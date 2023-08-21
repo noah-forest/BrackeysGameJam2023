@@ -7,7 +7,10 @@ using UnityEngine.Serialization;
 
 public class UnitStats : MonoBehaviour
 {
-	public int attackPower;
+	public float attackPower;
 	public float attackInterval;
+	public float critChance;
+	public float critDamage;
+	public float blockChance;
 	public int digCount;
 }

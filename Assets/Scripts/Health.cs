@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class Health : MonoBehaviour
 {
 	public int maxHealth;
-	public int health;
+	public float health;
 	public bool isDead;
 	public UnityEvent died;
 
@@ -18,12 +18,13 @@ public class Health : MonoBehaviour
 		Revive();
 	}
 
-	public void Damage(int dmg)
+	public void Damage(float dmg)
 	{
 		health -= dmg;
 		healthBar.UpdateHealthBar(health, maxHealth);
-		if (health <= 0)
+		if (health <= 0.1)
 		{
+			health = 0;
 			Die();
 		}
 	}

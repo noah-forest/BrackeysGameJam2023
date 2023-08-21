@@ -3,6 +3,7 @@ using System.Collections;
 using System.Net.Sockets;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(UnitStats))]
 [RequireComponent(typeof(Health))]
@@ -15,6 +16,8 @@ public class Unit : MonoBehaviour
 	public Actor actor;
 	
 	private bool isAttacking;
+	private bool crit;
+	private bool blocked;
 
 	private void Start()
 	{
@@ -36,8 +39,8 @@ public class Unit : MonoBehaviour
 		isAttacking = true;
 		while (!health.isDead)
 		{
-			AttackUnit();
 			yield return new WaitForSeconds(2);
+			AttackUnit();
 		}
 
 		isAttacking = false; // unit is dead
@@ -46,16 +49,38 @@ public class Unit : MonoBehaviour
 
 	private void AttackUnit()
 	{
-		unitToAttack.Damage(stats.attackPower);
+		// determine whether they attack, block, or crit
+		float randValue = Random.value;
+		if (randValue < stats.critChance)
+		{
+			Debug.Log("Crit!");
+			blocked = false;
+			crit = true;
+		} else if (randValue < stats.blockChance)
+		{
+			Debug.Log("Blocked!");
+			crit = false;
+			blocked = true;
+		}
+		else
+		{
+			crit = false;
+			blocked = false;
+		}
+		
+		unitToAttack.Damage(stats.attackPower, crit, blocked);
 	}
 
-	private void Damage(int dmg)
+	private void Damage(float dmg, bool crit, bool blocked)
 	{
+		if (blocked) return;
 		if (health.isDead)
 		{
+			if(crit) actor.health.Damage(stats.attackPower + stats.critDamage);
 			actor.health.Damage(stats.attackPower); // if the unit is dead, attack the actor
 			return;
 		}
+		if(crit) health.Damage(stats.attackPower + stats.critDamage);
 		health.Damage(stats.attackPower);
 	}
 
