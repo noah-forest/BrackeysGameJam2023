@@ -1,18 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class Grave : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	public Unit unit;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	private bool inGrave;
+	private int currentDigCount;
+
+	private void Start()
+	{
+		unit.health.died.AddListener(UnitDied);
+	}
+
+	private void UnitDied()
+	{
+		inGrave = true;
+	}
+
+	public void Dig()	//called by button onClick function
+	{
+		if(!inGrave) return;
+		currentDigCount++;
+		if (currentDigCount >= unit.stats.digCount)
+		{
+			inGrave = false;
+			unit.Respawn();
+		}
+	}
 }
