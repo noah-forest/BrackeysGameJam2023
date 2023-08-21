@@ -36,9 +36,8 @@ public class Unit : MonoBehaviour
 		isAttacking = true;
 		while (!health.isDead)
 		{
-			Debug.Log(this.name + "'s Health is: " + health.health);
 			AttackUnit();
-			yield return new WaitForSeconds(10);
+			yield return new WaitForSeconds(2);
 		}
 
 		isAttacking = false; // unit is dead
@@ -47,7 +46,6 @@ public class Unit : MonoBehaviour
 
 	private void AttackUnit()
 	{
-		Debug.Log(gameObject.name + " is attacking " + unitToAttack.name);
 		unitToAttack.Damage(stats.attackPower);
 	}
 
@@ -56,18 +54,15 @@ public class Unit : MonoBehaviour
 		if (health.isDead)
 		{
 			actor.health.Damage(stats.attackPower); // if the unit is dead, attack the actor
-			Debug.Log(actor.gameObject.name + " has been hit for " + stats.attackPower + " damage.");
 			return;
 		}
 		health.Damage(stats.attackPower);
-		Debug.Log(gameObject.name + " has been hit for " + stats.attackPower + " damage.");
 	}
 
 
 	private void OnDied()
 	{
 		// go to grave
-		Debug.Log(unitToAttack.gameObject.name + " has " + unitToAttack.health.health + " health left.");
 		gameObject.SetActive(false);
 	}
 
