@@ -18,19 +18,20 @@ public class Grave : MonoBehaviour
 	private void UnitDied()
 	{
 		inGrave = true;
+		currentDigCount = 0;
+		Debug.Log(unit.name + " is in grave");
 	}
 
 	public void Dig()	//called by button onClick function
 	{
 		if(!inGrave) return;
 		currentDigCount++;
-		
-		//if we haven't reached the dig count, return
-		if (currentDigCount < unit.stats.digCount) return;
-		
-		//else reset
-		inGrave = false;
-		unit.Respawn();
-		Debug.Log("Respawned");
+        
+		if (currentDigCount >= unit.stats.digCount)
+		{
+			inGrave = false;
+			unit.Respawn();
+			Debug.Log("Respawned");
+		}
 	}
 }
