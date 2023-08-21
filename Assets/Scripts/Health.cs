@@ -11,14 +11,17 @@ public class Health : MonoBehaviour
 	public bool isDead;
 	public UnityEvent died;
 
+	public HealthBar healthBar;
+
 	private void Start()
 	{
-		health = maxHealth;
+		Revive();
 	}
 
 	public void Damage(int dmg)
 	{
 		health -= dmg;
+		healthBar.UpdateHealthBar(health, maxHealth);
 		if (health <= 0)
 		{
 			Die();
@@ -29,6 +32,7 @@ public class Health : MonoBehaviour
 	{
 		isDead = false;
 		health = maxHealth;
+		healthBar.UpdateHealthBar(health, maxHealth);
 	}
 
 	private void Die()
