@@ -12,8 +12,9 @@ public class Unit : MonoBehaviour
 	public Unit unitToAttack;
 	public UnitStats stats;
 	public Health health;
-
 	public Actor actor;
+
+	private GameManager gameManager;
 	
 	private bool isAttacking;
 	private bool crit;
@@ -21,23 +22,23 @@ public class Unit : MonoBehaviour
 
 	private void Start()
 	{
+		gameManager = GameManager.singleton;
 		stats = GetComponent<UnitStats>();
 		health.died.AddListener(OnDied);
 	}
 
 	private void Update()
 	{
-		if (health.isDead) return;
-		if (!isAttacking)
-		{
-			StartCoroutine(AttackLoop()); 
-		}
+		if (health.isDead) return;	
+		if (isAttacking) return;
+		
+		StartCoroutine(AttackLoop());
 	}
 
 	private IEnumerator AttackLoop()
 	{
 		isAttacking = true;
-		while (!health.isDead)
+		while (!health.isDead && !gameManager.resolved)
 		{
 			yield return new WaitForSeconds(2);
 			AttackUnit();
@@ -53,17 +54,18 @@ public class Unit : MonoBehaviour
 		float randValue = Random.value;
 		if (randValue < stats.critChance)
 		{
-			Debug.Log("Crit!");
+			// crit hit
 			blocked = false;
 			crit = true;
 		} else if (randValue < stats.blockChance)
 		{
-			Debug.Log("Blocked!");
+			// blocked hit
 			crit = false;
 			blocked = true;
 		}
 		else
 		{
+			// normal hit
 			crit = false;
 			blocked = false;
 		}
@@ -73,15 +75,17 @@ public class Unit : MonoBehaviour
 
 	private void Damage(float dmg, bool crit, bool blocked)
 	{
-		if (blocked) return;
+		// if the unit is dead, damage the actor
 		if (health.isDead)
 		{
-			if(crit) actor.health.Damage(stats.attackPower + stats.critDamage);
-			actor.health.Damage(stats.attackPower); // if the unit is dead, attack the actor
+			actor.health.Damage(stats.attackPower);
 			return;
 		}
+		
+		// damage the unit
+		if (blocked) return;
 		if(crit) health.Damage(stats.attackPower + stats.critDamage);
-		health.Damage(stats.attackPower);
+		else health.Damage(stats.attackPower);
 	}
 
 

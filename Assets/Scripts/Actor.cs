@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Health))]
@@ -9,9 +6,16 @@ public class Actor : MonoBehaviour
 	// this is the player / enemy
 	public Health health;
 
-	private void Update()
+	private GameManager gameManager;
+
+	private void Start()
 	{
-		if(!health.isDead) return;
-		
+		gameManager = GameManager.singleton;
+		health.died.AddListener(OnActorDeath);
+	}
+
+	private void OnActorDeath()
+	{
+		gameManager.ActorDead(this.gameObject);
 	}
 }
