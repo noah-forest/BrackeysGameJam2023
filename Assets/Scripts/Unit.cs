@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Net.Sockets;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(UnitStats))]
@@ -9,8 +11,10 @@ public class Unit : MonoBehaviour
 	public Unit unitToAttack;
 	public UnitStats stats;
 	public Health health;
+
+	public Actor actor;
 	
-	//private Actor actor; -- tbd
+	private bool isAttacking;
 
 	private void Start()
 	{
@@ -18,16 +22,49 @@ public class Unit : MonoBehaviour
 		health.died.AddListener(OnDied);
 	}
 
+	private void Update()
+	{
+		if (health.isDead) return;
+		Debug.Log(gameObject.name + " is not dead");
+		if (!isAttacking)
+		{
+			StartCoroutine(AttackLoop()); 
+		}
+	}
+
+	private IEnumerator AttackLoop()
+	{
+		isAttacking = true;
+		while (!health.isDead)
+		{
+			AttackUnit();
+			Debug.Log(this.name + "'s Health is: " + health.health);
+			yield return new WaitForSeconds(stats.attackInterval);
+		}
+
+		isAttacking = false; // unit is dead
+		yield return null;
+	}
+
 	private void AttackUnit()
 	{
-		// attack the unit to attack
+		Debug.Log("Attacking: " + unitToAttack.name);
+		unitToAttack.Damage(stats.attackPower);
+	}
+
+	private void Damage(int dmg)
+	{
+		//if (health.isDead) actor.health.Damage(stats.attackPower); // if the unit is dead, attack the actor
 		health.Damage(stats.attackPower);
+		Debug.Log(gameObject.name + " dealt " + stats.attackPower + " damage.");
 	}
 
 
 	private void OnDied()
 	{
 		// go to grave
+		Debug.Log(gameObject.name + " died.");
+		Debug.Log(unitToAttack.gameObject.name + " has " + unitToAttack.health.health + " health left.");
 		gameObject.SetActive(false);
 	}
 
@@ -35,5 +72,6 @@ public class Unit : MonoBehaviour
 	{
 		// come back from grave
 		gameObject.SetActive(true);
+		health.Revive();
 	}
 }

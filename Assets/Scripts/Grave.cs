@@ -24,10 +24,13 @@ public class Grave : MonoBehaviour
 	{
 		if(!inGrave) return;
 		currentDigCount++;
-		if (currentDigCount >= unit.stats.digCount)
-		{
-			inGrave = false;
-			unit.Respawn();
-		}
+		
+		//if we haven't reached the dig count, return
+		if (currentDigCount < unit.stats.digCount) return;
+		
+		//else reset
+		inGrave = false;
+		unit.Respawn();
+		Debug.Log("Respawned");
 	}
 }
