@@ -7,7 +7,7 @@ public class ShopItem : ScriptableObject
 {
     public string name;
     public string type;
-    public GameObject art; // unit splash art, or item art
+    public GameObject prefab; // unit's prefab
     public string rarity;
     public string description;
 }

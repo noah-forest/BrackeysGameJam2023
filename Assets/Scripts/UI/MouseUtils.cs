@@ -61,7 +61,7 @@ public class MouseUtils : MonoBehaviour
 		}
 	}
 	
-	public void OnMouseDrag(Texture2D dragCursor)
+	public void SetDragCursor()
 	{
 		// set drag cursor
 		Vector2 cursorOffset = new Vector2(dragCursor.width / 2, dragCursor.height / 2);
