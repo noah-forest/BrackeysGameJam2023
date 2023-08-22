@@ -16,7 +16,7 @@ public class UnitHealthBar : MonoBehaviour
         health.healthChanged.AddListener(UpdateHealthBar);
     }
 
-    public void UpdateHealthBar()
+    public void UpdateHealthBar(float oldHealth, float newHealth)
     {
         slider.value = health.health / health.maxHealth;
     }

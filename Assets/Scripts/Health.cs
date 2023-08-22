@@ -14,14 +14,15 @@ public class Health : MonoBehaviour
 		get => _health;
 		set
 		{
+			float previousHealth = _health;
 			_health = value;
-			healthChanged.Invoke();
+			healthChanged.Invoke(previousHealth, value);
 		}
 	}
 
 	public bool isDead;
 	public UnityEvent died;
-	public UnityEvent healthChanged;
+	public UnityEvent<float, float> healthChanged;
 
 	private void Start()
 	{

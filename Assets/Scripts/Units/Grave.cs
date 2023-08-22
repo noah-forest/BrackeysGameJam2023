@@ -2,25 +2,26 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Collider2D))]
 public class Grave : MonoBehaviour
 {
-	public Unit unit;
+	[FormerlySerializedAs("unit")] public UnitAttacker unitAttacker;
 
 	private bool inGrave;
 	private int currentDigCount;
 
 	private void Start()
 	{
-		unit.gameObject.GetComponent<Health>().died.AddListener(UnitDied);
+		unitAttacker.gameObject.GetComponent<Health>().died.AddListener(UnitDied);
 	}
 
 	private void UnitDied()
 	{
 		inGrave = true;
 		currentDigCount = 0;
-		Debug.Log(unit.name + " is in grave");
+		Debug.Log(unitAttacker.name + " is in grave");
 	}
 
 	public void Dig()	//called by button onClick function
@@ -28,10 +29,10 @@ public class Grave : MonoBehaviour
 		if(!inGrave) return;
 		currentDigCount++;
         
-		if (currentDigCount >= unit.stats.digCount)
+		if (currentDigCount >= unitAttacker.stats.digCount)
 		{
 			inGrave = false;
-			unit.Respawn();
+			unitAttacker.Respawn();
 			Debug.Log("Respawned");
 		}
 	}

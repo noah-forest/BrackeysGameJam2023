@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EnemyAI : MonoBehaviour
 {
-	public Unit enemyUnit;
+	[FormerlySerializedAs("enemyUnit")] public UnitAttacker enemyUnitAttacker;
 
 	private float timer;
 	private int seconds;
@@ -12,7 +13,7 @@ public class EnemyAI : MonoBehaviour
 	
 	private void Start()
 	{
-		enemyUnit.health.died.AddListener(OnDeath);
+		enemyUnitAttacker.health.died.AddListener(OnDeath);
 	}
 
 	private void OnDeath()
@@ -29,8 +30,8 @@ public class EnemyAI : MonoBehaviour
 		timer += Time.deltaTime;
 		seconds = (int)(timer % 60);
 
-		if (seconds < enemyUnit.stats.digCount) return;
-		enemyUnit.Respawn();
+		if (seconds < enemyUnitAttacker.stats.digCount) return;
+		enemyUnitAttacker.Respawn();
 		dead = false;
 	}
 }

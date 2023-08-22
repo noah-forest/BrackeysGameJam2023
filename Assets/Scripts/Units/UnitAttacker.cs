@@ -3,55 +3,36 @@ using System.Collections;
 using System.Net.Sockets;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(UnitStats))]
 [RequireComponent(typeof(Health))]
-public class Unit : MonoBehaviour
+[RequireComponent(typeof(UnitAnimator))]
+public class UnitAttacker : MonoBehaviour
 {
-	public Unit unitToAttack;
+	[FormerlySerializedAs("unitToAttack")] public UnitAttacker unitAttackerToAttack;
 	[HideInInspector]
 	public UnitStats stats;
 	[HideInInspector]
 	public Health health;
 	public Actor actor;
 
-	private GameManager gameManager;
-	
+	public UnityEvent attacked;
+
 	private bool isAttacking;
 	private bool crit;
 	private bool blocked;
 
 	private void Start()
 	{
-		gameManager = GameManager.singleton;
 		stats = GetComponent<UnitStats>();
 		health = GetComponent<Health>();
 		health.died.AddListener(OnDied);
 	}
 
-	private void Update()
-	{
-		if (health.isDead) return;	
-		if (isAttacking) return;
-		
-		StartCoroutine(AttackLoop());
-	}
-
-	private IEnumerator AttackLoop()
-	{
-		isAttacking = true;
-		while (!health.isDead && !gameManager.resolved)
-		{
-			yield return new WaitForSeconds(2);
-			AttackUnit();
-		}
-
-		isAttacking = false; // unit is dead
-		yield return null;
-	}
-
-	private void AttackUnit()
+	public void AttackUnit()
 	{
 		// determine whether they attack, block, or crit
 		float randValue = Random.value;
@@ -72,8 +53,7 @@ public class Unit : MonoBehaviour
 			crit = false;
 			blocked = false;
 		}
-		
-		unitToAttack.Damage(stats.attackPower, crit, blocked);
+		unitAttackerToAttack.Damage(stats.attackPower, crit, blocked);
 	}
 
 	private void Damage(float dmg, bool crit, bool blocked)
@@ -86,9 +66,16 @@ public class Unit : MonoBehaviour
 		}
 		
 		// damage the unit
-		if (blocked) return;
-		if(crit) health.Damage(stats.attackPower + stats.critDamage);
-		else health.Damage(stats.attackPower);
+		if (!blocked)
+		{
+			float damageToDeal = stats.attackPower;
+			if (crit)
+			{
+				damageToDeal = stats.attackPower + stats.critDamage;
+			}
+			health.Damage(damageToDeal);
+			attacked.Invoke();
+		};
 	}
 
 
