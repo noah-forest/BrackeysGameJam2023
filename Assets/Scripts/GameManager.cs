@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
 	public void enemyDied()
 	{
 		Debug.Log("You won!");
+		Destroy(enemyActor.gameObject);
 	}
 
 	public void playerDied()
@@ -56,4 +57,10 @@ public class GameManager : MonoBehaviour
 		gameOver.SetActive(false);
 		resolved = false;
 	}
+
+
+	void StartNextBattle()
+    {
+		
+    }
 }
