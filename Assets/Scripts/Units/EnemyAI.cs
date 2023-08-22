@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 public class EnemyAI : MonoBehaviour
 {
-	[FormerlySerializedAs("enemyUnit")] public UnitAttacker enemyUnitAttacker;
+	[FormerlySerializedAs("enemyUnit")] public UnitController enemyUnitAttacker;
 
 	private float timer;
 	private int seconds;
@@ -30,8 +30,7 @@ public class EnemyAI : MonoBehaviour
 		timer += Time.deltaTime;
 		seconds = (int)(timer % 60);
 
-		if (seconds < enemyUnitAttacker.stats.digCount) return;
-		enemyUnitAttacker.Respawn();
+		if (seconds < enemyUnitAttacker.unitStats.digCount) return;
 		dead = false;
 	}
 }

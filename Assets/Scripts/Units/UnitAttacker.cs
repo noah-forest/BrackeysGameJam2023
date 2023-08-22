@@ -15,23 +15,17 @@ using Random = UnityEngine.Random;
 public class UnitAttacker : MonoBehaviour
 {
 
-	[HideInInspector]
-	public UnitStats stats;
-	[HideInInspector]
-	public Health health;
-	public Actor parentActor;
-	public UnitAttacker targetUnit;
+	public UnitController targetUnit;
+	UnitStats stats;
 
-	public UnityEvent attacked;
 
 	private bool isAttacking;
 	private bool crit;
-	private bool blocked;
+
 
 	private void Start()
 	{
 		stats = GetComponent<UnitStats>();
-		health = GetComponent<Health>();
 	}
 
 	/// <summary>
@@ -55,38 +49,6 @@ public class UnitAttacker : MonoBehaviour
 		}
 
 		targetUnit.TakeDamage(damage);
-	}
-
-	/// <summary>
-	/// called by other units in order to deal damage to THIS unit
-	/// </summary>
-	/// <param name="dmg"></param>
-	/// <param name="crit"></param>
-	/// <param name="blocked"></param>
-	private void TakeDamage(float dmg)
-	{
-		// if the unit is dead when it would normally take damage, damage this units actor
-		if (health.isDead)
-		{
-			parentActor.health.TakeDamage(dmg);
-			return;
-		}
-
-		//check if the unit blocks the incoming damage
-		blocked = false;
-		float blockRoll = Random.value;
-		if (blockRoll < stats.blockChance)
-		{
-			// blocked hit
-			blocked = true;
-		} // this is seperated out from the follwing 'damage the unit if' as other behavior may rely on block status.
-
-		// damage the unit
-		if (!blocked)
-		{
-			health.TakeDamage(dmg);
-			attacked.Invoke();
-		};
 	}
 	public void Respawn()
 	{

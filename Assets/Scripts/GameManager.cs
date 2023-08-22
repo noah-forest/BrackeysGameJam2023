@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
 
 	public Actor playerActor;
 	public Actor enemyActor;
-	
+
 	public bool resolved;
 
 	private void Start()

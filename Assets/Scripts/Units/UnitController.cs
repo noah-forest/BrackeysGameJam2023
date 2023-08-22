@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Health))]
@@ -10,10 +11,15 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(UnitStats))]
 public class UnitController : MonoBehaviour
 {
-    Health health;
+    [HideInInspector]
+    public Health health;
     UnitAttacker unitAttacker;
     UnitAnimator unitAnimator;
-    UnitStats unitStats;
+    [HideInInspector]
+    public UnitStats unitStats;
+
+    public Actor  parentActor;
+    public UnityEvent attacked;
 
     public Grave grave;
 
@@ -30,7 +36,7 @@ public class UnitController : MonoBehaviour
         unitAnimator = GetComponent<UnitAnimator>();
         StartCoroutine(AttackLoop());
         unitAnimator.attackHitEvent.AddListener(DamageEnemyUnit);
-        unitAttacker.attacked.AddListener(onUnitAttacked);
+        attacked.AddListener(onUnitAttacked);
         
         health.died.AddListener(OnDied);
         if (grave)
@@ -45,6 +51,38 @@ public class UnitController : MonoBehaviour
         if (health.isDead) return;	
         if (isAttacking) return;
         StartCoroutine(AttackLoop());
+    }
+
+    /// <summary>
+    /// called by other units in order to deal damage to THIS unit
+    /// </summary>
+    /// <param name="dmg"></param>
+    /// <param name="crit"></param>
+    /// <param name="blocked"></param>
+    public void TakeDamage(float dmg)
+    {
+        // if the unit is dead when it would normally take damage, damage this units actor
+        if (health.isDead)
+        {
+            parentActor.health.TakeDamage(dmg);
+            return;
+        }
+
+        //check if the unit blocks the incoming damage
+        bool blocked = false;
+        float blockRoll = Random.value;
+        if (blockRoll < unitStats.blockChance)
+        {
+            // blocked hit
+            blocked = true;
+        } // this is seperated out from the follwing 'damage the unit if' as other behavior may rely on block status.
+
+        // damage the unit
+        if (!blocked)
+        {
+            health.TakeDamage(dmg);
+            attacked.Invoke();
+        };
     }
 
     private IEnumerator AttackLoop()
@@ -86,7 +124,7 @@ public class UnitController : MonoBehaviour
     private void Respawn()
     {
         health.Revive();
-        unitAttacker.Respawn();
+        isAttacking = false;
         Debug.Log("Respawned");
         for(int i = 0; i < transform.childCount; i++)
         {
