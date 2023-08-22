@@ -169,7 +169,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274fcb14d24a59b4cacf0670638ec301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitAttacker: {fileID: 1792785006}
+  graveDug:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!61 &54638486
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -494,6 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b02d8e581dab2f42b5693d67dc7b06d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grave: {fileID: 2079664085}
 --- !u!1 &104210649
 GameObject:
   m_ObjectHideFlags: 0
@@ -955,7 +958,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 0}
-  isPlayer: 0
 --- !u!114 &369660229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2215,6 +2217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b02d8e581dab2f42b5693d67dc7b06d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grave: {fileID: 54638485}
 --- !u!1 &1803795683
 GameObject:
   m_ObjectHideFlags: 0
@@ -3000,7 +3003,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274fcb14d24a59b4cacf0670638ec301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitAttacker: {fileID: 95252312}
+  graveDug:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2102053184
 GameObject:
   m_ObjectHideFlags: 0
@@ -3050,7 +3055,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 0}
-  isPlayer: 0
 --- !u!114 &2102053187
 MonoBehaviour:
   m_ObjectHideFlags: 0

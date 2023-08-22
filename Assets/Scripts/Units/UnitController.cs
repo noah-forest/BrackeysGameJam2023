@@ -15,6 +15,8 @@ public class UnitController : MonoBehaviour
     UnitAnimator unitAnimator;
     UnitStats unitStats;
 
+    public Grave grave;
+
     private GameManager gameManager;
     private bool isAttacking;
 
@@ -28,8 +30,14 @@ public class UnitController : MonoBehaviour
         unitAnimator = GetComponent<UnitAnimator>();
         StartCoroutine(AttackLoop());
         unitAnimator.attackHitEvent.AddListener(DamageEnemyUnit);
-        
         unitAttacker.attacked.AddListener(onUnitAttacked);
+        
+        health.died.AddListener(OnDied);
+        if (grave)
+        {
+            grave.graveDug.AddListener(Respawn);
+            health.died.AddListener(OnDeath);
+        }
     }
 
     private void Update()
@@ -66,4 +74,35 @@ public class UnitController : MonoBehaviour
     {
         unitAnimator.Attacked();
     }
+
+    private void OnDeath()
+    {
+        if (grave)
+        {
+            grave.ActivateGrave(unitStats.digCount);
+        }
+    }
+
+    private void Respawn()
+    {
+        health.Revive();
+        unitAttacker.Respawn();
+        Debug.Log("Respawned");
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            GameObject Go = transform.GetChild(i).gameObject;
+            Go.SetActive(true);
+        }
+    }
+
+    private void OnDied()
+    {
+        // go to grave
+        for(int i = 0; i < transform.childCount; i++)
+        {
+            GameObject Go = transform.GetChild(i).gameObject;
+            Go.SetActive(false);
+        }
+    }
+
 }

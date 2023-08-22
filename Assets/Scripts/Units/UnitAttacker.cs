@@ -4,7 +4,6 @@ using System.Net.Sockets;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(UnitStats))]
@@ -12,7 +11,7 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(UnitAnimator))]
 public class UnitAttacker : MonoBehaviour
 {
-	[FormerlySerializedAs("unitToAttack")] public UnitAttacker unitAttackerToAttack;
+	public UnitAttacker unitAttackerToAttack;
 	[HideInInspector]
 	public UnitStats stats;
 	[HideInInspector]
@@ -29,7 +28,6 @@ public class UnitAttacker : MonoBehaviour
 	{
 		stats = GetComponent<UnitStats>();
 		health = GetComponent<Health>();
-		health.died.AddListener(OnDied);
 	}
 
 	public void AttackUnit()
@@ -77,19 +75,9 @@ public class UnitAttacker : MonoBehaviour
 			attacked.Invoke();
 		};
 	}
-
-
-	private void OnDied()
-	{
-		// go to grave
-		gameObject.SetActive(false);
-	}
-
 	public void Respawn()
 	{
 		// come back from grave
-		gameObject.SetActive(true);
-		health.Revive();
 		isAttacking = false;
 	}
 }
