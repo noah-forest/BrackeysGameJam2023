@@ -621,7 +621,7 @@ GameObject:
   - component: {fileID: 95252317}
   - component: {fileID: 95252319}
   m_Layer: 0
-  m_Name: Player Unit
+  m_Name: Player Unit Goliath
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -639,10 +639,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b30087d5421b2c45852d849cadeae79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitAttackerToAttack: {fileID: 1792785006}
   stats: {fileID: 0}
   health: {fileID: 0}
-  enemyActor: {fileID: 369660228}
+  parentActor: {fileID: 2102053186}
+  targetUnit: {fileID: 1792785006}
   attacked:
     m_PersistentCalls:
       m_Calls: []
@@ -658,7 +658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35347b89a44b5bd44b7e1644e5cad69a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 80
   _health: 0
   isDead: 0
   died:
@@ -679,12 +679,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ad420a994f2c64ea9cb16eded97be2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 15
-  attackInterval: 1
-  critChance: 0
-  critDamage: 0
+  attackPower: 20
+  attackInterval: 5
   blockChance: 0
-  digCount: 5
+  critChance: 0.25
+  critDamage: 5
+  digCount: 10
 --- !u!4 &95252315
 Transform:
   m_ObjectHideFlags: 0
@@ -1130,7 +1130,7 @@ GameObject:
   - component: {fileID: 263873131}
   - component: {fileID: 263873130}
   m_Layer: 0
-  m_Name: Player Unit (2)
+  m_Name: Player Unit (2) Depleted
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1148,10 +1148,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b30087d5421b2c45852d849cadeae79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitAttackerToAttack: {fileID: 2123007909}
   stats: {fileID: 0}
   health: {fileID: 0}
-  enemyActor: {fileID: 369660228}
+  parentActor: {fileID: 2102053186}
+  targetUnit: {fileID: 2123007909}
   attacked:
     m_PersistentCalls:
       m_Calls: []
@@ -1229,7 +1229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35347b89a44b5bd44b7e1644e5cad69a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 120
   _health: 0
   isDead: 0
   died:
@@ -1250,11 +1250,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ad420a994f2c64ea9cb16eded97be2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 15
+  attackPower: 10
   attackInterval: 1
+  blockChance: 0.15
   critChance: 0
   critDamage: 0
-  blockChance: 0
   digCount: 5
 --- !u!4 &263873136
 Transform:
@@ -2453,7 +2453,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d2b861f9433b612499797bc076197384, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7cdedb07c2ed15f43b0c86e5ca262ce5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2812,7 +2812,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d2b861f9433b612499797bc076197384, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e02464e7ffc369f408134fb47087d41a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2987,7 +2987,7 @@ GameObject:
   - component: {fileID: 1035538025}
   - component: {fileID: 1035538024}
   m_Layer: 0
-  m_Name: Player Unit (1)
+  m_Name: Player Unit (1) Goop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3005,10 +3005,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b30087d5421b2c45852d849cadeae79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitAttackerToAttack: {fileID: 1849227671}
   stats: {fileID: 0}
   health: {fileID: 0}
-  enemyActor: {fileID: 369660228}
+  parentActor: {fileID: 2102053186}
+  targetUnit: {fileID: 1849227671}
   attacked:
     m_PersistentCalls:
       m_Calls: []
@@ -3107,11 +3107,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ad420a994f2c64ea9cb16eded97be2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 15
-  attackInterval: 1
-  critChance: 0
-  critDamage: 0
-  blockChance: 0
+  attackPower: 10
+  attackInterval: 2
+  blockChance: 0.05
+  critChance: 0.05
+  critDamage: 5
   digCount: 5
 --- !u!4 &1035538030
 Transform:
@@ -3394,7 +3394,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d2b861f9433b612499797bc076197384, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 13223c8f11b0291458e8024f94403ae8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3930,7 +3930,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d2b861f9433b612499797bc076197384, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 47267599760930144af0936cca381f38, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4500,7 +4500,7 @@ GameObject:
   - component: {fileID: 1792785011}
   - component: {fileID: 1792785013}
   m_Layer: 0
-  m_Name: EnemyUnit
+  m_Name: EnemyUnit David
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4518,10 +4518,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b30087d5421b2c45852d849cadeae79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitAttackerToAttack: {fileID: 95252312}
   stats: {fileID: 0}
   health: {fileID: 0}
-  enemyActor: {fileID: 2102053186}
+  parentActor: {fileID: 369660228}
+  targetUnit: {fileID: 95252312}
   attacked:
     m_PersistentCalls:
       m_Calls: []
@@ -4558,12 +4558,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ad420a994f2c64ea9cb16eded97be2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 5
+  attackPower: 10
   attackInterval: 2
+  blockChance: 0.21
   critChance: 0
-  critDamage: 0
-  blockChance: 0
-  digCount: 5
+  critDamage: 5
+  digCount: 8
 --- !u!4 &1792785009
 Transform:
   m_ObjectHideFlags: 0
@@ -4958,7 +4958,7 @@ GameObject:
   - component: {fileID: 1849227668}
   - component: {fileID: 1849227667}
   m_Layer: 0
-  m_Name: EnemyUnit (1)
+  m_Name: EnemyUnit (1) DriftWood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5055,10 +5055,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b30087d5421b2c45852d849cadeae79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitAttackerToAttack: {fileID: 1035538023}
   stats: {fileID: 0}
   health: {fileID: 0}
-  enemyActor: {fileID: 2102053186}
+  parentActor: {fileID: 369660228}
+  targetUnit: {fileID: 1035538023}
   attacked:
     m_PersistentCalls:
       m_Calls: []
@@ -5096,10 +5096,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackPower: 5
-  attackInterval: 2
-  critChance: 0
-  critDamage: 0
-  blockChance: 0
+  attackInterval: 1
+  blockChance: 0.05
+  critChance: 0.25
+  critDamage: 5
   digCount: 5
 --- !u!1 &1914028641
 GameObject:
@@ -5351,7 +5351,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d2b861f9433b612499797bc076197384, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 641c770d289959e4d8fd37903ac20441, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6317,7 +6317,7 @@ GameObject:
   - component: {fileID: 2123007906}
   - component: {fileID: 2123007905}
   m_Layer: 0
-  m_Name: EnemyUnit (2)
+  m_Name: EnemyUnit (2) Diver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6414,10 +6414,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b30087d5421b2c45852d849cadeae79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitAttackerToAttack: {fileID: 263873129}
   stats: {fileID: 0}
   health: {fileID: 0}
-  enemyActor: {fileID: 2102053186}
+  parentActor: {fileID: 369660228}
+  targetUnit: {fileID: 263873129}
   attacked:
     m_PersistentCalls:
       m_Calls: []
@@ -6454,12 +6454,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ad420a994f2c64ea9cb16eded97be2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 5
-  attackInterval: 2
-  critChance: 0
-  critDamage: 0
-  blockChance: 0
-  digCount: 5
+  attackPower: 15
+  attackInterval: 3
+  blockChance: 0.15
+  critChance: 0.05
+  critDamage: 5
+  digCount: 7
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

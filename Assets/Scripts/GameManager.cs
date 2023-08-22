@@ -35,12 +35,12 @@ public class GameManager : MonoBehaviour
         enemyActor.GetComponent<Health>().died.AddListener(enemyDied);
     }
 
-	public void playerDied()
+	public void enemyDied()
 	{
 		Debug.Log("You won!");
 	}
 
-	public void enemyDied()
+	public void playerDied()
 	{
 		gameOver.SetActive(true);
 	}
