@@ -22,26 +22,27 @@ public class GameManager : MonoBehaviour
 	#endregion
 
 	public GameObject gameOver;
+
+	public Actor playerActor;
+	public Actor enemyActor;
 	
 	public bool resolved;
 
 	private void Start()
 	{
 		Reset();
+		playerActor.GetComponent<Health>().died.AddListener(playerDied);
+		enemyActor.GetComponent<Health>().died.AddListener(enemyDied);
 	}
 
-	public void ActorDead(GameObject actor)
+	public void playerDied()
 	{
-		resolved = true;
-		if (actor.name == "p_side")
-		{
-			gameOver.SetActive(true);
-		}
-		else
-		{
-			Debug.Log("You won!");
-			// transition to shop
-		}
+		Debug.Log("You won!");
+	}
+
+	public void enemyDied()
+	{
+		gameOver.SetActive(true);
 	}
 
 	public void ReloadScene()
