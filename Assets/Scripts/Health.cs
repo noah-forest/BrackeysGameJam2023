@@ -7,11 +7,21 @@ using UnityEngine.Events;
 public class Health : MonoBehaviour
 {
 	public int maxHealth;
-	public float health;
+	public float _health;
+
+	public float health
+	{
+		get => _health;
+		set
+		{
+			_health = value;
+			healthChanged.Invoke();
+		}
+	}
+
 	public bool isDead;
 	public UnityEvent died;
-
-	public HealthBar healthBar;
+	public UnityEvent healthChanged;
 
 	private void Start()
 	{
@@ -21,7 +31,6 @@ public class Health : MonoBehaviour
 	public void Damage(float dmg)
 	{
 		health -= dmg;
-		healthBar.UpdateHealthBar(health, maxHealth);
 		if (health <= 0.1)
 		{
 			health = 0;
@@ -33,7 +42,6 @@ public class Health : MonoBehaviour
 	{
 		isDead = false;
 		health = maxHealth;
-		healthBar.UpdateHealthBar(health, maxHealth);
 	}
 
 	private void Die()

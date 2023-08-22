@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
 public class Grave : MonoBehaviour
 {
 	public Unit unit;
@@ -12,7 +13,7 @@ public class Grave : MonoBehaviour
 
 	private void Start()
 	{
-		unit.health.died.AddListener(UnitDied);
+		unit.gameObject.GetComponent<Health>().died.AddListener(UnitDied);
 	}
 
 	private void UnitDied()
@@ -33,5 +34,10 @@ public class Grave : MonoBehaviour
 			unit.Respawn();
 			Debug.Log("Respawned");
 		}
+	}
+	
+	void OnMouseDown() // when collider is clicked
+	{
+		Dig();
 	}
 }

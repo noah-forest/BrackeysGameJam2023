@@ -10,7 +10,9 @@ using Random = UnityEngine.Random;
 public class Unit : MonoBehaviour
 {
 	public Unit unitToAttack;
+	[HideInInspector]
 	public UnitStats stats;
+	[HideInInspector]
 	public Health health;
 	public Actor actor;
 
@@ -24,6 +26,7 @@ public class Unit : MonoBehaviour
 	{
 		gameManager = GameManager.singleton;
 		stats = GetComponent<UnitStats>();
+		health = GetComponent<Health>();
 		health.died.AddListener(OnDied);
 	}
 
