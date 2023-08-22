@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Collider2D))]
@@ -14,8 +15,15 @@ public class Grave : MonoBehaviour
 	private bool inGrave;
 	private int currentDigCount;
 
+	private MouseUtils mouseUtils;
+	
 	private int digCount;
 	private float digSpeed = 0.25f; //used by enemy 
+
+	private void Start()
+	{
+		mouseUtils = MouseUtils.singleton;
+	}
 
 	public void ActivateGrave(int digCount)
 	{
@@ -28,7 +36,7 @@ public class Grave : MonoBehaviour
         }
 	}
 
-	public void Dig()	//called by button onClick function
+	public void Dig()
 	{
 		Debug.Log($"grave: { gameObject.name} was dug");
 		if(!inGrave) return;
@@ -57,6 +65,5 @@ public class Grave : MonoBehaviour
 		yield return new WaitForSeconds(digSpeed);
 		Dig();
 		if (inGrave == true) StartCoroutine(EnemyDig()); //loops until the dig function sets inGrave to false
-    } 
-
+    }
 }
