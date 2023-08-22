@@ -6,6 +6,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
+/// <summary>
+/// Handles damaging the oposing unit and enemy actor
+/// </summary>
 [RequireComponent(typeof(UnitStats))]
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(UnitAnimator))]
@@ -16,7 +19,7 @@ public class UnitAttacker : MonoBehaviour
 	public UnitStats stats;
 	[HideInInspector]
 	public Health health;
-	public Actor actor;
+	public Actor enemyActor;
 
 	public UnityEvent attacked;
 
@@ -59,7 +62,7 @@ public class UnitAttacker : MonoBehaviour
 		// if the unit is dead, damage the actor
 		if (health.isDead)
 		{
-			actor.health.Damage(stats.attackPower);
+			enemyActor.health.Damage(stats.attackPower);
 			return;
 		}
 		

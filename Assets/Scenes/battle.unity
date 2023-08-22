@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 54638486}
   - component: {fileID: 54638485}
   m_Layer: 0
-  m_Name: Grave (1)
+  m_Name: Enemy Grave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274fcb14d24a59b4cacf0670638ec301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerOwned: 0
   graveDug:
     m_PersistentCalls:
       m_Calls: []
@@ -354,7 +355,7 @@ GameObject:
   - component: {fileID: 95252317}
   - component: {fileID: 95252319}
   m_Layer: 0
-  m_Name: Unit
+  m_Name: Player Unit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -375,7 +376,7 @@ MonoBehaviour:
   unitAttackerToAttack: {fileID: 1792785006}
   stats: {fileID: 0}
   health: {fileID: 0}
-  actor: {fileID: 2102053186}
+  enemyActor: {fileID: 369660228}
   attacked:
     m_PersistentCalls:
       m_Calls: []
@@ -2098,7 +2099,7 @@ MonoBehaviour:
   unitAttackerToAttack: {fileID: 95252312}
   stats: {fileID: 0}
   health: {fileID: 0}
-  actor: {fileID: 369660228}
+  enemyActor: {fileID: 2102053186}
   attacked:
     m_PersistentCalls:
       m_Calls: []
@@ -2875,7 +2876,7 @@ GameObject:
   - component: {fileID: 2079664082}
   - component: {fileID: 2079664085}
   m_Layer: 0
-  m_Name: Grave
+  m_Name: Player Grave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3005,6 +3006,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274fcb14d24a59b4cacf0670638ec301, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerOwned: 1
   graveDug:
     m_PersistentCalls:
       m_Calls: []
