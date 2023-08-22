@@ -67,7 +67,7 @@ public class UnitController : MonoBehaviour
 
     private void DamageEnemyUnit()
     {
-        unitAttacker.AttackUnit();
+        unitAttacker.AttackTarget();
     }
 
     private void onUnitAttacked()

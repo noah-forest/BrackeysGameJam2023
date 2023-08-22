@@ -9,8 +9,8 @@ public class UnitStats : MonoBehaviour
 {
 	public float attackPower;
 	public float attackInterval;
-	public float critChance;
+	[Range(0, 1)] public float blockChance;
+	[Range(0, 1)] public float critChance;
 	public float critDamage;
-	public float blockChance;
 	public int digCount;
 }

@@ -14,12 +14,13 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(UnitAnimator))]
 public class UnitAttacker : MonoBehaviour
 {
-	public UnitAttacker unitAttackerToAttack;
+
 	[HideInInspector]
 	public UnitStats stats;
 	[HideInInspector]
 	public Health health;
-	public Actor enemyActor;
+	public Actor parentActor;
+	public UnitAttacker targetUnit;
 
 	public UnityEvent attacked;
 
@@ -33,50 +34,61 @@ public class UnitAttacker : MonoBehaviour
 		health = GetComponent<Health>();
 	}
 
-	public void AttackUnit()
+	/// <summary>
+	/// attack this units targetUnit using targetUnit.takeDamage
+	/// </summary>
+	public void AttackTarget()
 	{
-		// determine whether they attack, block, or crit
-		float randValue = Random.value;
-		if (randValue < stats.critChance)
+
+		// Damage instance feilds.
+
+		float damage = stats.attackPower;
+
+		crit = false;       // currently cirt bool does nothing ,but may be used later.
+		float critRoll = Random.value;
+		if (critRoll < stats.critChance) // determine whether they crit
 		{
 			// crit hit
-			blocked = false;
-			crit = true;
-		} else if (randValue < stats.blockChance)
-		{
-			// blocked hit
-			crit = false;
-			blocked = true;
+			//crit = true;
+			damage += stats.attackPower;
+
 		}
-		else
-		{
-			// normal hit
-			crit = false;
-			blocked = false;
-		}
-		unitAttackerToAttack.Damage(stats.attackPower, crit, blocked);
+
+		targetUnit.TakeDamage(damage);
+		Debug.Log($">>>>>>>>>>>>>>>>>>>>> {gameObject.name} Attacks for {damage} CRIT: {crit}");
 	}
 
-	private void Damage(float dmg, bool crit, bool blocked)
+	/// <summary>
+	/// called by other units in order to deal damage to THIS unit
+	/// </summary>
+	/// <param name="dmg"></param>
+	/// <param name="crit"></param>
+	/// <param name="blocked"></param>
+	private void TakeDamage(float dmg)
 	{
-		// if the unit is dead, damage the actor
+		// if the unit is dead when it would normally take damage, damage this units actor
 		if (health.isDead)
 		{
-			enemyActor.health.Damage(stats.attackPower);
+			parentActor.health.TakeDamage(dmg);
 			return;
 		}
-		
+
+		//check if the unit blocks the incoming damage
+		blocked = false;
+		float blockRoll = Random.value;
+		if (blockRoll < stats.blockChance)
+		{
+			// blocked hit
+			blocked = true;
+		} // this is seperated out from the follwing 'damage the unit if' as other behavior may rely on block status.
+
 		// damage the unit
 		if (!blocked)
 		{
-			float damageToDeal = stats.attackPower;
-			if (crit)
-			{
-				damageToDeal = stats.attackPower + stats.critDamage;
-			}
-			health.Damage(damageToDeal);
+			health.TakeDamage(dmg);
 			attacked.Invoke();
 		};
+		Debug.Log($"<<<< {gameObject.name} Is damaged for {dmg} BLOCK: {blocked}");
 	}
 	public void Respawn()
 	{

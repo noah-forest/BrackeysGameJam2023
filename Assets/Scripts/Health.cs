@@ -29,7 +29,7 @@ public class Health : MonoBehaviour
 		Revive();
 	}
 
-	public void Damage(float dmg)
+	public void TakeDamage(float dmg)
 	{
 		health -= dmg;
 		if (health <= 0.1)
