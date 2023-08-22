@@ -31,8 +31,8 @@ public class GameManager : MonoBehaviour
 	private void Start()
 	{
 		Reset();
-		playerActor.health.died.AddListener(playerDied);
-		enemyActor.health.died.AddListener(enemyDied);
+		playerActor:GetComponent<Health>().died.AddListener(playerDied);
+		enemyActor:GetComponent<Health>().died.AddListener(enemyDied);
 	}
 
 	public void playerDied()
