@@ -12,12 +12,5 @@ public class Actor : MonoBehaviour
 	private void Start()
 	{
 		health = GetComponent<Health>();
-		gameManager = GameManager.singleton;
-		health.died.AddListener(OnActorDeath);
-	}
-
-	private void OnActorDeath()
-	{
-		gameManager.ActorDead(this.gameObject);
 	}
 }
