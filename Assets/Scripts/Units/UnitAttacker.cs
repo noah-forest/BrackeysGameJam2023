@@ -55,7 +55,6 @@ public class UnitAttacker : MonoBehaviour
 		}
 
 		targetUnit.TakeDamage(damage);
-		Debug.Log($">>>>>>>>>>>>>>>>>>>>> {gameObject.name} Attacks for {damage} CRIT: {crit}");
 	}
 
 	/// <summary>
@@ -88,7 +87,6 @@ public class UnitAttacker : MonoBehaviour
 			health.TakeDamage(dmg);
 			attacked.Invoke();
 		};
-		Debug.Log($"<<<< {gameObject.name} Is damaged for {dmg} BLOCK: {blocked}");
 	}
 	public void Respawn()
 	{
