@@ -12,6 +12,6 @@ public class RefreshShop : MonoBehaviour
     private void Start()
     {
         button = GetComponent<Button>();
-        button.onClick.AddListener(shopController.PopulateShop);
+        button.onClick.AddListener(shopController.PopulateShopUnits);
     }
 }
