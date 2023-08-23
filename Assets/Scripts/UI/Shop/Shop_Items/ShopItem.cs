@@ -9,7 +9,7 @@ public class ShopItem : ScriptableObject
 {
     public string name;
     public string type;
-    public GameObject unitArt; // unit's art
+    public GameObject prefab; // unit's art
     public string rarity;
     public string description;
 }

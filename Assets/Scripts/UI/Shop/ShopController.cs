@@ -59,29 +59,22 @@ public class ShopController : MonoBehaviour
 		{
 			case "Common":
 				if (shopItems[unitIndex].rarity != "Common") return;
-				GenerateShopItem(unitIndex);
 				break;
 			case "Rare":
 				if (shopItems[unitIndex].rarity != "Rare") return;
-				GenerateShopItem(unitIndex);
 				break;
 			case "Epic":
 				if (shopItems[unitIndex].rarity != "Epic") return;
-				GenerateShopItem(unitIndex);
 				break;
 			case "Legendary":
 				if (shopItems[unitIndex].rarity != "Legendary") return;
-				GenerateShopItem(unitIndex);
 				break;
 		}
-	}
-
-	private void GenerateShopItem(int index)
-	{
-		prefab = shopItems[index].unitArt;
+		
+		prefab = shopItems[unitIndex].prefab;
 		SetUnitInfo setUnitInfo = prefab.GetComponent<SetUnitInfo>();
         
-		setUnitInfo.unitName.SetText(shopItems[index].name);
+		setUnitInfo.unitName.SetText(shopItems[unitIndex].name);
 		setUnitInfo.unitCost.SetText("5");
 	}
 }
