@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -9,10 +10,10 @@ public class ShopController : MonoBehaviour
 	public List<ShopItem> shopItems = new List<ShopItem>();
 	public List<GameObject> unitPos = new List<GameObject>();
 
-	private List<GameObject> shopWindows = new List<GameObject>();
+	public LootTable lootTable;
 	
+	private List<GameObject> shopWindows = new List<GameObject>();
 	private GameObject prefab;
-	private Sprite treasureIcon;
 	private GameObject shopWindow;
 	private int unitIndex;
 	private int posIndex;
@@ -53,11 +54,34 @@ public class ShopController : MonoBehaviour
 		{
 			unitIndex = Random.Range(0, shopItems.Count);
 		}
-		
-		prefab = shopItems[unitIndex].prefab;
+        
+		switch (lootTable.GetRarity().rarityName)
+		{
+			case "Common":
+				if (shopItems[unitIndex].rarity != "Common") return;
+				GenerateShopItem(unitIndex);
+				break;
+			case "Rare":
+				if (shopItems[unitIndex].rarity != "Rare") return;
+				GenerateShopItem(unitIndex);
+				break;
+			case "Epic":
+				if (shopItems[unitIndex].rarity != "Epic") return;
+				GenerateShopItem(unitIndex);
+				break;
+			case "Legendary":
+				if (shopItems[unitIndex].rarity != "Legendary") return;
+				GenerateShopItem(unitIndex);
+				break;
+		}
+	}
+
+	private void GenerateShopItem(int index)
+	{
+		prefab = shopItems[index].unitArt;
 		SetUnitInfo setUnitInfo = prefab.GetComponent<SetUnitInfo>();
         
-		setUnitInfo.unitName.SetText(shopItems[unitIndex].name);
+		setUnitInfo.unitName.SetText(shopItems[index].name);
 		setUnitInfo.unitCost.SetText("5");
 	}
 }

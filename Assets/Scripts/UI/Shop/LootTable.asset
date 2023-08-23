@@ -9,11 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2ca87ab088cab34287fa16335fdd78a, type: 3}
-  m_Name: Driftwood
+  m_Script: {fileID: 11500000, guid: 23b7a2dc021f89542bd780094e561559, type: 3}
+  m_Name: LootTable
   m_EditorClassIdentifier: 
-  name: Driftwood
-  type: Unit
-  unitArt: {fileID: 6817793864750181722, guid: 535f2637f8864db48b849611b1687bb7, type: 3}
-  rarity: Common
-  description: 
+  rarities:
+  - rarityName: Common
+    weight: 50
+  - rarityName: Rare
+    weight: 33
+  - rarityName: Epic
+    weight: 10
+  - rarityName: 'Legendary '
+    weight: 7
