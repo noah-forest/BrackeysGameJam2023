@@ -13,7 +13,8 @@ public class UnitController : MonoBehaviour
 {
     [HideInInspector]
     public Health health;
-    UnitAttacker unitAttacker;
+    [HideInInspector]
+    public UnitAttacker unitAttacker;
     UnitAnimator unitAnimator;
     [HideInInspector]
     public UnitStats unitStats;
@@ -21,12 +22,25 @@ public class UnitController : MonoBehaviour
     public Actor  parentActor;
     public UnityEvent attacked;
 
-    public Grave grave;
+    private Grave _grave;
+    /// <summary>
+    /// This is a property that will handle assigning the graveDug event whenever you assign a new grave to a unit
+    /// </summary>
+    public Grave unitGrave
+    {
+        set
+        {
+            value.graveDug.RemoveListener(Respawn); //this may be not needed, and may also cause problems later, and also may not even work.
+            _grave = value;
+            _grave.graveDug.AddListener(Respawn);
+        }
+        get => _grave;
+    }
 
     private GameManager gameManager;
     private bool isAttacking;
 
-    private void Start()
+    private void Awake()
     {
         gameManager = GameManager.singleton;
 
@@ -37,13 +51,8 @@ public class UnitController : MonoBehaviour
         StartCoroutine(AttackLoop());
         unitAnimator.attackHitEvent.AddListener(DamageEnemyUnit);
         attacked.AddListener(onUnitAttacked);
-        
-        health.died.AddListener(OnDied);
-        if (grave)
-        {
-            grave.graveDug.AddListener(Respawn);
-            health.died.AddListener(OnDeath);
-        }
+
+        health.died.AddListener(OnDeath);
     }
 
     private void Update()
@@ -115,9 +124,16 @@ public class UnitController : MonoBehaviour
 
     private void OnDeath()
     {
-        if (grave)
+        if (unitGrave)
         {
-            grave.ActivateGrave(unitStats.digCount);
+            Debug.Log($"{gameObject.name} has entered its grave");
+            unitGrave.ActivateGrave(unitStats.digCount);
+            // go to grave
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                GameObject Go = transform.GetChild(i).gameObject;
+                Go.SetActive(false);
+            }
         }
     }
 
@@ -132,15 +148,4 @@ public class UnitController : MonoBehaviour
             Go.SetActive(true);
         }
     }
-
-    private void OnDied()
-    {
-        // go to grave
-        for(int i = 0; i < transform.childCount; i++)
-        {
-            GameObject Go = transform.GetChild(i).gameObject;
-            Go.SetActive(false);
-        }
-    }
-
 }

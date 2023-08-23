@@ -33,7 +33,7 @@ public class UnitAttacker : MonoBehaviour
 	/// </summary>
 	public void AttackTarget()
 	{
-
+		if (!targetUnit) return;
 		// Damage instance feilds.
 
 		float damage = stats.attackPower;

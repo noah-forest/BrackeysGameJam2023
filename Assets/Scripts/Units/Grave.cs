@@ -18,7 +18,7 @@ public class Grave : MonoBehaviour
 	private MouseUtils mouseUtils;
 	
 	private int digCount;
-	private float digSpeed = 0.25f; //used by enemy 
+	private float digSpeed = 0.40f; //used by enemy 
 
 	private void Start()
 	{
@@ -38,7 +38,7 @@ public class Grave : MonoBehaviour
 
 	public void Dig()
 	{
-		Debug.Log($"grave: { gameObject.name} was dug");
+		
 		if(!inGrave) return;
 		currentDigCount++;
         
@@ -49,9 +49,8 @@ public class Grave : MonoBehaviour
 		}
 	}
 	
-	void OnMouseDown() // when collider is clicked
+	void OnMouseDown() // when collider is clicked by player
 	{
-		Debug.Log($"Grave: {gameObject.name} was clicked\n PlayerOwned?: {playerOwned}");
         if (playerOwned) Dig(); // enemies cannot be dug
 	}
 	
