@@ -55,6 +55,7 @@ public class ShopController : MonoBehaviour
 			unitIndex = Random.Range(0, shopItems.Count);
 		}
         
+		/* rarity is not working rn 
 		switch (lootTable.GetRarity().rarityName)
 		{
 			case "Common":
@@ -69,7 +70,7 @@ public class ShopController : MonoBehaviour
 			case "Legendary":
 				if (shopItems[unitIndex].rarity != "Legendary") return;
 				break;
-		}
+		} */
 		
 		prefab = shopItems[unitIndex].prefab;
 		SetUnitInfo setUnitInfo = prefab.GetComponent<SetUnitInfo>();

@@ -8,8 +8,6 @@ using UnityEngine.UIElements;
 public class ShopItem : ScriptableObject
 {
     public string name;
-    public string type;
     public GameObject prefab; // unit's art
     public string rarity;
-    public string description;
 }
