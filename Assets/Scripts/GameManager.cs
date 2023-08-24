@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
 
 	private void Start()
 	{
-		Gold = 1;
+		Gold = 0;
 		Lives = 3;
 		Reset();
 		LoadResources();

@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Collider2D))]
-public class Grave : MonoBehaviour
+public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 	public bool playerOwned;
 
@@ -65,4 +65,14 @@ public class Grave : MonoBehaviour
 		Dig();
 		if (inGrave == true) StartCoroutine(EnemyDig()); //loops until the dig function sets inGrave to false
     }
+
+	public void OnPointerEnter(PointerEventData eventData)
+	{
+		mouseUtils.SetHoverCursor();
+	}
+
+	public void OnPointerExit(PointerEventData eventData)
+	{
+		mouseUtils.SetToDefaultCursor();
+	}
 }

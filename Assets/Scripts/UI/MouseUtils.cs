@@ -9,6 +9,7 @@ public class MouseUtils : MonoBehaviour
 	public Texture2D hoverCursor;
 	public Texture2D dragCursor;
 	public Texture2D hoverDragCursor;
+	public Texture2D shovelCursor;
 
 	#region singleton
 
@@ -39,7 +40,7 @@ public class MouseUtils : MonoBehaviour
 	void Start()
 	{
 		mouseUtils = MouseUtils.singleton;
-        FindButtonsInScene();
+        //FindButtonsInScene();
 	}
 
 	public void FindButtonsInScene()
@@ -73,6 +74,12 @@ public class MouseUtils : MonoBehaviour
 	{
 		Vector2 cursorOffset = new Vector2(hoverDragCursor.width / 2, hoverDragCursor.height / 2);
 		Cursor.SetCursor(hoverDragCursor, cursorOffset, CursorMode.Auto);
+	}
+	
+	public void SetShovelCursor()
+	{
+		Vector2 cursorOffset = new Vector2(shovelCursor.width / 2, shovelCursor.height / 2);
+		Cursor.SetCursor(shovelCursor, cursorOffset, CursorMode.Auto);
 	}
 	
 	public void SetHoverCursor()
