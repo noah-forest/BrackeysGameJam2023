@@ -12,6 +12,21 @@ public delegate bool SlotDropPrecheck(Slot oldSlot, Slot newSlot);
 public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler, IDragHandler, IEndDragHandler
 {
     public static Slot currentlyOverSlot;
+    public static DragVisual _dragVisual;
+
+    public static DragVisual dragVisual
+    {
+        get
+        {
+            if (_dragVisual == null)
+            {
+                _dragVisual = Instantiate(Resources.Load("DraggingVisualObject") as GameObject).GetComponent<DragVisual>();
+                Debug.Log("instantited", _dragVisual);
+            }
+
+            return _dragVisual;
+        }
+    }
 
     private List<SlotDropPrecheck> slotDropPrechecks = new();
     
@@ -89,8 +104,9 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
         if (_payload != null && spriteDraggingRepresentation == null)
         {
-            spriteDraggingRepresentation = CreateSpriteObject();
-            spriteDraggingRepresentation.position = Input.mousePosition;
+            dragVisual.SetSprite(GetSpriteForDragging());
+            dragVisual.SnapTo(Input.mousePosition);
+            dragVisual.DragStarted();
             mouseUtils.SetDragCursor();
             isDragged = true;
         }
@@ -99,10 +115,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
     protected void OnMouseDrag()
     {
         //Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (spriteDraggingRepresentation)
-        {
-            spriteDraggingRepresentation.position = Input.mousePosition;
-        }
+        dragVisual.MoveTo(Input.mousePosition);
     }
 
     protected void OnMouseEnter()
@@ -127,12 +140,9 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
             renderer.SlotDragEnded(payload);
         }
 
-        if (spriteDraggingRepresentation)
-        {
-            mouseUtils.SetToDefaultCursor();
-            isDragged = false;
-            Destroy(spriteDraggingRepresentation.parent.gameObject);
-        }
+        dragVisual.DragStopped();
+        mouseUtils.SetToDefaultCursor();
+        isDragged = false;
 
         if (payload != null && currentlyOverSlot != null && currentlyOverSlot != this)
         {
@@ -173,7 +183,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
         this.OnMouseDown();
 
         //Fixes weird bug where initial position is wrong
-        spriteDraggingRepresentation.position = Input.mousePosition;
+        dragVisual.SnapTo(Input.mousePosition);
     }
 
     public void OnPointerUp(PointerEventData data)
