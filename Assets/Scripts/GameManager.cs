@@ -23,10 +23,15 @@ public class GameManager : MonoBehaviour
 	}
 	#endregion
 
+	[HideInInspector]
 	public UnityEvent goldChangedEvent;
+	[HideInInspector]
 	public UnityEvent livesChangedEvent;
+	[HideInInspector]
 	public UnityEvent battleWonEvent;
+	[HideInInspector]
 	public UnityEvent battleLostEvent;
+	[HideInInspector]
 	public UnityEvent gameOverEvent;
 
     #region Lives and Gold properties
@@ -61,7 +66,7 @@ public class GameManager : MonoBehaviour
 	public List<GameObject> allUnitPrfabs;
 	#endregion
 
-	public List<Slot> battleSlots = new List<Slot>();
+	public List<Slot> playerBattleSlots = new List<Slot>();
 	
 
     public int battleReward = 3;
@@ -154,7 +159,7 @@ public class GameManager : MonoBehaviour
 	public void LoadShop()
     {
 		SceneManager.LoadScene(1); 
-		foreach(Slot slot in battleSlots)
+		foreach(Slot slot in playerBattleSlots)
         {
 			slot.gameObject.SetActive(true);
         }
@@ -172,7 +177,7 @@ public class GameManager : MonoBehaviour
 	/// </summary>
 	void StartNextBattle()
     {
-		foreach (Slot slot in battleSlots)
+		foreach (Slot slot in playerBattleSlots)
 		{
 			slot.gameObject.SetActive(false);
 		}
@@ -207,9 +212,9 @@ public class GameManager : MonoBehaviour
     {
 		for(int unitIdx=0; unitIdx < lanes.Count; unitIdx++)
         {
-            if (battleSlots[unitIdx].payload)
+            if (playerBattleSlots[unitIdx].payload)
             {
-				GameObject newUnitObj = Instantiate(battleSlots[unitIdx].payload, lanes[unitIdx].playerUnitPosition.position, lanes[unitIdx].playerUnitPosition.rotation);
+				GameObject newUnitObj = Instantiate(playerBattleSlots[unitIdx].payload, lanes[unitIdx].playerUnitPosition.position, lanes[unitIdx].playerUnitPosition.rotation);
 				lanes[unitIdx].playerUnit = newUnitObj.GetComponent<UnitController>();
 				lanes[unitIdx].playerUnit.parentActor = playerActor;
 			}
