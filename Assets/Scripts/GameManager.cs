@@ -59,7 +59,10 @@ public class GameManager : MonoBehaviour
 	}
 	[HideInInspector]
 	public List<GameObject> allUnitPrfabs;
-    #endregion
+	#endregion
+
+	public List<Slot> battleSlots = new List<Slot>();
+	
 
     public int battleReward = 3;
 
@@ -81,7 +84,7 @@ public class GameManager : MonoBehaviour
 		Lives = 3;
 		Reset();
 		LoadResources();
-
+		LoadPlayerUnitsIntoBattleField();
 		StartNextBattle();
 
         playerActor.GetComponent<Health>().died.AddListener(playerDied);
@@ -151,6 +154,10 @@ public class GameManager : MonoBehaviour
 	public void LoadShop()
     {
 		SceneManager.LoadScene(1); 
+		foreach(Slot slot in battleSlots)
+        {
+			slot.gameObject.SetActive(true);
+        }
     }
 
 	private void Reset()
@@ -165,6 +172,10 @@ public class GameManager : MonoBehaviour
 	/// </summary>
 	void StartNextBattle()
     {
+		foreach (Slot slot in battleSlots)
+		{
+			slot.gameObject.SetActive(false);
+		}
 		resumeGame.Invoke();
 		//assigng target units to opposing units, and assign units to their graves
 		foreach(BattleLane lane in lanes)
@@ -194,8 +205,14 @@ public class GameManager : MonoBehaviour
 
 	private void LoadPlayerUnitsIntoBattleField()
     {
-		//todo
-    }
+		for(int unitIdx=0; unitIdx < lanes.Count; unitIdx++)
+        {
+			GameObject newUnitObj = Instantiate(battleSlots[unitIdx].payload, lanes[unitIdx].playerUnitPosition.position, lanes[unitIdx].playerUnitPosition.rotation);
+			lanes[unitIdx].playerUnit = newUnitObj.GetComponent<UnitController>();
+			lanes[unitIdx].playerUnit.parentActor = playerActor;
+		}
+
+	}
 
 	public GameObject GetRandomUnitObject()
     {
