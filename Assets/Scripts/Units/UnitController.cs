@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(UnitAnimator))]
 [RequireComponent(typeof(UnitAttacker))]
 [RequireComponent(typeof(UnitStats))]
-public class UnitController : MonoBehaviour
+public class UnitController : MonoBehaviour, ISlotItem
 {
     [HideInInspector]
     public Health health;
@@ -148,5 +148,12 @@ public class UnitController : MonoBehaviour
             GameObject Go = transform.GetChild(i).gameObject;
             Go.SetActive(true);
         }
+    }
+
+    public Sprite GetSlotSprite()
+    {
+        
+        GameObject sprite = transform.Find("Sprite").gameObject;
+        return sprite.GetComponent<SpriteRenderer>().sprite;
     }
 }
