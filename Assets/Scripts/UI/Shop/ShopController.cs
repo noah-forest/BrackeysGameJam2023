@@ -47,8 +47,9 @@ public class ShopController : MonoBehaviour
 			SetShopItems();
 			shopWindow = Instantiate(prefab, unitPos[i].transform);
 			shopWindows.Add(shopWindow);	// add it to a list of instantiated objects
-			mouseUtils.FindButtonsInScene();
-		}	
+		}
+		
+		mouseUtils.FindButtonsInScene();
 	}
 	
 	// loop through the SOs and their prefabs to set certain information
