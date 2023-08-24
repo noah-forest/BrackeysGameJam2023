@@ -207,9 +207,13 @@ public class GameManager : MonoBehaviour
     {
 		for(int unitIdx=0; unitIdx < lanes.Count; unitIdx++)
         {
-			GameObject newUnitObj = Instantiate(battleSlots[unitIdx].payload, lanes[unitIdx].playerUnitPosition.position, lanes[unitIdx].playerUnitPosition.rotation);
-			lanes[unitIdx].playerUnit = newUnitObj.GetComponent<UnitController>();
-			lanes[unitIdx].playerUnit.parentActor = playerActor;
+            if (battleSlots[unitIdx].payload)
+            {
+				GameObject newUnitObj = Instantiate(battleSlots[unitIdx].payload, lanes[unitIdx].playerUnitPosition.position, lanes[unitIdx].playerUnitPosition.rotation);
+				lanes[unitIdx].playerUnit = newUnitObj.GetComponent<UnitController>();
+				lanes[unitIdx].playerUnit.parentActor = playerActor;
+			}
+
 		}
 
 	}
