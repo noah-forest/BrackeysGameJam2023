@@ -1,17 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+public delegate bool SlotDropPrecheck(Slot oldSlot, Slot newSlot);
+
 public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler, IDragHandler, IEndDragHandler
 {
-    public UnityEvent<GameObject, GameObject> itemUpdatedEvent;
-    public UnityEvent dragStarted;
-    public UnityEvent dragStopped;
     public static Slot currentlyOverSlot;
+
+    private List<SlotDropPrecheck> slotDropPrechecks = new();
+    
     public GameObject _payload;
 
     protected Transform spriteDraggingRepresentation;
@@ -28,7 +31,6 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
             
             GameObject old = this.payload;
             this._payload = value;
-            itemUpdatedEvent.Invoke(old, value);
             Render();
         }
     }
@@ -36,6 +38,11 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
     private void Start()
     {
         Render();
+    }
+
+    public void AddDropPrecheck(SlotDropPrecheck precheck)
+    {
+        slotDropPrechecks.Add(precheck);
     }
 
     public Transform CreateSpriteObject()
@@ -117,13 +124,23 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
         if (payload != null && currentlyOverSlot != null && currentlyOverSlot != this)
         {
-            // Swaps currentlyOverSlot current item and this.payload
-            (payload, currentlyOverSlot.payload) = (currentlyOverSlot.payload, payload);
+            SwapSlots(currentlyOverSlot);
             currentlyOverSlot = null;
         }
         else
         {
             Render();
+        }
+    }
+
+    private void SwapSlots(Slot newSlot)
+    {
+        bool oldSlotPassed = slotDropPrechecks.TrueForAll(check => check(this, newSlot));
+        bool newSlotPassed = newSlot.slotDropPrechecks.TrueForAll(check => check(this, newSlot));
+
+        if (oldSlotPassed && newSlotPassed)
+        {
+            (this.payload, newSlot.payload) = (newSlot.payload, payload);
         }
     }
 
