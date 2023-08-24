@@ -8,6 +8,7 @@ public class MouseUtils : MonoBehaviour
 	public Texture2D defaultCursor;
 	public Texture2D hoverCursor;
 	public Texture2D dragCursor;
+	public Texture2D hoverDragCursor;
 
 	#region singleton
 
@@ -66,6 +67,12 @@ public class MouseUtils : MonoBehaviour
 		// set drag cursor
 		Vector2 cursorOffset = new Vector2(dragCursor.width / 2, dragCursor.height / 2);
 		Cursor.SetCursor(dragCursor, cursorOffset, CursorMode.Auto);
+	}
+	
+	public void SetHoverDragCursor()
+	{
+		Vector2 cursorOffset = new Vector2(hoverDragCursor.width / 2, hoverDragCursor.height / 2);
+		Cursor.SetCursor(hoverDragCursor, cursorOffset, CursorMode.Auto);
 	}
 	
 	public void SetHoverCursor()

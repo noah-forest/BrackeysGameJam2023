@@ -17,8 +17,12 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
     
     public GameObject _payload;
 
+    public MouseUtils mouseUtils;
+    
     protected Transform spriteDraggingRepresentation;
 
+    private bool isDragged;
+    
     public GameObject payload
     {
         get => _payload;
@@ -37,6 +41,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
     private void Start()
     {
+        mouseUtils = MouseUtils.singleton;
         OnPayloadChanged();
     }
 
@@ -85,6 +90,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
         {
             spriteDraggingRepresentation = CreateSpriteObject();
             spriteDraggingRepresentation.position = Input.mousePosition;
+            mouseUtils.SetDragCursor();
+            isDragged = true;
         }
     }
 
@@ -99,11 +106,13 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
     protected void OnMouseEnter()
     {
+        mouseUtils.SetHoverDragCursor();
         currentlyOverSlot = this;
     }
 
     protected void OnMouseExit()
     {
+        if(!isDragged) mouseUtils.SetToDefaultCursor();
         if (currentlyOverSlot == this)
         {
             currentlyOverSlot = null;
@@ -119,6 +128,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
         if (spriteDraggingRepresentation)
         {
+            mouseUtils.SetToDefaultCursor();
+            isDragged = false;
             Destroy(spriteDraggingRepresentation.parent.gameObject);
         }
 
