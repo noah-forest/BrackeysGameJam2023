@@ -10,18 +10,22 @@ using UnityEngine.Serialization;
 public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 	public bool playerOwned;
-
+	private ParticleSystem digParticle;
 	public UnityEvent graveDug;
 	private bool inGrave;
 	private int currentDigCount;
-
+	
 	private MouseUtils mouseUtils;
 	
 	private int digCount;
 	private float digSpeed = 0.40f; //used by enemy 
+	public Sprite[] digLevelSprites;
+	private SpriteRenderer sprite;
 
 	private void Start()
 	{
+		digParticle = GetComponent<ParticleSystem>();
+		sprite = GetComponent<SpriteRenderer>();
 		mouseUtils = MouseUtils.singleton;
 	}
 
@@ -34,6 +38,7 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
 			StartCoroutine(EnemyDig());
         }
+		sprite.sprite = digLevelSprites[digLevelSprites.Length-1];
 	}
 
 	public void Dig()
@@ -41,12 +46,18 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		
 		if(!inGrave) return;
 		currentDigCount++;
-        
+
+		int spriteInterp = (int)Mathf.Lerp(4, 1, (float)(currentDigCount) / (float)digCount);
+
 		if (currentDigCount >= digCount)
 		{
 			inGrave = false;
+			spriteInterp = 0;
 			graveDug.Invoke();
 		}
+		digParticle.Play();
+
+		sprite.sprite = digLevelSprites[spriteInterp];
 	}
 	
 	void OnMouseDown() // when collider is clicked by player
