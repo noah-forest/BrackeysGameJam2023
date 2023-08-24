@@ -117,6 +117,7 @@ public class GameManager : MonoBehaviour
 
 	public void playerDied()
 	{
+		--Lives;
 		if (Lives > 0)
 		{
 			battleLostEvent.Invoke();
