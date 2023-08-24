@@ -59,6 +59,7 @@ public class UnitController : MonoBehaviour
     {
         if (health.isDead) return;	
         if (isAttacking) return;
+        if (!unitAttacker.targetUnit) return;
         StartCoroutine(AttackLoop());
     }
 

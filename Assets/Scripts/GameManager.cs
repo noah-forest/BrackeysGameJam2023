@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 
@@ -22,24 +23,61 @@ public class GameManager : MonoBehaviour
 	}
 	#endregion
 
-	public GameObject gameOverUi;
+	public UnityEvent goldChangedEvent;
+	public UnityEvent livesChangedEvent;
+	public UnityEvent battleWonEvent;
+	public UnityEvent battleLostEvent;
+	public UnityEvent gameOverEvent;
 
-	//[HideInInspector]
+    #region Lives and Gold properties
+    /// <summary>
+    ///dont use this variable, use Gold
+    /// </summary>
+    private int _internalGold;
+	public int Gold
+    {
+		get => _internalGold;
+		set
+        {
+			goldChangedEvent.Invoke();
+			_internalGold = value;
+		}
+    }
+
+	/// <summary>
+	///dont use this variable, use Lives
+	/// </summary>
+	private int _internalLives;
+	public int Lives
+	{
+		get => _internalLives;
+		set
+		{
+			livesChangedEvent.Invoke();
+			_internalLives = value;
+		}
+	}
+	[HideInInspector]
 	public List<GameObject> allUnitPrfabs;
+    #endregion
 
-
+    private int battleReward = 3;
 
 	public Actor playerActor;
 	public Actor enemyActor;
 	public List<BattleLane> lanes;
 
 	public int amountOfBattlesBeforeShop = 2;
-	public int amountOfBattlesCur;
+	public int amountOfBattlesCur = 0;
 
 	public bool resolved;
+	public bool isPaused { private set; get; }
+	public UnityEvent pauseGame;
+	public UnityEvent resumeGame;
 
 	private void Start()
 	{
+		Lives = 3;
 		Reset();
 		LoadResources();
 
@@ -47,54 +85,85 @@ public class GameManager : MonoBehaviour
 
         playerActor.GetComponent<Health>().died.AddListener(playerDied);
         enemyActor.GetComponent<Health>().died.AddListener(enemyDied);
+
+		pauseGame.AddListener(PauseGame);
+		resumeGame.AddListener(UnPauseGame);
     }
 
+	void PauseGame()
+    {
+		isPaused = true;
+		Time.timeScale = 0;
+    }
+
+	void UnPauseGame()
+    {
+		isPaused = false;
+		Time.timeScale = 1;
+	}
 	
 
 	public void enemyDied()
 	{
-		Debug.Log("You won!");
+		battleWonEvent.Invoke();
+		Gold += battleReward;
+		pauseGame.Invoke();
 		/*TODO 
 		 * show win UI
 		 * play enemy death animation
 		 * play battle transition
 		*/
-		++amountOfBattlesCur;
-		if(amountOfBattlesCur < amountOfBattlesBeforeShop)
-        {
-			StartNextBattle();
-        }
-        else
-        {
-			amountOfBattlesCur = 0;
-			//load shop
-        }
 	}
 
 	public void playerDied()
 	{
-		gameOverUi.SetActive(true);
+		if (Lives > 0)
+		{
+			battleLostEvent.Invoke();
+		}
+		else
+		{
+			gameOverEvent.Invoke();
+		}
+		pauseGame.Invoke();
 	}
+	
+	public void NextBattleButton()
+    {
+		++amountOfBattlesCur;
+		if (amountOfBattlesCur < amountOfBattlesBeforeShop)
+		{
+			// play transition animation
+			StartNextBattle();
+		}
+		else
+		{
+			amountOfBattlesCur = 0;
+			LoadShop();
+		}
+    }
 
-	public void ReloadScene()
-	{
-		SceneManager.LoadScene(0);
-		Reset();
-		StartNextBattle();
-	}
+	/// <summary>
+	/// 1 is shop atm 8/23, if this stops working, the shop scene probably changed in the build settings
+	/// </summary>
+	public void LoadShop()
+    {
+		SceneManager.LoadScene(1); 
+    }
 
 	private void Reset()
 	{
-		gameOverUi.SetActive(false);
 		resolved = false;
 	}
 
+	
 
 	/// <summary>
 	/// delete the old enemy units and then load a random enemy unit for each lane and assign targets and graves to all units
 	/// </summary>
 	void StartNextBattle()
     {
+		resumeGame.Invoke();
 		//assigng target units to opposing units, and assign units to their graves
 		foreach(BattleLane lane in lanes)
         {
