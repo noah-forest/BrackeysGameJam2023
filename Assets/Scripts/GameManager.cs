@@ -39,8 +39,8 @@ public class GameManager : MonoBehaviour
 		get => _internalGold;
 		set
         {
-			goldChangedEvent.Invoke();
 			_internalGold = value;
+			goldChangedEvent.Invoke();
 		}
     }
 
@@ -53,15 +53,15 @@ public class GameManager : MonoBehaviour
 		get => _internalLives;
 		set
 		{
-			livesChangedEvent.Invoke();
 			_internalLives = value;
+			livesChangedEvent.Invoke();
 		}
 	}
 	[HideInInspector]
 	public List<GameObject> allUnitPrfabs;
     #endregion
 
-    private int battleReward = 3;
+    public int battleReward = 3;
 
 	public Actor playerActor;
 	public Actor enemyActor;
@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
 
 	private void Start()
 	{
+		Gold = 1;
 		Lives = 3;
 		Reset();
 		LoadResources();
