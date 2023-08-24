@@ -11,6 +11,8 @@ public class ShopController : MonoBehaviour
 	public List<GameObject> unitPos = new List<GameObject>();
 
 	public LootTable lootTable;
+
+	public MouseUtils mouseUtils;
 	
 	private List<GameObject> shopWindows = new List<GameObject>();
 	private GameObject prefab;
@@ -20,6 +22,7 @@ public class ShopController : MonoBehaviour
 	
 	private void Start()
 	{
+		mouseUtils = MouseUtils.singleton;
 		PopulateShopUnits();
 	}
 	
@@ -42,8 +45,9 @@ public class ShopController : MonoBehaviour
 		for (int i = 0; i < unitPos.Count; i++)
 		{
 			SetShopItems();
-			shopWindow = Instantiate(prefab, unitPos[i].transform) as GameObject;
+			shopWindow = Instantiate(prefab, unitPos[i].transform);
 			shopWindows.Add(shopWindow);	// add it to a list of instantiated objects
+			mouseUtils.FindButtonsInScene();
 		}	
 	}
 	
@@ -76,6 +80,6 @@ public class ShopController : MonoBehaviour
 		SetUnitInfo setUnitInfo = prefab.GetComponent<SetUnitInfo>();
         
 		setUnitInfo.unitName.SetText(shopItems[unitIndex].name);
-		setUnitInfo.unitCost.SetText("5");
+		setUnitInfo.unitCost.SetText("3");
 	}
 }

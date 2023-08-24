@@ -41,7 +41,7 @@ public class MouseUtils : MonoBehaviour
         FindButtonsInScene();
 	}
 
-	private void FindButtonsInScene()
+	public void FindButtonsInScene()
 	{
 		buttons = FindObjectsOfType<Button>();
 		
