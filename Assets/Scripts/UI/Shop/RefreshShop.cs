@@ -7,20 +7,25 @@ using UnityEngine.UI;
 public class RefreshShop : MonoBehaviour
 {
     public ShopController shopController;
-
+    public GameManager gameManager;
+    
     public LockShop lockShop;
     
     private Button button;
     private void Start()
     {
+        gameManager = GameManager.singleton;
+        
         button = GetComponent<Button>();
         button.onClick.AddListener(RefreshShopUnits);
     }
 
     private void RefreshShopUnits()
     {
+        if (gameManager.Gold <= 0) return;
         if (!lockShop.locked)
         {
+            gameManager.Gold--;
             shopController.PopulateShopUnits();
         }
         else
