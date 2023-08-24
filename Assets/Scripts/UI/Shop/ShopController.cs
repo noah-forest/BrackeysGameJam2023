@@ -10,8 +10,10 @@ public class ShopController : MonoBehaviour
 	public List<ShopItem> shopItems = new List<ShopItem>();
 	public List<GameObject> unitPos = new List<GameObject>();
 
+
 	public LootTable lootTable;
 
+	[HideInInspector]
 	public MouseUtils mouseUtils;
 	
 	private List<GameObject> shopWindows = new List<GameObject>();

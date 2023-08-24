@@ -17,6 +17,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
     
     public GameObject _payload;
 
+    [HideInInspector]
     public MouseUtils mouseUtils;
     
     protected Transform spriteDraggingRepresentation;

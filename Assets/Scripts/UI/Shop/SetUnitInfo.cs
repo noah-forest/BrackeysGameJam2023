@@ -8,6 +8,5 @@ public class SetUnitInfo : MonoBehaviour
 {
 	public TextMeshProUGUI unitName;
 	public TextMeshProUGUI unitCost;
-	public GameObject label;
-
+	public GameObject purchased;
 }
