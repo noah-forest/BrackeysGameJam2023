@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Collider2D))]
 public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -21,10 +22,14 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	private float digSpeed = 0.40f; //used by enemy 
 	public Sprite[] digLevelSprites;
 	private SpriteRenderer sprite;
+	AudioSource audSource;
+	public AudioClip digSound;
+	public AudioClip finalDigSound;
 
 	private void Start()
 	{
 		digParticle = GetComponent<ParticleSystem>();
+		audSource = GetComponent<AudioSource>();
 		sprite = GetComponent<SpriteRenderer>();
 		mouseUtils = MouseUtils.singleton;
 	}
@@ -47,7 +52,7 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		if(!inGrave) return;
 		currentDigCount++;
 
-		int spriteInterp = (int)Mathf.Lerp(4, 1, (float)(currentDigCount) / (float)digCount);
+		int spriteInterp = (int)Mathf.Lerp(digLevelSprites.Length, 1, (float)(currentDigCount) / (float)digCount);
 
 		if (currentDigCount >= digCount)
 		{
@@ -56,10 +61,30 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 			graveDug.Invoke();
 		}
 		digParticle.Play();
-
 		sprite.sprite = digLevelSprites[spriteInterp];
+		PlayDigSound();
 	}
 	
+	void PlayDigSound()
+    {
+		if (digCount == currentDigCount)
+        {
+			audSource.volume = playerOwned ? 0.3f : 0.05f;
+			audSource.pitch = 1.5f;
+			audSource.clip = finalDigSound;
+        }
+        else
+        {
+			audSource.volume = playerOwned ? 1 : 0.35f;
+			audSource.clip = digSound;
+			audSource.pitch = 1;
+			audSource.pitch -= 0.03f * currentDigCount;
+		}
+		audSource.pitch += Random.Range(-0.01f, 0.01f);
+		audSource.Play();
+
+	}
+
 	void OnMouseDown() // when collider is clicked by player
 	{
         if (playerOwned) Dig(); // enemies cannot be dug
