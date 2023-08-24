@@ -127,7 +127,6 @@ public class UnitController : MonoBehaviour, ISlotItem
     {
         if (unitGrave)
         {
-            Debug.Log($"{gameObject.name} has entered its grave");
             unitGrave.ActivateGrave(unitStats.digCount);
             // go to grave
             for (int i = 0; i < transform.childCount; i++)
@@ -142,7 +141,6 @@ public class UnitController : MonoBehaviour, ISlotItem
     {
         health.Revive();
         isAttacking = false;
-        Debug.Log("Respawned");
         for(int i = 0; i < transform.childCount; i++)
         {
             GameObject Go = transform.GetChild(i).gameObject;

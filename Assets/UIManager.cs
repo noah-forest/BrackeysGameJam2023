@@ -20,20 +20,22 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         gameManager = GameManager.singleton;
-        gameManager.goldChangedEvent.AddListener(UpdateGoldtext);
+        gameManager.goldChangedEvent.AddListener(UpdateGoldText);
         gameManager.livesChangedEvent.AddListener(UpdateLivesText);
         gameManager.battleWonEvent.AddListener(ShowBattleWonScreen);
         gameManager.battleLostEvent.AddListener(ShowBattleLostScreen);
         gameManager.gameOverEvent.AddListener(ShowGameOverScreen);
         shopButton.GetComponent<Button>().onClick.AddListener(HideBattleOverScreen);
         nextBattleButton.GetComponent<Button>().onClick.AddListener(HideBattleOverScreen);
+        UpdateGoldText();
+        UpdateLivesText();
     }
     private void HideBattleOverScreen()
     {
         battleOverScreen.SetActive(false);
     }
 
-    private void UpdateGoldtext()
+    private void UpdateGoldText()
     {
         goldUI.text = gameManager.Gold.ToString();
     }
