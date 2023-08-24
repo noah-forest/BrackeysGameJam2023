@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlotUnitRenderer : MonoBehaviour, ISlotRenderer
+public class SlotUnitRenderer : MonoBehaviour, ISlotPayloadChangeHandler, ISlotEndDragHandler, ISlotStartDragHandler
 {
     private GameObject spawnedUnit = null;
-    public void RenderSlot(GameObject payload)
+    public void SlotPayloadChanged(GameObject payload)
     {
         if (spawnedUnit)
         {

@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SlotImageRenderer : MonoBehaviour, ISlotRenderer
+public class SlotImageRenderer : MonoBehaviour, ISlotPayloadChangeHandler, ISlotEndDragHandler, ISlotStartDragHandler
 {
     private Image _image;
     private Image image
@@ -20,7 +20,7 @@ public class SlotImageRenderer : MonoBehaviour, ISlotRenderer
         }
     }
 
-    public void RenderSlot(GameObject payload)
+    public void SlotPayloadChanged(GameObject payload)
     {
         if (payload != null)
         {

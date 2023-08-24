@@ -31,13 +31,13 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
             
             GameObject old = this.payload;
             this._payload = value;
-            Render();
+            OnPayloadChanged();
         }
     }
 
     private void Start()
     {
-        Render();
+        OnPayloadChanged();
     }
 
     public void AddDropPrecheck(SlotDropPrecheck precheck)
@@ -66,17 +66,17 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
         return renderer?.GetSlotSprite();
     }
 
-    protected void Render()
+    protected void OnPayloadChanged()
     {
-        foreach (ISlotRenderer renderer in gameObject.GetComponentsInChildren<ISlotRenderer>())
+        foreach (ISlotPayloadChangeHandler renderer in gameObject.GetComponentsInChildren<ISlotPayloadChangeHandler>())
         {
-            renderer.RenderSlot(payload);
+            renderer.SlotPayloadChanged(payload);
         }
     }
 
     protected void OnMouseDown()
     {
-        foreach (ISlotRenderer renderer in gameObject.GetComponentsInChildren<ISlotRenderer>())
+        foreach (ISlotStartDragHandler renderer in gameObject.GetComponentsInChildren<ISlotStartDragHandler>())
         {
             renderer.SlotDragStarted(payload);
         }
@@ -112,7 +112,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
     protected void OnMouseUp()
     {
-        foreach (ISlotRenderer renderer in gameObject.GetComponentsInChildren<ISlotRenderer>())
+        foreach (ISlotEndDragHandler renderer in gameObject.GetComponentsInChildren<ISlotEndDragHandler>())
         {
             renderer.SlotDragEnded(payload);
         }
@@ -129,7 +129,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
         }
         else
         {
-            Render();
+            OnPayloadChanged();
         }
     }
 
