@@ -20,6 +20,15 @@ public class RefreshShop : MonoBehaviour
         button.onClick.AddListener(RefreshShopUnits);
     }
 
+    private void OnEnable()
+    {
+        if (!shopController) return;
+        if (!lockShop.locked)
+        {
+            shopController.PopulateShopUnits();
+        }
+    }
+
     private void RefreshShopUnits()
     {
         if (gameManager.Gold <= 0) return;

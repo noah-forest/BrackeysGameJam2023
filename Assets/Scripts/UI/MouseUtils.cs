@@ -40,29 +40,8 @@ public class MouseUtils : MonoBehaviour
 	void Start()
 	{
 		mouseUtils = MouseUtils.singleton;
-        //FindButtonsInScene();
 	}
-
-	public void FindButtonsInScene()
-	{
-		buttons = FindObjectsOfType<Button>();
-		
-		EventTrigger.Entry entry = new EventTrigger.Entry();
-		entry.eventID = EventTriggerType.PointerEnter;
-		entry.callback.AddListener(functionToCall => SetHoverCursor());
-		
-		EventTrigger.Entry exit = new EventTrigger.Entry();
-		exit.eventID = EventTriggerType.PointerExit;
-		exit.callback.AddListener(functionToCall => SetToDefaultCursor());
-
-		for (int i = 0; i < buttons.Length; i++)
-		{
-			trigger = buttons[i].AddComponent<EventTrigger>();
-			trigger.triggers.Add(entry);
-			trigger.triggers.Add(exit);
-		}
-	}
-	
+    
 	public void SetDragCursor()
 	{
 		// set drag cursor

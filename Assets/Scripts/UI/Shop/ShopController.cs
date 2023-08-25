@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -5,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class ShopController : MonoBehaviour
 {
@@ -59,7 +61,12 @@ public class ShopController : MonoBehaviour
 		
 		PopulateShopUnits();
 	}
-	
+
+	private void OnEnable()
+	{
+		
+	}
+
 	/// <summary>
 	/// Populates the shop with units
 	/// </summary>
@@ -81,8 +88,6 @@ public class ShopController : MonoBehaviour
 			GameObject window = SetShopItems(unitPos[i].transform);
 			shopWindows.Add(shopWindow);	// add it to a list of instantiated objects
 		}
-		
-		mouseUtils.FindButtonsInScene();
 	}
 	
 	// loop through the SOs and their prefabs to set certain information

@@ -75,6 +75,8 @@ public class GameManager : MonoBehaviour
 	public List<Slot> playerBattleSlots = new List<Slot>();
 	bool playerUnitsLoaded;
 
+	public GameObject HUD;
+	
 	[SerializeField] GameObject battleField;
 
 	public Actor playerActor;
@@ -85,16 +87,21 @@ public class GameManager : MonoBehaviour
 	public int amountOfBattlesBeforeShop = 2;
 	public int amountOfBattlesCur = 0;
 
+	[HideInInspector] public MouseUtils mouseUtils;
+	
 	public bool isPaused { private set; get; }
 	public UnityEvent pauseGame;
 	public UnityEvent resumeGame;
 
+	private bool inShop;
+	
 	private void Start()
 	{
+		mouseUtils = MouseUtils.singleton;
+		
 		Gold = 10;
 		Lives = 3;
 		LoadResources();
-		StartNextBattle();
 
         playerActor.GetComponent<Health>().died.AddListener(PlayerDied);
         enemyActor.GetComponent<Health>().died.AddListener(EnemyDied);
@@ -119,7 +126,7 @@ public class GameManager : MonoBehaviour
 	public void EnemyDied()
 	{
 		battleWonEvent.Invoke();
-		Gold += battleReward;
+		//Gold += battleReward;
 		pauseGame.Invoke();
 		/*TODO 
 		 * show win UI
@@ -128,6 +135,15 @@ public class GameManager : MonoBehaviour
 		*/
 	}
 
+	public void StartGame()
+	{
+		SceneManager.LoadScene("battle");
+		LoadShop();
+		mouseUtils.SetToDefaultCursor();
+		inShop = true;
+		HUD.SetActive(true);
+	}
+	
 	public void PlayerDied()
 	{
 		--Lives;
@@ -143,8 +159,14 @@ public class GameManager : MonoBehaviour
 	}
 	
 	public void NextBattleButton()
-    {
-		if (amountOfBattlesCur < amountOfBattlesBeforeShop)
+	{
+		if (inShop)
+		{
+			// play transition animation
+			StartNextBattle();
+			++amountOfBattlesCur;
+		}
+		else if (amountOfBattlesCur < amountOfBattlesBeforeShop)
 		{
 			// play transition animation
 			StartNextBattle();
@@ -152,6 +174,7 @@ public class GameManager : MonoBehaviour
 		}
 		else
 		{
+			Debug.Log("loading shop");
 			LoadShop();
 		}
     }
@@ -165,6 +188,7 @@ public class GameManager : MonoBehaviour
 		HideBattlefield();
 		playerUnitsLoaded = false;
 		shopTransitionEvent.Invoke();
+		Gold = 10;
 		foreach(Slot slot in playerBattleSlots)
         {
 			slot.gameObject.SetActive(true);
@@ -173,6 +197,7 @@ public class GameManager : MonoBehaviour
 
 	void StartNextBattle()
     {
+	    mouseUtils.SetToDefaultCursor();
 		resumeGame.Invoke();
 		battleStartedEvent.Invoke();
 		ShowBattlfield();
