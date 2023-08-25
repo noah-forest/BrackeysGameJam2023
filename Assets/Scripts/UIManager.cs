@@ -15,6 +15,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI livesStatusText;
     [SerializeField] TextMeshProUGUI battleRemainingStatusText;
     
+    public List<GameObject> unitBars = new();
+    
     GameManager gameManager;
     [SerializeField] GameObject shopUi;
 
@@ -82,11 +84,19 @@ public class UIManager : MonoBehaviour
 
     private void ShowShop()
     {
+        for (int i = 0; i < unitBars.Count; i++)
+        {
+            unitBars[i].SetActive(false);
+        }
         shopUi.SetActive(true);
     }
     private void HideShop()
     {
         shopUi.SetActive(false);
+        for (int i = 0; i < unitBars.Count; i++)
+        {
+            unitBars[i].SetActive(true);
+        }
     }
 
     private void LoadStatusText()

@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
 	public bool isPaused { private set; get; }
 	public UnityEvent pauseGame;
 	public UnityEvent resumeGame;
-
+	
 	private bool inShop;
 	
 	private void Start()
