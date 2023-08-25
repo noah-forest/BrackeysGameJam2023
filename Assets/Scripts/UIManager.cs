@@ -15,7 +15,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI battleRemainingStatusText;
 
     GameManager gameManager;
-
+    [SerializeField] GameObject shopUi;
 
     private void Start()
     {
@@ -27,6 +27,8 @@ public class UIManager : MonoBehaviour
         gameManager.gameOverEvent.AddListener(ShowGameOverScreen);
         shopButton.GetComponent<Button>().onClick.AddListener(HideBattleOverScreen);
         nextBattleButton.GetComponent<Button>().onClick.AddListener(HideBattleOverScreen);
+        gameManager.shopTransitionEvent.AddListener(ShowShop);
+        gameManager.battleStartedEvent.AddListener(HideShop);
         UpdateGoldText();
         UpdateLivesText();
     }
@@ -74,6 +76,16 @@ public class UIManager : MonoBehaviour
             nextBattleButton.SetActive(true);
             shopButton.SetActive(false);
         }
+    }
+
+
+    private void ShowShop()
+    {
+        shopUi.SetActive(true);
+    }
+    private void HideShop()
+    {
+        shopUi.SetActive(false);
     }
 
     private void LoadStatusText()
