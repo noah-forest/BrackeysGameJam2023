@@ -13,8 +13,7 @@ public class ShopController : MonoBehaviour
 
 	public GameObject sellWindow;
 
-	public LootTable lootTable;
-
+	[HideInInspector]
 	public GameManager gameManager;
 	
 	[HideInInspector]
