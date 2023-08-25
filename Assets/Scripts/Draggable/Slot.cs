@@ -8,12 +8,16 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public delegate bool SlotDropPrecheck(Slot oldSlot, Slot newSlot);
+public delegate bool SlotRetrievePrecheck(Slot oldSlot, Slot newSlot);
 
 public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler, IDragHandler, IEndDragHandler
 {
     public static Slot currentlyOverSlot;
     public static DragVisual _dragVisual;
 
+    public UnityEvent dragStarted;
+    public UnityEvent dragStopped;
+    
     public static DragVisual dragVisual
     {
         get
@@ -29,6 +33,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
     }
 
     private List<SlotDropPrecheck> slotDropPrechecks = new();
+    private List<SlotRetrievePrecheck> slotRetrievePrechecks = new();
     
     public GameObject _payload;
 
@@ -64,6 +69,11 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
     public void AddDropPrecheck(SlotDropPrecheck precheck)
     {
         slotDropPrechecks.Add(precheck);
+    }
+    
+    public void AddRetrievePrecheck(SlotRetrievePrecheck precheck)
+    {
+        slotRetrievePrechecks.Add(precheck);
     }
 
     public Transform CreateSpriteObject()
@@ -107,6 +117,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
             dragVisual.SetSprite(GetSpriteForDragging());
             dragVisual.SnapTo(Input.mousePosition);
             dragVisual.DragStarted();
+            dragStarted.Invoke();
             mouseUtils.SetDragCursor();
             isDragged = true;
         }
@@ -142,6 +153,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
         dragVisual.DragStopped();
         mouseUtils.SetToDefaultCursor();
+        dragStopped.Invoke();
         isDragged = false;
 
         if (payload != null && currentlyOverSlot != null && currentlyOverSlot != this)
@@ -155,14 +167,14 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
         }
     }
 
-    private void SwapSlots(Slot newSlot)
+    private void SwapSlots(Slot draggedToSlot)
     {
-        bool oldSlotPassed = slotDropPrechecks.TrueForAll(check => check(this, newSlot));
-        bool newSlotPassed = newSlot.slotDropPrechecks.TrueForAll(check => check(this, newSlot));
+        bool oldSlotPassed = slotRetrievePrechecks.TrueForAll(check => check(this, draggedToSlot));
+        bool draggedToSlotPassed = draggedToSlot.slotDropPrechecks.TrueForAll(check => check(this, draggedToSlot));
 
-        if (oldSlotPassed && newSlotPassed)
+        if (draggedToSlotPassed && oldSlotPassed)
         {
-            (this.payload, newSlot.payload) = (newSlot.payload, payload);
+            (this.payload, draggedToSlot.payload) = (draggedToSlot.payload, payload);
         }
     }
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,6 +14,8 @@ public class ShopController : MonoBehaviour
 
 	public LootTable lootTable;
 
+	public GameManager gameManager;
+	
 	[HideInInspector]
 	public MouseUtils mouseUtils;
 	
@@ -24,6 +27,7 @@ public class ShopController : MonoBehaviour
 	
 	private void Start()
 	{
+		gameManager = GameManager.singleton;
 		mouseUtils = MouseUtils.singleton;
 		PopulateShopUnits();
 	}
@@ -46,8 +50,7 @@ public class ShopController : MonoBehaviour
 		// loop through the unit positions and place a new shop item there
 		for (int i = 0; i < unitPos.Count; i++)
 		{
-			SetShopItems();
-			shopWindow = Instantiate(prefab, unitPos[i].transform);
+			GameObject window = SetShopItems(unitPos[i].transform);
 			shopWindows.Add(shopWindow);	// add it to a list of instantiated objects
 		}
 		
@@ -55,34 +58,50 @@ public class ShopController : MonoBehaviour
 	}
 	
 	// loop through the SOs and their prefabs to set certain information
-	private void SetShopItems()
+	private GameObject SetShopItems(Transform parent)
 	{
 		for (int i = 0; i < shopItems.Count; i++)
 		{
 			unitIndex = Random.Range(0, shopItems.Count);
 		}
-        
-		/* rarity is not working rn 
-		switch (lootTable.GetRarity().rarityName)
-		{
-			case "Common":
-				if (shopItems[unitIndex].rarity != "Common") return;
-				break;
-			case "Rare":
-				if (shopItems[unitIndex].rarity != "Rare") return;
-				break;
-			case "Epic":
-				if (shopItems[unitIndex].rarity != "Epic") return;
-				break;
-			case "Legendary":
-				if (shopItems[unitIndex].rarity != "Legendary") return;
-				break;
-		} */
 		
 		prefab = shopItems[unitIndex].prefab;
-		SetUnitInfo setUnitInfo = prefab.GetComponent<SetUnitInfo>();
-        
+		shopWindow = Instantiate(prefab, parent);
+		
+		SetUnitInfo setUnitInfo = shopWindow.GetComponent<SetUnitInfo>();
+		Slot unitSlot = shopWindow.GetComponent<Slot>();
+		
+		unitSlot.AddDropPrecheck((slot, shopSlot) => {
+			if (slot.payload != null)
+			{
+				// sold the unit
+				slot.payload = null;
+				gameManager.Gold += 2;
+			}
+			return false;
+		});
+		
+		unitSlot.AddRetrievePrecheck((shopSlot, newSlot) =>
+		{
+			if (newSlot.payload != null)
+			{
+				return false;
+			};
+			
+			if (gameManager.Gold >= 3)
+			{
+				// bought the unit
+				setUnitInfo.purchased.gameObject.SetActive(true);
+				gameManager.Gold -= 3;
+				return true;
+			}
+			
+			return false;
+		});
+		
 		setUnitInfo.unitName.SetText(shopItems[unitIndex].name);
 		setUnitInfo.unitCost.SetText("3");
+
+		return shopWindow;
 	}
 }
