@@ -11,6 +11,7 @@ public class ShopController : MonoBehaviour
 	public List<ShopItem> shopItems = new List<ShopItem>();
 	public List<GameObject> unitPos = new List<GameObject>();
 
+	public GameObject sellWindow;
 
 	public LootTable lootTable;
 
@@ -29,6 +30,34 @@ public class ShopController : MonoBehaviour
 	{
 		gameManager = GameManager.singleton;
 		mouseUtils = MouseUtils.singleton;
+		Slot.anyDragStarted.AddListener(arg0 =>
+		{
+			if (arg0.CompareTag("BattleSlot") || arg0.CompareTag("ReserveSlot"))
+			{
+				sellWindow.SetActive(true);
+			}
+		});
+		
+		Slot.anyDragStopped.AddListener(arg0 =>
+		{
+			if (arg0.CompareTag("BattleSlot") || arg0.CompareTag("ReserveSlot"))
+			{
+				sellWindow.SetActive(false);
+			}
+		});
+		
+		Slot unitSlot = sellWindow.GetComponent<Slot>();
+		
+		unitSlot.AddDropPrecheck((slot, shopSlot) => {
+			if (slot.payload != null)
+			{
+				// sold the unit
+				slot.payload = null;
+				gameManager.Gold += 2;
+			}
+			return false;
+		});
+		
 		PopulateShopUnits();
 	}
 	
@@ -69,17 +98,8 @@ public class ShopController : MonoBehaviour
 		shopWindow = Instantiate(prefab, parent);
 		
 		SetUnitInfo setUnitInfo = shopWindow.GetComponent<SetUnitInfo>();
-		Slot unitSlot = shopWindow.GetComponent<Slot>();
 		
-		unitSlot.AddDropPrecheck((slot, shopSlot) => {
-			if (slot.payload != null)
-			{
-				// sold the unit
-				slot.payload = null;
-				gameManager.Gold += 2;
-			}
-			return false;
-		});
+		Slot unitSlot = shopWindow.GetComponent<Slot>();
 		
 		unitSlot.AddRetrievePrecheck((shopSlot, newSlot) =>
 		{

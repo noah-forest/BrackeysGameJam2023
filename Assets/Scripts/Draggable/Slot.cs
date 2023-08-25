@@ -15,8 +15,10 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
     public static Slot currentlyOverSlot;
     public static DragVisual _dragVisual;
 
-    public UnityEvent dragStarted;
-    public UnityEvent dragStopped;
+    public UnityEvent dragStarted = new();
+    public UnityEvent dragStopped = new();
+    public static UnityEvent<Slot> anyDragStarted = new(); 
+    public static UnityEvent<Slot> anyDragStopped = new();
     
     public static DragVisual dragVisual
     {
@@ -118,6 +120,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
             dragVisual.SnapTo(Input.mousePosition);
             dragVisual.DragStarted();
             dragStarted.Invoke();
+            anyDragStarted.Invoke(this);
             mouseUtils.SetDragCursor();
             isDragged = true;
         }
@@ -154,6 +157,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
         dragVisual.DragStopped();
         mouseUtils.SetToDefaultCursor();
         dragStopped.Invoke();
+        anyDragStopped.Invoke(this);
         isDragged = false;
 
         if (payload != null && currentlyOverSlot != null && currentlyOverSlot != this)
