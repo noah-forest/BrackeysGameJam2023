@@ -12,7 +12,7 @@ public class ShopController : MonoBehaviour
 {
 	public List<ShopItem> shopItems = new List<ShopItem>();
 	public List<GameObject> unitPos = new List<GameObject>();
-
+	
 	public GameObject sellWindow;
 
 	[HideInInspector]
@@ -20,6 +20,8 @@ public class ShopController : MonoBehaviour
 	
 	[HideInInspector]
 	public MouseUtils mouseUtils;
+
+	private ShopAudio shopAudioPlayer;
 	
 	private List<GameObject> shopWindows = new List<GameObject>();
 	private GameObject prefab;
@@ -31,8 +33,12 @@ public class ShopController : MonoBehaviour
 	{
 		gameManager = GameManager.singleton;
 		mouseUtils = MouseUtils.singleton;
+
+		shopAudioPlayer = GetComponent<ShopAudio>();
+		
 		Slot.anyDragStarted.AddListener(arg0 =>
 		{
+			shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[1]);
 			if (arg0.CompareTag("BattleSlot") || arg0.CompareTag("ReserveSlot"))
 			{
 				sellWindow.SetActive(true);
@@ -43,7 +49,12 @@ public class ShopController : MonoBehaviour
 		{
 			if (arg0.CompareTag("BattleSlot") || arg0.CompareTag("ReserveSlot"))
 			{
+				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[2]);
 				sellWindow.SetActive(false);
+			}
+			else
+			{
+				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[0]);
 			}
 		});
 		
@@ -54,6 +65,7 @@ public class ShopController : MonoBehaviour
 			{
 				// sold the unit
 				slot.payload = null;
+				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
 				gameManager.Gold += 2;
 			}
 			return false;
@@ -109,6 +121,7 @@ public class ShopController : MonoBehaviour
 		{
 			if (newSlot.payload != null)
 			{
+				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[0]);
 				return false;
 			};
 			
@@ -117,6 +130,7 @@ public class ShopController : MonoBehaviour
 				// bought the unit
 				setUnitInfo.purchased.gameObject.SetActive(true);
 				gameManager.Gold -= 3;
+				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[2]);
 				return true;
 			}
 			

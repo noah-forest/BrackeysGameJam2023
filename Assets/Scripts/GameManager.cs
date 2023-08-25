@@ -256,7 +256,6 @@ public class GameManager : MonoBehaviour
         {
             if (playerBattleSlots[unitIdx].payload)
             {
-				Debug.Log($" unit to load{playerBattleSlots[unitIdx].payload}, lane pos{ lanes[unitIdx].playerUnitPosition}");
 				GameObject newUnitObj = Instantiate(playerBattleSlots[unitIdx].payload, lanes[unitIdx].playerUnitPosition.position, lanes[unitIdx].playerUnitPosition.rotation);
 				newUnitObj.transform.localScale = new Vector3(-1, 1, 1);
 				newUnitObj.GetComponentInChildren<SpriteRenderer>().flipX = true;

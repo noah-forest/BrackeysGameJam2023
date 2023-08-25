@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +14,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject gameOverScreen;
     [SerializeField] TextMeshProUGUI livesStatusText;
     [SerializeField] TextMeshProUGUI battleRemainingStatusText;
-
+    
     GameManager gameManager;
     [SerializeField] GameObject shopUi;
 

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
+	[HideInInspector]
 	public GameManager gameManager;
 	
 	private void Start()
