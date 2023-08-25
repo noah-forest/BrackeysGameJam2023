@@ -67,18 +67,18 @@ public class GameManager : MonoBehaviour
 	#endregion
 
 	public List<Slot> playerBattleSlots = new List<Slot>();
-	
+	bool playerUnitsLoaded;
 
-    public int battleReward = 3;
+
 
 	public Actor playerActor;
 	public Actor enemyActor;
 	public List<BattleLane> lanes;
 
+	public int battleReward = 3;
 	public int amountOfBattlesBeforeShop = 2;
 	public int amountOfBattlesCur = 0;
 
-	public bool resolved;
 	public bool isPaused { private set; get; }
 	public UnityEvent pauseGame;
 	public UnityEvent resumeGame;
@@ -87,9 +87,7 @@ public class GameManager : MonoBehaviour
 	{
 		Gold = 0;
 		Lives = 3;
-		Reset();
 		LoadResources();
-		LoadPlayerUnitsIntoBattleField();
 		StartNextBattle();
 
         playerActor.GetComponent<Health>().died.AddListener(playerDied);
@@ -158,6 +156,7 @@ public class GameManager : MonoBehaviour
 	/// </summary>
 	public void LoadShop()
     {
+		playerUnitsLoaded = false;
 		SceneManager.LoadScene(1); 
 		foreach(Slot slot in playerBattleSlots)
         {
@@ -165,52 +164,51 @@ public class GameManager : MonoBehaviour
         }
     }
 
-	private void Reset()
-	{
-		resolved = false;
-	}
-
-	
-
-	/// <summary>
-	/// delete the old enemy units and then load a random enemy unit for each lane and assign targets and graves to all units
-	/// </summary>
 	void StartNextBattle()
     {
+		resumeGame.Invoke();
+		if(!playerUnitsLoaded) LoadPlayerUnitsIntoBattle();
+		LoadRandomEnemyTeamIntoBattle();
+		AssignUnitTargets();
+	}
+
+	private void AssignUnitTargets(){
+		foreach(BattleLane lane in lanes)
+        {
+			lane.enemyUnit.unitAttacker.targetUnit = lane.playerUnit;
+			lane.playerUnit.unitAttacker.targetUnit = lane.enemyUnit;
+		}
+    }
+
+	/// <summary>
+	/// deletes the old enemy units if there are any and then loads a random enemy unit for each lane and assign graves to them
+	/// </summary>
+	private void LoadRandomEnemyTeamIntoBattle()
+    {
+		foreach (BattleLane lane in lanes)      //assigng target units to opposing units, and assign units to their graves
+		{
+			if (lane.enemyUnit) Destroy(lane.enemyUnit.gameObject);
+			GameObject newUnitObj = Instantiate(GetRandomUnitObject(), lane.enemyUnitPosition);
+			lane.enemyUnit = newUnitObj.GetComponent<UnitController>();
+			lane.enemyUnit.parentActor = enemyActor;
+			lane.enemyUnit.unitGrave = lane.enemyGrave;
+		}
+		enemyActor.health.Revive();
+	}
+
+	/// <summary>
+	/// spawns the units in the players battleslots into the battlefiled and assign graves to them
+	/// </summary>
+	private void LoadPlayerUnitsIntoBattle()
+    {
+		playerUnitsLoaded = true;
+		//hide battle slots;
 		foreach (Slot slot in playerBattleSlots)
 		{
 			slot.gameObject.SetActive(false);
 		}
-		resumeGame.Invoke();
-		//assigng target units to opposing units, and assign units to their graves
-		foreach(BattleLane lane in lanes)
-        {
-			if(lane.enemyUnit) Destroy(lane.enemyUnit.gameObject);
-			GameObject newUnitObj = Instantiate(GetRandomUnitObject(), lane.enemyUnitPosition);
-			lane.enemyUnit = newUnitObj.GetComponent<UnitController>();
-			lane.enemyUnit.parentActor = enemyActor;
-			lane.enemyUnit.unitAttacker.targetUnit = lane.playerUnit;
-			lane.enemyUnit.unitGrave = lane.enemyGrave;
-			lane.playerUnit.unitAttacker.targetUnit = lane.enemyUnit;
-			lane.playerUnit.unitGrave = lane.playerGrave;
-			
-		}
-		enemyActor.health.Revive();
-    }
-
-	private void LoadResources()
-    {
-		Object[] loadedUnits;
-		loadedUnits = Resources.LoadAll("Unit Prefabs");
-		foreach( var lu  in loadedUnits)
-        {
-			allUnitPrfabs.Add((GameObject)lu);
-        }
-    }
-
-	private void LoadPlayerUnitsIntoBattleField()
-    {
-		for(int unitIdx=0; unitIdx < lanes.Count; unitIdx++)
+		//load units
+		for (int unitIdx=0; unitIdx < lanes.Count; unitIdx++)
         {
             if (playerBattleSlots[unitIdx].payload)
             {
@@ -219,6 +217,7 @@ public class GameManager : MonoBehaviour
 				newUnitObj.GetComponentInChildren<SpriteRenderer>().flipX = true;
 				lanes[unitIdx].playerUnit = newUnitObj.GetComponent<UnitController>();
 				lanes[unitIdx].playerUnit.parentActor = playerActor;
+				lanes[unitIdx].playerUnit.unitGrave = lanes[unitIdx].playerGrave;
 			}
 
 		}
@@ -230,5 +229,13 @@ public class GameManager : MonoBehaviour
 		int unitRoll = Random.Range(0, allUnitPrfabs.Count);
 		return allUnitPrfabs[unitRoll];
     }
-
+	private void LoadResources()
+	{
+		Object[] loadedUnits;
+		loadedUnits = Resources.LoadAll("Unit Prefabs");
+		foreach (var lu in loadedUnits)
+		{
+			allUnitPrfabs.Add((GameObject)lu);
+		}
+	}
 }

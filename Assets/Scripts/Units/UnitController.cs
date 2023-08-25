@@ -104,7 +104,7 @@ public class UnitController : MonoBehaviour, ISlotItem
     private IEnumerator AttackLoop()
     {
         isAttacking = true;
-        while (!health.isDead && !gameManager.resolved)
+        while (!health.isDead)
         {
             yield return new WaitForSeconds(unitStats.attackInterval);
             StartAttack();
