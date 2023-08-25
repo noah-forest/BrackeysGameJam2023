@@ -215,8 +215,9 @@ public class GameManager : MonoBehaviour
             if (playerBattleSlots[unitIdx].payload)
             {
 				GameObject newUnitObj = Instantiate(playerBattleSlots[unitIdx].payload, lanes[unitIdx].playerUnitPosition.position, lanes[unitIdx].playerUnitPosition.rotation);
+				newUnitObj.transform.localScale = new Vector3(-1, 1, 1);
+				newUnitObj.GetComponentInChildren<SpriteRenderer>().flipX = true;
 				lanes[unitIdx].playerUnit = newUnitObj.GetComponent<UnitController>();
-				//lanes[unitIdx].playerUnit.GetComponent<Sprite>
 				lanes[unitIdx].playerUnit.parentActor = playerActor;
 			}
 
