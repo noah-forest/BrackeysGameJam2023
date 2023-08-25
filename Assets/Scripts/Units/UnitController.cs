@@ -22,6 +22,9 @@ public class UnitController : MonoBehaviour, ISlotItem
     public Actor  parentActor;
     public UnityEvent attacked;
 
+    [HideInInspector]
+    public UnityEvent blockedEvent;
+
     private Grave _grave;
     /// <summary>
     /// This is a property that will handle assigning the graveDug event whenever you assign a new grave to a unit
@@ -53,6 +56,8 @@ public class UnitController : MonoBehaviour, ISlotItem
         attacked.AddListener(onUnitAttacked);
 
         health.died.AddListener(OnDeath);
+        blockedEvent.AddListener(unitAnimator.PlayBlock);
+        unitAttacker.critEvent.AddListener(unitAnimator.PlayCrit);
     }
 
     private void Update()
@@ -84,6 +89,7 @@ public class UnitController : MonoBehaviour, ISlotItem
         if (blockRoll < unitStats.blockChance)
         {
             // blocked hit
+            blockedEvent.Invoke();
             blocked = true;
         } // this is seperated out from the follwing 'damage the unit if' as other behavior may rely on block status.
 

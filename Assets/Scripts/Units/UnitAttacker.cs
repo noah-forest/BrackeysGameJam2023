@@ -16,6 +16,7 @@ public class UnitAttacker : MonoBehaviour
 {
 
 	public UnitController targetUnit;
+	public UnityEvent critEvent;
 	UnitStats stats;
 
 
@@ -43,6 +44,7 @@ public class UnitAttacker : MonoBehaviour
 		{
 			// crit hit
 			//crit = true;
+			critEvent.Invoke();
 			damage += stats.attackPower;
 
 		}

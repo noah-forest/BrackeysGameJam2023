@@ -9,10 +9,16 @@ public class UnitAnimator : MonoBehaviour
 {
     private Animator animator;
     public UnityEvent attackHitEvent;
+    public Material blockParticle;
+    public Material critParticle;
+    private ParticleSystem particleSys;
+    private ParticleSystemRenderer particleRenderer;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
+        particleSys = GetComponent<ParticleSystem>();
+        particleRenderer = particleSys.GetComponent<ParticleSystemRenderer>();
     }
 
     public void Attack()
@@ -28,5 +34,17 @@ public class UnitAnimator : MonoBehaviour
     public void Attacked()
     {
         animator.SetTrigger("Damaged");
+    }
+
+    public void PlayCrit()
+    {
+        particleRenderer.material = critParticle;
+        particleSys.Play();
+    }
+
+    public void PlayBlock()
+    {
+        particleRenderer.material = blockParticle;
+        particleSys.Play();
     }
 }
