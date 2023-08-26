@@ -92,7 +92,8 @@ public class GameManager : MonoBehaviour
 
 	[HideInInspector] public MouseUtils mouseUtils;
 	
-	public bool isPaused { private set; get; }
+	public bool gameIsPaused { private set; get; }
+	public bool openThePauseMenuPleaseGoodSir;
 	public UnityEvent pauseGame;
 	public UnityEvent resumeGame;
 	
@@ -113,15 +114,37 @@ public class GameManager : MonoBehaviour
 		resumeGame.AddListener(UnPauseGame);
     }
 
-	public void PauseGame()
+    private void Update()
     {
-		isPaused = true;
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			TogglePauseMenu();
+		}
+	}
+
+	public void TogglePauseMenu()
+    {
+			if (gameIsPaused)
+			{
+				openThePauseMenuPleaseGoodSir = false;
+				resumeGame.Invoke();
+			}
+			else
+			{
+				openThePauseMenuPleaseGoodSir = true;
+				pauseGame.Invoke();
+			}
+	}
+
+    public void PauseGame()
+    {
+		gameIsPaused = true;
 		Time.timeScale = 0;
     }
 
 	public void UnPauseGame()
     {
-		isPaused = false;
+		gameIsPaused = false;
 		Time.timeScale = 1;
 	}
 

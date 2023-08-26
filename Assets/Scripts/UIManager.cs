@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject nextBattleButton;
     [SerializeField] GameObject gameOverScreen;
     [SerializeField] TextMeshProUGUI livesStatusText;
-    
+    [SerializeField] GameObject pauseMenuScreen;
     public List<GameObject> unitBars = new();
     
     GameManager gameManager;
@@ -31,12 +31,19 @@ public class UIManager : MonoBehaviour
         nextBattleButton.GetComponent<Button>().onClick.AddListener(HideBattleOverScreen);
         gameManager.shopTransitionEvent.AddListener(ShowShop);
         gameManager.battleStartedEvent.AddListener(HideShop);
+        gameManager.pauseGame.AddListener(ShowPauseMenu);
+        gameManager.resumeGame.AddListener(ShowPauseMenu);
         UpdateGoldText();
         UpdateLivesText();
     }
     private void HideBattleOverScreen()
     {
         battleOverScreen.SetActive(false);
+    }
+
+    private void ShowPauseMenu()
+    {
+        pauseMenuScreen.SetActive(gameManager.openThePauseMenuPleaseGoodSir);
     }
 
     private void UpdateGoldText()
