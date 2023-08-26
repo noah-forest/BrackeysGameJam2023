@@ -32,6 +32,14 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		audSource = GetComponent<AudioSource>();
 		sprite = GetComponent<SpriteRenderer>();
 		mouseUtils = MouseUtils.singleton;
+		GameManager.singleton.battleStartedEvent.AddListener(ResetGrave);
+	}
+
+	public void ResetGrave()
+    {
+		digCount = 0;
+		currentDigCount = 0;
+		sprite.sprite = digLevelSprites[0];
 	}
 
 	public void ActivateGrave(int digCount)
