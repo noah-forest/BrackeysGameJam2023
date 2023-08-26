@@ -222,8 +222,8 @@ public class GameManager : MonoBehaviour
 	private void AssignUnitTargets(){
 		foreach(BattleLane lane in lanes)
         {
-			lane.enemyUnit.unitAttacker.targetUnit = lane.playerUnit;
-			lane.playerUnit.unitAttacker.targetUnit = lane.enemyUnit;
+			if(lane.enemyUnit) lane.enemyUnit.unitAttacker.targetUnit = lane.playerUnit;
+			if(lane.playerUnit) lane.playerUnit.unitAttacker.targetUnit = lane.enemyUnit;
 		}
     }
 

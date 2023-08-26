@@ -121,6 +121,11 @@ public class UnitController : MonoBehaviour, ISlotItem
 
     private void DamageEnemyUnit()
     {
+        if (!unitAttacker.targetUnit)
+        {
+            gameManager.playerActor.health.TakeDamage(unitStats.attackPower); // this is fucking awful dont get me started. This only works cause the enemy will always have all 3 units
+            return;
+        }
         unitAttacker.AttackTarget();
     }
 
