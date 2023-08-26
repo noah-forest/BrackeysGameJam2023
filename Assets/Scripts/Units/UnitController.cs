@@ -107,6 +107,7 @@ public class UnitController : MonoBehaviour, ISlotItem
         while (!health.isDead)
         {
             yield return new WaitForSeconds(unitStats.attackInterval);
+            if (health.isDead) yield return null;
             StartAttack();
         }
 
@@ -121,6 +122,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 
     private void DamageEnemyUnit()
     {
+        if (health.isDead) return;
         if (!unitAttacker.targetUnit)
         {
             gameManager.playerActor.health.TakeDamage(unitStats.attackPower); // this is fucking awful dont get me started. This only works cause the enemy will always have all 3 units
