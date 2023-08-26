@@ -28,6 +28,9 @@ public class ShopController : MonoBehaviour
 	private GameObject shopWindow;
 	private int unitIndex;
 	private int posIndex;
+
+	private bool draggedIntoShop;
+	private bool draggedIntoNothing;
 	
 	private void Start()
 	{
@@ -38,23 +41,27 @@ public class ShopController : MonoBehaviour
 		
 		Slot.anyDragStarted.AddListener(arg0 =>
 		{
-			shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[1]);
 			if (arg0.CompareTag("BattleSlot") || arg0.CompareTag("ReserveSlot"))
 			{
 				sellWindow.SetActive(true);
+			}
+
+			if (arg0.payload != null)
+			{
+				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[1]);
 			}
 		});
 		
 		Slot.anyDragStopped.AddListener(arg0 =>
 		{
-			if (arg0.CompareTag("BattleSlot") || arg0.CompareTag("ReserveSlot"))
+			if (arg0.payload != null && !draggedIntoShop)
 			{
 				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[2]);
-				sellWindow.SetActive(false);
 			}
-			else
+			
+			if (arg0.CompareTag("BattleSlot") || arg0.CompareTag("ReserveSlot"))
 			{
-				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[0]);
+				sellWindow.SetActive(false);
 			}
 		});
 		
@@ -64,6 +71,7 @@ public class ShopController : MonoBehaviour
 			if (slot.payload != null)
 			{
 				// sold the unit
+				draggedIntoShop = true;
 				slot.payload = null;
 				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
 				gameManager.Gold += 2;
@@ -72,11 +80,6 @@ public class ShopController : MonoBehaviour
 		});
 		
 		PopulateShopUnits();
-	}
-
-	private void OnEnable()
-	{
-		
 	}
 
 	/// <summary>
@@ -121,7 +124,6 @@ public class ShopController : MonoBehaviour
 		{
 			if (newSlot.payload != null)
 			{
-				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[0]);
 				return false;
 			};
 			
@@ -130,10 +132,10 @@ public class ShopController : MonoBehaviour
 				// bought the unit
 				setUnitInfo.purchased.gameObject.SetActive(true);
 				gameManager.Gold -= 3;
-				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[2]);
 				return true;
 			}
-			
+
+			draggedIntoNothing = true;
 			return false;
 		});
 		
