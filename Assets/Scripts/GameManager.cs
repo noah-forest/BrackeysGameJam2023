@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 
 public class GameManager : MonoBehaviour
@@ -110,18 +113,17 @@ public class GameManager : MonoBehaviour
 		resumeGame.AddListener(UnPauseGame);
     }
 
-	void PauseGame()
+	public void PauseGame()
     {
 		isPaused = true;
 		Time.timeScale = 0;
     }
 
-	void UnPauseGame()
+	public void UnPauseGame()
     {
 		isPaused = false;
 		Time.timeScale = 1;
 	}
-	
 
 	public void EnemyDied()
 	{
@@ -184,6 +186,7 @@ public class GameManager : MonoBehaviour
 	/// </summary>
 	public void LoadShop()
     {
+	    resumeGame.Invoke();
 		amountOfBattlesCur = 0;
 		HideBattlefield();
 		playerUnitsLoaded = false;

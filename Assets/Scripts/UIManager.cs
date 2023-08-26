@@ -13,7 +13,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject nextBattleButton;
     [SerializeField] GameObject gameOverScreen;
     [SerializeField] TextMeshProUGUI livesStatusText;
-    [SerializeField] TextMeshProUGUI battleRemainingStatusText;
     
     public List<GameObject> unitBars = new();
     
@@ -102,7 +101,6 @@ public class UIManager : MonoBehaviour
     private void LoadStatusText()
     {
         livesStatusText.text = $"Lives Remaining: {gameManager.Lives}";
-        battleRemainingStatusText.text = $"Battles Until Shop: {gameManager.amountOfBattlesBeforeShop - gameManager.amountOfBattlesCur}";
     }
 
     private void ShowGameOverScreen()

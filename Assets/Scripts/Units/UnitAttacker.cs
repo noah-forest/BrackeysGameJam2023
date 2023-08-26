@@ -19,6 +19,7 @@ public class UnitAttacker : MonoBehaviour
 	public UnityEvent critEvent;
 	UnitStats stats;
 
+	public AudioSource hitAudioPlayer;
 
 	private bool isAttacking;
 	private bool crit;
@@ -50,6 +51,7 @@ public class UnitAttacker : MonoBehaviour
 		}
 
 		targetUnit.TakeDamage(damage);
+		hitAudioPlayer.PlayOneShot(hitAudioPlayer.clip);
 	}
 	public void Respawn()
 	{
