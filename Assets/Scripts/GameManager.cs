@@ -122,6 +122,12 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+    public void BackToMainMenu()
+    {
+	    resumeGame.Invoke();
+	    SceneManager.LoadScene("MainMenu");
+    }
+    
 	public void TogglePauseMenu()
     {
 			if (gameIsPaused)
