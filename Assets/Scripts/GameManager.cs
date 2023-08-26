@@ -168,11 +168,17 @@ public class GameManager : MonoBehaviour
 
 	public void StartGame()
 	{
+		Lives = 3;
+		Gold = 10;
 		SceneManager.LoadScene("battle");
 		LoadShop();
 		mouseUtils.SetToDefaultCursor();
 		inShop = true;
 		HUD.SetActive(true);
+		foreach(Slot slot in playerBattleSlots)
+        {
+			slot.payload = null;
+        }
 	}
 	
 	public void PlayerDied()
@@ -191,6 +197,7 @@ public class GameManager : MonoBehaviour
 	
 	public void NextBattleButton()
 	{
+		Gold = 5;
 		if (inShop)
 		{
 			// play transition animation
@@ -220,7 +227,6 @@ public class GameManager : MonoBehaviour
 		HideBattlefield();
 		playerUnitsLoaded = false;
 		shopTransitionEvent.Invoke();
-		Gold = 10;
 		foreach(Slot slot in playerBattleSlots)
         {
 			slot.gameObject.SetActive(true);

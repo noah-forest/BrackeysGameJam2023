@@ -15,9 +15,10 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	public UnityEvent graveDug;
 	private bool inGrave;
 	private int currentDigCount;
-	
+
 	private MouseUtils mouseUtils;
-	
+	private GameManager gameManager;
+
 	private int digCount;
 	private float digSpeed = 0.40f; //used by enemy 
 	public Sprite[] digLevelSprites;
@@ -28,11 +29,12 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
 	private void Start()
 	{
+		gameManager = GameManager.singleton;
 		digParticle = GetComponent<ParticleSystem>();
 		audSource = GetComponent<AudioSource>();
 		sprite = GetComponent<SpriteRenderer>();
 		mouseUtils = MouseUtils.singleton;
-		GameManager.singleton.battleStartedEvent.AddListener(ResetGrave);
+		gameManager.battleStartedEvent.AddListener(ResetGrave);
 	}
 
 	public void ResetGrave()
@@ -56,8 +58,7 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
 	public void Dig()
 	{
-		
-		if(!inGrave) return;
+		if(!inGrave || gameManager.gameIsPaused) return;
 		currentDigCount++;
 
 		int spriteInterp = (int)Mathf.Lerp(digLevelSprites.Length, 1, (float)(currentDigCount) / (float)digCount);

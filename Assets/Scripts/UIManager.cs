@@ -33,6 +33,7 @@ public class UIManager : MonoBehaviour
         gameManager.battleStartedEvent.AddListener(HideShop);
         gameManager.pauseGame.AddListener(ShowPauseMenu);
         gameManager.resumeGame.AddListener(ShowPauseMenu);
+        gameManager.shopTransitionEvent.AddListener(HideGameOverScreen);
         UpdateGoldText();
         UpdateLivesText();
     }
@@ -113,5 +114,10 @@ public class UIManager : MonoBehaviour
     private void ShowGameOverScreen()
     {
         gameOverScreen.SetActive(true);
+    }
+
+    private void HideGameOverScreen()
+    {
+        gameOverScreen.SetActive(false);
     }
 }
