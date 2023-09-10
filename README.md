@@ -1,4 +1,4 @@
-# BrackeysGameJam2023
+# Grave Diver
 
 ### Week long game jam project submitted for Brackeys Game Jam 2023
 
