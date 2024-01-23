@@ -172,7 +172,7 @@ public class GameManager : MonoBehaviour
 		Gold = 10;
 		SceneManager.LoadScene("battle");
 		LoadShop();
-		mouseUtils.SetToDefaultCursor();
+		//mouseUtils.SetToDefaultCursor();
 		inShop = true;
 		HUD.SetActive(true);
 		foreach(Slot slot in playerBattleSlots)
@@ -227,7 +227,9 @@ public class GameManager : MonoBehaviour
 		HideBattlefield();
 		playerUnitsLoaded = false;
 		shopTransitionEvent.Invoke();
-		foreach(Slot slot in playerBattleSlots)
+		mouseUtils.SetToDefaultCursor();
+		mouseUtils.FindButtonsInScene();
+		foreach (Slot slot in playerBattleSlots)
         {
 			slot.gameObject.SetActive(true);
         }

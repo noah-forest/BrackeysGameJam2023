@@ -19,7 +19,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
     public UnityEvent dragStopped = new();
     public static UnityEvent<Slot> anyDragStarted = new(); 
     public static UnityEvent<Slot> anyDragStopped = new();
-    
+
     public static DragVisual dragVisual
     {
         get
@@ -45,7 +45,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
     protected Transform spriteDraggingRepresentation;
 
     private bool isDragged;
-    
+
     public GameObject payload
     {
         get => _payload;
@@ -134,8 +134,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
     protected void OnMouseEnter()
     {
-        mouseUtils.SetHoverDragCursor();
-        currentlyOverSlot = this;
+        if(!isDragged) mouseUtils.SetHoverDragCursor();
+		currentlyOverSlot = this;
     }
 
     protected void OnMouseExit()
@@ -155,20 +155,27 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
         }
 
         dragVisual.DragStopped();
-        mouseUtils.SetToDefaultCursor();
         dragStopped.Invoke();
         anyDragStopped.Invoke(this);
         isDragged = false;
 
+		if(currentlyOverSlot == this)
+		{
+			mouseUtils.SetHoverDragCursor();
+		} else
+		{
+			mouseUtils.SetToDefaultCursor();
+		}
+
         if (payload != null && currentlyOverSlot != null && currentlyOverSlot != this)
         {
-            SwapSlots(currentlyOverSlot);
+			SwapSlots(currentlyOverSlot);
             currentlyOverSlot = null;
         }
         else
         {
-            OnPayloadChanged();
-        }
+			OnPayloadChanged();
+		}
     }
 
     private void SwapSlots(Slot draggedToSlot)
