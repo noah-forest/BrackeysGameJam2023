@@ -7,11 +7,12 @@ using UnityEngine.UI;
 public class RefreshShop : MonoBehaviour
 {
     public ShopController shopController;
-    public GameManager gameManager;
-    
-    public LockShop lockShop;
-    
-    private Button button;
+	public LockShop lockShop;
+
+	private GameManager gameManager;
+
+	private Button button;
+
     private void Start()
     {
         gameManager = GameManager.singleton;
@@ -22,24 +23,23 @@ public class RefreshShop : MonoBehaviour
 
     private void OnEnable()
     {
-        if (!shopController) return;
-        if (!lockShop.locked)
-        {
-            shopController.PopulateShopUnits();
-        }
+		if (lockShop.locked) return;
+		if (!shopController.firstRoll) return;
+		if(button) button.interactable = true;
+
+		shopController.PopulateShopUnits();
     }
 
     private void RefreshShopUnits()
     {
-        if (gameManager.Gold <= 0) return;
-        if (!lockShop.locked)
-        {
-            gameManager.Gold--;
-            shopController.PopulateShopUnits();
-        }
-        else
-        {
-            return;
-        }
+		gameManager.Gold -= shopController.refreshCost;
+
+		if (gameManager.Gold <= 0)
+		{
+			gameManager.Gold = 0;
+			button.interactable = false;
+		}
+
+		shopController.PopulateShopUnits();
     }
 }

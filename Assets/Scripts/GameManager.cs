@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
 		}
 	}
 	[HideInInspector]
-	public List<GameObject> allUnitPrfabs;
+	public List<GameObject> allUnitPrefabs;
 	#endregion
 
 	public List<Slot> playerBattleSlots = new List<Slot>();
@@ -322,16 +322,16 @@ public class GameManager : MonoBehaviour
 
 	public GameObject GetRandomUnitObject()
     {
-		int unitRoll = Random.Range(0, allUnitPrfabs.Count);
-		return allUnitPrfabs[unitRoll];
+		int unitRoll = Random.Range(0, allUnitPrefabs.Count);
+		return allUnitPrefabs[unitRoll];
     }
 	private void LoadResources()
 	{
 		Object[] loadedUnits;
-		loadedUnits = Resources.LoadAll("Unit Prefabs");
+		loadedUnits = Resources.LoadAll("Prefabs/Units");
 		foreach (var lu in loadedUnits)
 		{
-			allUnitPrfabs.Add((GameObject)lu);
+			allUnitPrefabs.Add((GameObject)lu);
 		}
 	}
 
