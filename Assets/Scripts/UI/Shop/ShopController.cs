@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -130,7 +129,7 @@ public class ShopController : MonoBehaviour
 
 				draggedIntoNothing = true;
 				return false;
-			}); 
+			});
 
 			shopWindows.Add(shopWindow);
 		}
@@ -142,9 +141,9 @@ public class ShopController : MonoBehaviour
 
 	private void SetUnitPayload(Slot curUnitSlot, string name)
 	{
-		foreach(Unit unit in shopUnits)
+		foreach (Unit unit in shopUnits)
 		{
-			foreach(GameObject prefab in unitPrefabs)
+			foreach (GameObject prefab in unitPrefabs)
 			{
 				if (name == unit.name && name == prefab.name)
 				{
@@ -159,13 +158,13 @@ public class ShopController : MonoBehaviour
 	{
 		for (int i = 0; i < shopUnits.Count; i++)
 		{
-			FindShopItem();	// find shopitem prefab and inits the curUnitInfo 
+			FindShopItem(); // find shopitem prefab and inits the curUnitInfo 
 
 			unitIndex = Random.Range(0, shopUnits.Count);
 			curUnitInfo.curUnit = shopUnits[unitIndex]; // sets the current unit to a random one in the list of units
 		}
 
-		shopWindow = Instantiate(shopItem, parent);	// creates the window object (1 of 4)
+		shopWindow = Instantiate(shopItem, parent); // creates the window object (1 of 4)
 	}
 
 	private void FindShopItem()
