@@ -112,6 +112,7 @@ public class ShopController : MonoBehaviour
 			Slot unitSlot = shopWindow.GetComponent<Slot>();
 
 			SetUnitPayload(unitSlot, curShopItem.unitName.text);
+			curShopItem.prefab = unitSlot.payload;
 
 			unitSlot.AddRetrievePrecheck((shopSlot, newSlot) =>
 			{

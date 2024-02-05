@@ -4548,7 +4548,7 @@ GameObject:
   - component: {fileID: 5133159319257571806}
   - component: {fileID: 6295142671063297996}
   m_Layer: 5
-  m_Name: BattleSlots (1)
+  m_Name: shadows
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4563,18 +4563,18 @@ RectTransform:
   m_GameObject: {fileID: 3455329626473909933}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.74704564, y: 0.844374, z: 0.72825575}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2953134436069085000}
   - {fileID: 2087390524735120642}
   - {fileID: 2534363504338410044}
   - {fileID: 4756472321700971082}
-  m_Father: {fileID: 5386961920527987918}
+  m_Father: {fileID: 6091521685128734579}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 40.043312, y: 231.56735}
+  m_AnchoredPosition: {x: -12.199974, y: -10.000641}
   m_SizeDelta: {x: 131.60443, y: 568.496}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6295142671063297996
@@ -5638,7 +5638,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6091521685128734579}
-  - component: {fileID: 9013452061986089211}
   m_Layer: 5
   m_Name: BattleSlots
   m_TagString: Untagged
@@ -5658,6 +5657,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5133159319257571806}
   - {fileID: 5386961920527987918}
   - {fileID: 7628506247439347654}
   - {fileID: 5217080983349376358}
@@ -5668,32 +5668,6 @@ RectTransform:
   m_AnchoredPosition: {x: -45, y: 596.0006}
   m_SizeDelta: {x: 131.60443, y: 568.496}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &9013452061986089211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4526331253867660579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 49.1
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &4669408663981996780
 GameObject:
   m_ObjectHideFlags: 0
@@ -8558,7 +8532,6 @@ RectTransform:
   m_Children:
   - {fileID: 3448729840571277373}
   - {fileID: 6556080036143042237}
-  - {fileID: 5133159319257571806}
   m_Father: {fileID: 6091521685128734579}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

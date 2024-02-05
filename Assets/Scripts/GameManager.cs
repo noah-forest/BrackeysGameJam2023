@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
 	#endregion
 
 	public List<Slot> playerBattleSlots = new List<Slot>();
+	public GameObject battleSlots;
 	bool playerUnitsLoaded;
 
 	public GameObject HUD;
@@ -229,10 +230,7 @@ public class GameManager : MonoBehaviour
 		shopTransitionEvent.Invoke();
 		mouseUtils.SetToDefaultCursor();
 		mouseUtils.FindButtonsInScene();
-		foreach (Slot slot in playerBattleSlots)
-        {
-			slot.gameObject.SetActive(true);
-        }
+		battleSlots.SetActive(true);
     }
 
 	void StartNextBattle()
@@ -287,10 +285,7 @@ public class GameManager : MonoBehaviour
     {
 		playerUnitsLoaded = true;
 		//hide battle slots;
-		foreach (Slot slot in playerBattleSlots)
-		{
-			slot.gameObject.SetActive(false);
-		}
+		battleSlots.SetActive(false);
 		//load units
 		for (int unitIdx=0; unitIdx < lanes.Count; unitIdx++)
         {

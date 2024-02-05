@@ -552,6 +552,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6447371687598338402}
   - component: {fileID: 7247817976536554169}
+  - component: {fileID: 67512621530538913}
   - component: {fileID: 5065429938064975583}
   m_Layer: 0
   m_Name: unitShopItem
@@ -604,6 +605,21 @@ MonoBehaviour:
   button: {fileID: 0}
   purchased: {fileID: 3792126878018904559}
   unitCost: 0
+--- !u!114 &67512621530538913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033901600914569340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5bd5e52a3434c149bdd2ded69308417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitInfo: {fileID: 7247817976536554169}
+  header: 
+  content: 
 --- !u!114 &5065429938064975583
 MonoBehaviour:
   m_ObjectHideFlags: 0

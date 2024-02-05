@@ -22,6 +22,7 @@ public class SetUnitInfo : MonoBehaviour
 	public Button button; //this is set at runtime, do not manually set
 
 	public GameObject purchased;
+	public GameObject prefab;
 
 	[HideInInspector]
 	public int unitCost;
