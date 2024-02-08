@@ -2,26 +2,45 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AudioButton : MonoBehaviour
 {
-    [SerializeField] private GameObject slider;
-    
-    private Animator anim;
+	[SerializeField] private Sprite buttonDefault;
+	[SerializeField] private Sprite buttonDisabled;
+    [SerializeField] private GameObject sliderObj;
+	[SerializeField] private Slider slider;
 
-    private void Awake()
-    {
-        anim = GetComponent<Animator>();
-    }
+	private Image currentImage;
 
-    public void OnClick()
-    {
-        if(anim) anim.speed = 0; //pause the anim
-        slider.SetActive(true);
-    }
+	public bool open;
 
-    public void SliderDeactive()
+	private void Start()
+	{
+		currentImage = GetComponent<Image>();
+	}
+
+	private void Update()
+	{
+		if(slider.value <= 0.005)
+		{
+			currentImage.sprite = buttonDisabled;
+		} else
+		{
+			currentImage.sprite = buttonDefault;
+		}
+	}
+
+	public void OnClick()
     {
-        anim.speed = 1;
+		if (open)
+		{
+			open = false;
+			sliderObj.SetActive(false);
+		} else
+		{
+			sliderObj.SetActive(true);
+			open = true;
+		}
     }
 }

@@ -8,6 +8,7 @@ public class LockShop : MonoBehaviour
 {
     public GameObject openLock;
     public GameObject closedLock;
+	public GameObject refreshLock;
 	public Button refreshButton;
 
     public bool locked;
@@ -32,6 +33,7 @@ public class LockShop : MonoBehaviour
 		locked = true;
 		openLock.SetActive(false);
 		closedLock.SetActive(true);
+		refreshLock.SetActive(true);
 		refreshButton.interactable = false;
 	}
 
@@ -40,6 +42,7 @@ public class LockShop : MonoBehaviour
         locked = false;
         openLock.SetActive(true);
         closedLock.SetActive(false);
+		refreshLock.SetActive(false);
 		if(gameManager.Gold > 0) refreshButton.interactable = true;
 	}
 }

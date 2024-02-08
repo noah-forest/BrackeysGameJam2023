@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -95,16 +96,25 @@ public class GameManager : MonoBehaviour
 	
 	public bool gameIsPaused { private set; get; }
 	public bool openThePauseMenuPleaseGoodSir;
+
+	[HideInInspector]
 	public UnityEvent pauseGame;
+	[HideInInspector]
 	public UnityEvent resumeGame;
-	
+	[HideInInspector]
+	public UnityEvent startGame;
+	[HideInInspector]
+	public UnityEvent startBattle;
+
+	public UnityEvent loadUI;
+
 	private bool inShop;
 	
 	private void Start()
 	{
 		mouseUtils = MouseUtils.singleton;
 		
-		Gold = 10;
+		Gold = 15;
 		Lives = 3;
 		LoadResources();
 
@@ -126,7 +136,7 @@ public class GameManager : MonoBehaviour
     public void BackToMainMenu()
     {
 	    resumeGame.Invoke();
-	    SceneManager.LoadScene("MainMenu");
+		startGame.Invoke();
     }
     
 	public void TogglePauseMenu()
@@ -158,24 +168,15 @@ public class GameManager : MonoBehaviour
 	public void EnemyDied()
 	{
 		battleWonEvent.Invoke();
-		//Gold += battleReward;
 		pauseGame.Invoke();
-		/*TODO 
-		 * show win UI
-		 * play enemy death animation
-		 * play battle transition
-		*/
 	}
 
 	public void StartGame()
 	{
+		startBattle.Invoke();
 		Lives = 3;
-		Gold = 10;
-		SceneManager.LoadScene("battle");
-		LoadShop();
-		//mouseUtils.SetToDefaultCursor();
+		Gold = 15;
 		inShop = true;
-		HUD.SetActive(true);
 		foreach(Slot slot in playerBattleSlots)
         {
 			slot.payload = null;
@@ -198,7 +199,7 @@ public class GameManager : MonoBehaviour
 	
 	public void NextBattleButton()
 	{
-		Gold = 5;
+		Gold = 10;
 		if (inShop)
 		{
 			// play transition animation
