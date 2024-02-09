@@ -14,6 +14,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject gameOverScreen;
     [SerializeField] TextMeshProUGUI livesStatusText;
     [SerializeField] GameObject pauseMenuScreen;
+
+	[SerializeField] GameObject reserveSlots;
+
     public List<GameObject> unitBars = new();
     
     GameManager gameManager;
@@ -92,10 +95,12 @@ public class UIManager : MonoBehaviour
     private void ShowShop()
     {
         shopUi.SetActive(true);
+		reserveSlots.SetActive(true);
     }
     private void HideShop()
     {
         shopUi.SetActive(false);
+		reserveSlots.SetActive(false);
     }
 
     private void LoadStatusText()

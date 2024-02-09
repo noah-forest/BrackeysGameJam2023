@@ -15,11 +15,6 @@ public class Tooltip : MonoBehaviour
 
 	public RectTransform rectTransform;
 
-	private void Awake()
-	{
-		rectTransform = GetComponent<RectTransform>();
-	}
-
 	public void SetText(string c, string h = "")
 	{
 		if (string.IsNullOrEmpty(h))
