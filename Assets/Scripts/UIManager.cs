@@ -32,11 +32,11 @@ public class UIManager : MonoBehaviour
         gameManager.gameOverEvent.AddListener(ShowGameOverScreen);
         shopButton.GetComponent<Button>().onClick.AddListener(HideBattleOverScreen);
         nextBattleButton.GetComponent<Button>().onClick.AddListener(HideBattleOverScreen);
-        gameManager.shopTransitionEvent.AddListener(ShowShop);
+        gameManager.loadShopEvent.AddListener(ShowShop);
         gameManager.battleStartedEvent.AddListener(HideShop);
         gameManager.pauseGame.AddListener(ShowPauseMenu);
         gameManager.resumeGame.AddListener(ShowPauseMenu);
-        gameManager.shopTransitionEvent.AddListener(HideGameOverScreen);
+        gameManager.loadShopEvent.AddListener(HideGameOverScreen);
         UpdateGoldText();
         UpdateLivesText();
     }

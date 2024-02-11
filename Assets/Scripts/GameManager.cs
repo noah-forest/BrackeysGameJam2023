@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 	}
     #endregion
 
-    #region BattleEvents
+    #region Battle Events
     [HideInInspector]
 	public UnityEvent goldChangedEvent;
 	[HideInInspector]
@@ -41,14 +41,29 @@ public class GameManager : MonoBehaviour
 	[HideInInspector]
 	public UnityEvent battleStartedEvent;
 	[HideInInspector]
-	public UnityEvent shopTransitionEvent;
-    #endregion
+	public UnityEvent loadShopEvent;
+	#endregion
 
-    #region Lives and Gold properties
-    /// <summary>
-    ///dont use this variable, use Gold
-    /// </summary>
-    private int _internalGold;
+	#region Transition Events
+	[HideInInspector]
+	public UnityEvent startGame;
+	[HideInInspector]
+	public UnityEvent startBattle;
+	[HideInInspector]
+	public UnityEvent startBattleTransition;
+	[HideInInspector]
+	public UnityEvent startShopTransition;
+
+	[HideInInspector]
+	public UnityEvent loadUI;
+
+	#endregion
+
+	#region Lives and Gold properties
+	/// <summary>
+	///dont use this variable, use Gold
+	/// </summary>
+	private int _internalGold;
 	public int Gold
     {
 		get => _internalGold;
@@ -84,6 +99,8 @@ public class GameManager : MonoBehaviour
 	
 	[SerializeField] GameObject battleField;
 
+	[SerializeField] AudioSource MusicPlayer;
+
 	public Actor playerActor;
 	public Actor enemyActor;
 	public List<BattleLane> lanes;
@@ -101,12 +118,6 @@ public class GameManager : MonoBehaviour
 	public UnityEvent pauseGame;
 	[HideInInspector]
 	public UnityEvent resumeGame;
-	[HideInInspector]
-	public UnityEvent startGame;
-	[HideInInspector]
-	public UnityEvent startBattle;
-
-	public UnityEvent loadUI;
 
 	private bool inShop;
 	
@@ -141,16 +152,17 @@ public class GameManager : MonoBehaviour
     
 	public void TogglePauseMenu()
     {
-			if (gameIsPaused)
-			{
-				openThePauseMenuPleaseGoodSir = false;
-				resumeGame.Invoke();
-			}
-			else
-			{
-				openThePauseMenuPleaseGoodSir = true;
-				pauseGame.Invoke();
-			}
+		if (SceneManager.GetActiveScene().name == "MainMenu") return;
+		if (gameIsPaused)
+		{
+			openThePauseMenuPleaseGoodSir = false;
+			resumeGame.Invoke();
+		}
+		else
+		{
+			openThePauseMenuPleaseGoodSir = true;
+			pauseGame.Invoke();
+		}
 	}
 
     public void PauseGame()
@@ -177,6 +189,7 @@ public class GameManager : MonoBehaviour
 		Lives = 3;
 		Gold = 15;
 		inShop = true;
+		MusicPlayer.Play();
 		foreach(Slot slot in playerBattleSlots)
         {
 			slot.payload = null;
@@ -202,19 +215,15 @@ public class GameManager : MonoBehaviour
 		Gold = 10;
 		if (inShop)
 		{
-			// play transition animation
 			StartNextBattle();
 			++amountOfBattlesCur;
 		}
 		else if (amountOfBattlesCur < amountOfBattlesBeforeShop)
 		{
-			// play transition animation
 			StartNextBattle();
 			++amountOfBattlesCur;
-		}
-		else
+		} else
 		{
-			Debug.Log("loading shop");
 			LoadShop();
 		}
     }
@@ -224,19 +233,30 @@ public class GameManager : MonoBehaviour
 	/// </summary>
 	public void LoadShop()
     {
-	    resumeGame.Invoke();
+		Debug.Log("shop is doing something");
+		resumeGame.Invoke();
 		amountOfBattlesCur = 0;
 		HideBattlefield();
 		playerUnitsLoaded = false;
-		shopTransitionEvent.Invoke();
+		loadShopEvent.Invoke();
 		mouseUtils.SetToDefaultCursor();
 		mouseUtils.FindButtonsInScene();
 		battleSlots.SetActive(true);
     }
 
+	public void ShopTransition()
+	{
+		startShopTransition.Invoke();
+	}
+
+	public void BattleTransition()
+	{
+		startBattleTransition.Invoke();
+	}
+
 	void StartNextBattle()
     {
-	    mouseUtils.SetToDefaultCursor();
+		mouseUtils.SetToDefaultCursor();
 		resumeGame.Invoke();
 		battleStartedEvent.Invoke();
 		ShowBattlfield();
