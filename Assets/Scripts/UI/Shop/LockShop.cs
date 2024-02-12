@@ -9,6 +9,7 @@ public class LockShop : MonoBehaviour
     public GameObject openLock;
     public GameObject closedLock;
 	public GameObject refreshLock;
+	public GameObject refreshCost;
 
 	public Image lockBorder;
 	public Sprite lockBorderTexture;
@@ -41,8 +42,10 @@ public class LockShop : MonoBehaviour
 	{
 		locked = true;
 		openLock.SetActive(false);
+		refreshCost.SetActive(false);
 		closedLock.SetActive(true);
 		refreshLock.SetActive(true);
+
 
 		lockBorder.color = new Color32(183, 75, 72, 255);
 		lockBorder.sprite = lockBorderTexture;
@@ -54,6 +57,7 @@ public class LockShop : MonoBehaviour
     {
         locked = false;
         openLock.SetActive(true);
+		refreshCost.SetActive(true);
 		closedLock.SetActive(false);
 		refreshLock.SetActive(false);
 

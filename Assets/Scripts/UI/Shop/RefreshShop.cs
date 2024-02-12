@@ -34,6 +34,12 @@ public class RefreshShop : MonoBehaviour
     {
 		gameManager.Gold -= shopController.refreshCost;
 
+		foreach(GameObject window in shopController.shopItemPos)
+		{
+			Animator animator = window.GetComponent<Animator>();
+			animator.SetTrigger("refreshed");
+		}
+
 		if (gameManager.Gold <= 0)
 		{
 			gameManager.Gold = 0;
