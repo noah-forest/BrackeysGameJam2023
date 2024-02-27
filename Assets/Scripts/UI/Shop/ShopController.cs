@@ -54,6 +54,7 @@ public class ShopController : MonoBehaviour
 			if (arg0.payload != null)
 			{
 				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[1]);
+				//Debug.Log("playing pick up sound");
 			}
 		});
 
@@ -62,6 +63,7 @@ public class ShopController : MonoBehaviour
 			if (arg0.payload != null && !draggedIntoShop)
 			{
 				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[2]);
+				//Debug.Log("playing drop sound");
 			}
 
 			if (arg0.CompareTag("BattleSlot") || arg0.CompareTag("ReserveSlot"))
@@ -125,6 +127,7 @@ public class ShopController : MonoBehaviour
 				{
 					curShopItem.purchased.SetActive(true);
 					gameManager.Gold -= curShopItem.unitCost;
+					shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
 					return true;
 				}
 

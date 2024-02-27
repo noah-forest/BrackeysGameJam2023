@@ -17,7 +17,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
     public UnityEvent dragStarted = new();
     public UnityEvent dragStopped = new();
-    public static UnityEvent<Slot> anyDragStarted = new(); 
+
+	public static UnityEvent<Slot> anyDragStarted = new(); 
     public static UnityEvent<Slot> anyDragStopped = new();
 
     public static DragVisual dragVisual
@@ -65,6 +66,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
     private void Start()
     {
         mouseUtils = MouseUtils.singleton;
+
         OnPayloadChanged();
     }
 
@@ -187,6 +189,14 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
         {
             (this.payload, draggedToSlot.payload) = (draggedToSlot.payload, payload);
         }
+
+		if (!oldSlotPassed)
+		{
+			if(this.payload.name == draggedToSlot.payload.name)
+			{
+				Debug.Log("level up unit");
+			}
+		}
     }
 
     //To work with UI

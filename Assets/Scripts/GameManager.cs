@@ -260,10 +260,20 @@ public class GameManager : MonoBehaviour
 		resumeGame.Invoke();
 		battleStartedEvent.Invoke();
 		ShowBattlfield();
-		if(!playerUnitsLoaded) LoadPlayerUnitsIntoBattle();
+		StartCoroutine(LoadUnits()); //dont let this shit get into final build please -> <-
+	}
+
+
+	//definitely a band-aid fix please fix this later i beg of you
+	private IEnumerator LoadUnits()
+	{
+		yield return new WaitForSeconds(0.2f);
+
 		LoadRandomEnemyTeamIntoBattle();
+		if (!playerUnitsLoaded) LoadPlayerUnitsIntoBattle();
 		AssignUnitTargets();
 	}
+
 	public void HideBattlefield()
 	{
 		ClearBattlefield();
@@ -311,7 +321,8 @@ public class GameManager : MonoBehaviour
 		for (int unitIdx=0; unitIdx < lanes.Count; unitIdx++)
         {
             if (playerBattleSlots[unitIdx].payload)
-            {
+            { 
+				// change newUnitObj to existing instance of unit in slot bought
 				GameObject newUnitObj = Instantiate(playerBattleSlots[unitIdx].payload, lanes[unitIdx].playerUnitPosition.position, lanes[unitIdx].playerUnitPosition.rotation);
 				newUnitObj.transform.localScale = new Vector3(-1, 1, 1);
 				newUnitObj.GetComponentInChildren<SpriteRenderer>().flipX = true;
@@ -319,9 +330,7 @@ public class GameManager : MonoBehaviour
 				lanes[unitIdx].playerUnit.parentActor = playerActor;
 				lanes[unitIdx].playerUnit.unitGrave = lanes[unitIdx].playerGrave;
 			}
-
 		}
-
 	}
 
 	private void ClearBattlefield()
