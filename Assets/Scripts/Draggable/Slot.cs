@@ -18,6 +18,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
     public UnityEvent dragStarted = new();
     public UnityEvent dragStopped = new();
 
+	public UnityEvent slotFilled = new();
+
 	public static UnityEvent<Slot> anyDragStarted = new(); 
     public static UnityEvent<Slot> anyDragStopped = new();
 
@@ -60,7 +62,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
             GameObject old = this.payload;
             this._payload = value;
             OnPayloadChanged();
-        }
+		}
     }
 
     private void Start()
@@ -189,12 +191,17 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 		{
 			if (payload && draggedToSlot.payload) 
 			{
+				// check if ur dragging onto the same unit
 				if (this.payload.name == draggedToSlot.payload.name)
 				{
 					GameObject tempPayload = payload;
 					payload = null;
 					Destroy(tempPayload);
-					Debug.Log("level up unit");
+
+					//Level up unit
+					Experience unitExp = draggedToSlot.payload.GetComponent<Experience>();
+					unitExp.AddExp();
+
 					return;
 				}
 			}

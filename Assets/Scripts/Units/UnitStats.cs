@@ -13,4 +13,16 @@ public class UnitStats : MonoBehaviour
 	[Range(0, 1)] public float critChance;
 	public float critDamage;
 	public int digCount;
+
+	[HideInInspector] public List<float> stats = new();
+
+	private void Awake()
+	{
+		stats.Add(attackPower);
+		stats.Add(attackInterval);
+		stats.Add(blockChance);
+		stats.Add(critChance);
+		stats.Add(critDamage);
+		stats.Add(digCount);
+	}
 }
