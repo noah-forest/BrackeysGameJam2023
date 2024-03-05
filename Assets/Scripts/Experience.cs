@@ -9,7 +9,6 @@ public class Experience : MonoBehaviour
 	public int curLevel = 1; //default lvl is 1
 	public int _exp;
 	[HideInInspector] public UnityEvent expChanged;
-	public GameObject expBar;
 
 	public int Exp
 	{

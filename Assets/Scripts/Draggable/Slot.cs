@@ -18,6 +18,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
     public UnityEvent dragStarted = new();
     public UnityEvent dragStopped = new();
 
+	public UnityEvent slotFilled = new();
+
 	public static UnityEvent<Slot> anyDragStarted = new(); 
     public static UnityEvent<Slot> anyDragStopped = new();
 
@@ -60,7 +62,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
             GameObject old = this.payload;
             this._payload = value;
             OnPayloadChanged();
-        }
+		}
     }
 
     private void Start()
