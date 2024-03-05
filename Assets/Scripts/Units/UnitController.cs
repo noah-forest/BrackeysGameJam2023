@@ -41,7 +41,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 	private GameManager gameManager;
 	private bool isAttacking;
 
-	private void Awake()
+	public void Awake()
 	{
 		gameManager = GameManager.singleton;
 
@@ -103,6 +103,11 @@ public class UnitController : MonoBehaviour, ISlotItem
 		};
 	}
 
+	public void InitCombat()
+	{
+		StartCoroutine(AttackLoop());
+	}
+
 	private IEnumerator AttackLoop()
 	{
 		isAttacking = true;
@@ -152,7 +157,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 		}
 	}
 
-	private void Respawn()
+	public void Respawn()
 	{
 		health.Revive();
 		isAttacking = false;

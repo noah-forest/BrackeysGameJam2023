@@ -10,15 +10,9 @@ public class AudioButton : MonoBehaviour
 	[SerializeField] private Sprite buttonDisabled;
     [SerializeField] private GameObject sliderObj;
 	[SerializeField] private Slider slider;
-
-	private Image currentImage;
+	[SerializeField] private Image currentImage;
 
 	public bool open;
-
-	private void Start()
-	{
-		currentImage = GetComponent<Image>();
-	}
 
 	private void Update()
 	{

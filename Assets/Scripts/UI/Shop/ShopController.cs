@@ -39,7 +39,6 @@ public class ShopController : MonoBehaviour
 		LoadResources();        // load the resources from the game files
 
 		firstRoll = false;
-		PopulateShopUnits();
 
 		refreshCost = 1;
 
@@ -87,6 +86,8 @@ public class ShopController : MonoBehaviour
 			return false;
 		});
 		#endregion
+
+		PopulateShopUnits();
 	}
 
 
@@ -95,16 +96,6 @@ public class ShopController : MonoBehaviour
 	/// </summary>
 	public void PopulateShopUnits()
 	{
-		firstRoll = true;
-
-		// if the shop items are already being displayed
-		if (shopWindows.Count != 0)
-		{
-			foreach (GameObject window in shopWindows) Destroy(window); // delete them
-			shopWindows.Clear(); // clear the list
-			shopWindows.TrimExcess(); // wipe the memory
-		}
-
 		// loop through the unit positions and place a new shop item there
 		foreach (GameObject unitPos in shopItemPos)
 		{
@@ -113,12 +104,11 @@ public class ShopController : MonoBehaviour
 			SetUnitInfo curShopItem = shopWindow.GetComponent<SetUnitInfo>();
 			Slot unitSlot = shopWindow.GetComponent<Slot>();
 
-			SetUnitPayload(unitSlot, curShopItem.unitName.text);
-			curShopItem.prefab = unitSlot.payload;
+			SetUnitPayload(unitSlot, curShopItem);
 
 			unitSlot.AddRetrievePrecheck((shopSlot, newSlot) =>
 			{
-				if (newSlot.payload != null)
+				if (newSlot.payload != null && newSlot.payload.name != unitSlot.payload.name)
 				{
 					return false;
 				};
@@ -137,21 +127,39 @@ public class ShopController : MonoBehaviour
 
 			shopWindows.Add(shopWindow);
 		}
+
+		 firstRoll = true;
+	}
+
+	public void ClearShopWindows()
+	{
+		// if the shop items are already being displayed
+		if (shopWindows.Count != 0)
+		{
+			foreach (GameObject window in shopWindows)
+			{
+				if (window.GetComponent<Slot>().payload != null) Destroy(window.GetComponent<Slot>().payload);
+				Destroy(window);
+			} // delete them
+			shopWindows.Clear(); // clear the list
+			shopWindows.TrimExcess(); // wipe the memory
+		}
 	}
 
 	//loops through the folders containing the SOs
 	//	grabs the corresponding prefab according to name
 	//		and sets it to the payload
-
-	private void SetUnitPayload(Slot curUnitSlot, string name)
+	private void SetUnitPayload(Slot curUnitSlot, SetUnitInfo curShopItem)
 	{
 		foreach (Unit unit in shopUnits)
 		{
 			foreach (GameObject prefab in unitPrefabs)
 			{
-				if (name == unit.name && name == prefab.name)
+				if (curShopItem.unitName.text == unit.name && curShopItem.unitName.text == prefab.name)
 				{
-					curUnitSlot.payload = prefab;
+					curUnitSlot.payload = Instantiate(prefab, transform);
+					curShopItem.prefab = prefab;
+					curUnitSlot.payload.SetActive(false);
 				}
 			}
 		}

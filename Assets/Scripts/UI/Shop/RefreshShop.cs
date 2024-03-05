@@ -27,6 +27,7 @@ public class RefreshShop : MonoBehaviour
 		if (!shopController.firstRoll) return;
 		if(button) button.interactable = true;
 
+		shopController.ClearShopWindows();
 		shopController.PopulateShopUnits();
     }
 
@@ -46,6 +47,7 @@ public class RefreshShop : MonoBehaviour
 			button.interactable = false;
 		}
 
+		shopController.ClearShopWindows();
 		shopController.PopulateShopUnits();
     }
 }

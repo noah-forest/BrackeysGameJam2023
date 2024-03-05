@@ -185,17 +185,21 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
         bool oldSlotPassed = slotRetrievePrechecks.TrueForAll(check => check(this, draggedToSlot));
         bool draggedToSlotPassed = draggedToSlot.slotDropPrechecks.TrueForAll(check => check(this, draggedToSlot));
 
-        if (draggedToSlotPassed && oldSlotPassed)
-        {
-            (this.payload, draggedToSlot.payload) = (draggedToSlot.payload, payload);
-        }
-
-		if (!oldSlotPassed)
+		if (draggedToSlotPassed && oldSlotPassed)
 		{
-			if(this.payload.name == draggedToSlot.payload.name)
+			if (payload && draggedToSlot.payload) 
 			{
-				Debug.Log("level up unit");
+				if (this.payload.name == draggedToSlot.payload.name)
+				{
+					GameObject tempPayload = payload;
+					payload = null;
+					Destroy(tempPayload);
+					Debug.Log("level up unit");
+					return;
+				}
 			}
+
+			(this.payload, draggedToSlot.payload) = (draggedToSlot.payload, payload);
 		}
     }
 

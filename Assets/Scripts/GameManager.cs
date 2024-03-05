@@ -125,7 +125,7 @@ public class GameManager : MonoBehaviour
 	{
 		mouseUtils = MouseUtils.singleton;
 		
-		Gold = 15;
+		Gold = 150;
 		Lives = 3;
 		LoadResources();
 
@@ -187,7 +187,7 @@ public class GameManager : MonoBehaviour
 	{
 		startBattle.Invoke();
 		Lives = 3;
-		Gold = 15;
+		Gold = 150;
 		inShop = true;
 		MusicPlayer.Play();
 		foreach(Slot slot in playerBattleSlots)
@@ -271,7 +271,7 @@ public class GameManager : MonoBehaviour
 
 		LoadRandomEnemyTeamIntoBattle();
 		if (!playerUnitsLoaded) LoadPlayerUnitsIntoBattle();
-		AssignUnitTargets();
+		AssignUnitTargets(); 
 	}
 
 	public void HideBattlefield()
@@ -321,24 +321,32 @@ public class GameManager : MonoBehaviour
 		for (int unitIdx=0; unitIdx < lanes.Count; unitIdx++)
         {
             if (playerBattleSlots[unitIdx].payload)
-            { 
-				// change newUnitObj to existing instance of unit in slot bought
-				GameObject newUnitObj = Instantiate(playerBattleSlots[unitIdx].payload, lanes[unitIdx].playerUnitPosition.position, lanes[unitIdx].playerUnitPosition.rotation);
+            {
+				GameObject newUnitObj = playerBattleSlots[unitIdx].payload;
+				newUnitObj.transform.parent = lanes[unitIdx].playerUnitPosition;
+				newUnitObj.SetActive(true);
+				newUnitObj.transform.SetPositionAndRotation(lanes[unitIdx].playerUnitPosition.position, lanes[unitIdx].playerUnitPosition.rotation);
 				newUnitObj.transform.localScale = new Vector3(-1, 1, 1);
 				newUnitObj.GetComponentInChildren<SpriteRenderer>().flipX = true;
 				lanes[unitIdx].playerUnit = newUnitObj.GetComponent<UnitController>();
 				lanes[unitIdx].playerUnit.parentActor = playerActor;
 				lanes[unitIdx].playerUnit.unitGrave = lanes[unitIdx].playerGrave;
+
+				lanes[unitIdx].playerUnit.InitCombat();
 			}
 		}
 	}
 
 	private void ClearBattlefield()
     {
-		foreach (BattleLane lane in lanes)
+		for(int i = 0; i < lanes.Count; i++)
 		{
-			if (lane.enemyUnit) Destroy(lane.enemyUnit.gameObject);
-			if (lane.playerUnit) Destroy(lane.playerUnit.gameObject);
+			if (lanes[i].enemyUnit) Destroy(lanes[i].enemyUnit.gameObject);
+			if (lanes[i].playerUnit)
+			{
+				lanes[i].playerUnit.Respawn();
+				lanes[i].playerUnit.gameObject.SetActive(false);
+			}
 		}
 		enemyActor.health.Revive();
 		playerActor.health.Revive();
