@@ -189,12 +189,17 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 		{
 			if (payload && draggedToSlot.payload) 
 			{
+				// check if ur dragging onto the same unit
 				if (this.payload.name == draggedToSlot.payload.name)
 				{
 					GameObject tempPayload = payload;
 					payload = null;
 					Destroy(tempPayload);
-					Debug.Log("level up unit");
+
+					//Level up unit
+					Experience unitExp = draggedToSlot.payload.GetComponent<Experience>();
+					unitExp.AddExp();
+
 					return;
 				}
 			}
