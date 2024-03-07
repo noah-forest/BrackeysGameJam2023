@@ -14,6 +14,9 @@ public class UnitStats : MonoBehaviour
 	public float critDamage;
 	public int digCount;
 
+	[TextArea(5, 30)]
+	public string description;
+
 	[HideInInspector] public List<float> stats = new();
 
 	private void Awake()

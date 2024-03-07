@@ -369,6 +369,7 @@ GameObject:
   - component: {fileID: -3360573364960408714}
   - component: {fileID: -625690914970479321}
   - component: {fileID: -1555334802469748844}
+  - component: {fileID: 1500676418786922406}
   m_Layer: 0
   m_Name: Spliffy
   m_TagString: Untagged
@@ -432,6 +433,10 @@ MonoBehaviour:
   critChance: 0.4
   critDamage: 15
   digCount: 5
+  description: 'Sick as fuck.
+
+    Has a high chance to crit.'
+  stats: []
 --- !u!114 &230730387648502647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,7 +498,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 0}
   unitAttacker: {fileID: 0}
-  unitAnimator: {fileID: 0}
   unitStats: {fileID: 0}
   parentActor: {fileID: 0}
   attacked:
@@ -5472,6 +5476,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1500676418786922406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8507790530395104826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc40f1218633c90449e813ab89530064, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curLevel: 1
+  _exp: 0
+  expChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8796321657911305149
 GameObject:
   m_ObjectHideFlags: 0

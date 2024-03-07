@@ -1,27 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TooltipSystem : MonoBehaviour
 {
-	private static TooltipSystem instance;
+	public static TooltipSystem instance;
 
 	public Tooltip tooltip;
 
-	public void Awake()
+	public TextMeshProUGUI healthTxt;
+	public TextMeshProUGUI dmgTxt;
+	public TextMeshProUGUI blockChanceTxt;
+	public TextMeshProUGUI critChanceTxt;
+	public TextMeshProUGUI atkSpdTxt;
+	public TextMeshProUGUI digCountTxt;
+	public TextMeshProUGUI critDmgTxt;
+	public TextMeshProUGUI rarityTxt;
+	public TextMeshProUGUI unitDesc;
+
+	private void Awake()
 	{
+		if (instance)
+		{
+			Destroy(this.gameObject);
+			return;
+		}
+
 		instance = this;
 		Hide();
 	}
 
-	public static void Show(string content, string header = "")
+	public static void Show(string header = "")
 	{
-		instance.tooltip.SetText(content, header);
+		instance.tooltip.SetText(header);
 		instance.tooltip.gameObject.SetActive(true);
 	}
 
 	public static void Hide()
 	{
 		instance.tooltip.gameObject.SetActive(false);
+	}
+
+	public void SwitchTooltipSide()
+	{
+		if (tooltip.switchSide)
+		{
+			tooltip.switchSide = !tooltip.switchSide;
+		}
 	}
 }

@@ -369,6 +369,7 @@ GameObject:
   - component: {fileID: 3408230627346536778}
   - component: {fileID: 244660575810703818}
   - component: {fileID: 1299664902979039232}
+  - component: {fileID: 2615203717610851424}
   m_Layer: 0
   m_Name: Driftwood
   m_TagString: Untagged
@@ -432,6 +433,12 @@ MonoBehaviour:
   critChance: 0.25
   critDamage: 10
   digCount: 5
+  description: 'Experienced grave diver.
+
+    Higher than normal chance to crit.
+
+'
+  stats: []
 --- !u!114 &3260980746812291132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,7 +500,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 0}
   unitAttacker: {fileID: 0}
-  unitAnimator: {fileID: 0}
   unitStats: {fileID: 0}
   parentActor: {fileID: 0}
   attacked:
@@ -5472,6 +5478,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2615203717610851424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7215190036254911893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc40f1218633c90449e813ab89530064, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curLevel: 1
+  _exp: 0
+  expChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8361231888574816325
 GameObject:
   m_ObjectHideFlags: 0

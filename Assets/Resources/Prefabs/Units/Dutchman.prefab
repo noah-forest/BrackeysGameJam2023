@@ -192,6 +192,7 @@ GameObject:
   - component: {fileID: 2259220525061214597}
   - component: {fileID: -6331679050471545844}
   - component: {fileID: 8903423251719287505}
+  - component: {fileID: 824400605111418944}
   m_Layer: 0
   m_Name: Dutchman
   m_TagString: Untagged
@@ -255,6 +256,9 @@ MonoBehaviour:
   critChance: 0.4
   critDamage: 5
   digCount: 7
+  description: "Legally distinct ghost pirate. \nHas a higher chance to crit.\nHas
+    high attack power."
+  stats: []
 --- !u!114 &8044939931016678658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,7 +320,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 0}
   unitAttacker: {fileID: 0}
-  unitAnimator: {fileID: 0}
   unitStats: {fileID: 0}
   parentActor: {fileID: 0}
   attacked:
@@ -5295,6 +5298,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &824400605111418944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4412241115225884187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc40f1218633c90449e813ab89530064, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curLevel: 1
+  _exp: 0
+  expChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5173877014671330240
 GameObject:
   m_ObjectHideFlags: 0

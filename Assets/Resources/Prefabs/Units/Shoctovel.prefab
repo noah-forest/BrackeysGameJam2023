@@ -369,6 +369,7 @@ GameObject:
   - component: {fileID: 4195732934361600407}
   - component: {fileID: 4572448183904819027}
   - component: {fileID: -3457708624988514293}
+  - component: {fileID: -3039602668803453458}
   m_Layer: 0
   m_Name: Shoctovel
   m_TagString: Untagged
@@ -432,6 +433,10 @@ MonoBehaviour:
   critChance: 0.25
   critDamage: 30
   digCount: 6
+  description: 'Has a very fast attack speed.
+
+    Does more damage on crit hits.'
+  stats: []
 --- !u!114 &230730387648502647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -493,7 +498,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 0}
   unitAttacker: {fileID: 0}
-  unitAnimator: {fileID: 0}
   unitStats: {fileID: 0}
   parentActor: {fileID: 0}
   attacked:
@@ -5472,6 +5476,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-3039602668803453458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8507790530395104826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc40f1218633c90449e813ab89530064, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curLevel: 1
+  _exp: 0
+  expChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8796321657911305149
 GameObject:
   m_ObjectHideFlags: 0

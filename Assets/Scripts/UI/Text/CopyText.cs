@@ -16,6 +16,6 @@ public class CopyText : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
-        textToCopy.text = thisText.text;
+		thisText.text = textToCopy.text;
     }
 }

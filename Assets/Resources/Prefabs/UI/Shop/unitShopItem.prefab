@@ -327,7 +327,6 @@ GameObject:
   - component: {fileID: 4338859953095183250}
   - component: {fileID: 9018422078639779500}
   - component: {fileID: 3394345172104761584}
-  - component: {fileID: 19577235646336147}
   - component: {fileID: 4854973117788219993}
   m_Layer: 5
   m_Name: cost
@@ -455,19 +454,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &19577235646336147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1914276783349513293}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef62f965d5019b648b47d55756392aa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textToCopy: {fileID: 4379363016385771492}
 --- !u!114 &4854973117788219993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -638,7 +624,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitInfo: {fileID: 7247817976536554169}
-  content: 
 --- !u!114 &5065429938064975583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -655,6 +640,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   dragStopped:
+    m_PersistentCalls:
+      m_Calls: []
+  slotFilled:
     m_PersistentCalls:
       m_Calls: []
   _payload: {fileID: 0}
@@ -1316,6 +1304,7 @@ GameObject:
   - component: {fileID: 100680589331992597}
   - component: {fileID: 2145842642477818002}
   - component: {fileID: 4608180618268553748}
+  - component: {fileID: 5090816700432764612}
   m_Layer: 5
   m_Name: name (1)
   m_TagString: Untagged
@@ -1456,6 +1445,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3a999834a3b56e146b6a1973f2a63b65, type: 2}
   - {fileID: 11400000, guid: 3abb7cd2aeafab14581cfa76766d71c8, type: 2}
   framesPerSecond: 5
+--- !u!114 &5090816700432764612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6189273031558673998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef62f965d5019b648b47d55756392aa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textToCopy: {fileID: 3829016633566795497}
 --- !u!1 &6503595691773529603
 GameObject:
   m_ObjectHideFlags: 0
@@ -1618,6 +1620,7 @@ GameObject:
   - component: {fileID: 3919108058538256309}
   - component: {fileID: 4379363016385771492}
   - component: {fileID: 2930859735679346601}
+  - component: {fileID: 643257899260179175}
   m_Layer: 5
   m_Name: cost (1)
   m_TagString: Untagged
@@ -1758,6 +1761,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3a999834a3b56e146b6a1973f2a63b65, type: 2}
   - {fileID: 11400000, guid: 3abb7cd2aeafab14581cfa76766d71c8, type: 2}
   framesPerSecond: 5
+--- !u!114 &643257899260179175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7802284650762132561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef62f965d5019b648b47d55756392aa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textToCopy: {fileID: 3394345172104761584}
 --- !u!1 &8229444256554731501
 GameObject:
   m_ObjectHideFlags: 0
@@ -1844,7 +1860,6 @@ GameObject:
   - component: {fileID: 7989115437784270597}
   - component: {fileID: 864646564146161572}
   - component: {fileID: 3829016633566795497}
-  - component: {fileID: 2736225662146623036}
   - component: {fileID: 1584669932266945741}
   m_Layer: 5
   m_Name: name
@@ -1970,19 +1985,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &2736225662146623036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8700598214183715547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef62f965d5019b648b47d55756392aa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textToCopy: {fileID: 2145842642477818002}
 --- !u!114 &1584669932266945741
 MonoBehaviour:
   m_ObjectHideFlags: 0

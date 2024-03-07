@@ -280,6 +280,7 @@ GameObject:
   - component: {fileID: -1702443310958428764}
   - component: {fileID: -1547652825575385891}
   - component: {fileID: 4659433444624199184}
+  - component: {fileID: 7562195027748471563}
   m_Layer: 0
   m_Name: Diver
   m_TagString: Untagged
@@ -343,6 +344,10 @@ MonoBehaviour:
   critChance: 0.05
   critDamage: 5
   digCount: 7
+  description: 'Has a high attack power
+
+    Slow attack speed'
+  stats: []
 --- !u!114 &9150093658479214337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,7 +409,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 0}
   unitAttacker: {fileID: 0}
-  unitAnimator: {fileID: 0}
   unitStats: {fileID: 0}
   parentActor: {fileID: 0}
   attacked:
@@ -5383,6 +5387,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7562195027748471563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5656684749794309812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc40f1218633c90449e813ab89530064, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curLevel: 1
+  _exp: 0
+  expChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5812331294630184461
 GameObject:
   m_ObjectHideFlags: 0

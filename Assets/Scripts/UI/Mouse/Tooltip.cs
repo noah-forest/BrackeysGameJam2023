@@ -7,15 +7,14 @@ using UnityEngine.UI;
 public class Tooltip : MonoBehaviour
 {
 	public TextMeshProUGUI header;
-	public TextMeshProUGUI content;
-
-	public LayoutElement layoutElement;
 
 	public int characterWrapLimit;
 
 	public RectTransform rectTransform;
 
-	public void SetText(string c, string h = "")
+	public bool switchSide;
+
+	public void SetText(string h = "")
 	{
 		if (string.IsNullOrEmpty(h))
 		{
@@ -25,26 +24,25 @@ public class Tooltip : MonoBehaviour
 			header.gameObject.SetActive(true);
 			header.text = h;
 		}
-
-		content.text = c;
 	}
 
 	private void Update()
 	{
-		if (Application.isEditor)
-		{
-			int headerLength = header.text.Length;
-			int contentLength = content.text.Length;
-
-			layoutElement.enabled = (headerLength > characterWrapLimit || contentLength > characterWrapLimit);
-		}
-
 		Vector2 position = Input.mousePosition;
+		float pivotX;
+		float pivotY;
 
-		float pivotX = position.x / Screen.width / 2;
-		float pivotY = position.y / Screen.height / 2;
+		pivotX = position.x / Screen.width / 2;
+		pivotY = position.y / Screen.height / 2;
 
 		rectTransform.pivot = new Vector2(-pivotX, pivotY);
+
+		if (switchSide)
+		{
+			rectTransform.pivot = new Vector2(pivotX, pivotY);
+			transform.position = position;
+		}
+
 		transform.position = position;
 	}
 }
