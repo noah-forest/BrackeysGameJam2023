@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -14,6 +15,7 @@ public class ShopController : MonoBehaviour
 	private List<GameObject> unitPrefabs = new();
 
 	public GameObject sellWindow;
+	public TextMeshProUGUI sellWindowPrice;
 
 	private GameManager gameManager;
 	private ShopAudio shopAudioPlayer;
@@ -22,6 +24,7 @@ public class ShopController : MonoBehaviour
 	private GameObject shopWindow;
 
 	private int unitIndex;
+	private int sellCost;
 	public int refreshCost;
 
 	private SetUnitInfo curUnitInfo;
@@ -48,6 +51,7 @@ public class ShopController : MonoBehaviour
 			if (arg0.CompareTag("BattleSlot") || arg0.CompareTag("ReserveSlot"))
 			{
 				sellWindow.SetActive(true);
+				sellWindowPrice.text = $"{sellCost}";
 			}
 
 			if (arg0.payload != null)
@@ -81,7 +85,7 @@ public class ShopController : MonoBehaviour
 				draggedIntoShop = true;
 				slot.payload = null;
 				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
-				gameManager.Gold += 2;
+				gameManager.Gold += sellCost;
 			}
 			return false;
 		});
@@ -105,6 +109,8 @@ public class ShopController : MonoBehaviour
 			Slot unitSlot = shopWindow.GetComponent<Slot>();
 
 			SetUnitPayload(unitSlot, curShopItem);
+
+			sellCost = curShopItem.unitCost;
 
 			unitSlot.AddRetrievePrecheck((shopSlot, newSlot) =>
 			{
