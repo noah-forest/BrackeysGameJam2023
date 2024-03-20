@@ -195,13 +195,18 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 				if (this.payload.name == draggedToSlot.payload.name)
 				{
 					GameObject tempPayload = payload;
+
+					// grab the experience from both units
 					Experience oldUnitExp = payload.GetComponent<Experience>();
+					Experience unitExp = draggedToSlot.payload.GetComponent<Experience>();
+					// if either of them are lvl 3, do nothing
+					// todo: revert to switch
+					if (oldUnitExp.curLevel == Experience.MaxLevel || unitExp.curLevel == Experience.MaxLevel) return;
+
 					payload = null;
 					Destroy(tempPayload);
 
 					//Level up unit
-					Experience unitExp = draggedToSlot.payload.GetComponent<Experience>();
-					if (oldUnitExp.curLevel == Experience.MaxLevel) return;
 					unitExp.AddExp(oldUnitExp.Exp + 1);
 
 					return;

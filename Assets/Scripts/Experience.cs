@@ -8,7 +8,7 @@ public class Experience : MonoBehaviour
 {
 	public static int MaxLevel = 3;
 	public static int ExpToLevel2 = 2;
-	public static int ExpToLevel3 = 5;
+	public static int ExpToLevel3 = 3;
 	public int curLevel = 1; //default lvl is 1
 	public int _exp;
 	[HideInInspector] public UnityEvent<int> expGained = new();
@@ -37,7 +37,7 @@ public class Experience : MonoBehaviour
 	private void LevelUp()
 	{
 		++curLevel;
-		Exp = 0;
+
 		Debug.Log($"is now level {curLevel}");
 
 		UnitStats unitStats = GetComponent<UnitStats>();
@@ -47,14 +47,16 @@ public class Experience : MonoBehaviour
 	private void TryToLevel()
 	{
 		// level up conditions
-		if(curLevel == 1 && Exp == ExpToLevel2)
+		if(curLevel == 1 && Exp >= ExpToLevel2)
 		{
+			Exp -= ExpToLevel2;
 			LevelUp();
 			unitLevelUp.Invoke(curLevel);
 		}
 
-		if(curLevel == 2 && Exp == ExpToLevel3)
+		if(curLevel == 2 && Exp >= ExpToLevel3)
 		{
+			Exp = 0;
 			LevelUp();
 			unitLevelUp.Invoke(curLevel);
 		}

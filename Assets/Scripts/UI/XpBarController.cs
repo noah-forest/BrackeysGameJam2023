@@ -1,26 +1,130 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-public class XpBarController : MonoBehaviour
+public class XpBarController : MonoBehaviour, ISlotPayloadChangeHandler
 {
 	public List<Color> pipColors = new(); //store both colors for pips
 	public List<GameObject> pips = new(); //store a list of pips
 
-	private Queue<GameObject> emptyPipQueue = new();
-
 	public GameObject cont; //pip parent
 
-	public GameObject battleSlot;
-	private Slot unitSlot;
+	public TextMeshProUGUI unitNameDisplay;
+	public TextMeshProUGUI unitLevelDisplay;
+	public TextMeshProUGUI unitXPDisplay;
+
 	private Experience unitExp;
+	private Slot slot;
+	private GameObject xpBar;
 
 	private void Awake()
 	{
-		unitSlot = battleSlot.GetComponent<Slot>();
+		slot = GetComponent<Slot>();
+		xpBar = transform.GetChild(0).gameObject;
+
+		foreach (Transform child in cont.transform.GetComponentsInChildren<Transform>())
+		{
+			if (child.name != "cont")
+			{
+				pips.Add(child.gameObject);
+			}
+		}
+
+		ShowXpBar();
 	}
 
+	public void SlotPayloadChanged(GameObject payload)
+	{
+		Debug.Log("slot changed");
+		if (payload == null)
+		{
+			HideXpBar();
+
+			if (unitExp)
+			{
+				unitExp.expGained.RemoveListener(UpdateXpBarUI);
+				unitExp.unitLevelUp.RemoveListener(UpdateLevelUI);
+				unitExp = null;
+			}
+			unitNameDisplay.text = "no unit";
+			unitLevelDisplay.text = "level: 0";
+			unitXPDisplay.text = "xp: 0";
+		}
+		else
+		{
+			ShowXpBar();
+
+			if (unitExp)
+			{
+				unitExp.expGained.RemoveListener(UpdateXpBarUI);
+				unitExp.unitLevelUp.RemoveListener(UpdateLevelUI);
+			}
+
+			unitExp = payload.GetComponent<Experience>();
+			unitNameDisplay.text = payload.name;
+			unitExp.expGained.AddListener(UpdateXpBarUI);
+			unitExp.unitLevelUp.AddListener(UpdateLevelUI);
+
+			UpdateXpBarUI(0);
+		}
+	}
+
+	private void UpdateXpBarUI(int xp)
+	{
+		Debug.Log($"{unitNameDisplay.text}: gained {xp} xp");
+		unitLevelDisplay.text = $"level: {unitExp.curLevel}";
+		unitXPDisplay.text = $"xp: {unitExp.Exp}";
+
+		int xpNeeded = unitExp.curLevel == 1 ? Experience.ExpToLevel2 : Experience.ExpToLevel3;
+
+		if (unitExp.curLevel == Experience.MaxLevel)
+		{
+			foreach (GameObject pip in pips)
+			{
+				pip.GetComponent<Image>().color = pipColors[1];
+			}
+			return;
+		}
+
+		for (int i = 0; i < xpNeeded; i++)
+		{
+			if (i < unitExp.Exp)
+			{
+				pips[i].GetComponent<Image>().color = pipColors[1];
+			}
+			else
+			{
+				pips[i].GetComponent<Image>().color = pipColors[0];
+			}
+		}
+	}
+
+	private void UpdateLevelUI(int xp)
+	{
+		if (unitExp.curLevel == 2)
+		{
+			GameObject newPip = pips[0];
+			newPip = Instantiate(newPip, cont.transform);
+			newPip.GetComponent<Image>().color = pipColors[0];
+			pips.Add(newPip);
+		}
+
+		UpdateXpBarUI(xp);
+	}
+
+	private void ShowXpBar()
+	{
+		xpBar.SetActive(true);
+	}
+
+	private void HideXpBar()
+	{
+		xpBar.SetActive(false);
+	}
+}
+
+/*
 	public void ClearXpBar()
 	{
 
@@ -128,5 +232,4 @@ public class XpBarController : MonoBehaviour
 			emptyPipQueue.Enqueue(pip);
 		}
 		Debug.Log($"createAndExpandPips finished | totalPips: {pips.Count} | emptyPipsQ: {emptyPipQueue.Count}");
-	}
-}
+	}*/

@@ -8,11 +8,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI livesUI;
     [SerializeField] TextMeshProUGUI goldUI;
     [SerializeField] GameObject battleOverScreen;
-    [SerializeField] TextMeshProUGUI battleOutcomeText;
+    //[SerializeField] TextMeshProUGUI battleOutcomeText;
     [SerializeField] GameObject shopButton;
     [SerializeField] GameObject nextBattleButton;
     [SerializeField] GameObject gameOverScreen;
-    [SerializeField] TextMeshProUGUI livesStatusText;
+    //[SerializeField] TextMeshProUGUI livesStatusText;
     [SerializeField] GameObject pauseMenuScreen;
 
 	[SerializeField] GameObject reserveSlots;
@@ -63,7 +63,7 @@ public class UIManager : MonoBehaviour
     //this is kind of fucked but its fine.
     private void ShowBattleWonScreen() 
     {
-        battleOutcomeText.text = "Battle Won";
+        //battleOutcomeText.text = "Battle Won";
         battleOverScreen.SetActive(true);
         LoadStatusText();
         LoadContinueButton();
@@ -71,7 +71,7 @@ public class UIManager : MonoBehaviour
 
     private void ShowBattleLostScreen()
     {
-        battleOutcomeText.text = "Battle Lost";
+       // battleOutcomeText.text = "Battle Lost";
         battleOverScreen.SetActive(true);
         LoadStatusText();
         LoadContinueButton();
@@ -105,7 +105,7 @@ public class UIManager : MonoBehaviour
 
     private void LoadStatusText()
     {
-        livesStatusText.text = $"Lives Remaining: {gameManager.Lives}";
+        //livesStatusText.text = $"Lives Remaining: {gameManager.Lives}";
     }
 
     private void ShowGameOverScreen()

@@ -190,7 +190,8 @@ public class GameManager : MonoBehaviour
 		Gold = 150;
 		inShop = true;
 		MusicPlayer.Play();
-		foreach(Slot slot in playerBattleSlots)
+		battleField.SetActive(true);
+		foreach (Slot slot in playerBattleSlots)
         {
 			slot.payload = null;
         }

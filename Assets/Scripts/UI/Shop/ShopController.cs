@@ -121,6 +121,12 @@ public class ShopController : MonoBehaviour
 
 				if (gameManager.Gold >= curShopItem.unitCost)
 				{
+					if(newSlot.payload != null)
+					{
+						Experience unitExp = newSlot.payload.GetComponent<Experience>();
+						if (unitExp && unitExp.curLevel == Experience.MaxLevel) return false;
+					}
+
 					curShopItem.purchased.SetActive(true);
 					gameManager.Gold -= curShopItem.unitCost;
 					shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
