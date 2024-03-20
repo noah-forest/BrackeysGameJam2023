@@ -39,7 +39,7 @@ public class XpBarController : MonoBehaviour, ISlotPayloadChangeHandler
 		Debug.Log("slot changed");
 		if (payload == null)
 		{
-			HideXpBar();
+			if (xpBar) HideXpBar();
 
 			if (unitExp)
 			{

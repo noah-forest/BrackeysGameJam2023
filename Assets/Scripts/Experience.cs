@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.Events;
 using UnityEngine;
-using Unity.VisualScripting;
+using UnityEngine.Events;
 
 public class Experience : MonoBehaviour
 {
@@ -16,7 +13,7 @@ public class Experience : MonoBehaviour
 
 	public int Exp
 	{
-		get => _exp; 
+		get => _exp;
 		set
 		{
 			int tempExp = _exp;
@@ -41,20 +38,20 @@ public class Experience : MonoBehaviour
 		Debug.Log($"is now level {curLevel}");
 
 		UnitStats unitStats = GetComponent<UnitStats>();
-		unitStats.attackPower++;
+		unitStats.LevelUpUnit();
 	}
 
 	private void TryToLevel()
 	{
 		// level up conditions
-		if(curLevel == 1 && Exp >= ExpToLevel2)
+		if (curLevel == 1 && Exp >= ExpToLevel2)
 		{
 			Exp -= ExpToLevel2;
 			LevelUp();
 			unitLevelUp.Invoke(curLevel);
 		}
 
-		if(curLevel == 2 && Exp >= ExpToLevel3)
+		if (curLevel == 2 && Exp >= ExpToLevel3)
 		{
 			Exp = 0;
 			LevelUp();

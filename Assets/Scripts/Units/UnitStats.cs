@@ -1,9 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class UnitStats : MonoBehaviour
 {
@@ -17,15 +13,13 @@ public class UnitStats : MonoBehaviour
 	[TextArea(5, 30)]
 	public string description;
 
-	[HideInInspector] public List<float> stats = new();
-
-	private void Awake()
+	public void LevelUpUnit()
 	{
-		stats.Add(attackPower);
-		stats.Add(attackInterval);
-		stats.Add(blockChance);
-		stats.Add(critChance);
-		stats.Add(critDamage);
-		stats.Add(digCount);
+		attackPower *= 1.25f;
+		attackInterval *= 0.95f;
+		blockChance *= 1.25f;
+		critChance *= 1.25f;
+		critDamage *= 1.25f;
+		digCount++;
 	}
 }
