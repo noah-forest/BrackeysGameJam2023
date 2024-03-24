@@ -433,10 +433,10 @@ MonoBehaviour:
   critChance: 0.4
   critDamage: 15
   digCount: 5
+  sellValue: 0
   description: 'Sick as fuck.
 
     Has a high chance to crit.'
-  stats: []
 --- !u!114 &230730387648502647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5490,7 +5490,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curLevel: 1
   _exp: 0
-  expChanged:
+  expGained:
+    m_PersistentCalls:
+      m_Calls: []
+  unitLevelUp:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &8796321657911305149

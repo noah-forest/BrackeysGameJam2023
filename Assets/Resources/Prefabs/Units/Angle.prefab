@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: -8827765349174409349}
   - component: {fileID: -1768702570637079050}
   m_Layer: 0
-  m_Name: Goop
+  m_Name: Angle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -433,8 +433,8 @@ MonoBehaviour:
   critChance: 0.05
   critDamage: 5
   digCount: 5
+  sellValue: 0
   description: Removing this unit when I get a chance.
-  stats: []
 --- !u!114 &230730387648502647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5488,7 +5488,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curLevel: 1
   _exp: 0
-  expChanged:
+  expGained:
+    m_PersistentCalls:
+      m_Calls: []
+  unitLevelUp:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &8796321657911305149

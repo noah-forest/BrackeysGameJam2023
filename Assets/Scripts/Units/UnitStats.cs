@@ -10,6 +10,8 @@ public class UnitStats : MonoBehaviour
 	public float critDamage;
 	public int digCount;
 
+	public int sellValue;
+
 	[TextArea(5, 30)]
 	public string description;
 
@@ -20,6 +22,7 @@ public class UnitStats : MonoBehaviour
 		blockChance *= 1.25f;
 		critChance *= 1.25f;
 		critDamage *= 1.25f;
+		sellValue *= 2;
 		digCount++;
 	}
 }

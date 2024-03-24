@@ -10,7 +10,7 @@ public class Tooltip : MonoBehaviour
 
 	public int characterWrapLimit;
 
-	public RectTransform rectTransform;
+	public RectTransform _rectTransform;
 
 	public bool switchSide;
 
@@ -28,22 +28,36 @@ public class Tooltip : MonoBehaviour
 
 	private void Update()
 	{
-		Vector2 position = Input.mousePosition;
-		float pivotX;
-		float pivotY;
-
-		pivotX = position.x / Screen.width / 2;
-		pivotY = position.y / Screen.height / 2;
-
-		rectTransform.pivot = new Vector2(-pivotX, pivotY);
-
-		if (switchSide)
-		{
-			rectTransform.pivot = new Vector2(pivotX, pivotY);
-			transform.position = position;
-		}
-
+		var position = Input.mousePosition;
+		var normalizedPosition = new Vector2(position.x / Screen.width, position.y / Screen.height);
+		var pivot = CalculatePivot(normalizedPosition);
+		_rectTransform.pivot = pivot;
 		transform.position = position;
+	}
+
+	private Vector2 CalculatePivot(Vector2 normalizedPosition)
+	{
+		var pivotTopLeft = new Vector2(-0.05f, 1.05f);
+		var pivotTopRight = new Vector2(1.05f, 1.05f);
+		var pivotBottomLeft = new Vector2(-0.05f, -0.05f);
+		var pivotBottomRight = new Vector2(1.05f, -0.05f);
+
+		if (normalizedPosition.x < 0.5f && normalizedPosition.y >= 0.5f)
+		{
+			return pivotTopLeft;
+		}
+		else if (normalizedPosition.x > 0.5f && normalizedPosition.y >= 0.5f)
+		{
+			return pivotTopRight;
+		}
+		else if (normalizedPosition.x <= 0.5f && normalizedPosition.y < 0.5f)
+		{
+			return pivotBottomLeft;
+		}
+		else
+		{
+			return pivotBottomRight;
+		}
 	}
 }
 

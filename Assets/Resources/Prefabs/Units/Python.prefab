@@ -433,10 +433,10 @@ MonoBehaviour:
   critChance: 0.95
   critDamage: 20
   digCount: 2
+  sellValue: 0
   description: 'Has a very high chance to crit.
 
     Does more damage on crit hits.'
-  stats: []
 --- !u!114 &230730387648502647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5490,7 +5490,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curLevel: 1
   _exp: 0
-  expChanged:
+  expGained:
+    m_PersistentCalls:
+      m_Calls: []
+  unitLevelUp:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &8796321657911305149

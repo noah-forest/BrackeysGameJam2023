@@ -51,12 +51,13 @@ public class ShopController : MonoBehaviour
 			if (arg0.CompareTag("BattleSlot") || arg0.CompareTag("ReserveSlot"))
 			{
 				sellWindow.SetActive(true);
-				sellWindowPrice.text = $"{sellCost}";
 			}
 
 			if (arg0.payload != null)
 			{
 				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[1]);
+				UnitStats sellInfo = arg0.payload.GetComponent<UnitStats>();
+				sellWindowPrice.text = $"{sellInfo.sellValue}";
 				//Debug.Log("playing pick up sound");
 			}
 		});
@@ -82,10 +83,11 @@ public class ShopController : MonoBehaviour
 			if (slot.payload != null)
 			{
 				// sold the unit
+				UnitStats sellInfo = slot.payload.GetComponent<UnitStats>();
 				draggedIntoShop = true;
 				slot.payload = null;
 				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
-				gameManager.Gold += sellCost;
+				gameManager.Gold += (int)sellInfo.sellValue;
 			}
 			return false;
 		});
@@ -110,7 +112,8 @@ public class ShopController : MonoBehaviour
 
 			SetUnitPayload(unitSlot, curShopItem);
 
-			sellCost = curShopItem.unitCost;
+			UnitStats sellInfo = unitSlot.payload.GetComponent<UnitStats>();
+			sellInfo.sellValue = (int)(curShopItem.unitCost * 0.75);
 
 			unitSlot.AddRetrievePrecheck((shopSlot, newSlot) =>
 			{

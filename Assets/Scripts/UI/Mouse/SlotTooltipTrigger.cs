@@ -2,15 +2,13 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ShopUnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-	public SetUnitInfo unitInfo;
+	private Slot unitSlot;
 
 	private UnitStats stats;
 	private int Health;
 	private TooltipSystem tooltipSystem;
-
-	private GameObject prefab;
 
 	private string header;
 	private string rarity;
@@ -19,15 +17,18 @@ public class ShopUnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPoin
 
 	private void Start()
 	{
+		unitSlot = GetComponent<Slot>();
 		tooltipSystem = TooltipSystem.instance;
-		header = unitInfo.curUnit.unitName;
 	}
 
 	public void OnPointerEnter(PointerEventData eventData)
 	{
-		prefab = unitInfo.prefab;
-		stats = prefab.GetComponent<UnitStats>();
-		Health = prefab.GetComponent<Health>().maxHealth;
+		if (unitSlot.payload == null) return;
+
+		header = unitSlot.payload.name.Replace("(Clone)","").Trim();
+		stats = unitSlot.payload.GetComponent<UnitStats>();
+		Health = unitSlot.payload.GetComponent<Health>().maxHealth;
+
 		// raw stats to show
 		tooltipSystem.healthTxt.text = Health.ToString();
 		tooltipSystem.dmgTxt.text = $"{stats.attackPower}";
@@ -46,9 +47,14 @@ public class ShopUnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPoin
 		tooltipSystem.blockChanceTxt.text = $"{stats.blockChance * 100}%";
 		tooltipSystem.critChanceTxt.text = $"{stats.critChance * 100}%";
 
-		tooltipSystem.SwitchTooltipSide();
-
-		TooltipSystem.Show(header);
+		// if the unit is in the battle slot, switch sides
+		if (unitSlot.CompareTag("BattleSlot"))
+		{
+			TooltipSystem.Show(header, true);
+		} else
+		{
+			TooltipSystem.Show(header, false);
+		}
 	}
 
 	public void OnPointerExit(PointerEventData eventData)

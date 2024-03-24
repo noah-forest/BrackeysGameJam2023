@@ -32,8 +32,10 @@ public class TooltipSystem : MonoBehaviour
 		Hide();
 	}
 
-	public static void Show(string header = "")
+	public static void Show(string header, bool side)
 	{
+		instance.tooltip.switchSide = side;
+
 		instance.tooltip.SetText(header);
 		instance.tooltip.gameObject.SetActive(true);
 	}
@@ -41,13 +43,5 @@ public class TooltipSystem : MonoBehaviour
 	public static void Hide()
 	{
 		instance.tooltip.gameObject.SetActive(false);
-	}
-
-	public void SwitchTooltipSide()
-	{
-		if (tooltip.switchSide)
-		{
-			tooltip.switchSide = !tooltip.switchSide;
-		}
 	}
 }
