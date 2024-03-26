@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +5,7 @@ public class AudioButton : MonoBehaviour
 {
 	[SerializeField] private Sprite buttonDefault;
 	[SerializeField] private Sprite buttonDisabled;
-    [SerializeField] private GameObject sliderObj;
+	[SerializeField] private GameObject sliderObj;
 	[SerializeField] private Slider slider;
 	[SerializeField] private Image currentImage;
 
@@ -16,25 +13,27 @@ public class AudioButton : MonoBehaviour
 
 	private void Update()
 	{
-		if(slider.value <= 0.005)
+		if (slider.value <= 0.005)
 		{
 			currentImage.sprite = buttonDisabled;
-		} else
+		}
+		else
 		{
 			currentImage.sprite = buttonDefault;
 		}
 	}
 
 	public void OnClick()
-    {
+	{
 		if (open)
 		{
 			open = false;
 			sliderObj.SetActive(false);
-		} else
+		}
+		else
 		{
 			sliderObj.SetActive(true);
 			open = true;
 		}
-    }
+	}
 }
