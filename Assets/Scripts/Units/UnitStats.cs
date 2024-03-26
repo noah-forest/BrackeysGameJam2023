@@ -15,8 +15,14 @@ public class UnitStats : MonoBehaviour
 	[TextArea(5, 30)]
 	public string description;
 
+	private Health health;
+
 	public void LevelUpUnit()
 	{
+		health = GetComponent<Health>();
+
+		health.maxHealth *= 1.25f;
+
 		attackPower *= 1.25f;
 		attackInterval *= 0.95f;
 		blockChance *= 1.25f;

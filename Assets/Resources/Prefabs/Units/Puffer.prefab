@@ -162,7 +162,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: c92070f50f9c3e240bb063172fb9b106, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c8a31b4286ccc7349ab59e53ef3e6e52, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -371,7 +371,7 @@ GameObject:
   - component: {fileID: -1555334802469748844}
   - component: {fileID: -3074717516838707651}
   m_Layer: 0
-  m_Name: Trout
+  m_Name: Puffer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -406,7 +406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35347b89a44b5bd44b7e1644e5cad69a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 35
   _health: 0
   isDead: 0
   died:
@@ -427,14 +427,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22ad420a994f2c64ea9cb16eded97be2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 5
+  attackPower: 3
   attackInterval: 2
-  blockChance: 0.05
+  blockChance: 0.5
   critChance: 0.4
-  critDamage: 15
-  digCount: 5
+  critDamage: 10
+  digCount: 4
   sellValue: 0
-  description: 'Tried to warn you about the hook. '
+  description: 'He''s just nervous.
+
+    High block chance.
+
+'
 --- !u!114 &230730387648502647
 MonoBehaviour:
   m_ObjectHideFlags: 0

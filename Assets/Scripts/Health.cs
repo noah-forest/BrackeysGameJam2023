@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
-	public int maxHealth;
+	public float maxHealth;
 	public float _health;
 
 	public float health

@@ -7,7 +7,7 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 	private Slot unitSlot;
 
 	private UnitStats stats;
-	private int Health;
+	private float Health;
 	private TooltipSystem tooltipSystem;
 
 	private string header;
@@ -30,11 +30,11 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 		Health = unitSlot.payload.GetComponent<Health>().maxHealth;
 
 		// raw stats to show
-		tooltipSystem.healthTxt.text = Health.ToString();
-		tooltipSystem.dmgTxt.text = $"{stats.attackPower}";
-		tooltipSystem.atkSpdTxt.text = $"{stats.attackInterval}";
-		tooltipSystem.digCountTxt.text = $"{stats.digCount}";
-		tooltipSystem.critDmgTxt.text = $"{stats.critDamage}";
+		tooltipSystem.healthTxt.text = $"{Mathf.Ceil(Health)}";
+		tooltipSystem.dmgTxt.text = $"{Mathf.Ceil(stats.attackPower)}";
+		tooltipSystem.atkSpdTxt.text = $"{Mathf.Ceil(stats.attackInterval)}";
+		tooltipSystem.digCountTxt.text = $"{Mathf.Ceil(stats.digCount)}";
+		tooltipSystem.critDmgTxt.text = $"{Mathf.Ceil(stats.critDamage)}";
 		tooltipSystem.unitDesc.text = stats.description;
 
 		// if the unit has no desc, hide the object.
@@ -44,8 +44,14 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 		}
 
 		// stats to show as percentage
-		tooltipSystem.blockChanceTxt.text = $"{stats.blockChance * 100}%";
-		tooltipSystem.critChanceTxt.text = $"{stats.critChance * 100}%";
+		tooltipSystem.blockChanceTxt.text = $"{Mathf.Ceil(stats.blockChance * 100)}";
+		
+		if(stats.critChance >= 1)
+		{
+			stats.critChance = 1;
+		}
+
+		tooltipSystem.critChanceTxt.text = $"{Mathf.Ceil(stats.critChance * 100)}";
 
 		// if the unit is in the battle slot, switch sides
 		if (unitSlot.CompareTag("BattleSlot"))

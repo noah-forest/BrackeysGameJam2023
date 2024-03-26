@@ -234,7 +234,6 @@ public class GameManager : MonoBehaviour
 	/// </summary>
 	public void LoadShop()
     {
-		Debug.Log("shop is doing something");
 		resumeGame.Invoke();
 		amountOfBattlesCur = 0;
 		HideBattlefield();

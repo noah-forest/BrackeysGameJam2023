@@ -13,6 +13,8 @@ public class SetUnitInfo : MonoBehaviour
 	public Image shopPreviewShadow;
 	public Image shopPreviewBackground;
 	public Image shopLabel;
+	public Image shopCostLabel;
+	public Image shopLabelBorder;
 	public Image shopFrame;
 
 	public TextMeshProUGUI unitName;
@@ -33,6 +35,9 @@ public class SetUnitInfo : MonoBehaviour
 		if (curUnit == null) return;
 
 		SetLabelRarity();
+
+		shopLabelBorder.color = shopLabel.color;
+		shopCostLabel.color = shopLabel.color;
 
 		unitCost = (int)curUnit.unitRarity;
 
@@ -55,15 +60,6 @@ public class SetUnitInfo : MonoBehaviour
 			UnitRarity.Epic => (Color)new Color32(218, 128, 245, 255),
 			UnitRarity.Legendary => (Color)new Color32(255, 175, 85, 255),
 			_ => (Color)new Color32(217, 217, 217, 255),
-		};
-
-		shopFrame.color = curUnit.unitRarity switch
-		{
-			UnitRarity.Common => (Color)new Color32(0, 0, 0, 255),
-			UnitRarity.Rare => (Color)new Color32(0, 170, 255, 255),
-			UnitRarity.Epic => (Color)new Color32(120, 0, 255, 255),
-			UnitRarity.Legendary => (Color)new Color32(255, 255, 255, 255),
-			_ => (Color)new Color32(0, 0, 0, 255)
 		};
 	}
 } 
