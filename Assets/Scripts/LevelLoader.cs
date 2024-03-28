@@ -46,6 +46,7 @@ public class LevelLoader : MonoBehaviour
 	{
 		StartCoroutine(LoadLevel("transition"));
 		StartCoroutine(WaitToTransShop());
+		gameManager.wonParticles.SetActive(false);
 		StartCoroutine(LoadLevel("battle"));
 	}
 

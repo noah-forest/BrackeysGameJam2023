@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SlideOutElement : MonoBehaviour
@@ -13,11 +12,23 @@ public class SlideOutElement : MonoBehaviour
 
 	private void OnEnable()
 	{
-		anim.SetTrigger("slideOut");
+		if(gameObject.name == "shop" || gameObject.name == "playerInfo" || gameObject.name == "unitInventory")
+		{
+			StartCoroutine(WaitForTransition());
+		} else
+		{
+			anim.SetTrigger("slideOut");
+		}
 	}
 
 	private void OnDisable()
 	{
-		anim.SetTrigger("disabled");
+		anim.ResetTrigger("disabled");
+	}
+
+	private IEnumerator WaitForTransition()
+	{
+		yield return new WaitForSeconds(0.2f);
+		anim.SetTrigger("slideOut");
 	}
 }

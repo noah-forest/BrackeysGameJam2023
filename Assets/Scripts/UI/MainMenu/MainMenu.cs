@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
 {
 	[HideInInspector]
 	public GameManager gameManager;
-	
+
 	private void Start()
 	{
 		gameManager = GameManager.singleton;

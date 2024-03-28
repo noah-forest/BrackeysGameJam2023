@@ -87,6 +87,8 @@ public class GameManager : MonoBehaviour
 			livesChangedEvent.Invoke();
 		}
 	}
+	public int maxLives;
+
 	[HideInInspector]
 	public List<GameObject> allUnitPrefabs;
 	#endregion
@@ -96,6 +98,8 @@ public class GameManager : MonoBehaviour
 	bool playerUnitsLoaded;
 
 	public GameObject HUD;
+
+	public GameObject wonParticles;
 	
 	[SerializeField] GameObject battleField;
 
@@ -152,13 +156,11 @@ public class GameManager : MonoBehaviour
     
 	public void TogglePauseMenu()
     {
-		if (SceneManager.GetActiveScene().name == "MainMenu") return;
 		if (gameIsPaused)
 		{
 			openThePauseMenuPleaseGoodSir = false;
 			resumeGame.Invoke();
-		}
-		else
+		} else
 		{
 			openThePauseMenuPleaseGoodSir = true;
 			pauseGame.Invoke();
@@ -187,6 +189,7 @@ public class GameManager : MonoBehaviour
 	{
 		startBattle.Invoke();
 		Lives = 3;
+		maxLives = Lives;
 		Gold = 150;
 		inShop = true;
 		MusicPlayer.Play();
@@ -213,7 +216,7 @@ public class GameManager : MonoBehaviour
 	
 	public void NextBattleButton()
 	{
-		Gold = 10;
+		Gold = 12;
 		if (inShop)
 		{
 			StartNextBattle();
