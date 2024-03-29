@@ -40,12 +40,6 @@ public class MouseUtils : MonoBehaviour
 	private List<Slot> slots = new();
 	private EventTrigger trigger;
 
-	// Start is called before the first frame update
-	void Start()
-	{
-		FindButtonsInScene();
-	}
-
 	public void FindButtonsInScene()
 	{
 		if(buttons.Count > 0)

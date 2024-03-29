@@ -114,6 +114,7 @@ public class ShopController : MonoBehaviour
 
 			UnitStats sellInfo = unitSlot.payload.GetComponent<UnitStats>();
 			sellInfo.sellValue = (int)(curShopItem.unitCost * 0.75);
+			sellInfo.Rarity = curShopItem.curUnit.unitRarity;
 
 			unitSlot.AddRetrievePrecheck((shopSlot, newSlot) =>
 			{

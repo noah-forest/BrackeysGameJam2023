@@ -34,7 +34,7 @@ public class SetUnitInfo : MonoBehaviour
 	{
 		if (curUnit == null) return;
 
-		SetLabelRarity();
+		SetLabelRarity(shopLabel);
 
 		shopLabelBorder.color = shopLabel.color;
 		shopCostLabel.color = shopLabel.color;
@@ -51,9 +51,9 @@ public class SetUnitInfo : MonoBehaviour
 		unitCostText.SetText(unitCost.ToString());
 	}
 
-	private void SetLabelRarity()
+	private void SetLabelRarity(Image label)
 	{
-		shopLabel.color = curUnit.unitRarity switch
+		label.color = curUnit.unitRarity switch
 		{
 			UnitRarity.Common => (Color)new Color32(217, 217, 217, 255),
 			UnitRarity.Rare => (Color)new Color32(128, 187, 245, 255),

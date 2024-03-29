@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -11,9 +12,8 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 	private TooltipSystem tooltipSystem;
 
 	private string header;
-	private string rarity;
-	private Color rarityBackgroundColor;
 
+	private UnitRarity rarity;
 
 	private void Start()
 	{
@@ -28,6 +28,7 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 		header = unitSlot.payload.name.Replace("(Clone)","").Trim();
 		stats = unitSlot.payload.GetComponent<UnitStats>();
 		Health = unitSlot.payload.GetComponent<Health>().maxHealth;
+		rarity = stats.Rarity;
 
 		// raw stats to show
 		tooltipSystem.healthTxt.text = $"{Mathf.Ceil(Health)}";
@@ -35,7 +36,10 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 		tooltipSystem.atkSpdTxt.text = $"{Mathf.Ceil(stats.attackInterval)}";
 		tooltipSystem.digCountTxt.text = $"{Mathf.Ceil(stats.digCount)}";
 		tooltipSystem.critDmgTxt.text = $"{Mathf.Ceil(stats.critDamage)}";
+		
 		tooltipSystem.unitDesc.text = stats.description;
+		tooltipSystem.rarityTxt.text = rarity.ToString();
+		SetLabelRarity(tooltipSystem.rarityLabel);
 
 		// if the unit has no desc, hide the object.
 		if(stats.description == null)
@@ -66,5 +70,17 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 	public void OnPointerExit(PointerEventData eventData)
 	{ 
 		TooltipSystem.Hide();
+	}
+
+	private void SetLabelRarity(Image label)
+	{
+		label.color = rarity switch
+		{
+			UnitRarity.Common => (Color)new Color32(217, 217, 217, 255),
+			UnitRarity.Rare => (Color)new Color32(128, 187, 245, 255),
+			UnitRarity.Epic => (Color)new Color32(218, 128, 245, 255),
+			UnitRarity.Legendary => (Color)new Color32(255, 175, 85, 255),
+			_ => (Color)new Color32(217, 217, 217, 255),
+		};
 	}
 }

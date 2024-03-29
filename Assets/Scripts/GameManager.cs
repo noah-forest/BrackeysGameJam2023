@@ -87,7 +87,6 @@ public class GameManager : MonoBehaviour
 			livesChangedEvent.Invoke();
 		}
 	}
-	public int maxLives;
 
 	[HideInInspector]
 	public List<GameObject> allUnitPrefabs;
@@ -103,7 +102,7 @@ public class GameManager : MonoBehaviour
 	
 	[SerializeField] GameObject battleField;
 
-	[SerializeField] AudioSource MusicPlayer;
+	public AudioSource MusicPlayer;
 
 	public Actor playerActor;
 	public Actor enemyActor;
@@ -112,6 +111,8 @@ public class GameManager : MonoBehaviour
 	public int battleReward = 3;
 	public int amountOfBattlesBeforeShop = 2;
 	public int amountOfBattlesCur = 0;
+
+	public UIManager uiManager;
 
 	[HideInInspector] public MouseUtils mouseUtils;
 	
@@ -188,8 +189,8 @@ public class GameManager : MonoBehaviour
 	public void StartGame()
 	{
 		startBattle.Invoke();
+		uiManager.ResetHearts();
 		Lives = 3;
-		maxLives = Lives;
 		Gold = 150;
 		inShop = true;
 		MusicPlayer.Play();

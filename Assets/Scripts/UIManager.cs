@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -5,15 +6,9 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-	[SerializeField] GameObject livesContainer;
-	[SerializeField] GameObject livesArea;
-	public Sprite emptyHeart;
-	public Sprite fullHeart;
-	private List<Image> hearts = new();
+	[SerializeField] TextMeshProUGUI livesUI;
+	[SerializeField] TextMeshProUGUI goldUI;
 
-    [SerializeField] TextMeshProUGUI livesUI;
-    [SerializeField] TextMeshProUGUI goldUI;
-    
 	[SerializeField] GameObject battleOverScreen;
 	[SerializeField] GameObject result;
 	private Animator textAnim;
@@ -22,28 +17,39 @@ public class UIManager : MonoBehaviour
 	[SerializeField] GameObject top;
 
 	[SerializeField] GameObject confirmUI;
-	
-	[SerializeField] GameObject gameOverScreen;
-    [SerializeField] GameObject pauseMenuScreen;
-	[SerializeField] GameObject reserveSlots;
-    GameManager gameManager;
-    [SerializeField] GameObject shopUi;
 
-    private void Start()
-    {
-        gameManager = GameManager.singleton;
-        gameManager.goldChangedEvent.AddListener(UpdateGoldText);
-        gameManager.livesChangedEvent.AddListener(UpdateLivesText);
-        gameManager.battleWonEvent.AddListener(ShowBattleWonScreen);
-        gameManager.battleLostEvent.AddListener(ShowBattleLostScreen);
-        gameManager.gameOverEvent.AddListener(ShowGameOverScreen);
-        gameManager.loadShopEvent.AddListener(ShowShop);
-        gameManager.battleStartedEvent.AddListener(HideShop);
-        gameManager.pauseGame.AddListener(ShowPauseMenu);
-        gameManager.resumeGame.AddListener(ShowPauseMenu);
-        gameManager.loadShopEvent.AddListener(HideGameOverScreen);
-        UpdateGoldText();
-        UpdateLivesText();
+	[SerializeField] GameObject gameOverScreen;
+	[SerializeField] GameObject pauseMenuScreen;
+	[SerializeField] GameObject reserveSlots;
+	GameManager gameManager;
+	[SerializeField] GameObject shopUi;
+
+	[SerializeField] GameObject livesContainer;
+	[SerializeField] GameObject livesArea;
+	[SerializeField] Sprite fullHeart;
+	[SerializeField] Material heartMat;
+	private List<Image> hearts = new();
+	private Animator heartAnim;
+
+	private float dissolveTime = 2f;
+
+	private int dissolveAmount = Shader.PropertyToID("_DissolveAmount");
+
+	private void Start()
+	{
+		gameManager = GameManager.singleton;
+		gameManager.goldChangedEvent.AddListener(UpdateGoldText);
+		gameManager.livesChangedEvent.AddListener(UpdateLivesText);
+		gameManager.battleWonEvent.AddListener(ShowBattleWonScreen);
+		gameManager.battleLostEvent.AddListener(ShowBattleLostScreen);
+		gameManager.gameOverEvent.AddListener(ShowGameOverScreen);
+		gameManager.loadShopEvent.AddListener(ShowShop);
+		gameManager.battleStartedEvent.AddListener(HideShop);
+		gameManager.pauseGame.AddListener(ShowPauseMenu);
+		gameManager.resumeGame.AddListener(ShowPauseMenu);
+		gameManager.loadShopEvent.AddListener(HideGameOverScreen);
+		UpdateGoldText();
+		UpdateLivesText();
 
 		foreach (Transform child in livesContainer.transform.GetComponentsInChildren<Transform>())
 		{
@@ -52,31 +58,34 @@ public class UIManager : MonoBehaviour
 				hearts.Add(child.gameObject.GetComponent<Image>());
 			}
 		}
+
+		ResetHearts();
 	}
 
-    private void ShowPauseMenu()
-    {
-        pauseMenuScreen.SetActive(gameManager.openThePauseMenuPleaseGoodSir);
-    }
+	private void ShowPauseMenu()
+	{
+		pauseMenuScreen.SetActive(gameManager.openThePauseMenuPleaseGoodSir);
+	}
 
-    private void UpdateGoldText()
-    {
-        goldUI.text = gameManager.Gold.ToString();
-    }
-    private void UpdateLivesText()
-    {
-        livesUI.text = gameManager.Lives.ToString();
-    }
+	private void UpdateGoldText()
+	{
+		goldUI.text = gameManager.Gold.ToString();
+	}
+	private void UpdateLivesText()
+	{
+		livesUI.text = gameManager.Lives.ToString();
+	}
 
 	public void ShowConfirmUI()
 	{
-		for(int i = 0; i < gameManager.lanes.Count; i++)
+		for (int i = 0; i < gameManager.lanes.Count; i++)
 		{
 			if (gameManager.playerBattleSlots[i].payload == null)
 			{
 				confirmUI.SetActive(true);
 				break;
-			} else if(i >= gameManager.lanes.Count-1 && gameManager.playerBattleSlots[i].payload != null)
+			}
+			else if (i >= gameManager.lanes.Count - 1 && gameManager.playerBattleSlots[i].payload != null)
 			{
 				gameManager.BattleTransition();
 				break;
@@ -84,20 +93,20 @@ public class UIManager : MonoBehaviour
 		}
 	}
 
-    #region BattleOver
-    //this is kind of fucked but its fine.
-    private void ShowBattleWonScreen()
+	#region BattleOver
+	//this is kind of fucked but its fine.
+	private void ShowBattleWonScreen()
 	{
 		battleOverScreen.SetActive(true);
 		ShowResult(0);
-    }
+	}
 
-    private void ShowBattleLostScreen()
-    {
+	private void ShowBattleLostScreen()
+	{
 		battleOverScreen.SetActive(true);
 		ShowResult(1);
 		LoadLives();
-    }
+	}
 
 	private void ShowResult(int index)
 	{
@@ -114,7 +123,8 @@ public class UIManager : MonoBehaviour
 			top.SetActive(false);
 			livesArea.SetActive(false);
 			gameManager.wonParticles.SetActive(true);
-		} else if (index == 1) // if the battle is LOST
+		}
+		else if (index == 1) // if the battle is LOST
 		{
 			textAnim.SetTrigger("lose");
 			livesArea.SetActive(true);
@@ -127,37 +137,76 @@ public class UIManager : MonoBehaviour
 	{
 		for (int i = 0; i < hearts.Count; i++)
 		{
-			if (i < gameManager.Lives)
+			if (i >= gameManager.Lives)
 			{
-				hearts[i].sprite = fullHeart;
+				//dissolve heart
+				heartAnim = hearts[i].GetComponent<Animator>();
+				StartCoroutine(WaitToVanish(hearts[i]));
 			}
-			else
-			{
-				hearts[i].sprite = emptyHeart;
-			}
+		}
+	}
+
+	private IEnumerator Vanish(Image heartToDissolve)
+	{
+		float elapsedTime = 0f;
+		while (elapsedTime < dissolveTime)
+		{
+			elapsedTime += Time.unscaledDeltaTime;
+
+			float lerpedDissolve = Mathf.Lerp(0, 1.1f, (elapsedTime / dissolveTime));
+
+			heartToDissolve.material.SetFloat(dissolveAmount, lerpedDissolve);
+
+			yield return null;
+		}
+
+		heartToDissolve.color = (Color)new Color32(0, 0, 0, 0);
+		heartToDissolve.sprite = null;
+	}
+
+	private IEnumerator WaitToVanish(Image heartToDissolve)
+	{
+		heartAnim.SetTrigger("grow");
+		yield return new WaitForSecondsRealtime(0.5f);
+		heartAnim.ResetTrigger("grow");
+		heartAnim.SetTrigger("shake");
+		StartCoroutine(Vanish(heartToDissolve));
+	}
+
+	public void ResetHearts()
+	{
+		foreach (Image heart in hearts)
+		{
+			heart.material.SetFloat(dissolveAmount, 0f);
+			heart.color = (Color)new Color32(255, 255, 255, 255);
+			heart.gameObject.transform.localScale = Vector3.one;
+			heart.sprite = fullHeart;
+
+			heartAnim = heart.GetComponent<Animator>();
+			heartAnim.SetTrigger("disabled");
 		}
 	}
 
 	#endregion
 
 	private void ShowShop()
-    {
-        shopUi.SetActive(true);
+	{
+		shopUi.SetActive(true);
 		reserveSlots.SetActive(true);
-    }
-    private void HideShop()
-    {
-        shopUi.SetActive(false);
+	}
+	private void HideShop()
+	{
+		shopUi.SetActive(false);
 		reserveSlots.SetActive(false);
-    }
+	}
 
-    private void ShowGameOverScreen()
-    {
-        gameOverScreen.SetActive(true);
-    }
+	private void ShowGameOverScreen()
+	{
+		gameOverScreen.SetActive(true);
+	}
 
-    private void HideGameOverScreen()
-    {
-        gameOverScreen.SetActive(false);
-    }
+	private void HideGameOverScreen()
+	{
+		gameOverScreen.SetActive(false);
+	}
 }

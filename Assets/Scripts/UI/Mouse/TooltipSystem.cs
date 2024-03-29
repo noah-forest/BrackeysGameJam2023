@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TooltipSystem : MonoBehaviour
 {
@@ -18,6 +16,7 @@ public class TooltipSystem : MonoBehaviour
 	public TextMeshProUGUI digCountTxt;
 	public TextMeshProUGUI critDmgTxt;
 	public TextMeshProUGUI rarityTxt;
+	public Image rarityLabel;
 	public TextMeshProUGUI unitDesc;
 
 	private void Awake()

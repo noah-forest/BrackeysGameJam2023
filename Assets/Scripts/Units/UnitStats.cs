@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class UnitStats : MonoBehaviour
 {
+	public UnitRarity Rarity;
+
 	public float attackPower;
 	public float attackInterval;
 	[Range(0, 1)] public float blockChance;
