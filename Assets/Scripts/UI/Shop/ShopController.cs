@@ -97,6 +97,7 @@ public class ShopController : MonoBehaviour
 	}
 
 
+
 	/// <summary>
 	/// Populates the shop with units
 	/// </summary>

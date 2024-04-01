@@ -10,12 +10,14 @@ public class LevelLoader : MonoBehaviour
 	public bool transitionIsPlaying;
 
 	private GameManager gameManager;
+	private UIManager uiManager;
 
 	private void Start()
 	{
 		transitionIsPlaying = false;
 
 		gameManager = GameManager.singleton;
+		uiManager = gameManager.uiManager;
 
 		gameManager.startGame.AddListener(StartGame);
 		gameManager.startBattle.AddListener(StartBattle);
@@ -28,6 +30,7 @@ public class LevelLoader : MonoBehaviour
 	private void StartGame()
 	{
 		StartCoroutine(LoadLevel("MainMenu"));
+		StartCoroutine(WaitToHide());
 	}
 
 	private void StartBattle()
@@ -94,5 +97,12 @@ public class LevelLoader : MonoBehaviour
 		yield return new WaitForSeconds(transitionTime);
 
 		gameManager.loadUI.Invoke();
+	}
+
+	IEnumerator WaitToHide()
+	{
+		yield return new WaitForSeconds(0.8f);
+
+		uiManager.HideMenus();
 	}
 }

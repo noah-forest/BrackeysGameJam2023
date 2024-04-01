@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
 	[SerializeField] GameObject reserveSlots;
 	GameManager gameManager;
 	[SerializeField] GameObject shopUi;
+	[SerializeField] GameObject HUD;
 
 	[SerializeField] GameObject livesContainer;
 	[SerializeField] GameObject livesArea;
@@ -156,10 +157,8 @@ public class UIManager : MonoBehaviour
 			float lerpedDissolve = Mathf.Lerp(0, 1.1f, (elapsedTime / dissolveTime));
 
 			heartToDissolve.material.SetFloat(dissolveAmount, lerpedDissolve);
-
 			yield return null;
 		}
-
 		heartToDissolve.color = (Color)new Color32(0, 0, 0, 0);
 		heartToDissolve.sprite = null;
 	}
@@ -167,9 +166,7 @@ public class UIManager : MonoBehaviour
 	private IEnumerator WaitToVanish(Image heartToDissolve)
 	{
 		heartAnim.SetTrigger("grow");
-		yield return new WaitForSecondsRealtime(0.5f);
-		heartAnim.ResetTrigger("grow");
-		heartAnim.SetTrigger("shake");
+		yield return new WaitForSecondsRealtime(0.6f);
 		StartCoroutine(Vanish(heartToDissolve));
 	}
 
@@ -181,19 +178,23 @@ public class UIManager : MonoBehaviour
 			heart.color = (Color)new Color32(255, 255, 255, 255);
 			heart.gameObject.transform.localScale = Vector3.one;
 			heart.sprite = fullHeart;
-
-			heartAnim = heart.GetComponent<Animator>();
-			heartAnim.SetTrigger("disabled");
 		}
 	}
 
 	#endregion
 
+	public void HideMenus()
+	{
+		shopUi.SetActive(false);
+		HUD.SetActive(false);
+	}
+	
 	private void ShowShop()
 	{
 		shopUi.SetActive(true);
 		reserveSlots.SetActive(true);
 	}
+
 	private void HideShop()
 	{
 		shopUi.SetActive(false);

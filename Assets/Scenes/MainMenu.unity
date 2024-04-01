@@ -159,7 +159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 44.912514, y: 297.16638}
+  m_AnchoredPosition: {x: -1761, y: 297.16638}
   m_SizeDelta: {x: 1123.8251, y: 299.6672}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &2937807
@@ -5817,7 +5817,7 @@ Animator:
   m_GameObject: {fileID: 346785129}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c6b2594639480fa498ea3896d290bfee, type: 2}
+  m_Controller: {fileID: 9100000, guid: c33cb317ab5203a4f9bfff44386df725, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 2
   m_ApplyRootMotion: 0
@@ -10903,7 +10903,7 @@ MonoBehaviour:
 
     --------------------------------
 
-    8 new units
+    9 new units
 
     --------------------------------
 
@@ -20499,7 +20499,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.97504, y: -414.62}
+  m_AnchoredPosition: {x: -0.97504, y: -971}
   m_SizeDelta: {x: 1032, y: 167.09}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1094930872
@@ -23402,7 +23402,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bf9c3fc4ca331e949a23f4c3c806b58e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8bd9b2cb1769c4b47a587c796d7b51d0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -40654,6 +40654,18 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4924796644863341493}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: TogglePauseMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4924796644863341493}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: BackToMainMenu
         m_Mode: 1
         m_Arguments:
@@ -44996,7 +45008,7 @@ Animator:
   m_GameObject: {fileID: 2013071083}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b85e24049dfded74a9a1bb5895fcf5ad, type: 2}
+  m_Controller: {fileID: 9100000, guid: c33cb317ab5203a4f9bfff44386df725, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 2
   m_ApplyRootMotion: 0
@@ -47099,6 +47111,7 @@ MonoBehaviour:
   pauseMenuScreen: {fileID: 1263255190065902659}
   reserveSlots: {fileID: 1830305625}
   shopUi: {fileID: 2644826010106768980}
+  HUD: {fileID: 6494404399350858429}
   livesContainer: {fileID: 1692761880}
   livesArea: {fileID: 473919677}
   fullHeart: {fileID: 21300000, guid: b2dc3ba4007a12648a6fa9ecca88a5bc, type: 3}
