@@ -159,7 +159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1761, y: 297.16638}
+  m_AnchoredPosition: {x: 0, y: 297.16638}
   m_SizeDelta: {x: 1123.8251, y: 299.6672}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &2937807
@@ -1389,7 +1389,7 @@ GameObject:
   m_Component:
   - component: {fileID: 79241912}
   m_Layer: 5
-  m_Name: textToAnimate (1)
+  m_Name: shadowAnimated
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3634,7 +3634,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 290.08746, y: -60.166412}
+  m_AnchoredPosition: {x: -1685.3973, y: -60.166412}
   m_SizeDelta: {x: 291.1376, y: 92.6484}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &244204777
@@ -3710,7 +3710,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -299.5153, y: 44.478577}
+  m_AnchoredPosition: {x: -2275, y: 44.478577}
   m_SizeDelta: {x: 291.1376, y: 92.6484}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &248046446
@@ -10889,12 +10889,22 @@ MonoBehaviour:
     --------------------------------
 
     Unit
-    price is dependent on rarity
+    rarity adjusted
 
     --------------------------------
 
-    Increased
-    the amount of money you receive per round
+    Unit cost is dependent
+    on rarity
+
+    --------------------------------
+
+    Unit sell amount is dependent
+    on rarity and level
+
+    --------------------------------
+
+    Increased the
+    amount of money you receive per round
 
     --------------------------------
 
@@ -24126,7 +24136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1382589522
 Transform:
   m_ObjectHideFlags: 0

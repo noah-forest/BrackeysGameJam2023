@@ -9,6 +9,7 @@ public class SetUnitInfo : MonoBehaviour
 	[HideInInspector] //this is set at runtime, do not manually set
 	public Unit curUnit;
 
+	public GameObject unitPreview;
 	public Image shopPreviewImage;
 	public Image shopPreviewShadow;
 	public Image shopPreviewBackground;
@@ -43,7 +44,7 @@ public class SetUnitInfo : MonoBehaviour
 
 		shopPreviewImage.sprite = curUnit.itemPreview;
 		shopPreviewShadow.sprite = shopPreviewImage.sprite;
-		shopPreviewImage.GetComponent<RectTransform>().anchoredPosition += curUnit.spriteOffset;
+		unitPreview.GetComponent<RectTransform>().anchoredPosition += curUnit.spriteOffset;
 
 		shopPreviewBackground.color = curUnit.previewColor;
 

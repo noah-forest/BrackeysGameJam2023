@@ -191,7 +191,7 @@ public class GameManager : MonoBehaviour
 		startBattle.Invoke();
 		uiManager.ResetHearts();
 		Lives = 3;
-		Gold = 150;
+		Gold = 250;
 		inShop = true;
 		MusicPlayer.Play();
 		battleField.SetActive(true);

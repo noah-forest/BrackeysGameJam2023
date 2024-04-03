@@ -30,6 +30,8 @@ public class LockShop : MonoBehaviour
 
         Button button = GetComponent<Button>();
         button.onClick.AddListener(SetShopLocked);
+
+		gameManager.startGame.AddListener(UnlockShop);
     }
 
     private void SetShopLocked()

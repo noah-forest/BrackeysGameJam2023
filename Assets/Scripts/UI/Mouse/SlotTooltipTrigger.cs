@@ -40,21 +40,19 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 		tooltipSystem.unitDesc.text = stats.description;
 		tooltipSystem.rarityTxt.text = rarity.ToString();
 		SetLabelRarity(tooltipSystem.rarityLabel);
-
-		// if the unit has no desc, hide the object.
-		if(stats.description == null)
-		{
-			Debug.Log(tooltipSystem.unitDesc.gameObject.transform.parent.name);
-		}
-
-		// stats to show as percentage
-		tooltipSystem.blockChanceTxt.text = $"{Mathf.Ceil(stats.blockChance * 100)}";
 		
+		//if the percentage is over 1, set it to 1
 		if(stats.critChance >= 1)
 		{
 			stats.critChance = 1;
 		}
 
+		if (stats.blockChance >= 1)
+		{
+			stats.blockChance = 1;
+		}
+
+		tooltipSystem.blockChanceTxt.text = $"{Mathf.Ceil(stats.blockChance * 100)}";
 		tooltipSystem.critChanceTxt.text = $"{Mathf.Ceil(stats.critChance * 100)}";
 
 		// if the unit is in the battle slot, switch sides
