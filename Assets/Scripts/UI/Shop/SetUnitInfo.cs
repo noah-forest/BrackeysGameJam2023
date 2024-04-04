@@ -25,7 +25,8 @@ public class SetUnitInfo : MonoBehaviour
 	public Button button; //this is set at runtime, do not manually set
 
 	public GameObject purchased;
-	public GameObject prefab;
+	public UnitStats unitStats;
+	private UnitRarity rarity;
 
 	[HideInInspector]
 	public int unitCost;
@@ -33,6 +34,9 @@ public class SetUnitInfo : MonoBehaviour
 	//set this items information = to the info on the SO
 	private void OnEnable()
 	{
+		unitStats = curUnit.unitStats;
+		rarity = unitStats.Rarity;
+
 		if (curUnit == null) return;
 
 		SetLabelRarity(shopLabel);
@@ -40,7 +44,13 @@ public class SetUnitInfo : MonoBehaviour
 		shopLabelBorder.color = shopLabel.color;
 		shopCostLabel.color = shopLabel.color;
 
-		unitCost = (int)curUnit.unitRarity;
+		if(rarity == UnitRarity.Legendary)
+		{
+			unitCost = 7;
+		} else
+		{
+			unitCost = (int)rarity;
+		}
 
 		shopPreviewImage.sprite = curUnit.itemPreview;
 		shopPreviewShadow.sprite = shopPreviewImage.sprite;
@@ -54,7 +64,7 @@ public class SetUnitInfo : MonoBehaviour
 
 	private void SetLabelRarity(Image label)
 	{
-		label.color = curUnit.unitRarity switch
+		label.color = rarity switch
 		{
 			UnitRarity.Common => (Color)new Color32(217, 217, 217, 255),
 			UnitRarity.Rare => (Color)new Color32(128, 187, 245, 255),

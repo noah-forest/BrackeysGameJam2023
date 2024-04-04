@@ -7,12 +7,7 @@ using UnityEngine.UI;
 public class Tooltip : MonoBehaviour
 {
 	public TextMeshProUGUI header;
-
-	public int characterWrapLimit;
-
 	public RectTransform _rectTransform;
-
-	public bool switchSide;
 
 	public void SetText(string h = "")
 	{
@@ -30,17 +25,21 @@ public class Tooltip : MonoBehaviour
 	{
 		var position = Input.mousePosition;
 		var normalizedPosition = new Vector2(position.x / Screen.width, position.y / Screen.height);
-		var pivot = CalculatePivot(normalizedPosition);
-		_rectTransform.pivot = pivot;
-		transform.position = position;
+		var pivot = CalculatePivot(normalizedPosition) * 100;
+
+		transform.position = position + (Vector3) pivot;
 	}
 
 	private Vector2 CalculatePivot(Vector2 normalizedPosition)
 	{
-		var pivotTopLeft = new Vector2(-0.05f, 1.05f);
-		var pivotTopRight = new Vector2(1.05f, 1.05f);
-		var pivotBottomLeft = new Vector2(-0.05f, -0.05f);
-		var pivotBottomRight = new Vector2(1.05f, -0.05f);
+		float y = 1.05f;
+		float right = -4.2f;
+		float left = -0.05f;	
+
+		var pivotTopLeft = new Vector2(left, y);
+		var pivotTopRight = new Vector2(right, y);
+		var pivotBottomLeft = new Vector2(left, y);
+		var pivotBottomRight = new Vector2(right, y);
 
 		if (normalizedPosition.x < 0.5f && normalizedPosition.y >= 0.5f)
 		{

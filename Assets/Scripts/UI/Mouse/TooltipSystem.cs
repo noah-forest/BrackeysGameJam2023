@@ -8,6 +8,7 @@ public class TooltipSystem : MonoBehaviour
 
 	public Tooltip tooltip;
 
+	public TextMeshProUGUI levelTxt;
 	public TextMeshProUGUI healthTxt;
 	public TextMeshProUGUI dmgTxt;
 	public TextMeshProUGUI blockChanceTxt;
@@ -31,10 +32,8 @@ public class TooltipSystem : MonoBehaviour
 		Hide();
 	}
 
-	public static void Show(string header, bool side)
+	public static void Show(string header)
 	{
-		instance.tooltip.switchSide = side;
-
 		instance.tooltip.SetText(header);
 		instance.tooltip.gameObject.SetActive(true);
 	}

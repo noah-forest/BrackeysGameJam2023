@@ -1,14 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public enum UnitRarity
-{
-	Common = 2,
-	Rare,
-	Epic,
-	Legendary
-}
-
 [CreateAssetMenu]
 public class Unit : ScriptableObject
 {
@@ -17,7 +9,6 @@ public class Unit : ScriptableObject
 
 	[Header("Information")]
 	public string unitName;
-	public UnitRarity unitRarity;
-
+	public UnitStats unitStats;
 	public Vector2 spriteOffset;
 }

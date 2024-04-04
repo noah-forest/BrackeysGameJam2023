@@ -212,7 +212,6 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 					return;
 				}
 			}
-
 			(this.payload, draggedToSlot.payload) = (draggedToSlot.payload, payload);
 		}
     }

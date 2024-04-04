@@ -1,6 +1,14 @@
 using System;
 using UnityEngine;
 
+public enum UnitRarity
+{
+	Common = 2,
+	Rare,
+	Epic,
+	Legendary
+}
+
 public class UnitStats : MonoBehaviour
 {
 	public UnitRarity Rarity;

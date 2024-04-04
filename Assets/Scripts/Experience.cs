@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,6 +11,12 @@ public class Experience : MonoBehaviour
 	public int _exp;
 	[HideInInspector] public UnityEvent<int> expGained = new();
 	[HideInInspector] public UnityEvent<int> unitLevelUp = new();
+
+	private static Dictionary<int, int> levelToExpNeeded = new()
+	{
+		{1, ExpToLevel2},
+		{2, ExpToLevel3}
+	};
 
 	public int Exp
 	{
@@ -58,4 +65,16 @@ public class Experience : MonoBehaviour
 			unitLevelUp.Invoke(curLevel);
 		}
 	}
+
+	public int GetExpNeeded()
+	{
+		if (levelToExpNeeded.ContainsKey(curLevel))
+		{
+			return levelToExpNeeded[curLevel];
+		}
+        else
+        {
+             return levelToExpNeeded[MaxLevel-1];
+        }
+    }
 }

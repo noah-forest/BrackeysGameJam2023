@@ -93,6 +93,7 @@ public class GameManager : MonoBehaviour
 	#endregion
 
 	public List<Slot> playerBattleSlots = new List<Slot>();
+	public List<Slot> playerReserveSlots = new();
 	public GameObject battleSlots;
 	bool playerUnitsLoaded;
 
@@ -191,14 +192,22 @@ public class GameManager : MonoBehaviour
 		startBattle.Invoke();
 		uiManager.ResetHearts();
 		Lives = 3;
-		Gold = 250;
+		Gold = 12;
 		inShop = true;
 		MusicPlayer.Play();
 		battleField.SetActive(true);
+
 		foreach (Slot slot in playerBattleSlots)
         {
+			Destroy(slot.payload);
 			slot.payload = null;
         }
+
+		foreach(Slot slot in playerReserveSlots)
+		{
+			Destroy(slot.payload);
+			slot.payload = null;
+		}
 	}
 	
 	public void PlayerDied()
@@ -337,6 +346,9 @@ public class GameManager : MonoBehaviour
 				lanes[unitIdx].playerUnit.unitGrave = lanes[unitIdx].playerGrave;
 
 				lanes[unitIdx].playerUnit.InitCombat();
+			} else
+			{
+				lanes[unitIdx].playerUnit = null;
 			}
 		}
 	}

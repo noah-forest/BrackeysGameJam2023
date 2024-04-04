@@ -3,9 +3,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-	private Slot unitSlot;
+	private MouseUtils cursor;
 
 	private UnitStats stats;
 	private float Health;
@@ -18,20 +18,17 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 
 	private void Start()
 	{
-		unitSlot = GetComponent<Slot>();
+		cursor = MouseUtils.singleton;
 		tooltipSystem = TooltipSystem.instance;
+		stats = transform.parent.GetComponent<UnitStats>();
+		Health = transform.parent.GetComponent<Health>().maxHealth;
+		level = transform.parent.GetComponent<Experience>().curLevel;
+		header = transform.parent.name.Replace("(Clone)", "").Trim();
+		rarity = stats.Rarity;
 	}
 
 	public void OnPointerEnter(PointerEventData eventData)
 	{
-		if (unitSlot.payload == null) return;
-
-		header = unitSlot.payload.name.Replace("(Clone)","").Trim();
-		stats = unitSlot.payload.GetComponent<UnitStats>();
-		level = unitSlot.payload.GetComponent<Experience>().curLevel;
-		Health = unitSlot.payload.GetComponent<Health>().maxHealth;
-		rarity = stats.Rarity;
-
 		// raw stats to show
 		tooltipSystem.levelTxt.text = $"{level}";
 		tooltipSystem.healthTxt.text = $"{Mathf.Floor(Health)}";
@@ -59,10 +56,13 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 		tooltipSystem.critChanceTxt.text = $"{Mathf.Floor(stats.critChance * 100)}";
 
 		TooltipSystem.Show(header);
+
+		cursor.SetHoverCursor();
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
-	{ 
+	{
+		cursor.SetToDefaultCursor();
 		TooltipSystem.Hide();
 	}
 

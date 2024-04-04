@@ -1,10 +1,7 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Collider2D))]
@@ -27,6 +24,8 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	public AudioClip digSound;
 	public AudioClip finalDigSound;
 
+	public GameObject graveTutorial;
+
 	private void Start()
 	{
 		gameManager = GameManager.singleton;
@@ -35,12 +34,14 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		sprite = GetComponent<SpriteRenderer>();
 		mouseUtils = MouseUtils.singleton;
 		gameManager.battleStartedEvent.AddListener(ResetGrave);
+		graveTutorial.SetActive(false);
 	}
 
 	public void ResetGrave()
-    {
+	{
 		digCount = 0;
 		currentDigCount = 0;
+		graveTutorial.SetActive(false);
 		sprite.sprite = digLevelSprites[0];
 	}
 
@@ -49,16 +50,19 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		this.digCount = digCount;
 		inGrave = true;
 		currentDigCount = 0;
-        if (!playerOwned)
-        {
+		if (!playerOwned)
+		{
 			StartCoroutine(EnemyDig());
-        }
-		sprite.sprite = digLevelSprites[digLevelSprites.Length-1];
+		} else
+		{
+			graveTutorial.SetActive(true);
+		}
+		sprite.sprite = digLevelSprites[digLevelSprites.Length - 1];
 	}
 
 	public void Dig()
 	{
-		if(!inGrave || gameManager.gameIsPaused) return;
+		if (!inGrave || gameManager.gameIsPaused) return;
 		currentDigCount++;
 
 		int spriteInterp = (int)Mathf.Lerp(digLevelSprites.Length, 1, (float)(currentDigCount) / (float)digCount);
@@ -66,6 +70,7 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		if (currentDigCount >= digCount)
 		{
 			inGrave = false;
+			graveTutorial.SetActive(false);
 			spriteInterp = 0;
 			graveDug.Invoke();
 		}
@@ -73,17 +78,17 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		sprite.sprite = digLevelSprites[spriteInterp];
 		PlayDigSound();
 	}
-	
+
 	void PlayDigSound()
-    {
+	{
 		if (digCount == currentDigCount)
-        {
+		{
 			audSource.volume = playerOwned ? 0.3f : 0.05f;
 			audSource.pitch = 1.5f;
 			audSource.clip = finalDigSound;
-        }
-        else
-        {
+		}
+		else
+		{
 			audSource.volume = playerOwned ? 1 : 0.35f;
 			audSource.clip = digSound;
 			audSource.pitch = 1;
@@ -96,20 +101,20 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
 	void OnMouseDown() // when collider is clicked by player
 	{
-        if (playerOwned) Dig(); // enemies cannot be dug
+		if (playerOwned) Dig(); // enemies cannot be dug
 	}
-	
+
 	/// <summary>
 	/// Enemy graves return units to life on cooldown instead of being clicked.
 	/// Technically, it clicks the grave on intervals so the enemy. 
 	/// </summary>
 	/// <returns></returns>
 	IEnumerator EnemyDig()
-    {
+	{
 		yield return new WaitForSeconds(digSpeed);
 		Dig();
 		if (inGrave == true) StartCoroutine(EnemyDig()); //loops until the dig function sets inGrave to false
-    }
+	}
 
 	public void OnPointerEnter(PointerEventData eventData)
 	{

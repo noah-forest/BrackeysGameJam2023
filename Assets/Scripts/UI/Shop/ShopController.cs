@@ -88,6 +88,7 @@ public class ShopController : MonoBehaviour
 				slot.payload = null;
 				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
 				gameManager.Gold += (int)sellInfo.sellValue;
+				Destroy(slot.payload);
 			}
 			return false;
 		});
@@ -115,11 +116,10 @@ public class ShopController : MonoBehaviour
 
 			UnitStats sellInfo = unitSlot.payload.GetComponent<UnitStats>();
 			sellInfo.sellValue = (int)(curShopItem.unitCost * 0.75);
-			sellInfo.Rarity = curShopItem.curUnit.unitRarity;
 
 			unitSlot.AddRetrievePrecheck((shopSlot, newSlot) =>
 			{
-				if (newSlot.payload != null && newSlot.payload.name != unitSlot.payload.name)
+				if (newSlot.payload != null && newSlot.payload.name != unitSlot.payload.name || newSlot.gameObject.name.Contains("Shop"))
 				{
 					return false;
 				};
@@ -175,7 +175,6 @@ public class ShopController : MonoBehaviour
 				if (curShopItem.unitName.text == unit.name && curShopItem.unitName.text == prefab.name)
 				{
 					curUnitSlot.payload = Instantiate(prefab, transform);
-					curShopItem.prefab = prefab;
 					curUnitSlot.payload.SetActive(false);
 				}
 			}
