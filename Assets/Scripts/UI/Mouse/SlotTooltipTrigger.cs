@@ -36,7 +36,7 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 		tooltipSystem.levelTxt.text = $"{level}";
 		tooltipSystem.healthTxt.text = $"{Mathf.Floor(Health)}";
 		tooltipSystem.dmgTxt.text = $"{Mathf.Floor(stats.attackPower)}";
-		tooltipSystem.atkSpdTxt.text = $"{Mathf.Floor(stats.attackInterval * 100)}";
+		tooltipSystem.atkSpdTxt.text = $"{Mathf.Floor(stats.attackInterval * 10)}";
 		tooltipSystem.digCountTxt.text = $"{Mathf.Floor(stats.digCount)}";
 		tooltipSystem.critDmgTxt.text = $"{Mathf.Floor(stats.critDamage)}";
 		

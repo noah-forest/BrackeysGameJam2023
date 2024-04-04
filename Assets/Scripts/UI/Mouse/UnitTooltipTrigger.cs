@@ -8,7 +8,7 @@ public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 	private MouseUtils cursor;
 
 	private UnitStats stats;
-	private float Health;
+	private Health Health;
 	private int level;
 	private TooltipSystem tooltipSystem;
 
@@ -21,7 +21,8 @@ public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 		cursor = MouseUtils.singleton;
 		tooltipSystem = TooltipSystem.instance;
 		stats = transform.parent.GetComponent<UnitStats>();
-		Health = transform.parent.GetComponent<Health>().maxHealth;
+		Health = transform.parent.GetComponent<Health>();
+		Health.died.AddListener(HideTooltip);
 		header = transform.parent.name.Replace("(Clone)", "").Trim();
 		rarity = stats.Rarity;
 	}
@@ -32,9 +33,9 @@ public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 
 		// raw stats to show
 		tooltipSystem.levelTxt.text = $"{level}";
-		tooltipSystem.healthTxt.text = $"{Mathf.Floor(Health)}";
+		tooltipSystem.healthTxt.text = $"{Mathf.Floor(Health.maxHealth)}";
 		tooltipSystem.dmgTxt.text = $"{Mathf.Floor(stats.attackPower)}";
-		tooltipSystem.atkSpdTxt.text = $"{Mathf.Floor(stats.attackInterval * 100)}";
+		tooltipSystem.atkSpdTxt.text = $"{Mathf.Floor(stats.attackInterval * 10)}";
 		tooltipSystem.digCountTxt.text = $"{Mathf.Floor(stats.digCount)}";
 		tooltipSystem.critDmgTxt.text = $"{Mathf.Floor(stats.critDamage)}";
 		
@@ -62,6 +63,11 @@ public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
+	{
+		HideTooltip();
+	}
+
+	public void HideTooltip()
 	{
 		cursor.SetToDefaultCursor();
 		TooltipSystem.Hide();
