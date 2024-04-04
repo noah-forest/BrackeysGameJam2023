@@ -22,18 +22,19 @@ public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 		tooltipSystem = TooltipSystem.instance;
 		stats = transform.parent.GetComponent<UnitStats>();
 		Health = transform.parent.GetComponent<Health>().maxHealth;
-		level = transform.parent.GetComponent<Experience>().curLevel;
 		header = transform.parent.name.Replace("(Clone)", "").Trim();
 		rarity = stats.Rarity;
 	}
 
 	public void OnPointerEnter(PointerEventData eventData)
 	{
+		level = transform.parent.GetComponent<Experience>().curLevel;
+
 		// raw stats to show
 		tooltipSystem.levelTxt.text = $"{level}";
 		tooltipSystem.healthTxt.text = $"{Mathf.Floor(Health)}";
 		tooltipSystem.dmgTxt.text = $"{Mathf.Floor(stats.attackPower)}";
-		tooltipSystem.atkSpdTxt.text = $"{Mathf.Floor(stats.attackInterval)}";
+		tooltipSystem.atkSpdTxt.text = $"{Mathf.Floor(stats.attackInterval * 100)}";
 		tooltipSystem.digCountTxt.text = $"{Mathf.Floor(stats.digCount)}";
 		tooltipSystem.critDmgTxt.text = $"{Mathf.Floor(stats.critDamage)}";
 		
@@ -47,9 +48,9 @@ public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 			stats.critChance = 1;
 		}
 
-		if (stats.blockChance >= 1)
+		if (stats.blockChance >= 0.85f)
 		{
-			stats.blockChance = 1;
+			stats.blockChance = 0.85f;
 		}
 
 		tooltipSystem.blockChanceTxt.text = $"{Mathf.Floor(stats.blockChance * 100)}";
