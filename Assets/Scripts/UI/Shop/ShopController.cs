@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class ShopController : MonoBehaviour
@@ -14,6 +15,7 @@ public class ShopController : MonoBehaviour
 	private List<Unit> shopUnits = new();
 	private List<GameObject> unitPrefabs = new();
 
+	public Button refreshButton;
 	public GameObject sellWindow;
 	public TextMeshProUGUI sellWindowPrice;
 
@@ -24,13 +26,11 @@ public class ShopController : MonoBehaviour
 	private GameObject shopWindow;
 
 	private int unitIndex;
-	private int sellCost;
 	public int refreshCost;
 
 	private SetUnitInfo curUnitInfo;
 
 	private bool draggedIntoShop;
-	private bool draggedIntoNothing;
 
 	public bool firstRoll;          // this is to check if the shop has been initially rolled
 
@@ -137,8 +137,6 @@ public class ShopController : MonoBehaviour
 					shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
 					return true;
 				}
-
-				draggedIntoNothing = true;
 				return false;
 			});
 

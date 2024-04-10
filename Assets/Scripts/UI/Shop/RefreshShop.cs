@@ -18,36 +18,46 @@ public class RefreshShop : MonoBehaviour
         gameManager = GameManager.singleton;
         
         button = GetComponent<Button>();
-        button.onClick.AddListener(RefreshShopUnits);
+        button.onClick.AddListener(CheckIfRefresh);
+		gameManager.goldChangedEvent.AddListener(CheckForGold);
     }
 
     private void OnEnable()
     {
 		if (lockShop.locked) return;
 		if (!shopController.firstRoll) return;
-		if(button) button.interactable = true;
 
 		shopController.ClearShopWindows();
 		shopController.PopulateShopUnits();
     }
 
-    private void RefreshShopUnits()
+	private void CheckForGold()
+	{
+		if (gameManager.Gold <= 0)
+		{
+			button.interactable = false;
+		}
+		else
+		{
+			button.interactable = true;
+		}
+	}
+
+	private void CheckIfRefresh()
     {
 		gameManager.Gold -= shopController.refreshCost;
+		RefreshUnits();
+    }
 
-		foreach(GameObject window in shopController.shopItemPos)
+	private void RefreshUnits()
+	{
+		foreach (GameObject window in shopController.shopItemPos)
 		{
 			Animator animator = window.GetComponent<Animator>();
 			animator.SetTrigger("refreshed");
 		}
 
-		if (gameManager.Gold <= 0)
-		{
-			gameManager.Gold = 0;
-			button.interactable = false;
-		}
-
 		shopController.ClearShopWindows();
 		shopController.PopulateShopUnits();
-    }
+	}
 }
