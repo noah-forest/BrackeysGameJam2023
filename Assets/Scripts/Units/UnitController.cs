@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -74,6 +75,8 @@ public class UnitController : MonoBehaviour, ISlotItem
 	/// <param name="blocked"></param>
 	public void TakeDamage(float dmg)
 	{
+		float remainder = health.health - dmg;
+
 		// if the unit is dead when it would normally take damage, damage this units actor
 		if (health.isDead)
 		{
@@ -98,7 +101,11 @@ public class UnitController : MonoBehaviour, ISlotItem
 		// damage the unit
 		if (!blocked)
 		{
-			health.TakeDamage(dmg);
+            health.TakeDamage(dmg);
+			if(health.health <= 0)
+			{
+				parentActor.health.TakeDamage(Mathf.Abs(remainder));
+			}
 			attacked.Invoke();
 		};
 	}
