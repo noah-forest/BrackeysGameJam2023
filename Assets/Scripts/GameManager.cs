@@ -103,8 +103,18 @@ public class GameManager : MonoBehaviour
 	}
 	#endregion
 
+	[Header("Debug Menu")]
+	public bool overkillEnabled;
+	public bool growingMoney;
+	public bool gainInterest;
+
+	[Space(10)]
+
 	[HideInInspector]
 	public List<GameObject> allUnitPrefabs;
+
+	[Space(10)]
+	[Header("everything else")]
 
 	public List<Slot> playerBattleSlots = new List<Slot>();
 	public List<Slot> playerReserveSlots = new();
@@ -130,7 +140,7 @@ public class GameManager : MonoBehaviour
 	[HideInInspector] public MouseUtils mouseUtils;
 
 	public bool gameIsPaused { private set; get; }
-	public bool openThePauseMenuPleaseGoodSir;
+	public bool openPauseMenu;
 
 	[HideInInspector]
 	public UnityEvent pauseGame;
@@ -170,12 +180,12 @@ public class GameManager : MonoBehaviour
 	{
 		if (gameIsPaused)
 		{
-			openThePauseMenuPleaseGoodSir = false;
+			openPauseMenu = false;
 			resumeGame.Invoke();
 		}
 		else
 		{
-			openThePauseMenuPleaseGoodSir = true;
+			openPauseMenu = true;
 			pauseGame.Invoke();
 		}
 	}
@@ -266,8 +276,18 @@ public class GameManager : MonoBehaviour
 	/// </summary>
 	public void LoadShop()
 	{
-		GainInterest();
-		GainBattleReward();
+		if(gainInterest && growingMoney)
+		{
+			GainInterest();
+			GainBattleReward();
+		} else if(!gainInterest && growingMoney)
+		{
+			GainBattleReward();
+		} else
+		{
+			Cash = 12;
+		}
+
 		resumeGame.Invoke();
 		HideBattlefield();
 		playerUnitsLoaded = false;

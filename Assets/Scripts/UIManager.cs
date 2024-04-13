@@ -68,7 +68,7 @@ public class UIManager : MonoBehaviour
 
 	private void ShowPauseMenu()
 	{
-		pauseMenuScreen.SetActive(gameManager.openThePauseMenuPleaseGoodSir);
+		pauseMenuScreen.SetActive(gameManager.openPauseMenu);
 	}
 
 	private void UpdateGoldText()
