@@ -25,6 +25,9 @@ public class UIManager : MonoBehaviour
 	[SerializeField] GameObject shopUi;
 	[SerializeField] GameObject HUD;
 
+	[SerializeField] GameObject battlesWon;
+	[SerializeField] TextMeshProUGUI battlesWonCount;
+
 	[SerializeField] GameObject livesContainer;
 	[SerializeField] GameObject livesArea;
 	[SerializeField] Sprite fullHeart;
@@ -70,7 +73,7 @@ public class UIManager : MonoBehaviour
 
 	private void UpdateGoldText()
 	{
-		goldUI.text = gameManager.Gold.ToString();
+		goldUI.text = gameManager.Cash.ToString();
 	}
 	private void UpdateLivesText()
 	{
@@ -99,6 +102,7 @@ public class UIManager : MonoBehaviour
 	private void ShowBattleWonScreen()
 	{
 		battleOverScreen.SetActive(true);
+		battlesWonCount.text = gameManager.BattlesWon.ToString();
 		ShowResult(0);
 	}
 
@@ -119,18 +123,22 @@ public class UIManager : MonoBehaviour
 
 		if (index == 0) // if the battle is WON
 		{
-			textAnim.SetTrigger("won");
 			cmpResult.color = (Color)new Color32(159, 255, 97, 255); // set the color to GREEN
 			top.SetActive(false);
 			livesArea.SetActive(false);
+			battlesWon.SetActive(true);
 			gameManager.wonParticles.SetActive(true);
+
+			textAnim.SetTrigger("won");
 		}
 		else if (index == 1) // if the battle is LOST
 		{
-			textAnim.SetTrigger("lose");
-			livesArea.SetActive(true);
-			top.SetActive(true);
 			cmpResult.color = (Color)new Color32(255, 95, 95, 255); // set the color to RED
+			livesArea.SetActive(true);
+			battlesWon.SetActive(false);
+			top.SetActive(true);
+
+			textAnim.SetTrigger("lose");
 		}
 	}
 

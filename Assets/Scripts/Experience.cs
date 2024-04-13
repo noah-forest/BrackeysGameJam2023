@@ -35,14 +35,11 @@ public class Experience : MonoBehaviour
 	{
 		if (curLevel == MaxLevel) return;
 		Exp += xp;
-		Debug.Log($"current xp is: {Exp}");
 	}
 
 	private void LevelUp()
 	{
 		++curLevel;
-
-		Debug.Log($"is now level {curLevel}");
 
 		UnitStats unitStats = GetComponent<UnitStats>();
 		unitStats.LevelUpUnit();

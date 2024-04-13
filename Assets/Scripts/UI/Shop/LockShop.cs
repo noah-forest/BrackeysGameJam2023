@@ -66,6 +66,6 @@ public class LockShop : MonoBehaviour
 		lockBorder.color = new Color32(163, 143, 99, 255);
 		lockBorder.sprite = defaultBorderTexture;
 
-		if (gameManager.Gold > 0) refreshButton.interactable = true;
+		if (gameManager.Cash > 0) refreshButton.interactable = true;
 	}
 }

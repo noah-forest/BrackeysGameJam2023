@@ -87,7 +87,7 @@ public class ShopController : MonoBehaviour
 				draggedIntoShop = true;
 				slot.payload = null;
 				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
-				gameManager.Gold += (int)sellInfo.sellValue;
+				gameManager.Cash += (int)sellInfo.sellValue;
 				Destroy(slot.payload);
 			}
 			return false;
@@ -124,7 +124,7 @@ public class ShopController : MonoBehaviour
 					return false;
 				};
 
-				if (gameManager.Gold >= curShopItem.unitCost)
+				if (gameManager.Cash >= curShopItem.unitCost)
 				{
 					if(newSlot.payload != null)
 					{
@@ -133,7 +133,7 @@ public class ShopController : MonoBehaviour
 					}
 
 					curShopItem.purchased.SetActive(true);
-					gameManager.Gold -= curShopItem.unitCost;
+					gameManager.Cash -= curShopItem.unitCost;
 					shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
 					return true;
 				}

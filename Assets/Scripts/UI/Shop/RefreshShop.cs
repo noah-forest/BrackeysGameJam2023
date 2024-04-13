@@ -33,7 +33,7 @@ public class RefreshShop : MonoBehaviour
 
 	private void CheckForGold()
 	{
-		if (gameManager.Gold <= 0)
+		if (gameManager.Cash <= 0)
 		{
 			button.interactable = false;
 		}
@@ -45,7 +45,7 @@ public class RefreshShop : MonoBehaviour
 
 	private void CheckIfRefresh()
     {
-		gameManager.Gold -= shopController.refreshCost;
+		gameManager.Cash -= shopController.refreshCost;
 		RefreshUnits();
     }
 

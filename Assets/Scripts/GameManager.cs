@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
@@ -25,13 +23,15 @@ public class GameManager : MonoBehaviour
 		singleton = this;
 		DontDestroyOnLoad(this.gameObject);
 	}
-    #endregion
+	#endregion
 
-    #region Battle Events
-    [HideInInspector]
+	#region Battle Events
+	[HideInInspector]
 	public UnityEvent goldChangedEvent;
 	[HideInInspector]
 	public UnityEvent livesChangedEvent;
+	[HideInInspector]
+	public UnityEvent battleScoreEvent;
 	[HideInInspector]
 	public UnityEvent battleWonEvent;
 	[HideInInspector]
@@ -59,20 +59,20 @@ public class GameManager : MonoBehaviour
 
 	#endregion
 
-	#region Lives and Gold properties
+	#region Getters and Setters
 	/// <summary>
-	///dont use this variable, use Gold
+	///dont use this variable, use Cash
 	/// </summary>
-	private int _internalGold;
-	public int Gold
-    {
-		get => _internalGold;
+	private int _internalCash;
+	public int Cash
+	{
+		get => _internalCash;
 		set
-        {
-			_internalGold = value;
+		{
+			_internalCash = value;
 			goldChangedEvent.Invoke();
 		}
-    }
+	}
 
 	/// <summary>
 	///dont use this variable, use Lives
@@ -88,9 +88,23 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	///dont use this variable, use BattlesWon
+	/// </summary>
+	private int _internalBattlesWon;
+	public int BattlesWon
+	{
+		get => _internalBattlesWon;
+		set
+		{
+			_internalBattlesWon = value;
+			battleScoreEvent.Invoke();
+		}
+	}
+	#endregion
+
 	[HideInInspector]
 	public List<GameObject> allUnitPrefabs;
-	#endregion
 
 	public List<Slot> playerBattleSlots = new List<Slot>();
 	public List<Slot> playerReserveSlots = new();
@@ -99,8 +113,8 @@ public class GameManager : MonoBehaviour
 
 	public GameObject HUD;
 
-	public GameObject wonParticles;
-	
+	public GameObject wonParticles; 
+
 	[SerializeField] GameObject battleField;
 
 	public AudioSource MusicPlayer;
@@ -109,14 +123,12 @@ public class GameManager : MonoBehaviour
 	public Actor enemyActor;
 	public List<BattleLane> lanes;
 
-	public int battleReward = 3;
-	public int amountOfBattlesBeforeShop = 2;
-	public int amountOfBattlesCur = 0;
+	private int battleReward = 150;
 
 	public UIManager uiManager;
 
 	[HideInInspector] public MouseUtils mouseUtils;
-	
+
 	public bool gameIsPaused { private set; get; }
 	public bool openThePauseMenuPleaseGoodSir;
 
@@ -126,63 +138,64 @@ public class GameManager : MonoBehaviour
 	public UnityEvent resumeGame;
 
 	private bool inShop;
-	
+
 	private void Start()
 	{
 		mouseUtils = MouseUtils.singleton;
-		
-		Gold = 150;
-		Lives = 3;
+
 		LoadResources();
 
-        playerActor.GetComponent<Health>().died.AddListener(PlayerDied);
-        enemyActor.GetComponent<Health>().died.AddListener(EnemyDied);
+		playerActor.GetComponent<Health>().died.AddListener(PlayerDied);
+		enemyActor.GetComponent<Health>().died.AddListener(EnemyDied);
 
 		pauseGame.AddListener(PauseGame);
 		resumeGame.AddListener(UnPauseGame);
-    }
+	}
 
-    private void Update()
-    {
+	private void Update()
+	{
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
 			TogglePauseMenu();
 		}
 	}
 
-    public void BackToMainMenu()
-    {
-	    resumeGame.Invoke();
+	public void BackToMainMenu()
+	{
+		resumeGame.Invoke();
 		startGame.Invoke();
-    }
-    
+	}
+
 	public void TogglePauseMenu()
-    {
+	{
 		if (gameIsPaused)
 		{
 			openThePauseMenuPleaseGoodSir = false;
 			resumeGame.Invoke();
-		} else
+		}
+		else
 		{
 			openThePauseMenuPleaseGoodSir = true;
 			pauseGame.Invoke();
 		}
 	}
 
-    public void PauseGame()
-    {
+	public void PauseGame()
+	{
 		gameIsPaused = true;
 		Time.timeScale = 0;
-    }
+	}
 
 	public void UnPauseGame()
-    {
+	{
 		gameIsPaused = false;
 		Time.timeScale = 1;
 	}
 
 	public void EnemyDied()
 	{
+		++BattlesWon;
+		Debug.Log($"battles won: {BattlesWon}");
 		battleWonEvent.Invoke();
 		pauseGame.Invoke();
 	}
@@ -192,24 +205,23 @@ public class GameManager : MonoBehaviour
 		startBattle.Invoke();
 		uiManager.ResetHearts();
 		Lives = 3;
-		Gold = 12;
 		inShop = true;
 		MusicPlayer.Play();
 		battleField.SetActive(true);
 
 		foreach (Slot slot in playerBattleSlots)
-        {
+		{
 			Destroy(slot.payload);
 			slot.payload = null;
-        }
+		}
 
-		foreach(Slot slot in playerReserveSlots)
+		foreach (Slot slot in playerReserveSlots)
 		{
 			Destroy(slot.payload);
 			slot.payload = null;
 		}
 	}
-	
+
 	public void PlayerDied()
 	{
 		--Lives;
@@ -223,39 +235,47 @@ public class GameManager : MonoBehaviour
 		}
 		pauseGame.Invoke();
 	}
-	
+
 	public void NextBattleButton()
 	{
-		Gold = 12;
 		if (inShop)
 		{
 			StartNextBattle();
-			++amountOfBattlesCur;
-		}
-		else if (amountOfBattlesCur < amountOfBattlesBeforeShop)
-		{
-			StartNextBattle();
-			++amountOfBattlesCur;
 		} else
 		{
 			LoadShop();
 		}
-    }
+	}
+
+	public void GainBattleReward()
+	{
+		Cash += battleReward;
+	}
+
+	public void GainInterest()
+	{
+		int interestThreshold = 10;
+		if(Cash >=  interestThreshold)
+		{
+			Cash += Cash / interestThreshold;
+		} 
+	}
 
 	/// <summary>
 	/// 1 is shop atm 8/23, if this stops working, the shop scene probably changed in the build settings
 	/// </summary>
 	public void LoadShop()
-    {
+	{
+		GainInterest();
+		GainBattleReward();
 		resumeGame.Invoke();
-		amountOfBattlesCur = 0;
 		HideBattlefield();
 		playerUnitsLoaded = false;
 		loadShopEvent.Invoke();
 		mouseUtils.SetToDefaultCursor();
 		mouseUtils.FindButtonsInScene();
 		battleSlots.SetActive(true);
-    }
+	}
 
 	public void ShopTransition()
 	{
@@ -268,7 +288,7 @@ public class GameManager : MonoBehaviour
 	}
 
 	void StartNextBattle()
-    {
+	{
 		mouseUtils.SetToDefaultCursor();
 		resumeGame.Invoke();
 		battleStartedEvent.Invoke();
@@ -284,7 +304,7 @@ public class GameManager : MonoBehaviour
 
 		LoadRandomEnemyTeamIntoBattle();
 		if (!playerUnitsLoaded) LoadPlayerUnitsIntoBattle();
-		AssignUnitTargets(); 
+		AssignUnitTargets();
 	}
 
 	public void HideBattlefield()
@@ -298,19 +318,20 @@ public class GameManager : MonoBehaviour
 		ClearBattlefield();
 		battleField.SetActive(true);
 	}
-	private void AssignUnitTargets(){
-		foreach(BattleLane lane in lanes)
-        {
-			if(lane.enemyUnit) lane.enemyUnit.unitAttacker.targetUnit = lane.playerUnit;
-			if(lane.playerUnit) lane.playerUnit.unitAttacker.targetUnit = lane.enemyUnit;
+	private void AssignUnitTargets()
+	{
+		foreach (BattleLane lane in lanes)
+		{
+			if (lane.enemyUnit) lane.enemyUnit.unitAttacker.targetUnit = lane.playerUnit;
+			if (lane.playerUnit) lane.playerUnit.unitAttacker.targetUnit = lane.enemyUnit;
 		}
-    }
+	}
 
 	/// <summary>
 	/// deletes the old enemy units if there are any and then loads a random enemy unit for each lane and assign graves to them
 	/// </summary>
 	private void LoadRandomEnemyTeamIntoBattle()
-    {
+	{
 		foreach (BattleLane lane in lanes)      //assigng target units to opposing units, and assign units to their graves
 		{
 			if (lane.enemyUnit) Destroy(lane.enemyUnit.gameObject);
@@ -326,15 +347,15 @@ public class GameManager : MonoBehaviour
 	/// spawns the units in the players battleslots into the battlefiled and assign graves to them
 	/// </summary>
 	private void LoadPlayerUnitsIntoBattle()
-    {
+	{
 		playerUnitsLoaded = true;
 		//hide battle slots;
 		battleSlots.SetActive(false);
 		//load units
-		for (int unitIdx=0; unitIdx < lanes.Count; unitIdx++)
-        {
-            if (playerBattleSlots[unitIdx].payload)
-            {
+		for (int unitIdx = 0; unitIdx < lanes.Count; unitIdx++)
+		{
+			if (playerBattleSlots[unitIdx].payload)
+			{
 				GameObject newUnitObj = playerBattleSlots[unitIdx].payload;
 				newUnitObj.transform.parent = lanes[unitIdx].playerUnitPosition;
 				newUnitObj.SetActive(true);
@@ -346,7 +367,8 @@ public class GameManager : MonoBehaviour
 				lanes[unitIdx].playerUnit.unitGrave = lanes[unitIdx].playerGrave;
 
 				lanes[unitIdx].playerUnit.InitCombat();
-			} else
+			}
+			else
 			{
 				lanes[unitIdx].playerUnit = null;
 			}
@@ -354,8 +376,8 @@ public class GameManager : MonoBehaviour
 	}
 
 	private void ClearBattlefield()
-    {
-		for(int i = 0; i < lanes.Count; i++)
+	{
+		for (int i = 0; i < lanes.Count; i++)
 		{
 			if (lanes[i].enemyUnit) Destroy(lanes[i].enemyUnit.gameObject);
 			if (lanes[i].playerUnit)
@@ -370,10 +392,10 @@ public class GameManager : MonoBehaviour
 	}
 
 	public GameObject GetRandomUnitObject()
-    {
+	{
 		int unitRoll = Random.Range(0, allUnitPrefabs.Count);
 		return allUnitPrefabs[unitRoll];
-    }
+	}
 	private void LoadResources()
 	{
 		Object[] loadedUnits;

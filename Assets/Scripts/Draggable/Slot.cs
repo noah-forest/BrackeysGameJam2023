@@ -30,7 +30,6 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
             if (_dragVisual == null)
             {
                 _dragVisual = Instantiate(Resources.Load("DraggingVisualObject") as GameObject).GetComponent<DragVisual>();
-                Debug.Log("instantited", _dragVisual);
             }
 
             return _dragVisual;
