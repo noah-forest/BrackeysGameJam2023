@@ -41,30 +41,80 @@ public class UnitController : MonoBehaviour, ISlotItem
 
 	private GameManager gameManager;
 	private bool isAttacking;
+	private bool inCombat;
+	private float attackCooldownEnd;
 
 	public void Awake()
 	{
 		gameManager = GameManager.singleton;
 
+		gameObject.SetActive(false);
+
 		health = GetComponent<Health>();
 		unitAttacker = GetComponent<UnitAttacker>();
 		unitStats = GetComponent<UnitStats>();
 		unitAnimator = GetComponent<UnitAnimator>();
-		StartCoroutine(AttackLoop());
-		unitAnimator.attackHitEvent.AddListener(DamageEnemyUnit);
-		attacked.AddListener(onUnitAttacked);
 
+		unitAnimator.attackHitEvent.AddListener(DamageEnemyUnit);
+		unitAnimator.attackEndEvent.AddListener(SetAttackTime);
+
+		gameManager.battleStartedEvent.AddListener(BattleStarted);
+		gameManager.battleEndedEvent.AddListener(BattleEnded);
+
+
+		attacked.AddListener(OnUnitAttacked);
 		health.died.AddListener(OnDeath);
 		blockedEvent.AddListener(unitAnimator.PlayBlock);
 		unitAttacker.critEvent.AddListener(unitAnimator.PlayCrit);
 	}
 
-	private void Update()
+	private void OnEnable()
 	{
-		if (health.isDead) return;
-		if (isAttacking) return;
-		if (!unitAttacker.targetUnit) return;
-		StartCoroutine(AttackLoop());
+		inCombat = true;
+		gameManager.combatBeganEvent.Invoke();
+	}
+
+	private void FixedUpdate()
+	{
+		Debug.Log(inCombat);
+		if (!inCombat) return;
+
+		Debug.Log("update has started");
+
+		if (health.isDead)
+		{
+			Debug.Log("unit is dead");
+			isAttacking = false;
+			return;
+		} else if(Time.time > attackCooldownEnd && !isAttacking)
+		{
+			Debug.Log("meets time requirements unit should attack");
+			Attack();
+		}
+	}
+
+	private void SetAttackTime()
+	{
+		Debug.Log("resetting unit attack time");
+		attackCooldownEnd = Time.time + unitStats.attackInterval;
+		isAttacking = false;
+	}
+
+	private void Attack()
+	{
+		Debug.Log("unit attacked");
+		isAttacking = true;
+		StartAttack();
+	}
+
+	private void BattleStarted()
+	{
+		inCombat = true;
+	}
+
+	private void BattleEnded()
+	{
+		inCombat = false;
 	}
 
 	/// <summary>
@@ -112,21 +162,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 
 	public void InitCombat()
 	{
-		StartCoroutine(AttackLoop());
-	}
-
-	private IEnumerator AttackLoop()
-	{
-		isAttacking = true;
-		while (!health.isDead)
-		{
-			yield return new WaitForSeconds(unitStats.attackInterval);
-			if (health.isDead) yield return null;
-			StartAttack();
-		}
-
-		isAttacking = false; // unit is dead
-		yield return null;
+		SetAttackTime();
 	}
 
 	private void StartAttack()
@@ -136,7 +172,6 @@ public class UnitController : MonoBehaviour, ISlotItem
 
 	private void DamageEnemyUnit()
 	{
-		if (health.isDead) return;
 		if (!unitAttacker.targetUnit)
 		{
 			gameManager.playerActor.health.TakeDamage(unitStats.attackPower); // this is fucking awful dont get me started. This only works cause the enemy will always have all 3 units
@@ -145,7 +180,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 		unitAttacker.AttackTarget();
 	}
 
-	private void onUnitAttacked()
+	private void OnUnitAttacked()
 	{
 		unitAnimator.Attacked();
 	}

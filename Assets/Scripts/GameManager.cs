@@ -41,6 +41,10 @@ public class GameManager : MonoBehaviour
 	[HideInInspector]
 	public UnityEvent battleStartedEvent;
 	[HideInInspector]
+	public UnityEvent combatBeganEvent;
+	[HideInInspector]
+	public UnityEvent battleEndedEvent;
+	[HideInInspector]
 	public UnityEvent loadShopEvent;
 	#endregion
 
@@ -207,6 +211,7 @@ public class GameManager : MonoBehaviour
 		++BattlesWon;
 		Debug.Log($"battles won: {BattlesWon}");
 		battleWonEvent.Invoke();
+		battleEndedEvent.Invoke();
 		pauseGame.Invoke();
 	}
 
@@ -243,6 +248,7 @@ public class GameManager : MonoBehaviour
 		{
 			gameOverEvent.Invoke();
 		}
+		battleEndedEvent.Invoke();
 		pauseGame.Invoke();
 	}
 
@@ -310,8 +316,8 @@ public class GameManager : MonoBehaviour
 	void StartNextBattle()
 	{
 		mouseUtils.SetToDefaultCursor();
-		resumeGame.Invoke();
 		battleStartedEvent.Invoke();
+		resumeGame.Invoke();
 		ShowBattlfield();
 		StartCoroutine(LoadUnits()); //dont let this shit get into final build please -> <-
 	}
@@ -359,6 +365,9 @@ public class GameManager : MonoBehaviour
 			lane.enemyUnit = newUnitObj.GetComponent<UnitController>();
 			lane.enemyUnit.parentActor = enemyActor;
 			lane.enemyUnit.unitGrave = lane.enemyGrave;
+			lane.enemyUnit.gameObject.SetActive(true);
+
+			lane.enemyUnit.InitCombat();
 		}
 		enemyActor.health.Revive();
 	}

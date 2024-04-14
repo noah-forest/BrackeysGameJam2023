@@ -9,6 +9,7 @@ public class UnitAnimator : MonoBehaviour
 {
     private Animator animator;
     public UnityEvent attackHitEvent;
+	public UnityEvent attackEndEvent;
     public Material blockParticle;
     public Material critParticle;
     private ParticleSystem particleSys;
@@ -30,6 +31,11 @@ public class UnitAnimator : MonoBehaviour
     {
         attackHitEvent.Invoke();
     }
+
+	public void AttackEndEvent()
+	{
+		attackEndEvent.Invoke();
+	}
 
     public void Attacked()
     {
