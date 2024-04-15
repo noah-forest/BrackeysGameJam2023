@@ -1,53 +1,67 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class RefreshShop : MonoBehaviour
 {
-    public ShopController shopController;
+	public ShopController shopController;
 	public LockShop lockShop;
+
+	public TextMeshProUGUI refreshCostText;
 
 	private GameManager gameManager;
 
 	private Button button;
 
-    private void Start()
-    {
-        gameManager = GameManager.singleton;
-        
-        button = GetComponent<Button>();
-        button.onClick.AddListener(CheckIfRefresh);
-		gameManager.goldChangedEvent.AddListener(CheckForGold);
-    }
+	private int originalRefreshCost;
 
-    private void OnEnable()
-    {
+	private void Start()
+	{
+		gameManager = GameManager.singleton;
+
+		originalRefreshCost = shopController.refreshCost;
+		refreshCostText.text = shopController.refreshCost.ToString();
+
+		button = GetComponent<Button>();
+		button.onClick.AddListener(CheckIfRefresh);
+		gameManager.goldChangedEvent.AddListener(CheckForGold);
+	}
+
+	private void OnEnable()
+	{
+		shopController.refreshCost = originalRefreshCost;
+		refreshCostText.text = shopController.refreshCost.ToString();
 		if (lockShop.locked) return;
 		if (!shopController.firstRoll) return;
 
 		shopController.ClearShopWindows();
 		shopController.PopulateShopUnits();
-    }
+	}
 
 	private void CheckForGold()
 	{
-		if (gameManager.Cash <= 0)
+		if (gameManager.Cash <= 0 || gameManager.Cash < shopController.refreshCost)
 		{
 			button.interactable = false;
 		}
-		else
+		else if (gameManager.Cash > 0 && !lockShop.locked)
 		{
 			button.interactable = true;
 		}
 	}
 
 	private void CheckIfRefresh()
-    {
+	{
+		gameManager.shopRefreshed.Invoke();
+
 		gameManager.Cash -= shopController.refreshCost;
+		if(shopController.refreshCost < 5)
+		{
+			++shopController.refreshCost;
+			refreshCostText.text = shopController.refreshCost.ToString();
+		}
 		RefreshUnits();
-    }
+	}
 
 	private void RefreshUnits()
 	{

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using Object = UnityEngine.Object;
@@ -62,6 +63,8 @@ public class GameManager : MonoBehaviour
 	public UnityEvent loadUI;
 
 	#endregion
+
+	public UnityEvent shopRefreshed;
 
 	#region Getters and Setters
 	/// <summary>
@@ -137,7 +140,8 @@ public class GameManager : MonoBehaviour
 	public Actor enemyActor;
 	public List<BattleLane> lanes;
 
-	private int battleReward = 150;
+	private int battleReward = 8;
+	private int startingGold = 12;
 
 	public UIManager uiManager;
 
@@ -145,6 +149,7 @@ public class GameManager : MonoBehaviour
 
 	public bool gameIsPaused { private set; get; }
 	public bool openPauseMenu;
+	private bool firstTime;
 
 	[HideInInspector]
 	public UnityEvent pauseGame;
@@ -164,6 +169,8 @@ public class GameManager : MonoBehaviour
 
 		pauseGame.AddListener(PauseGame);
 		resumeGame.AddListener(UnPauseGame);
+
+		firstTime = true;
 	}
 
 	private void Update()
@@ -219,6 +226,7 @@ public class GameManager : MonoBehaviour
 	{
 		startBattle.Invoke();
 		uiManager.ResetHearts();
+		firstTime = true;
 		Lives = 3;
 		inShop = true;
 		MusicPlayer.Play();
@@ -282,18 +290,26 @@ public class GameManager : MonoBehaviour
 	/// </summary>
 	public void LoadShop()
 	{
-		if(gainInterest && growingMoney)
+		if (firstTime)
+		{
+			Cash = startingGold;
+		}
+
+		if (gainInterest && growingMoney && !firstTime)
 		{
 			GainInterest();
 			GainBattleReward();
-		} else if(!gainInterest && growingMoney)
+		}
+		else if (!gainInterest && growingMoney && !firstTime)
 		{
 			GainBattleReward();
-		} else
+		}
+		else
 		{
-			Cash = 12;
+			Cash = startingGold;
 		}
 
+		firstTime = false;
 		resumeGame.Invoke();
 		HideBattlefield();
 		playerUnitsLoaded = false;

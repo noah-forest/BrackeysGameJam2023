@@ -32,7 +32,11 @@ public class UnitController : MonoBehaviour, ISlotItem
 	{
 		set
 		{
-			value.graveDug.RemoveListener(Respawn); //this may be not needed, and may also cause problems later, and also may not even work.
+			if (_grave != null)
+			{
+				_grave.graveDug.RemoveListener(Respawn);
+			}
+			
 			_grave = value;
 			_grave.graveDug.AddListener(Respawn);
 		}
@@ -76,33 +80,26 @@ public class UnitController : MonoBehaviour, ISlotItem
 
 	private void FixedUpdate()
 	{
-		Debug.Log(inCombat);
 		if (!inCombat) return;
-
-		Debug.Log("update has started");
 
 		if (health.isDead)
 		{
-			Debug.Log("unit is dead");
 			isAttacking = false;
 			return;
 		} else if(Time.time > attackCooldownEnd && !isAttacking)
 		{
-			Debug.Log("meets time requirements unit should attack");
 			Attack();
 		}
 	}
 
 	private void SetAttackTime()
 	{
-		Debug.Log("resetting unit attack time");
 		attackCooldownEnd = Time.time + unitStats.attackInterval;
 		isAttacking = false;
 	}
 
 	private void Attack()
 	{
-		Debug.Log("unit attacked");
 		isAttacking = true;
 		StartAttack();
 	}
