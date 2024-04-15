@@ -202,7 +202,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 	public void Respawn()
 	{
 		health.Revive();
-		isAttacking = false;
+		SetAttackTime();
 		for (int i = 0; i < transform.childCount; i++)
 		{
 			GameObject Go = transform.GetChild(i).gameObject;
