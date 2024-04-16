@@ -7,6 +7,8 @@ public class Actor : MonoBehaviour
 	[HideInInspector]
 	public Health health;
 
+	public int actorHealth;
+
 	private GameManager gameManager;
 
 	public UnitController[] units = new UnitController[3];
@@ -14,7 +16,7 @@ public class Actor : MonoBehaviour
 	private void Awake()
 	{
 		health = GetComponent<Health>();
-		health.InitHealth(125);
+		health.InitHealth(actorHealth);
 	}
 
 	//public InitializeRandomTeam()

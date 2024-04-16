@@ -48,7 +48,6 @@ public class UnitStats : MonoBehaviour
 		health.maxHealth += levelUpMod;
 
 		damage += levelUpMod;
-		attackSpeed += new StatModifier(0.05f, StatModType.PercentMultReduction, (int)StatModType.PercentMultReduction - 1, source);
 		
 		critChance += levelUpMod;
 		blockChance += levelUpMod;

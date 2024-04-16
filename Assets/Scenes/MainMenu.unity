@@ -1525,8 +1525,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 671062477}
   m_HandleRect: {fileID: 671062476}
   m_Direction: 2
-  m_Value: 1.0000005
-  m_Size: 0.4271405
+  m_Value: 1.0000019
+  m_Size: 0.66580284
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11796,7 +11796,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Hotfix 0.2.2
+  m_text: 'Hotfix 0.2.3
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5a9a782d2042f7b4e952e8980e6939c5, type: 2}
   m_sharedMaterial: {fileID: 5483411604070718266, guid: 5a9a782d2042f7b4e952e8980e6939c5, type: 2}
@@ -12875,7 +12877,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.0004272461}
-  m_SizeDelta: {x: 0, y: 695.7264}
+  m_SizeDelta: {x: 0, y: 260.3864}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &599615839
 MonoBehaviour:
@@ -12911,63 +12913,42 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Removed Crit Damage
+  m_text: 'Reworked underlying stat system
 
     ---------------------------------------
 
-    All
-    crits are double units base damage
+    Simplified
+    unit stats
 
     ---------------------------------------
 
-    Added
-    Overkill (experimental)
+    Units no longer
+    gain attack speed when leveling up
 
     ---------------------------------------
 
-    You
-    now gain continous money, and earn interest after 10 gold
+    Rebalanced
+    all units
 
     ---------------------------------------
 
-    Added
-    Battles Won tracker
+    Reverted player health
+    change
 
     ---------------------------------------
 
-    Slowed
-    AI dig speed from .4 to .5
+    Added variance to how
+    quickly the enemy will revive their units
 
     ---------------------------------------
 
-    Decreased
-    cash gained from a battle
-
-    ---------------------------------------
-
-    Buffed
-    player health from 100 to 125
-
-    ---------------------------------------
-
-    Refresh
-    cost now scales with refreshes
+    Updated
+    unit descriptions to be more accurate
 
     ---------------------------------------
 
     Fixed
-    a bug where units were not getting properly reset after reviving
-
-    ---------------------------------------
-
-    Fixed
-    a bug where you unit could be tied to multiple graves and heal when another units
-    grave was dug
-
-    ---------------------------------------
-
-    Fixed a bug where
-    you could refresh the shop if it was locked after a battle'
+    a bug where the indicators for crit or block were not showing on newer units'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -14427,7 +14408,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2110063241}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5728595}
+  m_AnchorMin: {x: 0, y: 0.33419716}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -20403,8 +20384,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: This unit cums in its fucking brothers ass everyday and its really a huge
-    fucking problem
+  m_text: 'You dont see this everday
+
+    Critical
+
+    All Rounder'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5a9a782d2042f7b4e952e8980e6939c5, type: 2}
   m_sharedMaterial: {fileID: 5483411604070718266, guid: 5a9a782d2042f7b4e952e8980e6939c5, type: 2}
@@ -20443,7 +20427,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 7
+  m_lineSpacing: 40
   m_lineSpacingMax: 0
   m_paragraphSpacing: 4
   m_charWidthMaxAdj: 0
@@ -27481,8 +27465,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: This unit cums in its fucking brothers ass everyday and its really a huge
-    fucking problem
+  m_text: 'You dont see this everday
+
+    Critical
+
+    All Rounder'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5a9a782d2042f7b4e952e8980e6939c5, type: 2}
   m_sharedMaterial: {fileID: 5483411604070718266, guid: 5a9a782d2042f7b4e952e8980e6939c5, type: 2}
@@ -27521,7 +27508,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 7
+  m_lineSpacing: 40
   m_lineSpacingMax: 0
   m_paragraphSpacing: 4
   m_charWidthMaxAdj: 0
@@ -38015,288 +38002,290 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitStatsDatabase:
   - name: Depleted
-    health: 35
-    damage: 7
-    attackSpeed: 1.5
+    health: 3
+    damage: 1
+    attackSpeed: 2
     blockChance: 0.29999998
     critChance: 0
     digCount: 5
     rarity: 2
     description: 'Legally distinct sponge character
 
-      High block chance'
+      Defensive'
     unitSprite: {fileID: 21300000, guid: e02464e7ffc369f408134fb47087d41a, type: 3}
   - name: Driftwood
-    health: 20
-    damage: 4
-    attackSpeed: 1.1
+    health: 2
+    damage: 2
+    attackSpeed: 2
     blockChance: 0.049999997
-    critChance: 0.25
+    critChance: 0.14999999
     digCount: 5
     rarity: 2
-    description: 'Experienced grave diver
-
-      High crit chance'
+    description: Experienced grave diver
     unitSprite: {fileID: 21300000, guid: 641c770d289959e4d8fd37903ac20441, type: 3}
   - name: Dud
-    health: 150
-    damage: 100
-    attackSpeed: 20
+    health: 12
+    damage: 10
+    attackSpeed: 4
     blockChance: 0
     critChance: 0
-    digCount: 10
+    digCount: 25
     rarity: 2
     description: 'It probably wont explode
 
       Probably'
     unitSprite: {fileID: 21300000, guid: 8ec8ffda88395bc4fbca8bf83ead281a, type: 3}
   - name: Goliath
-    health: 50
-    damage: 25
-    attackSpeed: 3.8
+    health: 6
+    damage: 4
+    attackSpeed: 4
     blockChance: 0
     critChance: 0.25
     digCount: 10
     rarity: 2
-    description: 'Very slow attack speed
-
-      Very high damage'
+    description: Dont make it angry
     unitSprite: {fileID: 21300000, guid: 13223c8f11b0291458e8024f94403ae8, type: 3}
   - name: Horseshoe
-    health: 35
-    damage: 5
-    attackSpeed: 2
+    health: 6
+    damage: 1
+    attackSpeed: 4
     blockChance: 0.25
     critChance: 0.049999997
     digCount: 4
     rarity: 2
-    description: Not the horse kind
+    description: 'Not the horse kind
+
+      Defensive'
     unitSprite: {fileID: 21300000, guid: 855d80e19e6c8bf44aafe41567656447, type: 3}
   - name: Mollusk
-    health: 25
+    health: 2
     damage: 6
-    attackSpeed: 3
+    attackSpeed: 2
     blockChance: 0.049999997
-    critChance: 0.7
+    critChance: 0.29999998
     digCount: 5
     rarity: 2
     description: 'Nothing to see here
 
-      Very high crit chance'
+      Glass Cannon'
     unitSprite: {fileID: 21300000, guid: 6b0880359f0d57249acd674986286504, type: 3}
   - name: Puffer
-    health: 35
-    damage: 3
+    health: 5
+    damage: 1
     attackSpeed: 2
-    blockChance: 0.5
-    critChance: 0.39999998
-    digCount: 4
+    blockChance: 0.35
+    critChance: 0.14999999
+    digCount: 6
     rarity: 2
-    description: 'Hes just nervous
+    description: 'Theyre just nervous
 
-      High block chance'
+      Defensive'
     unitSprite: {fileID: 21300000, guid: c8a31b4286ccc7349ab59e53ef3e6e52, type: 3}
   - name: Stalker
-    health: 15
+    health: 2
     damage: 3
-    attackSpeed: 1
+    attackSpeed: 2
     blockChance: 0
     critChance: 0.7
     digCount: 3
     rarity: 2
     description: 'You wont see it coming
 
-      High crit chance'
+      Critical'
     unitSprite: {fileID: 21300000, guid: 675d117289ff1284abb5e15fe24ade96, type: 3}
   - name: Trout
-    health: 30
-    damage: 5
+    health: 3
+    damage: 3
     attackSpeed: 2
     blockChance: 0.049999997
-    critChance: 0.29999998
+    critChance: 0.14999999
     digCount: 5
     rarity: 2
     description: 'Tried to warn you about the hook
 
-      High crit chance'
+      All Rounder'
     unitSprite: {fileID: 21300000, guid: c92070f50f9c3e240bb063172fb9b106, type: 3}
   - name: Worm
-    health: 25
-    damage: 6
-    attackSpeed: 3
+    health: 2
+    damage: 4
+    attackSpeed: 2
     blockChance: 0.19999999
-    critChance: 0.39999998
+    critChance: 0.099999994
     digCount: 4
     rarity: 2
     description: 'What a cool, and not scary guy!
 
-      High crit chance
-
-      Slow
-      attack speed'
+      Offensive'
     unitSprite: {fileID: 21300000, guid: 030bf1557c25ee2459a6bd1a8f22ee77, type: 3}
   - name: Angle
-    health: 30
-    damage: 10
-    attackSpeed: 3
+    health: 4
+    damage: 5
+    attackSpeed: 4
     blockChance: 0.049999997
-    critChance: 0.29999998
-    digCount: 5
+    critChance: 0.35
+    digCount: 6
     rarity: 3
-    description: 'Don''t be so obtuse
+    description: 'Theyve got an odd shape about them
 
-      Very high crit damage'
+      Critical'
     unitSprite: {fileID: 21300000, guid: d2b861f9433b612499797bc076197384, type: 3}
   - name: Chef
-    health: 10
+    health: 2
     damage: 2
-    attackSpeed: 0.8
-    blockChance: 0.049999997
+    attackSpeed: 1.5
+    blockChance: 0.099999994
     critChance: 0.049999997
     digCount: 2
     rarity: 3
-    description: Youre telling me a shrimp fried this rice?
+    description: 'Youre telling me a shrimp fried this rice?
+
+      Quick'
     unitSprite: {fileID: 21300000, guid: f66a5fa32e3f12345af15bbe0a89178b, type: 3}
   - name: Destitute
-    health: 35
-    damage: 5
-    attackSpeed: 2
-    blockChance: 0.29999998
+    health: 7
+    damage: 2
+    attackSpeed: 4
+    blockChance: 0.35
     critChance: 0.19999999
-    digCount: 5
+    digCount: 6
     rarity: 3
     description: 'A barnacles best friend
 
-      High block chance'
+      Defensive'
     unitSprite: {fileID: 21300000, guid: afb4f41a1df2a474d86ba8a43862a249, type: 3}
   - name: Diver
-    health: 30
-    damage: 15
-    attackSpeed: 3
-    blockChance: 0.14999999
-    critChance: 0.049999997
-    digCount: 7
-    rarity: 3
-    description: 'High damage
-
-      Slow attack speed'
-    unitSprite: {fileID: 21300000, guid: 47267599760930144af0936cca381f38, type: 3}
-  - name: Hermit
-    health: 40
-    damage: 10
-    attackSpeed: 2.5
+    health: 4
+    damage: 4
+    attackSpeed: 4
     blockChance: 0.14999999
     critChance: 0.14999999
-    digCount: 5
+    digCount: 7
     rarity: 3
-    description: Run of the mill crustacean
+    description: 'Seems like a good dude
+
+      All Rounder'
+    unitSprite: {fileID: 21300000, guid: 47267599760930144af0936cca381f38, type: 3}
+  - name: Hermit
+    health: 5
+    damage: 2
+    attackSpeed: 4
+    blockChance: 0.25
+    critChance: 0.099999994
+    digCount: 6
+    rarity: 3
+    description: 'Run of the mill crustacean
+
+      Defensive'
     unitSprite: {fileID: 21300000, guid: 15a8a3acf8b18ad40b50c7e94c8e634a, type: 3}
   - name: Jelly
-    health: 30
-    damage: 5
-    attackSpeed: 1.4
+    health: 3
+    damage: 6
+    attackSpeed: 4
     blockChance: 0.049999997
-    critChance: 0.39999998
+    critChance: 0.35
     digCount: 5
     rarity: 3
     description: 'Definitely not named after what its made of
 
-      High crit chance'
+      Critical'
     unitSprite: {fileID: 21300000, guid: 61d8e9d6196b47e478229d645b047512, type: 3}
   - name: Python
-    health: 20
-    damage: 3
+    health: 1
+    damage: 4
     attackSpeed: 2
     blockChance: 0.049999997
-    critChance: 0.95
+    critChance: 0.7
     digCount: 3
     rarity: 3
-    description: Very high crit chance
+    description: 'Its got a nasty bite
+
+      Glass Cannon
+
+      Critical'
     unitSprite: {fileID: 21300000, guid: c892d38e80fe7024096b8545a1faa9aa, type: 3}
   - name: David
-    health: 40
-    damage: 10
-    attackSpeed: 2
-    blockChance: 0.21
+    health: 12
+    damage: 1
+    attackSpeed: 4
+    blockChance: 0.14999999
     critChance: 0
     digCount: 8
     rarity: 4
     description: 'I wonder whos inside
 
-      High block chance'
+      Defensive'
     unitSprite: {fileID: 21300000, guid: 7cdedb07c2ed15f43b0c86e5ca262ce5, type: 3}
   - name: Dutchman
-    health: 30
-    damage: 18
-    attackSpeed: 2.2
+    health: 4
+    damage: 8
+    attackSpeed: 2
     blockChance: 0.049999997
-    critChance: 0.39999998
+    critChance: 0.35
     digCount: 7
     rarity: 4
     description: 'Legally distinct ghost pirate
 
-      High crit chance
-
-      High
-      damage'
+      Offensive'
     unitSprite: {fileID: 21300000, guid: 492213666cd74f3478146a2edea12388, type: 3}
   - name: Moai
-    health: 50
-    damage: 2
-    attackSpeed: 3
-    blockChance: 0.5
+    health: 2
+    damage: 1
+    attackSpeed: 4
+    blockChance: 0.65
     critChance: 0.049999997
-    digCount: 6
+    digCount: 15
     rarity: 4
-    description: 'He a rock bro
+    description: 'They a rock bro
 
-      Very high block chance'
+      Defensive'
     unitSprite: {fileID: 21300000, guid: 2eb892b4af00ef54e8efaa533452633e, type: 3}
   - name: Shoctovel
-    health: 25
-    damage: 2
-    attackSpeed: 0.5
-    blockChance: 0.049999997
-    critChance: 0.099999994
-    digCount: 6
-    rarity: 4
-    description: Very fast attack speed
-    unitSprite: {fileID: 21300000, guid: 21948f851d5b5234d83d756935598ed2, type: 3}
-  - name: Spliffy
-    health: 25
+    health: 5
     damage: 5
     attackSpeed: 2
+    blockChance: 0.19999999
+    critChance: 0.19999999
+    digCount: 6
+    rarity: 4
+    description: 'A reliable, eight legged diver
+
+      All Rounder'
+    unitSprite: {fileID: 21300000, guid: 21948f851d5b5234d83d756935598ed2, type: 3}
+  - name: Spliffy
+    health: 4
+    damage: 6
+    attackSpeed: 2
     blockChance: 0.049999997
-    critChance: 0.39999998
+    critChance: 0.59999996
     digCount: 5
     rarity: 4
     description: 'He just like me for real
 
-      High crit chance'
+      Critical'
     unitSprite: {fileID: 21300000, guid: f5bd059febedc2644a9a8bf29cd5b07e, type: 3}
   - name: Glumpis
-    health: 25
-    damage: 7
-    attackSpeed: 1.5
-    blockChance: 0.19999999
-    critChance: 0.39999998
-    digCount: 3
+    health: 6
+    damage: 6
+    attackSpeed: 2
+    blockChance: 0.14999999
+    critChance: 0.14999999
+    digCount: 8
     rarity: 5
     description: 'Games
 
-      High crit chance'
+      All Rounder'
     unitSprite: {fileID: 21300000, guid: a868ef4e3e7d68148a3ce82a2cf7e22c, type: 3}
   - name: Pirat
-    health: 20
-    damage: 5
-    attackSpeed: 0.90000004
-    blockChance: 0.14999999
-    critChance: 0.19999999
-    digCount: 5
+    health: 1
+    damage: 1
+    attackSpeed: 0.5
+    blockChance: 0.01
+    critChance: 0.049999997
+    digCount: 7
     rarity: 5
     description: 'Get it
 
-      Fast attack speed'
+      Quick'
     unitSprite: {fileID: 21300000, guid: 371116c389eec2f4c9cf7df0fd6835eb, type: 3}
 --- !u!114 &1619360556
 MonoBehaviour:
@@ -38569,7 +38558,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Hotfix 0.2.2
+  m_text: Hotfix 0.2.3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5a9a782d2042f7b4e952e8980e6939c5, type: 2}
   m_sharedMaterial: {fileID: 5483411604070718266, guid: 5a9a782d2042f7b4e952e8980e6939c5, type: 2}
@@ -51188,8 +51177,8 @@ RectTransform:
   - {fileID: 804569165}
   - {fileID: 1601295904}
   - {fileID: 1254785087}
-  - {fileID: 452473319}
   - {fileID: 1470167112}
+  - {fileID: 452473319}
   - {fileID: 760418785}
   m_Father: {fileID: 1757810490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -56726,6 +56715,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 0}
+  actorHealth: 100
   units:
   - {fileID: 0}
   - {fileID: 0}
@@ -58501,6 +58491,7 @@ MonoBehaviour:
   wonParticles: {fileID: 1511206049}
   battleField: {fileID: 6061492426935951633}
   MusicPlayer: {fileID: 1999471152}
+  audioMixer: {fileID: 24100000, guid: 6ded5fafd7a9e33438aaf5b3c69981d8, type: 2}
   playerActor: {fileID: 2869434031154460488}
   enemyActor: {fileID: 5815087136913851513}
   lanes:
@@ -59044,6 +59035,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 0}
+  actorHealth: 100
   units:
   - {fileID: 0}
   - {fileID: 0}

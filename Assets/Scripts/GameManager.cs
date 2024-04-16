@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Events;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
@@ -141,13 +142,14 @@ public class GameManager : MonoBehaviour
 	[SerializeField] GameObject battleField;
 
 	public AudioSource MusicPlayer;
+	public AudioMixer audioMixer;
 
 	public Actor playerActor;
 	public Actor enemyActor;
 	public List<BattleLane> lanes;
 
 	private int battleReward = 8;
-	private int startingGold = 12;
+	private int startingGold = 150;
 
 	public UIManager uiManager;
 
