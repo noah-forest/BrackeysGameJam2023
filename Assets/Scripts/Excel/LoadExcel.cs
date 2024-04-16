@@ -7,6 +7,8 @@ public class LoadExcel : MonoBehaviour
 	public UnitInfo blankItem;
 	public UnitManager unitManager;
 
+	public GameManager gameManager;
+
 	private Dictionary<string, UnitRarity> unitRaritys = new Dictionary<string, UnitRarity>()
 	{
 		{"Common", UnitRarity.Common},
@@ -28,9 +30,17 @@ public class LoadExcel : MonoBehaviour
 	{
 		// clear database
 		unitManager.unitStatsDatabase.Clear();
+		List<Dictionary<string, object>> data;
 
 		//read CSV files
-		List<Dictionary<string, object>> data = CSVReader.Read("UnitStats");
+		if (gameManager.oldStatValues)
+		{
+			data = CSVReader.Read("OldUnitStats");
+		} else
+		{
+			data = CSVReader.Read("UnitStats");
+		}
+
 		for(int i = 0; i < data.Count; i++)
 		{
 			int Health = int.Parse(data[i]["Health"].ToString(), System.Globalization.NumberStyles.Integer);

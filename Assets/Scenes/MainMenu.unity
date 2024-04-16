@@ -38014,12 +38014,118 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitStatsDatabase:
-  - name: Worm
-    health: 2
+  - name: Depleted
+    health: 35
+    damage: 7
+    attackSpeed: 1.5
+    blockChance: 0.29999998
+    critChance: 0
+    digCount: 5
+    rarity: 2
+    description: 'Legally distinct sponge character
+
+      High block chance'
+    unitSprite: {fileID: 21300000, guid: e02464e7ffc369f408134fb47087d41a, type: 3}
+  - name: Driftwood
+    health: 20
     damage: 4
+    attackSpeed: 1.1
+    blockChance: 0.049999997
+    critChance: 0.25
+    digCount: 5
+    rarity: 2
+    description: 'Experienced grave diver
+
+      High crit chance'
+    unitSprite: {fileID: 21300000, guid: 641c770d289959e4d8fd37903ac20441, type: 3}
+  - name: Dud
+    health: 150
+    damage: 100
+    attackSpeed: 20
+    blockChance: 0
+    critChance: 0
+    digCount: 10
+    rarity: 2
+    description: 'It probably wont explode
+
+      Probably'
+    unitSprite: {fileID: 21300000, guid: 8ec8ffda88395bc4fbca8bf83ead281a, type: 3}
+  - name: Goliath
+    health: 50
+    damage: 25
+    attackSpeed: 3.8
+    blockChance: 0
+    critChance: 0.25
+    digCount: 10
+    rarity: 2
+    description: 'Very slow attack speed
+
+      Very high damage'
+    unitSprite: {fileID: 21300000, guid: 13223c8f11b0291458e8024f94403ae8, type: 3}
+  - name: Horseshoe
+    health: 35
+    damage: 5
     attackSpeed: 2
+    blockChance: 0.25
+    critChance: 0.049999997
+    digCount: 4
+    rarity: 2
+    description: Not the horse kind
+    unitSprite: {fileID: 21300000, guid: 855d80e19e6c8bf44aafe41567656447, type: 3}
+  - name: Mollusk
+    health: 25
+    damage: 6
+    attackSpeed: 3
+    blockChance: 0.049999997
+    critChance: 0.7
+    digCount: 5
+    rarity: 2
+    description: 'Nothing to see here
+
+      Very high crit chance'
+    unitSprite: {fileID: 21300000, guid: 6b0880359f0d57249acd674986286504, type: 3}
+  - name: Puffer
+    health: 35
+    damage: 3
+    attackSpeed: 2
+    blockChance: 0.5
+    critChance: 0.39999998
+    digCount: 4
+    rarity: 2
+    description: 'Hes just nervous
+
+      High block chance'
+    unitSprite: {fileID: 21300000, guid: c8a31b4286ccc7349ab59e53ef3e6e52, type: 3}
+  - name: Stalker
+    health: 15
+    damage: 3
+    attackSpeed: 1
+    blockChance: 0
+    critChance: 0.7
+    digCount: 3
+    rarity: 2
+    description: 'You wont see it coming
+
+      High crit chance'
+    unitSprite: {fileID: 21300000, guid: 675d117289ff1284abb5e15fe24ade96, type: 3}
+  - name: Trout
+    health: 30
+    damage: 5
+    attackSpeed: 2
+    blockChance: 0.049999997
+    critChance: 0.29999998
+    digCount: 5
+    rarity: 2
+    description: 'Tried to warn you about the hook
+
+      High crit chance'
+    unitSprite: {fileID: 21300000, guid: c92070f50f9c3e240bb063172fb9b106, type: 3}
+  - name: Worm
+    health: 25
+    damage: 6
+    attackSpeed: 3
     blockChance: 0.19999999
-    critChance: 0.099999994
+    critChance: 0.39999998
     digCount: 4
     rarity: 2
     description: 'What a cool, and not scary guy!
@@ -38029,230 +38135,102 @@ MonoBehaviour:
       Slow
       attack speed'
     unitSprite: {fileID: 21300000, guid: 030bf1557c25ee2459a6bd1a8f22ee77, type: 3}
-  - name: Trout
-    health: 3
-    damage: 3
-    attackSpeed: 2
-    blockChance: 0.049999997
-    critChance: 0.14999999
-    digCount: 5
-    rarity: 2
-    description: 'Tried to warn you about the hook
-
-      High crit chance'
-    unitSprite: {fileID: 21300000, guid: c92070f50f9c3e240bb063172fb9b106, type: 3}
-  - name: Stalker
-    health: 2
-    damage: 3
-    attackSpeed: 2
-    blockChance: 0
-    critChance: 0.7
-    digCount: 3
-    rarity: 2
-    description: 'You wont see it coming
-
-      High crit chance'
-    unitSprite: {fileID: 21300000, guid: 675d117289ff1284abb5e15fe24ade96, type: 3}
-  - name: Puffer
-    health: 5
-    damage: 1
-    attackSpeed: 2
-    blockChance: 0.35
-    critChance: 0.14999999
-    digCount: 6
-    rarity: 2
-    description: 'Hes just nervous
-
-      High block chance'
-    unitSprite: {fileID: 21300000, guid: c8a31b4286ccc7349ab59e53ef3e6e52, type: 3}
-  - name: Mollusk
-    health: 2
-    damage: 6
-    attackSpeed: 2
+  - name: Angle
+    health: 30
+    damage: 10
+    attackSpeed: 3
     blockChance: 0.049999997
     critChance: 0.29999998
     digCount: 5
-    rarity: 2
-    description: 'Nothing to see here
-
-      Very high crit chance'
-    unitSprite: {fileID: 21300000, guid: 6b0880359f0d57249acd674986286504, type: 3}
-  - name: Horseshoe
-    health: 6
-    damage: 1
-    attackSpeed: 4
-    blockChance: 0.25
-    critChance: 0.049999997
-    digCount: 4
-    rarity: 2
-    description: Not the horse kind
-    unitSprite: {fileID: 21300000, guid: 855d80e19e6c8bf44aafe41567656447, type: 3}
-  - name: Goliath
-    health: 6
-    damage: 4
-    attackSpeed: 4
-    blockChance: 0
-    critChance: 0.25
-    digCount: 10
-    rarity: 2
-    description: 'Very slow attack speed
-
-      Very high damage'
-    unitSprite: {fileID: 21300000, guid: 13223c8f11b0291458e8024f94403ae8, type: 3}
-  - name: Dud
-    health: 12
-    damage: 10
-    attackSpeed: 4
-    blockChance: 0
-    critChance: 0
-    digCount: 25
-    rarity: 2
-    description: 'It probably wont explode
-
-      Probably'
-    unitSprite: {fileID: 21300000, guid: 8ec8ffda88395bc4fbca8bf83ead281a, type: 3}
-  - name: Driftwood
-    health: 2
-    damage: 2
-    attackSpeed: 2
-    blockChance: 0.049999997
-    critChance: 0.14999999
-    digCount: 5
-    rarity: 2
-    description: 'Experienced grave diver
-
-      High crit chance'
-    unitSprite: {fileID: 21300000, guid: 641c770d289959e4d8fd37903ac20441, type: 3}
-  - name: Depleted
-    health: 3
-    damage: 1
-    attackSpeed: 2
-    blockChance: 0.29999998
-    critChance: 0
-    digCount: 5
-    rarity: 2
-    description: 'Legally distinct sponge character
-
-      High block chance'
-    unitSprite: {fileID: 21300000, guid: e02464e7ffc369f408134fb47087d41a, type: 3}
-  - name: Angle
-    health: 4
-    damage: 5
-    attackSpeed: 4
-    blockChance: 0.049999997
-    critChance: 0.35
-    digCount: 6
     rarity: 3
     description: 'Don''t be so obtuse
 
       Very high crit damage'
     unitSprite: {fileID: 21300000, guid: d2b861f9433b612499797bc076197384, type: 3}
   - name: Chef
-    health: 3
-    damage: 3
-    attackSpeed: 2
-    blockChance: 0.099999994
+    health: 10
+    damage: 2
+    attackSpeed: 0.8
+    blockChance: 0.049999997
     critChance: 0.049999997
     digCount: 2
     rarity: 3
     description: Youre telling me a shrimp fried this rice?
     unitSprite: {fileID: 21300000, guid: f66a5fa32e3f12345af15bbe0a89178b, type: 3}
-  - name: Python
-    health: 1
-    damage: 4
+  - name: Destitute
+    health: 35
+    damage: 5
     attackSpeed: 2
-    blockChance: 0.049999997
-    critChance: 0.7
-    digCount: 3
-    rarity: 3
-    description: Very high crit chance
-    unitSprite: {fileID: 21300000, guid: c892d38e80fe7024096b8545a1faa9aa, type: 3}
-  - name: Jelly
-    health: 3
-    damage: 6
-    attackSpeed: 4
-    blockChance: 0.049999997
-    critChance: 0.35
+    blockChance: 0.29999998
+    critChance: 0.19999999
     digCount: 5
     rarity: 3
-    description: 'Definitely not named after what its made of
+    description: 'A barnacles best friend
 
-      High crit chance'
-    unitSprite: {fileID: 21300000, guid: 61d8e9d6196b47e478229d645b047512, type: 3}
-  - name: Hermit
-    health: 5
-    damage: 2
-    attackSpeed: 4
-    blockChance: 0.25
-    critChance: 0.099999994
-    digCount: 6
-    rarity: 3
-    description: Run of the mill crustacean
-    unitSprite: {fileID: 21300000, guid: 15a8a3acf8b18ad40b50c7e94c8e634a, type: 3}
+      High block chance'
+    unitSprite: {fileID: 21300000, guid: afb4f41a1df2a474d86ba8a43862a249, type: 3}
   - name: Diver
-    health: 4
-    damage: 4
-    attackSpeed: 4
+    health: 30
+    damage: 15
+    attackSpeed: 3
     blockChance: 0.14999999
-    critChance: 0.14999999
+    critChance: 0.049999997
     digCount: 7
     rarity: 3
     description: 'High damage
 
       Slow attack speed'
     unitSprite: {fileID: 21300000, guid: 47267599760930144af0936cca381f38, type: 3}
-  - name: Destitute
-    health: 7
-    damage: 2
-    attackSpeed: 4
-    blockChance: 0.35
-    critChance: 0.19999999
-    digCount: 6
-    rarity: 3
-    description: 'A barnacles best friend
-
-      High block chance'
-    unitSprite: {fileID: 21300000, guid: afb4f41a1df2a474d86ba8a43862a249, type: 3}
-  - name: Spliffy
-    health: 4
-    damage: 6
-    attackSpeed: 2
-    blockChance: 0.049999997
-    critChance: 0.59999996
+  - name: Hermit
+    health: 40
+    damage: 10
+    attackSpeed: 2.5
+    blockChance: 0.14999999
+    critChance: 0.14999999
     digCount: 5
-    rarity: 4
-    description: 'He just like me for real
+    rarity: 3
+    description: Run of the mill crustacean
+    unitSprite: {fileID: 21300000, guid: 15a8a3acf8b18ad40b50c7e94c8e634a, type: 3}
+  - name: Jelly
+    health: 30
+    damage: 5
+    attackSpeed: 1.4
+    blockChance: 0.049999997
+    critChance: 0.39999998
+    digCount: 5
+    rarity: 3
+    description: 'Definitely not named after what its made of
 
       High crit chance'
-    unitSprite: {fileID: 21300000, guid: f5bd059febedc2644a9a8bf29cd5b07e, type: 3}
-  - name: Shoctovel
-    health: 5
-    damage: 5
-    attackSpeed: 2
-    blockChance: 0.19999999
-    critChance: 0.19999999
-    digCount: 6
-    rarity: 4
-    description: Very fast attack speed
-    unitSprite: {fileID: 21300000, guid: 21948f851d5b5234d83d756935598ed2, type: 3}
-  - name: Moai
-    health: 2
-    damage: 1
-    attackSpeed: 4
-    blockChance: 0.65
-    critChance: 0.049999997
-    digCount: 15
-    rarity: 4
-    description: 'He a rock bro
-
-      Very high block chance'
-    unitSprite: {fileID: 21300000, guid: 2eb892b4af00ef54e8efaa533452633e, type: 3}
-  - name: Dutchman
-    health: 4
-    damage: 8
+    unitSprite: {fileID: 21300000, guid: 61d8e9d6196b47e478229d645b047512, type: 3}
+  - name: Python
+    health: 20
+    damage: 3
     attackSpeed: 2
     blockChance: 0.049999997
-    critChance: 0.35
+    critChance: 0.95
+    digCount: 3
+    rarity: 3
+    description: Very high crit chance
+    unitSprite: {fileID: 21300000, guid: c892d38e80fe7024096b8545a1faa9aa, type: 3}
+  - name: David
+    health: 40
+    damage: 10
+    attackSpeed: 2
+    blockChance: 0.21
+    critChance: 0
+    digCount: 8
+    rarity: 4
+    description: 'I wonder whos inside
+
+      High block chance'
+    unitSprite: {fileID: 21300000, guid: 7cdedb07c2ed15f43b0c86e5ca262ce5, type: 3}
+  - name: Dutchman
+    health: 30
+    damage: 18
+    attackSpeed: 2.2
+    blockChance: 0.049999997
+    critChance: 0.39999998
     digCount: 7
     rarity: 4
     description: 'Legally distinct ghost pirate
@@ -38262,42 +38240,64 @@ MonoBehaviour:
       High
       damage'
     unitSprite: {fileID: 21300000, guid: 492213666cd74f3478146a2edea12388, type: 3}
-  - name: David
-    health: 12
-    damage: 1
-    attackSpeed: 4
-    blockChance: 0.14999999
-    critChance: 0
-    digCount: 8
-    rarity: 4
-    description: 'I wonder whos inside
-
-      High block chance'
-    unitSprite: {fileID: 21300000, guid: 7cdedb07c2ed15f43b0c86e5ca262ce5, type: 3}
-  - name: Pirat
-    health: 1
-    damage: 1
-    attackSpeed: 0.5
-    blockChance: 0.01
+  - name: Moai
+    health: 50
+    damage: 2
+    attackSpeed: 3
+    blockChance: 0.5
     critChance: 0.049999997
-    digCount: 7
-    rarity: 5
-    description: 'Get it
+    digCount: 6
+    rarity: 4
+    description: 'He a rock bro
 
-      Fast attack speed'
-    unitSprite: {fileID: 21300000, guid: 371116c389eec2f4c9cf7df0fd6835eb, type: 3}
-  - name: Glumpis
-    health: 6
-    damage: 6
+      Very high block chance'
+    unitSprite: {fileID: 21300000, guid: 2eb892b4af00ef54e8efaa533452633e, type: 3}
+  - name: Shoctovel
+    health: 25
+    damage: 2
+    attackSpeed: 0.5
+    blockChance: 0.049999997
+    critChance: 0.099999994
+    digCount: 6
+    rarity: 4
+    description: Very fast attack speed
+    unitSprite: {fileID: 21300000, guid: 21948f851d5b5234d83d756935598ed2, type: 3}
+  - name: Spliffy
+    health: 25
+    damage: 5
     attackSpeed: 2
-    blockChance: 0.14999999
-    critChance: 0.14999999
-    digCount: 8
+    blockChance: 0.049999997
+    critChance: 0.39999998
+    digCount: 5
+    rarity: 4
+    description: 'He just like me for real
+
+      High crit chance'
+    unitSprite: {fileID: 21300000, guid: f5bd059febedc2644a9a8bf29cd5b07e, type: 3}
+  - name: Glumpis
+    health: 25
+    damage: 7
+    attackSpeed: 1.5
+    blockChance: 0.19999999
+    critChance: 0.39999998
+    digCount: 3
     rarity: 5
     description: 'Games
 
       High crit chance'
     unitSprite: {fileID: 21300000, guid: a868ef4e3e7d68148a3ce82a2cf7e22c, type: 3}
+  - name: Pirat
+    health: 20
+    damage: 5
+    attackSpeed: 0.90000004
+    blockChance: 0.14999999
+    critChance: 0.19999999
+    digCount: 5
+    rarity: 5
+    description: 'Get it
+
+      Fast attack speed'
+    unitSprite: {fileID: 21300000, guid: 371116c389eec2f4c9cf7df0fd6835eb, type: 3}
 --- !u!114 &1619360556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38322,6 +38322,7 @@ MonoBehaviour:
     description: 
     unitSprite: {fileID: 0}
   unitManager: {fileID: 1619360555}
+  gameManager: {fileID: 4924796644863341493}
 --- !u!1 &1629459806
 GameObject:
   m_ObjectHideFlags: 0
@@ -58480,6 +58481,7 @@ MonoBehaviour:
   shopRefreshed:
     m_PersistentCalls:
       m_Calls: []
+  oldStatValues: 0
   overkillEnabled: 1
   growingMoney: 1
   gainInterest: 1

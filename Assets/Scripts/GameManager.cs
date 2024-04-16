@@ -112,6 +112,9 @@ public class GameManager : MonoBehaviour
 	#endregion
 
 	[Header("Debug Menu")]
+	[Header("Reload Stats after enabling/disabling")]
+	public bool oldStatValues;
+	[Space(10)]
 	public bool overkillEnabled;
 	public bool growingMoney;
 	public bool gainInterest;
