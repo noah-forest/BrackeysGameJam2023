@@ -42,7 +42,7 @@ public class Experience : MonoBehaviour
 		++curLevel;
 
 		UnitStats unitStats = GetComponent<UnitStats>();
-		unitStats.LevelUpUnit();
+		unitStats.LevelUpUnit(this); // to-do add sources for each level to allow for de-leveling
 	}
 
 	private void TryToLevel()

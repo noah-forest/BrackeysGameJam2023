@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
 
 	#endregion
 
+	[HideInInspector]
 	public UnityEvent shopRefreshed;
 
 	#region Getters and Setters
@@ -128,6 +129,8 @@ public class GameManager : MonoBehaviour
 	public GameObject battleSlots;
 	bool playerUnitsLoaded;
 
+	public UnitManager unitManager;
+
 	public GameObject HUD;
 
 	public GameObject wonParticles; 
@@ -158,11 +161,11 @@ public class GameManager : MonoBehaviour
 
 	private bool inShop;
 
+	public GameObject unitMasterPrefab;
+
 	private void Start()
 	{
 		mouseUtils = MouseUtils.singleton;
-
-		LoadResources();
 
 		playerActor.GetComponent<Health>().died.AddListener(PlayerDied);
 		enemyActor.GetComponent<Health>().died.AddListener(EnemyDied);
@@ -348,7 +351,7 @@ public class GameManager : MonoBehaviour
 		if (!playerUnitsLoaded) LoadPlayerUnitsIntoBattle();
 		AssignUnitTargets();
 	}
-
+	
 	public void HideBattlefield()
 	{
 		ClearBattlefield();
@@ -377,7 +380,7 @@ public class GameManager : MonoBehaviour
 		foreach (BattleLane lane in lanes)      //assigng target units to opposing units, and assign units to their graves
 		{
 			if (lane.enemyUnit) Destroy(lane.enemyUnit.gameObject);
-			GameObject newUnitObj = Instantiate(GetRandomUnitObject(), lane.enemyUnitPosition);
+			GameObject newUnitObj = InstantiateRandomUnit(lane.enemyUnitPosition);
 			lane.enemyUnit = newUnitObj.GetComponent<UnitController>();
 			lane.enemyUnit.parentActor = enemyActor;
 			lane.enemyUnit.unitGrave = lane.enemyGrave;
@@ -436,20 +439,24 @@ public class GameManager : MonoBehaviour
 		playerUnitsLoaded = false;
 	}
 
-	public GameObject GetRandomUnitObject()
+	public GameObject InstantiateRandomUnit(Transform parent)
 	{
-		int unitRoll = Random.Range(0, allUnitPrefabs.Count);
-		return allUnitPrefabs[unitRoll];
-	}
-	private void LoadResources()
-	{
-		Object[] loadedUnits;
-		loadedUnits = Resources.LoadAll("Prefabs/Units");
-		foreach (var lu in loadedUnits)
-		{
-			allUnitPrefabs.Add((GameObject)lu);
-		}
+		int unitRoll = Random.Range(0, unitManager.unitStatsDatabase.Count);
+		return CreateUnitInstance(unitRoll, parent);
 	}
 
+	public GameObject CreateUnitInstance(int unitIndex, Transform parent)
+	{
+		GameObject newUnit = Instantiate(unitMasterPrefab, parent);
+		UnitMasterComponent unitMaster = newUnit.GetComponent<UnitMasterComponent>();
+		unitMaster.unitStats.InitUnit(unitManager.unitStatsDatabase[unitIndex]);
 
+		unitMaster.unitStats.Rarity = unitManager.unitStatsDatabase[unitIndex].rarity;
+		unitMaster.unitStats.description = unitManager.unitStatsDatabase[unitIndex].description;
+		newUnit.name = unitManager.unitStatsDatabase[unitIndex].name;
+
+		unitMaster.unitSprite.sprite = unitManager.unitStatsDatabase[unitIndex].unitSprite;
+
+		return newUnit;
+	}
 }

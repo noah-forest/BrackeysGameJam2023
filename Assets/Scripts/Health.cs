@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.Events;
+using glumpis.CharacterStats;
 
 public class Health : MonoBehaviour
 {
-	public float maxHealth;
+	public CharacterStat maxHealth;
 	public float _health;
 
 	public float health
@@ -37,6 +38,11 @@ public class Health : MonoBehaviour
 			isDead = true;
 			Die();
 		}
+	}
+
+	public void InitHealth(int health)
+	{
+		maxHealth = new CharacterStat(health, 1);
 	}
 
 	public void Revive()

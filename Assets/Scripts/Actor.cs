@@ -14,6 +14,7 @@ public class Actor : MonoBehaviour
 	private void Awake()
 	{
 		health = GetComponent<Health>();
+		health.InitHealth(125);
 	}
 
 	//public InitializeRandomTeam()

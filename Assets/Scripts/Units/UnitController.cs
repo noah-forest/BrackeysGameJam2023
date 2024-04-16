@@ -94,7 +94,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 
 	private void SetAttackTime()
 	{
-		attackCooldownEnd = Time.time + unitStats.attackInterval;
+		attackCooldownEnd = Time.time + unitStats.attackSpeed;
 		isAttacking = false;
 	}
 
@@ -171,7 +171,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 	{
 		if (!unitAttacker.targetUnit)
 		{
-			gameManager.playerActor.health.TakeDamage(unitStats.attackPower); // this is fucking awful dont get me started. This only works cause the enemy will always have all 3 units
+			gameManager.playerActor.health.TakeDamage(unitStats.damage); // this is fucking awful dont get me started. This only works cause the enemy will always have all 3 units
 			return;
 		}
 		unitAttacker.AttackTarget();

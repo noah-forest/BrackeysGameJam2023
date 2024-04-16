@@ -30,7 +30,7 @@ public class EnemyAI : MonoBehaviour
 		timer += Time.deltaTime;
 		seconds = (int)(timer % 60);
 
-		if (seconds < enemyUnitAttacker.unitStats.digCount) return;
+		if (seconds < (int)enemyUnitAttacker.unitStats.digCount) return;
 		dead = false;
 	}
 }

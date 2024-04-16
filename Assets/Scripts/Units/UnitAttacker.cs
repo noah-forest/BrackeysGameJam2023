@@ -37,7 +37,7 @@ public class UnitAttacker : MonoBehaviour
 	{
 		// Damage instance feilds.
 
-		float damage = stats.attackPower;
+		float damage = stats.damage;
 
 		crit = false;       // currently cirt bool does nothing ,but may be used later.
 		float critRoll = Random.value;
@@ -46,9 +46,7 @@ public class UnitAttacker : MonoBehaviour
 			// crit hit
 			//crit = true;
 			critEvent.Invoke();
-			damage *= 2;
-			stats.critDamage = damage;
-
+			damage *= stats.critDamageMult;
 		}
 
 		targetUnit.TakeDamage(damage);

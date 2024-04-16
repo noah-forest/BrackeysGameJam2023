@@ -17,7 +17,7 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	private GameManager gameManager;
 
 	private int digCount;
-	private float digSpeed = 0.40f; //used by enemy 
+	private float digSpeed = 0.45f; //used by enemy 
 	public Sprite[] digLevelSprites;
 	private SpriteRenderer sprite;
 	AudioSource audSource;
@@ -111,7 +111,7 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	/// <returns></returns>
 	IEnumerator EnemyDig()
 	{
-		yield return new WaitForSeconds(digSpeed);
+		yield return new WaitForSeconds(digSpeed + Random.Range(-0.2f, 0.2f));
 		Dig();
 		if (inGrave == true) StartCoroutine(EnemyDig()); //loops until the dig function sets inGrave to false
 	}

@@ -35,27 +35,20 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 		// raw stats to show
 		tooltipSystem.levelTxt.text = $"{level}";
 		tooltipSystem.healthTxt.text = $"{Mathf.Floor(Health)}";
-		tooltipSystem.dmgTxt.text = $"{Mathf.Floor(stats.attackPower)}";
-		tooltipSystem.atkSpdTxt.text = $"{Mathf.Floor(stats.attackInterval * 10)}";
+		tooltipSystem.dmgTxt.text = $"{Mathf.Floor(stats.damage)}";
+
+		if ((stats.attackSpeed * 10) > 20) tooltipSystem.atkSpdTxt.text = "Slow";
+		else if ((stats.attackSpeed * 10) == 20) tooltipSystem.atkSpdTxt.text = "Fast";
+		else if ((stats.attackSpeed * 10) < 20) tooltipSystem.atkSpdTxt.text = "Nuts";
+
 		tooltipSystem.digCountTxt.text = $"{Mathf.Floor(stats.digCount)}";
 		
 		tooltipSystem.unitDesc.text = stats.description;
 		tooltipSystem.rarityTxt.text = rarity.ToString();
 		SetLabelRarity(tooltipSystem.rarityLabel);
-		
-		//if the percentage is over 1, set it to 1
-		if(stats.critChance >= 1)
-		{
-			stats.critChance = 1;
-		}
 
-		if (stats.blockChance >= 0.85f)
-		{
-			stats.blockChance = 0.85f;
-		}
-
-		tooltipSystem.blockChanceTxt.text = $"{Mathf.Floor(stats.blockChance * 100)}";
-		tooltipSystem.critChanceTxt.text = $"{Mathf.Floor(stats.critChance * 100)}";
+		tooltipSystem.blockChanceTxt.text = $"{Mathf.Floor(stats.blockChance * 100f)}";
+		tooltipSystem.critChanceTxt.text = $"{Mathf.Floor(stats.critChance * 100f)}";
 
 		TooltipSystem.Show(header);
 	}
