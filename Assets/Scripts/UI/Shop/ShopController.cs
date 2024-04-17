@@ -32,7 +32,6 @@ public class ShopController : MonoBehaviour
 
 	// lists to populate from resources
 	private List<Unit> shopUnits = new();
-	private List<GameObject> unitPrefabs = new();
 
 	public Button refreshButton;
 	public GameObject sellWindow;
@@ -262,7 +261,7 @@ public class ShopController : MonoBehaviour
 
 	private void FindShopItem()
 	{
-		shopItem = Resources.Load("Prefabs/UI/Shop/unitShopItem") as GameObject;
+		shopItem = Resources.Load("Prefabs/unitShopItem") as GameObject;
 		if (shopItem != null)
 		{
 			curUnitInfo = shopItem.GetComponent<SetUnitInfo>();

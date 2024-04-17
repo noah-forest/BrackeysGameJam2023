@@ -125,9 +125,6 @@ public class GameManager : MonoBehaviour
 
 	[Space(10)]
 
-	[HideInInspector]
-	public List<GameObject> allUnitPrefabs;
-
 	[Space(10)]
 	[Header("everything else")]
 

@@ -26,7 +26,9 @@ public class SetUnitInfo : MonoBehaviour
 
 	public GameObject purchased;
 	public UnitStats unitStats;
+	
 	private UnitRarity rarity;
+	public List<GameObject> rarityGlowList = new();
 
 	[HideInInspector]
 	public int unitCost;
@@ -51,6 +53,14 @@ public class SetUnitInfo : MonoBehaviour
 		{
 			unitCost = (int)rarity;
 		}
+
+		foreach(GameObject item in rarityGlowList)
+		{
+            if (item.name == rarity.ToString())
+            {
+				item.SetActive(true);
+            }
+        }
 
 		shopPreviewImage.sprite = curUnit.itemPreview;
 		shopPreviewShadow.sprite = shopPreviewImage.sprite;
