@@ -119,6 +119,9 @@ public class GameManager : MonoBehaviour
 	public bool overkillEnabled;
 	public bool growingMoney;
 	public bool gainInterest;
+	[Space(10)]
+	public int startingGold = 12;
+	public int battleReward = 8;
 
 	[Space(10)]
 
@@ -147,9 +150,6 @@ public class GameManager : MonoBehaviour
 	public Actor playerActor;
 	public Actor enemyActor;
 	public List<BattleLane> lanes;
-
-	private int battleReward = 8;
-	private int startingGold = 150;
 
 	public UIManager uiManager;
 
@@ -286,7 +286,7 @@ public class GameManager : MonoBehaviour
 
 	public void GainInterest()
 	{
-		int interestThreshold = 10;
+		int interestThreshold = 5;
 		if(Cash >=  interestThreshold)
 		{
 			Cash += Cash / interestThreshold;

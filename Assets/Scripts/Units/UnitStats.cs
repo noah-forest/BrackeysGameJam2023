@@ -1,6 +1,5 @@
-using System;
-using UnityEngine;
 using glumpis.CharacterStats;
+using UnityEngine;
 
 public enum UnitRarity
 {
@@ -48,11 +47,11 @@ public class UnitStats : MonoBehaviour
 		health.maxHealth += levelUpMod;
 
 		damage += levelUpMod;
-		
+
 		critChance += levelUpMod;
 		blockChance += levelUpMod;
-		
+
 		digCount += new StatModifier(1, StatModType.Flat, (int)StatModType.Flat - 1, source);
 		sellValue += new StatModifier(2, StatModType.PercentMult, (int)StatModType.PercentMult - 1, source);
 	}
-}	
+}

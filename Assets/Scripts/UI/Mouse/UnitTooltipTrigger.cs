@@ -36,7 +36,8 @@ public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 		tooltipSystem.healthTxt.text = $"{Mathf.Floor(Health.maxHealth)}";
 		tooltipSystem.dmgTxt.text = $"{Mathf.Floor(stats.damage)}";
 
-		if ((stats.attackSpeed * 10) > 20) tooltipSystem.atkSpdTxt.text = "Slow";
+		if ((stats.attackSpeed * 10) > 40) tooltipSystem.atkSpdTxt.text = "Ass";
+		else if ((stats.attackSpeed * 10) == 40) tooltipSystem.atkSpdTxt.text = "Slow";
 		else if ((stats.attackSpeed * 10) == 20) tooltipSystem.atkSpdTxt.text = "Fast";
 		else if ((stats.attackSpeed * 10) < 20) tooltipSystem.atkSpdTxt.text = "Nuts";
 

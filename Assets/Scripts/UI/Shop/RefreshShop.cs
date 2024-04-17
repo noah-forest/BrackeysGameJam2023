@@ -44,7 +44,7 @@ public class RefreshShop : MonoBehaviour
 		{
 			button.interactable = false;
 		}
-		else if (gameManager.Cash > 0 && !lockShop.locked)
+		else if (gameManager.Cash > 0 && !lockShop.locked && gameManager.Cash >= shopController.refreshCost)
 		{
 			button.interactable = true;
 		}

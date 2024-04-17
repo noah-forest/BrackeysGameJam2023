@@ -55,12 +55,24 @@ public class ShopController : MonoBehaviour
 
 	public RarityTable defaultRarities;
 
+	[Space(15)]
+	[Header("Rarity Weights")]
+	public int commonWeight;
+	public int rareWeight;
+	public int epicWeight;
+	public int legendaryWeight;
+
 	private void Start()
 	{
 		gameManager = GameManager.singleton;
 		shopAudioPlayer = GetComponent<ShopAudio>();
 
-		defaultRarities = new RarityTable(52, 35, 15, 8);
+		defaultRarities = new RarityTable(commonWeight, rareWeight, epicWeight, legendaryWeight);
+
+		Debug.Log((float)commonWeight / defaultRarities.weightedTotal * 100);
+		Debug.Log((float)rareWeight / defaultRarities.weightedTotal * 100);
+		Debug.Log((float)epicWeight / defaultRarities.weightedTotal * 100);
+		Debug.Log((float)legendaryWeight / defaultRarities.weightedTotal * 100);
 
 		LoadResources();        // load the resources from the game files
 
@@ -203,46 +215,50 @@ public class ShopController : MonoBehaviour
 	// sets a single shop item at a certain location
 	private void SetShopItem(Transform parent)
 	{
+		UnitInfo unitInfo;
+		unitInfo = gameManager.unitManager.unitStatsDatabase[GetRandomUnitWeighted(defaultRarities)];
+
 		for (int i = 0; i < shopUnits.Count; i++)
 		{
-			FindShopItem(); // find shopitem prefab and inits the curUnitInfo 
-
-			// put random unit in shop
-			unitIndex = Random.Range(0, shopUnits.Count);
-			curUnitInfo.curUnit = shopUnits[unitIndex];
-
-			//curUnitInfo.curUnit = shopUnits[GetRandomUnitWeighted(defaultRarities)];
+			FindShopItem(); // find shopitem prefab and inits the curUnitInfo
+			if (shopUnits[i].name == unitInfo.name)
+			{
+				curUnitInfo.curUnit = shopUnits[i];
+			}
 		}
 
 		shopWindow = Instantiate(shopItem, parent); // creates the window object (1 of 4)
 	}
 
-	//private UnitRarity RollRarity(RarityTable rarityTable)
-	//{
-	//	int roll = Random.Range(0, rarityTable.weightedTotal);
-	//	foreach (KeyValuePair<UnitRarity, int> kvp in rarityTable.rarityWeights)
-	//	{
-	//		if (roll <= kvp.Value)
-	//		{
-	//			return kvp.Key;
-	//		}
-	//		else
-	//		{
-	//			roll -= kvp.Value;
-	//		}
-	//	}
+	private UnitRarity RollRarity(RarityTable rarityTable)
+	{
+		int roll = Random.Range(0, rarityTable.weightedTotal);
+		foreach (KeyValuePair<UnitRarity, int> kvp in rarityTable.rarityWeights)
+		{
+			if (roll <= kvp.Value)
+			{
+				return kvp.Key;
+			}
+			else
+			{
+				roll -= kvp.Value;
+			}
+		}
 
-	//	return UnitRarity.Common;
-	//}
+		return UnitRarity.Common;
+	}
 
-	//private int GetRandomUnitWeighted(RarityTable rarityTable)
-	//{
-	//	UnitRarity rarity = RollRarity(rarityTable);
-	//	Debug.Log($"current rarity: {rarity}");
-	//	int roll = Random.Range(gameManager.unitManager.unitRarityCount[0][rarity-1], gameManager.unitManager.unitRarityCount[0][rarity]-1);
-	//	Debug.Log($"unit index rolled: {roll}");
-	//	return roll;
-	//}
+	private int GetRandomUnitWeighted(RarityTable rarityTable)
+	{
+		UnitRarity rarity = RollRarity(rarityTable);
+
+		UnitManager unitManager = gameManager.unitManager;
+		Dictionary<UnitRarity, int> rarityOffsets = unitManager.rarityOffsets;
+		Dictionary<UnitRarity, int> unitRarityCount = unitManager.unitRarityCount;
+
+		int roll = Random.Range(rarityOffsets[rarity], rarityOffsets[rarity] + unitRarityCount[rarity] - 1);
+		return roll;
+	}
 
 	private void FindShopItem()
 	{

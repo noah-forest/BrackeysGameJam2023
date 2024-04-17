@@ -17,15 +17,6 @@ public class LoadExcel : MonoBehaviour
 		{"Legendary", UnitRarity.Legendary}
 	};
 
-	//private Dictionary<UnitRarity, int> unitRarityCount = new Dictionary<UnitRarity, int>()
-	//{
-	//	{UnitRarity.None, 0},
-	//	{UnitRarity.Common, 0},
-	//	{UnitRarity.Rare, 0},
-	//	{UnitRarity.Epic, 0},
-	//	{UnitRarity.Legendary, 0}
-	//};
-
 	public void LoadUnitData()
 	{
 		// clear database
@@ -57,16 +48,10 @@ public class LoadExcel : MonoBehaviour
 			AddItem(Health, Damage, AttackSpeed, BlockChance, CritChance, DigCount, Name, Rarity, Description);
 		}
 
-		//unitManager.unitStatsDatabase.Sort(delegate (UnitInfo a, UnitInfo b) { 
-		//	return a.rarity > b.rarity ? 1 : -1;
-		//});
-
-		//foreach(UnitInfo unit in unitManager.unitStatsDatabase)
-		//{
-		//	++unitRarityCount[unit.rarity];
-		//}
-
-		//unitManager.unitRarityCount.Add(unitRarityCount);
+		unitManager.unitStatsDatabase.Sort(delegate (UnitInfo a, UnitInfo b)
+		{
+			return a.rarity > b.rarity ? 1 : -1;
+		});
 	}
 
 	private void AddItem(int health, int damage, float attackSpeed, float blockChance, float critChance, int digCount, string name, UnitRarity rarity, string description)
