@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
-using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 
@@ -112,20 +110,16 @@ public class GameManager : MonoBehaviour
 	}
 	#endregion
 
-	[Header("Debug Menu")]
-	[Header("Reload Stats after enabling/disabling")]
-	public bool oldStatValues;
 	[Space(10)]
-	public bool overkillEnabled;
-	public bool growingMoney;
-	public bool gainInterest;
-	[Space(10)]
-	public int startingGold = 12;
-	public int battleReward = 8;
+
+	public DebugMenu debugMenu;
+	public Settings settings;
 
 	[Space(10)]
 
-	[Space(10)]
+	public UnitManager unitManager;
+	public UIManager uiManager;
+
 	[Header("everything else")]
 
 	public List<Slot> playerBattleSlots = new List<Slot>();
@@ -133,11 +127,9 @@ public class GameManager : MonoBehaviour
 	public GameObject battleSlots;
 	bool playerUnitsLoaded;
 
-	public UnitManager unitManager;
-
 	public GameObject HUD;
 
-	public GameObject wonParticles; 
+	public GameObject wonParticles;
 
 	[SerializeField] GameObject battleField;
 
@@ -147,8 +139,6 @@ public class GameManager : MonoBehaviour
 	public Actor playerActor;
 	public Actor enemyActor;
 	public List<BattleLane> lanes;
-
-	public UIManager uiManager;
 
 	[HideInInspector] public MouseUtils mouseUtils;
 
@@ -270,7 +260,8 @@ public class GameManager : MonoBehaviour
 		if (inShop)
 		{
 			StartNextBattle();
-		} else
+		}
+		else
 		{
 			LoadShop();
 		}
@@ -278,16 +269,16 @@ public class GameManager : MonoBehaviour
 
 	public void GainBattleReward()
 	{
-		Cash += battleReward;
+		Cash += settings.battleReward;
 	}
 
 	public void GainInterest()
 	{
 		int interestThreshold = 5;
-		if(Cash >=  interestThreshold)
+		if (Cash >= interestThreshold)
 		{
 			Cash += Cash / interestThreshold;
-		} 
+		}
 	}
 
 	/// <summary>
@@ -297,21 +288,21 @@ public class GameManager : MonoBehaviour
 	{
 		if (firstTime)
 		{
-			Cash = startingGold;
+			Cash = settings.startingGold;
 		}
 
-		if (gainInterest && growingMoney && !firstTime)
+		if (debugMenu.gainInterest && debugMenu.growingMoney && !firstTime)
 		{
 			GainInterest();
 			GainBattleReward();
 		}
-		else if (!gainInterest && growingMoney && !firstTime)
+		else if (!debugMenu.gainInterest && debugMenu.growingMoney && !firstTime)
 		{
 			GainBattleReward();
 		}
 		else
 		{
-			Cash = startingGold;
+			Cash = settings.startingGold;
 		}
 
 		firstTime = false;
@@ -353,7 +344,7 @@ public class GameManager : MonoBehaviour
 		if (!playerUnitsLoaded) LoadPlayerUnitsIntoBattle();
 		AssignUnitTargets();
 	}
-	
+
 	public void HideBattlefield()
 	{
 		ClearBattlefield();

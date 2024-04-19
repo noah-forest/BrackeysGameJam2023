@@ -24,7 +24,7 @@ public class LoadExcel : MonoBehaviour
 		List<Dictionary<string, object>> data;
 
 		//read CSV files
-		if (gameManager.oldStatValues)
+		if (gameManager.debugMenu.oldStatValues)
 		{
 			data = CSVReader.Read("OldUnitStats");
 		} else

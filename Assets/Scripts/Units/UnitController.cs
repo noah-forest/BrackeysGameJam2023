@@ -149,7 +149,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 		if (!blocked)
 		{
             health.TakeDamage(dmg);
-			if(health.health <= 0 && gameManager.overkillEnabled)
+			if(health.health <= 0 && gameManager.debugMenu.overkillEnabled)
 			{
 				parentActor.health.TakeDamage(Mathf.Abs(remainder));
 			}
