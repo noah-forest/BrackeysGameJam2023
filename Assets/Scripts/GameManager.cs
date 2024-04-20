@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 
@@ -171,6 +172,7 @@ public class GameManager : MonoBehaviour
 
 	private void Update()
 	{
+		if (SceneManager.GetActiveScene().name == "MainMenu") return;
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
 			TogglePauseMenu();
