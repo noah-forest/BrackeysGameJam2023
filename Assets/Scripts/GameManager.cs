@@ -114,6 +114,7 @@ public class GameManager : MonoBehaviour
 
 	public DebugMenu debugMenu;
 	public Settings settings;
+	public GameObject settingsMenu;
 
 	[Space(10)]
 
@@ -173,6 +174,12 @@ public class GameManager : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
 			TogglePauseMenu();
+
+			if (settingsMenu.activeInHierarchy)
+			{
+				OpenSideMenu menu = settingsMenu.GetComponent<OpenSideMenu>();
+				menu.OnClick();
+			}
 		}
 	}
 

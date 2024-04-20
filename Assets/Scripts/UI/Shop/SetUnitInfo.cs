@@ -61,7 +61,7 @@ public class SetUnitInfo : MonoBehaviour
 			unitCost = (int)rarity;
 		}
 
-		if (gameManager.settings.rarityBorders)
+		if (Settings.RarityBorders)
 		{
 			foreach (GameObject item in rarityGlowList)
 			{
