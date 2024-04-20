@@ -122,6 +122,7 @@ public class ShopController : MonoBehaviour
 				slot.payload = null;
 				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
 				gameManager.Cash += (int)sellInfo.sellValue.Value;
+				gameManager.unitSold?.Invoke();
 				Destroy(slot.payload);
 			}
 			return false;
@@ -151,9 +152,23 @@ public class ShopController : MonoBehaviour
 
 			unitSlot.AddRetrievePrecheck((shopSlot, newSlot) =>
 			{
-				if (newSlot.payload != null && newSlot.payload.name != unitSlot.payload.name || newSlot.gameObject.name.Contains("Shop"))
+				if (newSlot.gameObject.name.Contains("Shop"))
 				{
 					return false;
+				}
+
+				if (newSlot.payload != null && newSlot.payload.name != unitSlot.payload.name)
+				{
+					Slot slot = FindNearestEmptySlot(gameManager.playerReserveSlots);
+
+					if (slot != null)
+					{
+						slot.payload = newSlot.payload;
+						newSlot.payload = null;
+					} else 
+					{
+						return false;
+					}
 				};
 
 				if (gameManager.Cash >= curShopItem.unitCost)
@@ -166,6 +181,7 @@ public class ShopController : MonoBehaviour
 
 					curShopItem.purchased.SetActive(true);
 					gameManager.Cash -= curShopItem.unitCost;
+					gameManager.unitPurchased?.Invoke();
 					shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
 					return true;
 				}
@@ -176,6 +192,19 @@ public class ShopController : MonoBehaviour
 		}
 
 		 firstRoll = true;
+	}
+
+	private Slot FindNearestEmptySlot(List<Slot> slots)
+	{
+		foreach(Slot slot in slots)
+		{
+			if(slot.payload == null)
+			{
+				return slot;
+			}
+        }
+
+		return null;
 	}
 
 	public void ClearShopWindows()

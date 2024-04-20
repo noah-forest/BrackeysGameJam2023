@@ -43,6 +43,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
     [HideInInspector]
     public MouseUtils mouseUtils;
+
+	private GameManager gameManager;
     
     protected Transform spriteDraggingRepresentation;
 
@@ -66,7 +68,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
     private void Start()
     {
-        mouseUtils = MouseUtils.singleton;
+		gameManager = GameManager.singleton;
+		mouseUtils = MouseUtils.singleton;
 
         OnPayloadChanged();
     }

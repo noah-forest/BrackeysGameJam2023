@@ -64,8 +64,21 @@ public class GameManager : MonoBehaviour
 
 	#endregion
 
+	#region Shop Events
 	[HideInInspector]
-	public UnityEvent shopRefreshed;
+	public UnityEvent shopRefreshed = new();
+	[HideInInspector]
+	public UnityEvent unitPurchased = new();
+	[HideInInspector]
+	public UnityEvent unitSold = new();
+	#endregion
+
+	#region Unit Events
+	[HideInInspector]
+	public UnityEvent unitExpAdded;
+	[HideInInspector]
+	public UnityEvent unitLevelUp;
+	#endregion
 
 	#region Getters and Setters
 	/// <summary>
@@ -247,6 +260,12 @@ public class GameManager : MonoBehaviour
 			Destroy(slot.payload);
 			slot.payload = null;
 		}
+	}
+
+	public bool CheckForReserveSlot()
+	{
+		if (playerReserveSlots.Count <= 0) return false;
+		else return true;
 	}
 
 	public void PlayerDied()
