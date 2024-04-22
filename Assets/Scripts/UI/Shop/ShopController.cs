@@ -69,11 +69,6 @@ public class ShopController : MonoBehaviour
 
 		defaultRarities = new RarityTable(commonWeight, rareWeight, epicWeight, legendaryWeight);
 
-		Debug.Log((float)commonWeight / defaultRarities.weightedTotal * 100);
-		Debug.Log((float)rareWeight / defaultRarities.weightedTotal * 100);
-		Debug.Log((float)epicWeight / defaultRarities.weightedTotal * 100);
-		Debug.Log((float)legendaryWeight / defaultRarities.weightedTotal * 100);
-
 		LoadResources();        // load the resources from the game files
 
 		firstRoll = false;
@@ -217,7 +212,8 @@ public class ShopController : MonoBehaviour
 		foreach(Slot slot in gameManager.playerBattleSlots)
 		{
 			if(slot.payload == null) continue;
-			if(slot.payload.name == unitSlot.payload.name)
+			if (slot.payload.GetComponent<Experience>().curLevel == Experience.MaxLevel) continue;
+			if (slot.payload.name == unitSlot.payload.name)
 			{
 				curShopItem.unitFound.SetActive(true);
 			}
@@ -226,6 +222,7 @@ public class ShopController : MonoBehaviour
 		foreach (Slot slot in gameManager.playerReserveSlots)
 		{
 			if (slot.payload == null) continue;
+			if (slot.payload.GetComponent<Experience>().curLevel == Experience.MaxLevel) continue;
 			if (slot.payload.name == unitSlot.payload.name)
 			{
 				curShopItem.unitFound.SetActive(true);
