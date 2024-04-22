@@ -64,6 +64,7 @@ public class ShopController : MonoBehaviour
 	private void Start()
 	{
 		gameManager = GameManager.singleton;
+		gameManager.unitAddedToSlot.AddListener(SearchAfterPurchase);
 		shopAudioPlayer = GetComponent<ShopAudio>();
 
 		defaultRarities = new RarityTable(commonWeight, rareWeight, epicWeight, legendaryWeight);
@@ -200,8 +201,6 @@ public class ShopController : MonoBehaviour
 
 	public void SearchAfterPurchase()
 	{
-		Debug.Log("searching for unit in shop");
-
 		for (int i = 0; i < shopWindows.Count;  i++)
 		{
 			SetUnitInfo curShopItem = shopWindows[i].GetComponent<SetUnitInfo>();
@@ -220,7 +219,6 @@ public class ShopController : MonoBehaviour
 			if(slot.payload == null) continue;
 			if(slot.payload.name == unitSlot.payload.name)
 			{
-				Debug.Log("found same unit!");
 				curShopItem.unitFound.SetActive(true);
 			}
 		}

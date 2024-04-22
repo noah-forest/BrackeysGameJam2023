@@ -43,6 +43,9 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
     [HideInInspector]
     public MouseUtils mouseUtils;
+
+	[HideInInspector]
+	public GameManager gameManager;
     
     protected Transform spriteDraggingRepresentation;
 
@@ -67,6 +70,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
     private void Start()
     {
 		mouseUtils = MouseUtils.singleton;
+		gameManager = GameManager.singleton;
 
         OnPayloadChanged();
     }
@@ -104,11 +108,12 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
     protected void OnPayloadChanged()
     {
-        foreach (ISlotPayloadChangeHandler renderer in gameObject.GetComponentsInChildren<ISlotPayloadChangeHandler>())
+		foreach (ISlotPayloadChangeHandler renderer in gameObject.GetComponentsInChildren<ISlotPayloadChangeHandler>())
         {
             renderer.SlotPayloadChanged(payload);
         }
-    }
+		if(gameManager != null) gameManager.unitAddedToSlot?.Invoke();
+	}
 
     protected void OnMouseDown()
     {

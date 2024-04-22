@@ -18,6 +18,7 @@ public class XpBarController : MonoBehaviour, ISlotPayloadChangeHandler
 
 	private void Awake()
 	{
+
 		slot = GetComponent<Slot>();
 		xpBar = transform.GetChild(0).gameObject;
 

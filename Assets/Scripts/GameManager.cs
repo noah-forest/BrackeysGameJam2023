@@ -81,6 +81,8 @@ public class GameManager : MonoBehaviour
 	public UnityEvent unitLevelUp;
 	#endregion
 
+	[HideInInspector] public UnityEvent unitAddedToSlot = new();
+
 	#region Getters and Setters
 	/// <summary>
 	///dont use this variable, use Cash
