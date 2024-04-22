@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -51,6 +50,7 @@ public class ShopController : MonoBehaviour
 	private bool draggedIntoShop;
 
 	public bool firstRoll;          // this is to check if the shop has been initially rolled
+	public bool unitInInventory = false;
 
 	public RarityTable defaultRarities;
 
@@ -144,8 +144,10 @@ public class ShopController : MonoBehaviour
 
 			SetUnitInfo curShopItem = shopWindow.GetComponent<SetUnitInfo>();
 			Slot unitSlot = shopWindow.GetComponent<Slot>();
+			curShopItem.unitFound.SetActive(false);
 
 			SetUnitPayload(unitSlot, curShopItem);
+			UnitFoundInInventory(unitSlot, curShopItem);
 
 			UnitStats sellInfo = unitSlot.payload.GetComponent<UnitStats>();
 			sellInfo.sellValue.BaseValue = (int)(curShopItem.unitCost * 0.75);
@@ -165,7 +167,8 @@ public class ShopController : MonoBehaviour
 					{
 						slot.payload = newSlot.payload;
 						newSlot.payload = null;
-					} else 
+					}
+					else
 					{
 						return false;
 					}
@@ -173,15 +176,17 @@ public class ShopController : MonoBehaviour
 
 				if (gameManager.Cash >= curShopItem.unitCost)
 				{
-					if(newSlot.payload != null)
+					if (newSlot.payload != null)
 					{
 						Experience unitExp = newSlot.payload.GetComponent<Experience>();
 						if (unitExp && unitExp.curLevel == Experience.MaxLevel) return false;
 					}
 
 					curShopItem.purchased.SetActive(true);
+					curShopItem.unitFound.SetActive(false);
 					gameManager.Cash -= curShopItem.unitCost;
 					gameManager.unitPurchased?.Invoke();
+
 					shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
 					return true;
 				}
@@ -190,19 +195,55 @@ public class ShopController : MonoBehaviour
 
 			shopWindows.Add(shopWindow);
 		}
+		firstRoll = true;
+	}
 
-		 firstRoll = true;
+	public void SearchAfterPurchase()
+	{
+		Debug.Log("searching for unit in shop");
+
+		for (int i = 0; i < shopWindows.Count;  i++)
+		{
+			SetUnitInfo curShopItem = shopWindows[i].GetComponent<SetUnitInfo>();
+			Slot unitSlot = shopWindows[i].GetComponent<Slot>();
+            if (unitSlot.payload != null)
+            {
+				UnitFoundInInventory(unitSlot, curShopItem);
+            }
+        }
+	}
+
+	private void UnitFoundInInventory(Slot unitSlot, SetUnitInfo curShopItem)
+	{
+		foreach(Slot slot in gameManager.playerBattleSlots)
+		{
+			if(slot.payload == null) continue;
+			if(slot.payload.name == unitSlot.payload.name)
+			{
+				Debug.Log("found same unit!");
+				curShopItem.unitFound.SetActive(true);
+			}
+		}
+
+		foreach (Slot slot in gameManager.playerReserveSlots)
+		{
+			if (slot.payload == null) continue;
+			if (slot.payload.name == unitSlot.payload.name)
+			{
+				curShopItem.unitFound.SetActive(true);
+			}
+		}
 	}
 
 	private Slot FindNearestEmptySlot(List<Slot> slots)
 	{
-		foreach(Slot slot in slots)
+		foreach (Slot slot in slots)
 		{
-			if(slot.payload == null)
+			if (slot.payload == null)
 			{
 				return slot;
 			}
-        }
+		}
 
 		return null;
 	}

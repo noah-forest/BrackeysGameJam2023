@@ -16,9 +16,6 @@ public class Dummy : MonoBehaviour, ISlotPayloadChangeHandler
 		{
 			unitInstance = Instantiate(payload);
 			unitInstance.SetActive(false);
-		} else
-		{
-
 		}
 	}
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -170,6 +171,8 @@ public class GameManager : MonoBehaviour
 
 	public GameObject unitMasterPrefab;
 
+	public int interest;
+
 	private void Start()
 	{
 		mouseUtils = MouseUtils.singleton;
@@ -300,13 +303,15 @@ public class GameManager : MonoBehaviour
 		Cash += settings.battleReward;
 	}
 
-	public void GainInterest()
+	public int GainInterest()
 	{
 		int interestThreshold = 5;
 		if (Cash >= interestThreshold)
 		{
-			Cash += Cash / interestThreshold;
+			interest = Cash / interestThreshold;
 		}
+
+		return interest;
 	}
 
 	/// <summary>
@@ -321,7 +326,7 @@ public class GameManager : MonoBehaviour
 
 		if (debugMenu.gainInterest && debugMenu.growingMoney && !firstTime)
 		{
-			GainInterest();
+			Cash += GainInterest();
 			GainBattleReward();
 		}
 		else if (!debugMenu.gainInterest && debugMenu.growingMoney && !firstTime)

@@ -32,6 +32,8 @@ public class SetUnitInfo : MonoBehaviour
 	private UnitRarity rarity;
 	public List<GameObject> rarityGlowList = new();
 
+	public GameObject unitFound;
+
 	[HideInInspector]
 	public int unitCost;
 

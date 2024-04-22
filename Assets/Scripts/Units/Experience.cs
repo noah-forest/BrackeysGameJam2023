@@ -69,9 +69,9 @@ public class Experience : MonoBehaviour
 		{
 			return levelToExpNeeded[curLevel];
 		}
-        else
-        {
-             return levelToExpNeeded[MaxLevel-1];
-        }
-    }
+		else
+		{
+			return levelToExpNeeded[MaxLevel - 1];
+		}
+	}
 }

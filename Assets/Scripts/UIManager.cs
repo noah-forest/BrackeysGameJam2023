@@ -16,6 +16,9 @@ public class UIManager : MonoBehaviour
 	[SerializeField] List<Sprite> results = new();
 	[SerializeField] GameObject top;
 
+	[SerializeField] TextMeshProUGUI battleReward;
+	[SerializeField] TextMeshProUGUI interestGained;
+
 	[SerializeField] GameObject confirmUI;
 
 	[SerializeField] GameObject gameOverScreen;
@@ -115,6 +118,9 @@ public class UIManager : MonoBehaviour
 
 	private void ShowResult(int index)
 	{
+		battleReward.text = $"{gameManager.settings.battleReward}";
+		interestGained.text = $"{gameManager.GainInterest()}";
+
 		Image cmpResult = result.GetComponent<Image>();
 		textAnim = result.GetComponent<Animator>();
 		Image shadResult = resultShadow.GetComponent<Image>();
@@ -196,7 +202,7 @@ public class UIManager : MonoBehaviour
 		shopUi.SetActive(false);
 		HUD.SetActive(false);
 	}
-	
+
 	private void ShowShop()
 	{
 		shopUi.SetActive(true);

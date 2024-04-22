@@ -12,10 +12,11 @@ public class SlideOutElement : MonoBehaviour
 
 	private void OnEnable()
 	{
-		if(gameObject.name == "shop" || gameObject.name == "playerInfo" || gameObject.name == "unitInventory")
+		if (gameObject.name == "shop" || gameObject.name == "playerInfo" || gameObject.name == "unitInventory")
 		{
 			StartCoroutine(WaitForTransition());
-		} else
+		}
+		else
 		{
 			anim.SetTrigger("slideOut");
 		}
