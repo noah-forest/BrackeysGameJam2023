@@ -19,7 +19,8 @@ public class Health : MonoBehaviour
 	}
 
 	public bool isDead;
-	public UnityEvent died;
+	public UnityEvent died = new();
+	public UnityEvent<GameObject> unitDied = new();
 	public UnityEvent<float, float> healthChanged;
 
 	private void Start()

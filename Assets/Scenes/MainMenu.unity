@@ -5167,11 +5167,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6db669303101864438ffd8f5ab6d4b90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCursor: {fileID: 2800000, guid: 4711e9ab2df0c7e43a746ce3e5e38684, type: 3}
-  hoverCursor: {fileID: 2800000, guid: cf03562283fd5c54cb06338e875a566a, type: 3}
-  dragCursor: {fileID: 2800000, guid: 03f54ee1bd120e74da43c9d7486a672e, type: 3}
-  hoverDragCursor: {fileID: 2800000, guid: 806ceaebec723804f84507ce18fe3fdd, type: 3}
-  shovelCursor: {fileID: 2800000, guid: b4111c45fdf072842a0006bb01050faf, type: 3}
+  defaultCursor: {fileID: 2800000, guid: 3c1d5ac87fbd304409854c47fa27e5a9, type: 3}
+  hoverCursor: {fileID: 2800000, guid: 3abe9fa7ed1e52b45b1107aefc7aba2b, type: 3}
+  dragCursor: {fileID: 2800000, guid: ebe093506ea4ede428a7378df6226d2d, type: 3}
+  hoverDragCursor: {fileID: 2800000, guid: 4d238bc76084fb842a83ac2faf513c30, type: 3}
+  shovelCursor: {fileID: 2800000, guid: e9c7deb9266a1f340a2abbd1e634f6a0, type: 3}
   MainMenuCanvas: {fileID: 0}
   shopCanvas: {fileID: 0}
 --- !u!4 &240077340
@@ -22331,7 +22331,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4532023220856383276, guid: 809ccdfeb84faed459fb7a63f7142a12, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -419.08795
+      value: -419.08798
       objectReference: {fileID: 0}
     - target: {fileID: 4532023220856383276, guid: 809ccdfeb84faed459fb7a63f7142a12, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -28559,7 +28559,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4532023220856383276, guid: 809ccdfeb84faed459fb7a63f7142a12, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -419.08795
+      value: -419.08798
       objectReference: {fileID: 0}
     - target: {fileID: 4532023220856383276, guid: 809ccdfeb84faed459fb7a63f7142a12, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -67618,6 +67618,9 @@ MonoBehaviour:
   died:
     m_PersistentCalls:
       m_Calls: []
+  unitDied:
+    m_PersistentCalls:
+      m_Calls: []
   healthChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -69741,6 +69744,9 @@ MonoBehaviour:
   _health: 0
   isDead: 0
   died:
+    m_PersistentCalls:
+      m_Calls: []
+  unitDied:
     m_PersistentCalls:
       m_Calls: []
   healthChanged:
@@ -71942,6 +71948,9 @@ MonoBehaviour:
   unitLevelUp:
     m_PersistentCalls:
       m_Calls: []
+  unitAddedToSlot:
+    m_PersistentCalls:
+      m_Calls: []
   debugMenu: {fileID: 612816110}
   settings: {fileID: 1983035974}
   settingsMenu: {fileID: 1946800547}
@@ -72857,6 +72866,7 @@ MonoBehaviour:
       m_Calls: []
   _payload: {fileID: 0}
   mouseUtils: {fileID: 0}
+  gameManager: {fileID: 0}
 --- !u!222 &6123851458735988000
 CanvasRenderer:
   m_ObjectHideFlags: 0

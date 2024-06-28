@@ -14,13 +14,12 @@ public class XpBarController : MonoBehaviour, ISlotPayloadChangeHandler
 
 	private Experience unitExp;
 	private Slot slot;
-	private GameObject xpBar;
+	public GameObject xpBar;
 
 	private void Awake()
 	{
 
 		slot = GetComponent<Slot>();
-		xpBar = transform.GetChild(0).gameObject;
 
 		//find pips in the XpBar
 		foreach (Transform child in cont.transform.GetComponentsInChildren<Transform>())

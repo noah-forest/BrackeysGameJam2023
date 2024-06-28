@@ -184,6 +184,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 
 	private void OnDeath()
 	{
+		health.unitDied?.Invoke(gameObject);
 		if (unitGrave)
 		{
 			unitGrave.ActivateGrave(unitStats.digCount);
