@@ -23,6 +23,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 	public static UnityEvent<Slot> anyDragStarted = new(); 
     public static UnityEvent<Slot> anyDragStopped = new();
 
+	private bool beingDragged;
+
     public static DragVisual dragVisual
     {
         get
@@ -48,8 +50,6 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 	public GameManager gameManager;
     
     protected Transform spriteDraggingRepresentation;
-
-    private bool isDragged;
 
     public GameObject payload
     {
@@ -129,26 +129,27 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
             dragVisual.DragStarted();
             dragStarted.Invoke();
             anyDragStarted.Invoke(this);
-            mouseUtils.SetDragCursor();
-            isDragged = true;
-        }
+			mouseUtils.SetDragCursor();
+		}
     }
 
     protected void OnMouseDrag()
     {
         //Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         dragVisual.MoveTo(Input.mousePosition);
-    }
+		beingDragged = true;
+		mouseUtils.SetDragCursor();
+	}
 
     protected void OnMouseEnter()
     {
-        if(!isDragged) mouseUtils.SetHoverDragCursor();
+		if (payload != null) mouseUtils.SetHoverDragCursor();
 		currentlyOverSlot = this;
     }
 
     protected void OnMouseExit()
     {
-        if(!isDragged) mouseUtils.SetToDefaultCursor();
+		mouseUtils.SetToDefaultCursor();
         if (currentlyOverSlot == this)
         {
             currentlyOverSlot = null;
@@ -165,17 +166,11 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
         dragVisual.DragStopped();
         dragStopped.Invoke();
         anyDragStopped.Invoke(this);
-        isDragged = false;
+        beingDragged = false;
 
-		if(currentlyOverSlot == this)
-		{
-			mouseUtils.SetHoverDragCursor();
-		} else
-		{
-			mouseUtils.SetToDefaultCursor();
-		}
+		if(payload != null) mouseUtils.SetHoverDragCursor();
 
-        if (payload != null && currentlyOverSlot != null && currentlyOverSlot != this)
+		if (payload != null && currentlyOverSlot != null && currentlyOverSlot != this)
         {
 			SwapSlots(currentlyOverSlot);
             currentlyOverSlot = null;

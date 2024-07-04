@@ -214,11 +214,13 @@ public class GameManager : MonoBehaviour
 		if (gameIsPaused)
 		{
 			openPauseMenu = false;
+			mouseUtils.SetToDefaultCursor();
 			resumeGame.Invoke();
 		}
 		else
 		{
 			openPauseMenu = true;
+			mouseUtils.SetToDefaultCursor();
 			pauseGame.Invoke();
 		}
 	}

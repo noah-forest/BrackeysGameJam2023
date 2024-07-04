@@ -9,6 +9,7 @@ public class MouseUtils : MonoBehaviour
 {
 	public Texture2D defaultCursor;
 	public Texture2D hoverCursor;
+	public Texture2D pressedCursor;
 	public Texture2D dragCursor;
 	public Texture2D hoverDragCursor;
 	public Texture2D shovelCursor;
@@ -81,6 +82,12 @@ public class MouseUtils : MonoBehaviour
 		// set drag cursor
 		Vector2 cursorOffset = new Vector2(dragCursor.width / 2, dragCursor.height / 2);
 		Cursor.SetCursor(dragCursor, cursorOffset, CursorMode.Auto);
+	}
+
+	public void SetPressedCursor()
+	{
+		Vector2 cursorOffset = new Vector2(pressedCursor.width / 2, pressedCursor.height / 2);
+		Cursor.SetCursor(pressedCursor, cursorOffset, CursorMode.Auto);
 	}
 
 	public void SetHoverDragCursor()
