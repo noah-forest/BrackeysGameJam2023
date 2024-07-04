@@ -171,7 +171,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
         anyDragStopped.Invoke(this);
         beingDragged = false;
 
-		if(payload != null) mouseUtils.SetHoverDragCursor();
+		mouseUtils.SetHoverDragCursor();
 
 		if (payload != null && currentlyOverSlot != null && currentlyOverSlot != this)
         {
@@ -214,7 +214,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 					return;
 				}
 			}
-			(this.payload, draggedToSlot.payload) = (draggedToSlot.payload, payload);
+			(payload, draggedToSlot.payload) = (draggedToSlot.payload, payload);
 		}
     }
 
@@ -250,8 +250,6 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        this.OnMouseUp();
+		this.OnMouseUp();
     }
-
-    
 }

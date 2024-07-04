@@ -52,18 +52,4 @@ public class Settings : MonoBehaviour
 			postProcessingToggled?.Invoke();
 		}
 	}
-
-	private readonly static string s_AutoCombine = "AutoCombine";
-	public static bool AutoCombine
-	{
-		get
-		{
-			return PlayerPrefs.GetInt(s_AutoCombine, 1) != 0;
-		}
-
-		set
-		{
-			PlayerPrefs.SetInt(s_AutoCombine, value ? 1 : 0);
-		}
-	}
 }
