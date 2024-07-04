@@ -5167,11 +5167,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultCursor: {fileID: 2800000, guid: 3c1d5ac87fbd304409854c47fa27e5a9, type: 3}
+  tooltipCursor: {fileID: 2800000, guid: a5bf38db0023a924db4aa0d16fe86ae1, type: 3}
   hoverCursor: {fileID: 2800000, guid: 3abe9fa7ed1e52b45b1107aefc7aba2b, type: 3}
   pressedCursor: {fileID: 2800000, guid: 67551bac3de875343a7676866ffbf16e, type: 3}
   dragCursor: {fileID: 2800000, guid: ebe093506ea4ede428a7378df6226d2d, type: 3}
   hoverDragCursor: {fileID: 2800000, guid: 4d238bc76084fb842a83ac2faf513c30, type: 3}
   shovelCursor: {fileID: 2800000, guid: e9c7deb9266a1f340a2abbd1e634f6a0, type: 3}
+  shovelDigCursor: {fileID: 2800000, guid: b9893399acb97f84ba0fba4d1b7a216c, type: 3}
   MainMenuCanvas: {fileID: 0}
   shopCanvas: {fileID: 0}
 --- !u!4 &240077340
@@ -64139,7 +64141,6 @@ GameObject:
   - component: {fileID: 2019465357}
   - component: {fileID: 2019465359}
   - component: {fileID: 2019465358}
-  - component: {fileID: 2019465360}
   m_Layer: 0
   m_Name: exit button
   m_TagString: Button
@@ -64245,51 +64246,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2019465360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2019465356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 2
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 240077339}
-          m_TargetAssemblyTypeName: MouseUtils, Assembly-CSharp
-          m_MethodName: SetPressedCursor
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - eventID: 3
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 240077339}
-          m_TargetAssemblyTypeName: MouseUtils, Assembly-CSharp
-          m_MethodName: SetHoverCursor
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &2023750402
 GameObject:
   m_ObjectHideFlags: 0

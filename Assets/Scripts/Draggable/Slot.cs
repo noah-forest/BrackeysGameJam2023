@@ -171,7 +171,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
         anyDragStopped.Invoke(this);
         beingDragged = false;
 
-		mouseUtils.SetHoverDragCursor();
+		if(payload != null) mouseUtils.SetHoverDragCursor();
 
 		if (payload != null && currentlyOverSlot != null && currentlyOverSlot != this)
         {

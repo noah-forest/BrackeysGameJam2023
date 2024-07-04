@@ -2,20 +2,26 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class MouseUtils : MonoBehaviour
 {
 	public Texture2D defaultCursor;
+	public Texture2D tooltipCursor;
 	public Texture2D hoverCursor;
 	public Texture2D pressedCursor;
 	public Texture2D dragCursor;
 	public Texture2D hoverDragCursor;
 	public Texture2D shovelCursor;
+	public Texture2D shovelDigCursor;
 
 	public Canvas MainMenuCanvas;
 	public Canvas shopCanvas;
+
+	private bool hovering;
+	private bool hoveringGrave;
 
 	#region singleton
 
@@ -76,9 +82,41 @@ public class MouseUtils : MonoBehaviour
 		}
 	}
 
+	private void Update()
+	{
+		if (hovering)
+		{
+			if (Input.GetMouseButtonDown(0))
+			{
+				SetPressedCursor();
+			}
+
+			if (Input.GetMouseButtonUp(0))
+			{
+				SetHoverCursor();
+			}
+		} else if (hoveringGrave)
+		{
+			if (Input.GetMouseButtonDown(0))
+			{
+				SetShovelPressedCursor();
+			}
+
+			if (Input.GetMouseButtonUp(0))
+			{
+				SetShovelCursor();
+			}
+		} else
+		{
+			return;
+		}
+	}
+
 	#region Set Mouse Cursors
 	public void SetDragCursor()
 	{
+		hovering = false;
+
 		// set drag cursor
 		Vector2 cursorOffset = new Vector2(dragCursor.width / 2, dragCursor.height / 2);
 		Cursor.SetCursor(dragCursor, cursorOffset, CursorMode.Auto);
@@ -90,26 +128,50 @@ public class MouseUtils : MonoBehaviour
 		Cursor.SetCursor(pressedCursor, cursorOffset, CursorMode.Auto);
 	}
 
+	public void SetShovelPressedCursor()
+	{
+		Vector2 cursorOffset = new Vector2(shovelDigCursor.width / 2, shovelDigCursor.height / 2);
+		Cursor.SetCursor(shovelDigCursor, cursorOffset, CursorMode.Auto);
+	}
+
 	public void SetHoverDragCursor()
 	{
+		hovering = false;
+
 		Vector2 cursorOffset = new Vector2(hoverDragCursor.width / 2, hoverDragCursor.height / 2);
 		Cursor.SetCursor(hoverDragCursor, cursorOffset, CursorMode.Auto);
 	}
 
 	public void SetShovelCursor()
 	{
+		hovering = false;
+		hoveringGrave = true;
+
 		Vector2 cursorOffset = new Vector2(shovelCursor.width / 2, shovelCursor.height / 2);
 		Cursor.SetCursor(shovelCursor, cursorOffset, CursorMode.Auto);
 	}
 
 	public void SetHoverCursor()
 	{
+		hovering = true;
+
 		Vector2 cursorOffset = new Vector2(hoverCursor.width / 2, hoverCursor.height / 2);
 		Cursor.SetCursor(hoverCursor, cursorOffset, CursorMode.Auto);
 	}
 
+	public void SetTooltipCursor()
+	{
+		hovering = false;
+
+		Vector2 cursorOffset = new Vector2(tooltipCursor.width / 2, tooltipCursor.height / 2);
+		Cursor.SetCursor(tooltipCursor, cursorOffset, CursorMode.Auto);
+	}
+
 	public void SetToDefaultCursor()
 	{
+		hovering = false;
+		hoveringGrave = false;
+
 		Vector2 cursorOffset = new Vector2(defaultCursor.width / 2, defaultCursor.height / 2);
 		Cursor.SetCursor(defaultCursor, cursorOffset, CursorMode.Auto);
 	}

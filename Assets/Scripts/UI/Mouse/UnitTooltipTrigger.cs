@@ -52,7 +52,7 @@ public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 
 		TooltipSystem.Show(header);
 
-		cursor.SetHoverCursor();
+		cursor.SetTooltipCursor();
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
