@@ -16,6 +16,8 @@ public class XpBarController : MonoBehaviour, ISlotPayloadChangeHandler
 	private Slot slot;
 	public GameObject xpBar;
 
+	public GameObject glow;
+
 	private void Awake()
 	{
 
@@ -45,9 +47,6 @@ public class XpBarController : MonoBehaviour, ISlotPayloadChangeHandler
 				unitExp.unitLevelUp.RemoveListener(UpdateLevelUI);
 				unitExp = null;
 			}
-			//unitNameDisplay.text = "no unit";
-			//unitLevelDisplay.text = "level: 0";
-			//unitXPDisplay.text = "xp: 0";
 		}
 		else
 		{
@@ -60,7 +59,6 @@ public class XpBarController : MonoBehaviour, ISlotPayloadChangeHandler
 			}
 
 			unitExp = payload.GetComponent<Experience>();
-			//unitNameDisplay.text = payload.name;
 			unitExp.expGained.AddListener(UpdateXpBarUI);
 			unitExp.unitLevelUp.AddListener(UpdateLevelUI);
 
@@ -107,6 +105,9 @@ public class XpBarController : MonoBehaviour, ISlotPayloadChangeHandler
 
 	private void UpdateLevelUI(int xp)
 	{
+		Animator anim = glow.GetComponent<Animator>();
+		anim.Play("levelUpGlow");
+
 		if (unitExp.curLevel == 2)
 		{
 			AddPip();
