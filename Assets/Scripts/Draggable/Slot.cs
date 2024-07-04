@@ -137,8 +137,11 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
     {
         //Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         dragVisual.MoveTo(Input.mousePosition);
-		beingDragged = true;
-		mouseUtils.SetDragCursor();
+		if (payload != null)
+		{
+			beingDragged = true;
+			mouseUtils.SetDragCursor();
+		}
 	}
 
     protected void OnMouseEnter()
