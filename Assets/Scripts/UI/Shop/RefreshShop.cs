@@ -9,6 +9,8 @@ public class RefreshShop : MonoBehaviour
 
 	public TextMeshProUGUI refreshCostText;
 
+	public bool canRefresh;
+
 	private GameManager gameManager;
 
 	private Button button;
@@ -43,10 +45,12 @@ public class RefreshShop : MonoBehaviour
 		if (gameManager.Cash <= 0 || gameManager.Cash < shopController.refreshCost)
 		{
 			button.interactable = false;
+			canRefresh = false;
 		}
 		else if (gameManager.Cash > 0 && !lockShop.locked && gameManager.Cash >= shopController.refreshCost)
 		{
 			button.interactable = true;
+			canRefresh = true;
 		}
 	}
 

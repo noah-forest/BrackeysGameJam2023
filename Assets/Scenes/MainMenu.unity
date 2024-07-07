@@ -2494,6 +2494,7 @@ MonoBehaviour:
   shopController: {fileID: 7457116552246339444}
   lockShop: {fileID: 7831071500210865838}
   refreshCostText: {fileID: 263554447}
+  canRefresh: 0
 --- !u!114 &103863950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36263,7 +36264,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -395, y: 363}
+  m_AnchoredPosition: {x: -395, y: 363.00003}
   m_SizeDelta: {x: 381.41003, y: 194.58997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1360368530
@@ -73591,6 +73592,7 @@ MonoBehaviour:
   lockBorder: {fileID: 429345555}
   lockBorderTexture: {fileID: 21300000, guid: c16589981f3908245baae2b99d0a8e15, type: 3}
   refreshButton: {fileID: 103863950}
+  refreshShop: {fileID: 0}
   locked: 0
 --- !u!95 &7831071500210865839
 Animator:
