@@ -1,21 +1,17 @@
-# Grave Diver v.0.2.0
+# Grave Diver v.0.2.5
 
-### 0.2.0 - SHOP UPDATE - Changelog
+### 0.2.5 - SHOP UPDATE - Changelog
 
-+ You can now view patchnotes!
-+ All UI revamped
-+ Goop removed
-+ 11 new units
-+ 4 unit resprites
-+ Updated credits
-+ Added transitions
-+ Added tooltip
-+ You can now level up units
-	- Levelling up a unit increases their stats
-+ Unit cost is dependent on rarity
-+ Unit sell amount is dependent on rarity and level
-+ Unit rarity adjusted
-+ Increased the amount of money you receive per round
++ Added Settings menu
++ Added Pause Menu button
++ Added glow effects to higher rarity units in shop
++ Added some post processing effects
++ Misc UI changes
++ Fixed mobile compatibility issues
++ Lowered interest threshold from 10 -> 5
++ If you now drag a unit from shop onto unit in active, moves the units to an empty slot in the reserves
 
-  Made by Glumpis Games 2023
++ Fixed a bug where deselecting a button would cause its animation to play
+
+  Made by Glumpis Games 2023-2024
   https://glumpis.itch.io/
