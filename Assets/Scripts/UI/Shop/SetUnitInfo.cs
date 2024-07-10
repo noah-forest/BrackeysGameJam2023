@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class SetUnitInfo : MonoBehaviour
 {
+	private GameManager gameManager;
+
 	[HideInInspector] //this is set at runtime, do not manually set
 	public Unit curUnit;
 
@@ -26,10 +28,19 @@ public class SetUnitInfo : MonoBehaviour
 
 	public GameObject purchased;
 	public UnitStats unitStats;
+	
 	private UnitRarity rarity;
+	public List<GameObject> rarityGlowList = new();
+
+	public GameObject unitFound;
 
 	[HideInInspector]
 	public int unitCost;
+
+	private void Awake()
+	{
+		gameManager = GameManager.singleton;
+	}
 
 	//set this items information = to the info on the SO
 	private void OnEnable()
@@ -50,6 +61,17 @@ public class SetUnitInfo : MonoBehaviour
 		} else
 		{
 			unitCost = (int)rarity;
+		}
+
+		if (Settings.RarityBorders)
+		{
+			foreach (GameObject item in rarityGlowList)
+			{
+				if (item.name == rarity.ToString())
+				{
+					item.SetActive(true);
+				}
+			}
 		}
 
 		shopPreviewImage.sprite = curUnit.itemPreview;

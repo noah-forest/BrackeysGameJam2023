@@ -23,6 +23,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 	public static UnityEvent<Slot> anyDragStarted = new(); 
     public static UnityEvent<Slot> anyDragStopped = new();
 
+	private bool beingDragged;
+
     public static DragVisual dragVisual
     {
         get
@@ -30,7 +32,6 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
             if (_dragVisual == null)
             {
                 _dragVisual = Instantiate(Resources.Load("DraggingVisualObject") as GameObject).GetComponent<DragVisual>();
-                Debug.Log("instantited", _dragVisual);
             }
 
             return _dragVisual;
@@ -44,10 +45,11 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
     [HideInInspector]
     public MouseUtils mouseUtils;
+
+	[HideInInspector]
+	public GameManager gameManager;
     
     protected Transform spriteDraggingRepresentation;
-
-    private bool isDragged;
 
     public GameObject payload
     {
@@ -67,7 +69,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
     private void Start()
     {
-        mouseUtils = MouseUtils.singleton;
+		mouseUtils = MouseUtils.singleton;
+		gameManager = GameManager.singleton;
 
         OnPayloadChanged();
     }
@@ -105,11 +108,12 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
     protected void OnPayloadChanged()
     {
-        foreach (ISlotPayloadChangeHandler renderer in gameObject.GetComponentsInChildren<ISlotPayloadChangeHandler>())
+		foreach (ISlotPayloadChangeHandler renderer in gameObject.GetComponentsInChildren<ISlotPayloadChangeHandler>())
         {
             renderer.SlotPayloadChanged(payload);
         }
-    }
+		if(gameManager != null) gameManager.unitAddedToSlot?.Invoke();
+	}
 
     protected void OnMouseDown()
     {
@@ -125,26 +129,30 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
             dragVisual.DragStarted();
             dragStarted.Invoke();
             anyDragStarted.Invoke(this);
-            mouseUtils.SetDragCursor();
-            isDragged = true;
-        }
+			mouseUtils.SetDragCursor();
+		}
     }
 
     protected void OnMouseDrag()
     {
         //Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         dragVisual.MoveTo(Input.mousePosition);
-    }
+		if (payload != null)
+		{
+			beingDragged = true;
+			mouseUtils.SetDragCursor();
+		}
+	}
 
     protected void OnMouseEnter()
     {
-        if(!isDragged) mouseUtils.SetHoverDragCursor();
+		if (payload != null) mouseUtils.SetHoverDragCursor();
 		currentlyOverSlot = this;
     }
 
     protected void OnMouseExit()
     {
-        if(!isDragged) mouseUtils.SetToDefaultCursor();
+		mouseUtils.SetToDefaultCursor();
         if (currentlyOverSlot == this)
         {
             currentlyOverSlot = null;
@@ -161,17 +169,11 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
         dragVisual.DragStopped();
         dragStopped.Invoke();
         anyDragStopped.Invoke(this);
-        isDragged = false;
+        beingDragged = false;
 
-		if(currentlyOverSlot == this)
-		{
-			mouseUtils.SetHoverDragCursor();
-		} else
-		{
-			mouseUtils.SetToDefaultCursor();
-		}
+		if(payload != null) mouseUtils.SetHoverDragCursor();
 
-        if (payload != null && currentlyOverSlot != null && currentlyOverSlot != this)
+		if (payload != null && currentlyOverSlot != null && currentlyOverSlot != this)
         {
 			SwapSlots(currentlyOverSlot);
             currentlyOverSlot = null;
@@ -212,7 +214,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 					return;
 				}
 			}
-			(this.payload, draggedToSlot.payload) = (draggedToSlot.payload, payload);
+			(payload, draggedToSlot.payload) = (draggedToSlot.payload, payload);
 		}
     }
 
@@ -248,8 +250,6 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        this.OnMouseUp();
+		this.OnMouseUp();
     }
-
-    
 }

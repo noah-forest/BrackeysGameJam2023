@@ -17,6 +17,7 @@ public class LockShop : MonoBehaviour
 	private Sprite defaultBorderTexture;
 
 	public Button refreshButton;
+	public RefreshShop refreshShop;
 
     public bool locked;
 
@@ -27,6 +28,8 @@ public class LockShop : MonoBehaviour
 		gameManager = GameManager.singleton;
 
 		defaultBorderTexture = lockBorder.sprite;
+
+		refreshShop = refreshButton.gameObject.GetComponent<RefreshShop>();
 
         Button button = GetComponent<Button>();
         button.onClick.AddListener(SetShopLocked);
@@ -66,6 +69,6 @@ public class LockShop : MonoBehaviour
 		lockBorder.color = new Color32(163, 143, 99, 255);
 		lockBorder.sprite = defaultBorderTexture;
 
-		if (gameManager.Gold > 0) refreshButton.interactable = true;
+		if (refreshShop.canRefresh) refreshButton.interactable = true;
 	}
 }

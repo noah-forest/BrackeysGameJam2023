@@ -16,6 +16,9 @@ public class UIManager : MonoBehaviour
 	[SerializeField] List<Sprite> results = new();
 	[SerializeField] GameObject top;
 
+	[SerializeField] TextMeshProUGUI battleReward;
+	[SerializeField] TextMeshProUGUI interestGained;
+
 	[SerializeField] GameObject confirmUI;
 
 	[SerializeField] GameObject gameOverScreen;
@@ -24,6 +27,9 @@ public class UIManager : MonoBehaviour
 	GameManager gameManager;
 	[SerializeField] GameObject shopUi;
 	[SerializeField] GameObject HUD;
+
+	[SerializeField] GameObject battlesWon;
+	[SerializeField] TextMeshProUGUI battlesWonCount;
 
 	[SerializeField] GameObject livesContainer;
 	[SerializeField] GameObject livesArea;
@@ -65,12 +71,15 @@ public class UIManager : MonoBehaviour
 
 	private void ShowPauseMenu()
 	{
-		pauseMenuScreen.SetActive(gameManager.openThePauseMenuPleaseGoodSir);
+		pauseMenuScreen.SetActive(gameManager.openPauseMenu);
+
+		SoundSettings soundSettings = pauseMenuScreen.transform.parent.GetComponent<SoundSettings>();
+		soundSettings.RefreshSlider(PlayerPrefs.GetFloat("SavedMasterVolume"));
 	}
 
 	private void UpdateGoldText()
 	{
-		goldUI.text = gameManager.Gold.ToString();
+		goldUI.text = gameManager.Cash.ToString();
 	}
 	private void UpdateLivesText()
 	{
@@ -99,6 +108,7 @@ public class UIManager : MonoBehaviour
 	private void ShowBattleWonScreen()
 	{
 		battleOverScreen.SetActive(true);
+		battlesWonCount.text = gameManager.BattlesWon.ToString();
 		ShowResult(0);
 	}
 
@@ -111,6 +121,9 @@ public class UIManager : MonoBehaviour
 
 	private void ShowResult(int index)
 	{
+		battleReward.text = $"{gameManager.settings.battleReward}";
+		interestGained.text = $"{gameManager.GainInterest()}";
+
 		Image cmpResult = result.GetComponent<Image>();
 		textAnim = result.GetComponent<Animator>();
 		Image shadResult = resultShadow.GetComponent<Image>();
@@ -119,18 +132,22 @@ public class UIManager : MonoBehaviour
 
 		if (index == 0) // if the battle is WON
 		{
-			textAnim.SetTrigger("won");
 			cmpResult.color = (Color)new Color32(159, 255, 97, 255); // set the color to GREEN
 			top.SetActive(false);
 			livesArea.SetActive(false);
+			battlesWon.SetActive(true);
 			gameManager.wonParticles.SetActive(true);
+
+			textAnim.SetTrigger("won");
 		}
 		else if (index == 1) // if the battle is LOST
 		{
-			textAnim.SetTrigger("lose");
-			livesArea.SetActive(true);
-			top.SetActive(true);
 			cmpResult.color = (Color)new Color32(255, 95, 95, 255); // set the color to RED
+			livesArea.SetActive(true);
+			battlesWon.SetActive(false);
+			top.SetActive(true);
+
+			textAnim.SetTrigger("lose");
 		}
 	}
 
@@ -188,7 +205,7 @@ public class UIManager : MonoBehaviour
 		shopUi.SetActive(false);
 		HUD.SetActive(false);
 	}
-	
+
 	private void ShowShop()
 	{
 		shopUi.SetActive(true);

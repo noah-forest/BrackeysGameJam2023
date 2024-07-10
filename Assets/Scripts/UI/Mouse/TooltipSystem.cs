@@ -15,7 +15,6 @@ public class TooltipSystem : MonoBehaviour
 	public TextMeshProUGUI critChanceTxt;
 	public TextMeshProUGUI atkSpdTxt;
 	public TextMeshProUGUI digCountTxt;
-	public TextMeshProUGUI critDmgTxt;
 	public TextMeshProUGUI rarityTxt;
 	public Image rarityLabel;
 	public TextMeshProUGUI unitDesc;
