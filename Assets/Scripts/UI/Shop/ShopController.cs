@@ -65,6 +65,7 @@ public class ShopController : MonoBehaviour
 	{
 		gameManager = GameManager.singleton;
 		gameManager.unitAddedToSlot.AddListener(SearchAfterPurchase);
+		gameManager.unitSold.AddListener(SearchAfterPurchase);
 		shopAudioPlayer = GetComponent<ShopAudio>();
 
 		defaultRarities = new RarityTable(commonWeight, rareWeight, epicWeight, legendaryWeight);
@@ -118,7 +119,7 @@ public class ShopController : MonoBehaviour
 				slot.payload = null;
 				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
 				gameManager.Cash += (int)sellInfo.sellValue.Value;
-				gameManager.unitSold?.Invoke();
+				SearchAfterPurchase();
 				Destroy(slot.payload);
 			}
 			return false;
@@ -225,6 +226,9 @@ public class ShopController : MonoBehaviour
 			if (slot.payload.name == unitSlot.payload.name)
 			{
 				curShopItem.unitFound.SetActive(true);
+			} else
+			{
+				curShopItem.unitFound.SetActive(false);
 			}
 		}
 
@@ -235,6 +239,9 @@ public class ShopController : MonoBehaviour
 			if (slot.payload.name == unitSlot.payload.name)
 			{
 				curShopItem.unitFound.SetActive(true);
+			} else
+			{
+				curShopItem.unitFound.SetActive(false);
 			}
 		}
 	}
