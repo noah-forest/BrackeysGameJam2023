@@ -72,6 +72,9 @@ public class UIManager : MonoBehaviour
 	private void ShowPauseMenu()
 	{
 		pauseMenuScreen.SetActive(gameManager.openPauseMenu);
+
+		SoundSettings soundSettings = pauseMenuScreen.transform.parent.GetComponent<SoundSettings>();
+		soundSettings.RefreshSlider(PlayerPrefs.GetFloat("SavedMasterVolume"));
 	}
 
 	private void UpdateGoldText()

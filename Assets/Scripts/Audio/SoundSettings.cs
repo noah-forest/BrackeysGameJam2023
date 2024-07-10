@@ -48,7 +48,7 @@ public class SoundSettings : MonoBehaviour
 		SliderValue = soundSlider.value;
 	}
 
-    private void RefreshSlider(float _value)
+    public void RefreshSlider(float _value)
     {
 		soundSlider.value = _value;
 		SliderValue = soundSlider.value;

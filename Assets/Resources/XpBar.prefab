@@ -305,8 +305,9 @@ GameObject:
   - component: {fileID: 1098614576693434982}
   - component: {fileID: 600921491438783920}
   - component: {fileID: 3931546803740910392}
+  - component: {fileID: 3409769374090114280}
   m_Layer: 5
-  m_Name: Text (TMP) (1)
+  m_Name: level
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -458,6 +459,27 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3a999834a3b56e146b6a1973f2a63b65, type: 2}
   - {fileID: 11400000, guid: 3abb7cd2aeafab14581cfa76766d71c8, type: 2}
   framesPerSecond: 5
+--- !u!95 &3409769374090114280
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3564433888782522727}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 28789dffc894b2d42b82791fa2009f41, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7520541186454307455
 GameObject:
   m_ObjectHideFlags: 0

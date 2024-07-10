@@ -18,6 +18,8 @@ public class XpBarController : MonoBehaviour, ISlotPayloadChangeHandler
 
 	public GameObject glow;
 
+	public Animator levelUpAnim;
+
 	private void Awake()
 	{
 
@@ -107,6 +109,7 @@ public class XpBarController : MonoBehaviour, ISlotPayloadChangeHandler
 	{
 		Animator anim = glow.GetComponent<Animator>();
 		anim.Play("levelUpGlow");
+		levelUpAnim.Play("levelUpTextAnim");
 
 		if (unitExp.curLevel == 2)
 		{

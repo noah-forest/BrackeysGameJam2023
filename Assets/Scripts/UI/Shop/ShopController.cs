@@ -179,6 +179,15 @@ public class ShopController : MonoBehaviour
 					}
 
 					curShopItem.purchased.SetActive(true);
+					
+					foreach(GameObject glow in curShopItem.rarityGlowList)
+					{
+						if (glow.activeInHierarchy)
+						{
+							glow.SetActive(false);
+						}
+					}
+
 					curShopItem.unitFound.SetActive(false);
 					gameManager.Cash -= curShopItem.unitCost;
 					gameManager.unitPurchased?.Invoke();

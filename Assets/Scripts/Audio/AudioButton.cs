@@ -49,18 +49,4 @@ public class AudioButton : MonoBehaviour
 			currentImage.sprite = audioLevels[3];
 		}
 	}
-
-	public void OnClick()
-	{
-		if (open)
-		{
-			open = false;
-			sliderObj.SetActive(false);
-		}
-		else
-		{
-			sliderObj.SetActive(true);
-			open = true;
-		}
-	}
 }
