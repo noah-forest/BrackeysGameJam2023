@@ -51,10 +51,10 @@ public class SequenceAnimator : MonoBehaviour
 			foreach (Animator animator in animators)
 			{
 				animator.SetTrigger("DoAnimation");
-				yield return new WaitForSeconds(animDuration);
+				yield return new WaitForSecondsRealtime(animDuration);
 			}
 
-			yield return new WaitForSeconds(animCooldown);
+			yield return new WaitForSecondsRealtime(animCooldown);
 		}
 	}
 }
