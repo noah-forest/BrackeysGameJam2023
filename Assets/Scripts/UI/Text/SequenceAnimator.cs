@@ -14,10 +14,22 @@ public class SequenceAnimator : MonoBehaviour
 	private void Awake()
 	{
 		animators = new List<Animator>(GetComponentsInChildren<Animator>());
+
+		foreach(var animator in animators)
+		{
+			animator.keepAnimatorStateOnDisable = true;
+		}
 	}
 
 	private void OnEnable()
 	{
+		foreach(var animator in animators)
+		{
+			animator.ResetTrigger("DoAnimation");
+			animator.Rebind();
+			animator.Update(0f);
+		}
+
 		DoAnim = true;
 		StartTextAnim();
 	}
