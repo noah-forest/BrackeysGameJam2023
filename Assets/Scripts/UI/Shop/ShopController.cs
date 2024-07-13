@@ -221,14 +221,12 @@ public class ShopController : MonoBehaviour
 	{
 		foreach(Slot slot in gameManager.playerBattleSlots)
 		{
-			if(slot.payload == null) continue;
+			if (slot.payload == null) continue;
+
 			if (slot.payload.GetComponent<Experience>().curLevel == Experience.MaxLevel) continue;
 			if (slot.payload.name == unitSlot.payload.name)
 			{
 				curShopItem.unitFound.SetActive(true);
-			} else
-			{
-				curShopItem.unitFound.SetActive(false);
 			}
 		}
 
@@ -239,9 +237,6 @@ public class ShopController : MonoBehaviour
 			if (slot.payload.name == unitSlot.payload.name)
 			{
 				curShopItem.unitFound.SetActive(true);
-			} else
-			{
-				curShopItem.unitFound.SetActive(false);
 			}
 		}
 	}
