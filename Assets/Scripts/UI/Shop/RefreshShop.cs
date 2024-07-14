@@ -27,6 +27,8 @@ public class RefreshShop : MonoBehaviour
 		button = GetComponent<Button>();
 		button.onClick.AddListener(CheckIfRefresh);
 		gameManager.goldChangedEvent.AddListener(CheckForGold);
+
+		canRefresh = true;
 	}
 
 	private void OnEnable()

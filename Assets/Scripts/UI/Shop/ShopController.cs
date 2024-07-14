@@ -119,8 +119,8 @@ public class ShopController : MonoBehaviour
 				slot.payload = null;
 				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
 				gameManager.Cash += (int)sellInfo.sellValue.Value;
-				SearchAfterPurchase();
 				Destroy(slot.payload);
+				gameManager.unitSold.Invoke();
 			}
 			return false;
 		});
@@ -210,7 +210,9 @@ public class ShopController : MonoBehaviour
 		{
 			SetUnitInfo curShopItem = shopWindows[i].GetComponent<SetUnitInfo>();
 			Slot unitSlot = shopWindows[i].GetComponent<Slot>();
-            if (unitSlot.payload != null)
+			curShopItem.unitFound.SetActive(false);
+
+			if (unitSlot.payload != null)
             {
 				UnitFoundInInventory(unitSlot, curShopItem);
             }
