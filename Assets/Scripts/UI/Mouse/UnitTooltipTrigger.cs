@@ -16,19 +16,31 @@ public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 
 	private UnitRarity rarity;
 
+	private bool hovering;
+
 	private void Start()
 	{
 		cursor = MouseUtils.singleton;
 		tooltipSystem = TooltipSystem.instance;
 		stats = transform.parent.GetComponent<UnitStats>();
 		Health = transform.parent.GetComponent<Health>();
-		Health.died.AddListener(HideTooltip);
+		Health.unitDied.AddListener(UnitDied);
 		header = transform.parent.name.Replace("(Clone)", "").Trim();
 		rarity = stats.Rarity;
 	}
 
+	private void UnitDied(GameObject go)
+	{
+		if(go == transform.parent.gameObject && hovering)
+		{
+			HideTooltip();
+		}
+	}
+
 	public void OnPointerEnter(PointerEventData eventData)
 	{
+		hovering = true;
+
 		level = transform.parent.GetComponent<Experience>().curLevel;
 
 		// raw stats to show
@@ -57,6 +69,7 @@ public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 
 	public void OnPointerExit(PointerEventData eventData)
 	{
+		hovering = false;
 		HideTooltip();
 	}
 
