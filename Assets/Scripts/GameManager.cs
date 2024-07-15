@@ -75,7 +75,9 @@ public class GameManager : MonoBehaviour
 	[HideInInspector]
 	public UnityEvent enemyUnitsCreated = new();
 	[HideInInspector]
-	public UnityEvent<int> previewRolled = new();
+	public UnityEvent previewRolled = new();
+	[HideInInspector]
+	public UnityEvent unitRevealed = new();
 	#endregion
 
 	#region Unit Events
@@ -180,8 +182,12 @@ public class GameManager : MonoBehaviour
 	public GameObject unitMasterPrefab;
 
 	public UnitPreview unitPreview;
+	public int revealCost = 5;
 
 	public int interest;
+
+	private int EnemyUnitLvl2 = 3;
+	private int EnemyUnitLvl3 = 6;
 
 	private void Start()
 	{
@@ -192,6 +198,8 @@ public class GameManager : MonoBehaviour
 
 		pauseGame.AddListener(PauseGame);
 		resumeGame.AddListener(UnPauseGame);
+
+		EnemyUnitLvl2 = 1;
 
 		firstTime = true;
 	}
@@ -501,15 +509,42 @@ public class GameManager : MonoBehaviour
 	public GameObject InstantiateRandomUnit(Transform parent)
 	{
 		int unitRoll = Random.Range(0, unitManager.unitStatsDatabase.Count);
+
+		if (BattlesWon >= EnemyUnitLvl2)
+		{
+			int unitLevelRoll = Random.Range(0, 2);
+
+			if(BattlesWon >= EnemyUnitLvl3)
+			{
+				unitLevelRoll = Random.Range(0, 3);
+			}
+
+			if(unitLevelRoll == 1)
+			{
+				return CreateUnitInstance(unitRoll, parent, Experience.ExpToLevel2);
+			} else if(unitLevelRoll == 2)
+			{
+				return CreateUnitInstance(unitRoll, parent, Experience.ExpToLevel3);
+			}
+		}
+
 		return CreateUnitInstance(unitRoll, parent);
 	}
 
-	public GameObject CreateUnitInstance(int unitIndex, Transform parent)
+	public GameObject CreateUnitInstance(int unitIndex, Transform parent, int unitLevel = 0)
 	{
 		GameObject newUnit = Instantiate(unitMasterPrefab, parent);
 		UnitMasterComponent unitMaster = newUnit.GetComponent<UnitMasterComponent>();
 		unitMaster.unitStats.InitUnit(unitManager.unitStatsDatabase[unitIndex]);
 
+		if(unitLevel == 2)
+		{
+			unitMaster.unitExperience.AddExp(unitLevel);
+		} else if(unitLevel == 3)
+		{
+			unitMaster.unitExperience.AddExp(Experience.ExpToLevel2);
+			unitMaster.unitExperience.AddExp(unitLevel);
+		}
 		unitMaster.unitStats.Rarity = unitManager.unitStatsDatabase[unitIndex].rarity;
 		unitMaster.unitStats.description = unitManager.unitStatsDatabase[unitIndex].description;
 		newUnit.name = unitManager.unitStatsDatabase[unitIndex].name;

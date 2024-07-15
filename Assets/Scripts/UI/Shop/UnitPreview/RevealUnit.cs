@@ -24,21 +24,46 @@ public class RevealUnit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 	private SlotTooltipTrigger trigger;
 
 	private MouseUtils mouseUtils;
+	private GameManager gameManager;
 
 	private bool hovering;
+	private bool canReveal;
 
 	private void Start()
 	{
 		mouseUtils = MouseUtils.singleton;
-	}
+		gameManager = GameManager.singleton;
+		gameManager.goldChangedEvent.AddListener(CheckForCash);
 
-	private void OnEnable()
-	{
 		button = GetComponent<Button>();
+		button.onClick.AddListener(CheckIfReveal);
+
 		unitSlot = GetComponent<Slot>();
 		trigger = GetComponent<SlotTooltipTrigger>();
 
-		button.onClick.AddListener(ShowUnit);
+		unitCostText.text = gameManager.revealCost.ToString();
+	}
+
+	private void CheckForCash()
+	{
+		if (gameManager.Cash > 0 && gameManager.Cash >= gameManager.revealCost && gameManager.Cash - gameManager.revealCost >= 0)
+		{
+			button.interactable = true;
+			canReveal = true;
+		}
+		else if (gameManager.Cash <= 0 || gameManager.Cash < gameManager.revealCost)
+		{
+			button.interactable = false;
+			canReveal = false;
+		}
+	}
+
+	private void CheckIfReveal()
+	{
+		gameManager.unitRevealed?.Invoke();
+
+		gameManager.Cash -= gameManager.revealCost;
+		ShowUnit();
 	}
 
 	public void ShowUnit()
@@ -48,7 +73,6 @@ public class RevealUnit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 		if (hovering)
 		{
 			trigger.ShowTooltip(unitSlot);
-			// subtract money
 		}
 		button.interactable = false;
 		priceTag.SetActive(false);
@@ -59,8 +83,10 @@ public class RevealUnit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 	{
 		unitImage.sprite = hiddenSprite;
 		unitSlot.payload = null;
-		button.interactable = true;
-		//unitCostText.text = 
+		if(canReveal)
+		{
+			button.interactable = true;
+		}
 		priceTag.SetActive(true);
 		hidden = true;
 	}
@@ -88,10 +114,11 @@ public class RevealUnit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
 	public void OnPointerUp(PointerEventData eventData)
 	{
-		if (hovering)
+		if (hovering && canReveal)
 		{
 			mouseUtils.SetTooltipCursor();
-		} else
+		}
+		else if (!hovering && !canReveal)
 		{
 			mouseUtils.SetToDefaultCursor();
 		}

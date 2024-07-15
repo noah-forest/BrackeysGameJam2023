@@ -8,6 +8,8 @@ public class UnitPreview : MonoBehaviour
 
 	public Sprite hiddenUnit;
 
+	public int rerollCost = 10;
+
 	private GameManager gameManager;
 
 	private void Start()
@@ -38,5 +40,6 @@ public class UnitPreview : MonoBehaviour
 	public void RerollEnemyUnits()
 	{
 		gameManager.CreateEnemyTeam();
+		gameManager.previewRolled?.Invoke();
 	}
 }
