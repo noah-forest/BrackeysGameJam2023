@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
 	[SerializeField] GameObject reserveSlots;
 	GameManager gameManager;
 	[SerializeField] GameObject shopUi;
+	[SerializeField] GameObject unitPreview;
 	[SerializeField] GameObject HUD;
 
 	[SerializeField] GameObject battlesWon;
@@ -203,18 +204,21 @@ public class UIManager : MonoBehaviour
 	public void HideMenus()
 	{
 		shopUi.SetActive(false);
+		unitPreview.SetActive(false);
 		HUD.SetActive(false);
 	}
 
 	private void ShowShop()
 	{
 		shopUi.SetActive(true);
+		unitPreview.SetActive(true);
 		reserveSlots.SetActive(true);
 	}
 
 	private void HideShop()
 	{
 		shopUi.SetActive(false);
+		unitPreview.SetActive(false);
 		reserveSlots.SetActive(false);
 	}
 

@@ -23,6 +23,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 	public static UnityEvent<Slot> anyDragStarted = new(); 
     public static UnityEvent<Slot> anyDragStopped = new();
 
+	public bool interactable = true;
+
 	private bool beingDragged;
 
     public static DragVisual dragVisual
@@ -222,34 +224,52 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
     public void OnPointerEnter(PointerEventData data)
     {
-        this.OnMouseEnter();
+		if (interactable)
+		{
+			this.OnMouseEnter();
+		}
     }
 
     public void OnPointerExit(PointerEventData data)
     {
-        this.OnMouseExit();
-    }
+		if (interactable)
+		{
+			this.OnMouseExit();
+		}
+	}
 
     public void OnPointerDown(PointerEventData data)
     {
-        this.OnMouseDown();
+		if (interactable)
+		{
+			this.OnMouseDown();
 
-        //Fixes weird bug where initial position is wrong
-        dragVisual.SnapTo(Input.mousePosition);
+			//Fixes weird bug where initial position is wrong
+			dragVisual.SnapTo(Input.mousePosition);
+		}
     }
 
     public void OnPointerUp(PointerEventData data)
     {
-        this.OnMouseUp();
+		if (interactable)
+		{
+			this.OnMouseUp();
+		}
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        this.OnMouseDrag();
+		if (interactable)
+		{
+			this.OnMouseDrag();
+		}
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-		this.OnMouseUp();
+		if (interactable)
+		{
+			this.OnMouseUp();
+		}
     }
 }

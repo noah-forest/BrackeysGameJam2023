@@ -72,6 +72,10 @@ public class GameManager : MonoBehaviour
 	public UnityEvent unitPurchased = new();
 	[HideInInspector]
 	public UnityEvent unitSold = new();
+	[HideInInspector]
+	public UnityEvent enemyUnitsCreated = new();
+	[HideInInspector]
+	public UnityEvent<int> previewRolled = new();
 	#endregion
 
 	#region Unit Events
@@ -158,6 +162,8 @@ public class GameManager : MonoBehaviour
 	public Actor enemyActor;
 	public List<BattleLane> lanes;
 
+	public List<GameObject> enemyUnits;
+
 	[HideInInspector] public MouseUtils mouseUtils;
 
 	public bool gameIsPaused { private set; get; }
@@ -172,6 +178,8 @@ public class GameManager : MonoBehaviour
 	private bool inShop;
 
 	public GameObject unitMasterPrefab;
+
+	public UnitPreview unitPreview;
 
 	public int interest;
 
@@ -345,6 +353,7 @@ public class GameManager : MonoBehaviour
 		firstTime = false;
 		resumeGame.Invoke();
 		HideBattlefield();
+		CreateEnemyTeam();
 		playerUnitsLoaded = false;
 		loadShopEvent.Invoke();
 		mouseUtils.SetToDefaultCursor();
@@ -377,7 +386,7 @@ public class GameManager : MonoBehaviour
 	{
 		yield return new WaitForSeconds(0.2f);
 
-		LoadRandomEnemyTeamIntoBattle();
+		LoadEnemyTeamIntoBattle();
 		if (!playerUnitsLoaded) LoadPlayerUnitsIntoBattle();
 		AssignUnitTargets();
 	}
@@ -397,26 +406,46 @@ public class GameManager : MonoBehaviour
 	{
 		foreach (BattleLane lane in lanes)
 		{
-			if (lane.enemyUnit) lane.enemyUnit.unitAttacker.targetUnit = lane.playerUnit;
-			if (lane.playerUnit) lane.playerUnit.unitAttacker.targetUnit = lane.enemyUnit;
+			if (lane.enemyUnitController) lane.enemyUnitController.unitAttacker.targetUnit = lane.playerUnit;
+			if (lane.playerUnit) lane.playerUnit.unitAttacker.targetUnit = lane.enemyUnitController;
 		}
+	}
+	
+	public void CreateEnemyTeam()
+	{
+		if(enemyUnits.Count != 0)
+		{
+			foreach (GameObject unit in enemyUnits)
+			{
+				Destroy(unit);
+			}
+			enemyUnits.Clear();
+			enemyUnits.TrimExcess();
+		}
+
+		foreach(BattleLane lane in lanes)
+		{
+			if (lane.enemyUnit) Destroy(lane.enemyUnit);
+			lane.enemyUnit = InstantiateRandomUnit(lane.enemyUnitPosition);
+			enemyUnits.Add(lane.enemyUnit);
+		}
+
+		unitPreview.FillUnitPos(enemyUnits);
 	}
 
 	/// <summary>
 	/// deletes the old enemy units if there are any and then loads a random enemy unit for each lane and assign graves to them
 	/// </summary>
-	private void LoadRandomEnemyTeamIntoBattle()
+	private void LoadEnemyTeamIntoBattle()
 	{
 		foreach (BattleLane lane in lanes)      //assigng target units to opposing units, and assign units to their graves
 		{
-			if (lane.enemyUnit) Destroy(lane.enemyUnit.gameObject);
-			GameObject newUnitObj = InstantiateRandomUnit(lane.enemyUnitPosition);
-			lane.enemyUnit = newUnitObj.GetComponent<UnitController>();
-			lane.enemyUnit.parentActor = enemyActor;
-			lane.enemyUnit.unitGrave = lane.enemyGrave;
-			lane.enemyUnit.gameObject.SetActive(true);
+			lane.enemyUnitController = lane.enemyUnit.GetComponent<UnitController>();
+			lane.enemyUnitController.parentActor = enemyActor;
+			lane.enemyUnitController.unitGrave = lane.enemyGrave;
+			lane.enemyUnit.SetActive(true);
 
-			lane.enemyUnit.InitCombat();
+			lane.enemyUnitController.InitCombat();
 		}
 		enemyActor.health.Revive();
 	}
@@ -457,7 +486,7 @@ public class GameManager : MonoBehaviour
 	{
 		for (int i = 0; i < lanes.Count; i++)
 		{
-			if (lanes[i].enemyUnit) Destroy(lanes[i].enemyUnit.gameObject);
+			if (lanes[i].enemyUnitController) Destroy(lanes[i].enemyUnitController.gameObject);
 			if (lanes[i].playerUnit)
 			{
 				lanes[i].playerUnit.Respawn();

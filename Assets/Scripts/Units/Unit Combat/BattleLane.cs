@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class BattleLane : MonoBehaviour
 {
-    /// <summary>
-    /// left side of battlefield
-    /// </summary>
-    public UnitController enemyUnit;
+	public GameObject enemyUnit;
+	/// <summary>
+	/// left side of battlefield
+	/// </summary>
+	public UnitController enemyUnitController;
     /// <summary>
     /// left side of battlefield
     /// </summary>

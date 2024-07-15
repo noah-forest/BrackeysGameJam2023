@@ -16,20 +16,24 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 
 	private UnitRarity rarity;
 
+	private MouseUtils mouseUtils;
+
 	private void Start()
 	{
 		unitSlot = GetComponent<Slot>();
 		tooltipSystem = TooltipSystem.instance;
+		mouseUtils = MouseUtils.singleton;
 	}
 
-	public void OnPointerEnter(PointerEventData eventData)
+	
+	public void ShowTooltip(Slot slot)
 	{
-		if (unitSlot.payload == null) return;
+		if (slot.payload == null) return;
 
-		header = unitSlot.payload.name.Replace("(Clone)","").Trim();
-		stats = unitSlot.payload.GetComponent<UnitStats>();
-		level = unitSlot.payload.GetComponent<Experience>().curLevel;
-		Health = unitSlot.payload.GetComponent<Health>().maxHealth;
+		header = slot.payload.name.Replace("(Clone)", "").Trim();
+		stats = slot.payload.GetComponent<UnitStats>();
+		level = slot.payload.GetComponent<Experience>().curLevel;
+		Health = slot.payload.GetComponent<Health>().maxHealth;
 		rarity = stats.Rarity;
 
 		// raw stats to show
@@ -43,13 +47,14 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 			else if ((stats.attackSpeed * 10) == 40) tooltipSystem.atkSpdTxt.text = "Slow";
 			else if ((stats.attackSpeed * 10) == 20) tooltipSystem.atkSpdTxt.text = "Fast";
 			else if ((stats.attackSpeed * 10) < 20) tooltipSystem.atkSpdTxt.text = "Nuts";
-		} else
+		}
+		else
 		{
 			tooltipSystem.atkSpdTxt.text = $"{stats.attackSpeed * 10}";
 		}
 
 		tooltipSystem.digCountTxt.text = $"{Mathf.Floor(stats.digCount)}";
-		
+
 		tooltipSystem.unitDesc.text = stats.description;
 		tooltipSystem.rarityTxt.text = rarity.ToString();
 		SetLabelRarity(tooltipSystem.rarityLabel);
@@ -60,9 +65,20 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 		TooltipSystem.Show(header);
 	}
 
-	public void OnPointerExit(PointerEventData eventData)
-	{ 
+	public void HideTooltip()
+	{
 		TooltipSystem.Hide();
+	}
+
+	public void OnPointerEnter(PointerEventData eventData)
+	{
+		if (unitSlot.payload == null) return;
+		ShowTooltip(unitSlot);
+	}
+
+	public void OnPointerExit(PointerEventData eventData)
+	{
+		HideTooltip();
 	}
 
 	private void SetLabelRarity(Image label)
