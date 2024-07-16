@@ -156,6 +156,7 @@ public class ShopController : MonoBehaviour
 					return false;
 				}
 
+				//moves unit in battleSlot to nearest empty reserve slot
 				if (newSlot.payload != null && newSlot.payload.name != unitSlot.payload.name)
 				{
 					Slot slot = FindNearestEmptySlot(gameManager.playerReserveSlots);
@@ -171,6 +172,7 @@ public class ShopController : MonoBehaviour
 					}
 				};
 
+				//unit purchase check
 				if (gameManager.Cash >= curShopItem.unitCost)
 				{
 					if (newSlot.payload != null)
@@ -181,6 +183,7 @@ public class ShopController : MonoBehaviour
 
 					curShopItem.purchased.SetActive(true);
 					
+					//turn off the rarity glow on units on purchase
 					foreach(GameObject glow in curShopItem.rarityGlowList)
 					{
 						if (glow.activeInHierarchy)
@@ -210,7 +213,7 @@ public class ShopController : MonoBehaviour
 		{
 			SetUnitInfo curShopItem = shopWindows[i].GetComponent<SetUnitInfo>();
 			Slot unitSlot = shopWindows[i].GetComponent<Slot>();
-			curShopItem.unitFound.SetActive(false);
+			curShopItem.unitFound.SetActive(false); //set this to false before searching, effectively clearing it
 
 			if (unitSlot.payload != null)
             {

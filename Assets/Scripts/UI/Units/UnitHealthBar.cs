@@ -7,6 +7,9 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Health))]
 public class UnitHealthBar : MonoBehaviour
 {
+	public GameObject shadowDefault;
+	public GameObject shadowFlipped;
+
 	[SerializeField] private Image bar;
 	[SerializeField] private float timeToDrain = 0.25f;
 	[SerializeField] private Gradient healthBarColor;
@@ -16,23 +19,26 @@ public class UnitHealthBar : MonoBehaviour
 
 	private Color newBarColor;
 
-	private Coroutine drainHealthCoroutine;
-
-    private void Start()
-    {
-        health = GetComponent<Health>();
+	private void OnEnable()
+	{
+		health = GetComponent<Health>();
 
 		bar.color = healthBarColor.Evaluate(_target);
 		CheckGradientAmount();
 
 		health.healthChanged.AddListener(UpdateHealthBar);
-    }
+	}
 
-    public void UpdateHealthBar(float oldHealth, float newHealth)
+	public void UpdateHealthBar(float oldHealth, float newHealth)
     {
 		_target = health.health / health.maxHealth;
 
-		drainHealthCoroutine = StartCoroutine(DrainHealth());
+		bar.fillAmount = _target;
+
+		if (gameObject.activeSelf)
+		{
+			StartCoroutine(DrainHealth());
+		}
 
 		CheckGradientAmount();
 

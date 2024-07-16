@@ -199,8 +199,6 @@ public class GameManager : MonoBehaviour
 		pauseGame.AddListener(PauseGame);
 		resumeGame.AddListener(UnPauseGame);
 
-		EnemyUnitLvl2 = 1;
-
 		firstTime = true;
 	}
 
@@ -385,11 +383,11 @@ public class GameManager : MonoBehaviour
 		battleStartedEvent.Invoke();
 		resumeGame.Invoke();
 		ShowBattlfield();
-		StartCoroutine(LoadUnits()); //dont let this shit get into final build please -> <-
+		StartCoroutine(LoadUnits()); //dont let this shit get into final build please -> <- (it will) 
 	}
 
 
-	//definitely a band-aid fix please fix this later i beg of you
+	//definitely a band-aid fix please fix this later i beg of you please dear god fix this 
 	private IEnumerator LoadUnits()
 	{
 		yield return new WaitForSeconds(0.2f);
@@ -438,6 +436,7 @@ public class GameManager : MonoBehaviour
 			enemyUnits.Add(lane.enemyUnit);
 		}
 
+		//populates the unitPreview with the generated units
 		unitPreview.FillUnitPos(enemyUnits);
 	}
 
@@ -476,8 +475,16 @@ public class GameManager : MonoBehaviour
 				newUnitObj.SetActive(true);
 				newUnitObj.transform.position = lanes[unitIdx].playerUnitPosition.position;
 				newUnitObj.transform.localPosition = Vector3.zero;
+
+				//flip players units so that the attack anim plays the correct way
 				newUnitObj.transform.localScale = new Vector3(-1, 1, 1);
+				//then flip the sprites so that they aren't facing the wrong way
 				newUnitObj.GetComponentInChildren<SpriteRenderer>().flipX = true;
+
+				//since we flip the unit, we need to manually flip the shadow on the health bar to be correct
+				UnitHealthBar healthBar = newUnitObj.GetComponentInChildren<UnitHealthBar>();
+				healthBar.shadowFlipped.SetActive(true);
+				healthBar.shadowDefault.SetActive(false);
 
 				lanes[unitIdx].playerUnit = newUnitObj.GetComponent<UnitController>();
 				lanes[unitIdx].playerUnit.parentActor = playerActor;
@@ -512,10 +519,12 @@ public class GameManager : MonoBehaviour
 	{
 		int unitRoll = Random.Range(0, unitManager.unitStatsDatabase.Count);
 
+		//after certain amount of battlesWon, start scaling enemy units
 		if (BattlesWon >= EnemyUnitLvl2)
 		{
 			int unitLevelRoll = Random.Range(0, 2);
 
+			//increase the scaling amount after more battlesWon
 			if(BattlesWon >= EnemyUnitLvl3)
 			{
 				unitLevelRoll = Random.Range(0, 3);
@@ -539,6 +548,8 @@ public class GameManager : MonoBehaviour
 		UnitMasterComponent unitMaster = newUnit.GetComponent<UnitMasterComponent>();
 		unitMaster.unitStats.InitUnit(unitManager.unitStatsDatabase[unitIndex]);
 
+		//artifically level units when given a unitLevel param
+		//this is used for enemy unit scaling, but could have other applications
 		if(unitLevel == 2)
 		{
 			unitMaster.unitExperience.AddExp(unitLevel);
@@ -547,6 +558,7 @@ public class GameManager : MonoBehaviour
 			unitMaster.unitExperience.AddExp(Experience.ExpToLevel2);
 			unitMaster.unitExperience.AddExp(unitLevel);
 		}
+
 		unitMaster.unitStats.Rarity = unitManager.unitStatsDatabase[unitIndex].rarity;
 		unitMaster.unitStats.description = unitManager.unitStatsDatabase[unitIndex].description;
 		newUnit.name = unitManager.unitStatsDatabase[unitIndex].name;
