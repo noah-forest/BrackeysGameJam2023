@@ -142,6 +142,7 @@ public class ShopController : MonoBehaviour
 			SetUnitInfo curShopItem = shopWindow.GetComponent<SetUnitInfo>();
 			Slot unitSlot = shopWindow.GetComponent<Slot>();
 			curShopItem.unitFound.SetActive(false);
+			curShopItem.unitShine.SetActive(false);
 
 			SetUnitPayload(unitSlot, curShopItem);
 			UnitFoundInInventory(unitSlot, curShopItem);
@@ -193,6 +194,7 @@ public class ShopController : MonoBehaviour
 					}
 
 					curShopItem.unitFound.SetActive(false);
+					curShopItem.unitShine.SetActive(false);
 					gameManager.Cash -= curShopItem.unitCost;
 					gameManager.unitPurchased?.Invoke();
 
@@ -214,6 +216,7 @@ public class ShopController : MonoBehaviour
 			SetUnitInfo curShopItem = shopWindows[i].GetComponent<SetUnitInfo>();
 			Slot unitSlot = shopWindows[i].GetComponent<Slot>();
 			curShopItem.unitFound.SetActive(false); //set this to false before searching, effectively clearing it
+			curShopItem.unitShine.SetActive(false);
 
 			if (unitSlot.payload != null)
             {
@@ -232,6 +235,10 @@ public class ShopController : MonoBehaviour
 			if (slot.payload.name == unitSlot.payload.name)
 			{
 				curShopItem.unitFound.SetActive(true);
+				curShopItem.unitShine.SetActive(true);
+
+				Animator anim = curShopItem.unitShine.GetComponent<Animator>();
+				anim.SetTrigger("unitFound");
 			}
 		}
 
@@ -242,6 +249,10 @@ public class ShopController : MonoBehaviour
 			if (slot.payload.name == unitSlot.payload.name)
 			{
 				curShopItem.unitFound.SetActive(true);
+				curShopItem.unitShine.SetActive(true);
+
+				Animator anim = curShopItem.unitShine.GetComponent<Animator>();
+				anim.SetTrigger("unitFound");
 			}
 		}
 	}
