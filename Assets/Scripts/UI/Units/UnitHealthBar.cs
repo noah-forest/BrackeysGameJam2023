@@ -7,7 +7,6 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Health))]
 public class UnitHealthBar : MonoBehaviour
 {
-    [SerializeField] private Slider slider;
 	[SerializeField] private Image bar;
 	[SerializeField] private float timeToDrain = 0.25f;
 	[SerializeField] private Gradient healthBarColor;
@@ -41,7 +40,7 @@ public class UnitHealthBar : MonoBehaviour
 
 	private IEnumerator DrainHealth()
 	{
-		float fillAmount = slider.value;
+		float fillAmount = bar.fillAmount;
 		Color currentColor = bar.color;
 
 		float elaspedTime = 0f;
@@ -49,7 +48,7 @@ public class UnitHealthBar : MonoBehaviour
 		{
 			elaspedTime += Time.deltaTime;
 
-			slider.value = Mathf.Lerp(fillAmount, _target, elaspedTime / timeToDrain);
+			bar.fillAmount = Mathf.Lerp(fillAmount, _target, elaspedTime / timeToDrain);
 
 			bar.color = Color.Lerp(currentColor, newBarColor, elaspedTime / timeToDrain);
 
