@@ -474,9 +474,11 @@ public class GameManager : MonoBehaviour
 				GameObject newUnitObj = playerBattleSlots[unitIdx].payload;
 				newUnitObj.transform.parent = lanes[unitIdx].playerUnitPosition;
 				newUnitObj.SetActive(true);
-				newUnitObj.transform.SetPositionAndRotation(lanes[unitIdx].playerUnitPosition.position, lanes[unitIdx].playerUnitPosition.rotation);
+				newUnitObj.transform.position = lanes[unitIdx].playerUnitPosition.position;
+				newUnitObj.transform.localPosition = Vector3.zero;
 				newUnitObj.transform.localScale = new Vector3(-1, 1, 1);
 				newUnitObj.GetComponentInChildren<SpriteRenderer>().flipX = true;
+
 				lanes[unitIdx].playerUnit = newUnitObj.GetComponent<UnitController>();
 				lanes[unitIdx].playerUnit.parentActor = playerActor;
 				lanes[unitIdx].playerUnit.unitGrave = lanes[unitIdx].playerGrave;
