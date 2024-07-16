@@ -182,7 +182,7 @@ public class GameManager : MonoBehaviour
 	public GameObject unitMasterPrefab;
 
 	public UnitPreview unitPreview;
-	public int revealCost = 5;
+	public int revealCost = 3;
 
 	public int interest;
 

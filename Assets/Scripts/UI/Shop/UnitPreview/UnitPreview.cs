@@ -19,9 +19,17 @@ public class UnitPreview : MonoBehaviour
 
 	public void FillUnitPos(List<GameObject> enemyUnits)
 	{
+		//how many units to hide
 		int randomHidden = Random.Range(0, enemyUnits.Count+1);
 
-		for(int i = 0; i < unitPos.Count; ++i)
+		//roll it twice to lower the chances of getting all 3 hidden
+		if (randomHidden == enemyUnits.Count)
+		{
+			randomHidden = Random.Range(0, enemyUnits.Count + 1);
+		}
+
+		//show units not hidden
+		for (int i = 0; i < unitPos.Count; ++i)
 		{
 			UnitMasterComponent master = enemyUnits[i].GetComponent<UnitMasterComponent>();
 			RevealUnit unitImg = unitPos[i].GetComponent<RevealUnit>();
@@ -30,6 +38,7 @@ public class UnitPreview : MonoBehaviour
 			unitImg.ShowUnit();
 		}
 
+		//hide the units
 		for(int i = 0; i < randomHidden; ++i)
 		{
 			RevealUnit unitImg = unitPos[i].GetComponent<RevealUnit>();

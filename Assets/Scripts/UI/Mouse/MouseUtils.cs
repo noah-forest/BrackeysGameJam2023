@@ -20,6 +20,9 @@ public class MouseUtils : MonoBehaviour
 	public Canvas MainMenuCanvas;
 	public Canvas shopCanvas;
 
+	public List<AudioClip> mouseSoundFX;
+	private AudioSource soundPlayer;
+
 	private bool hovering;
 	private bool hoveringGrave;
 
@@ -39,6 +42,7 @@ public class MouseUtils : MonoBehaviour
 		DontDestroyOnLoad(this.gameObject);
 		
 		SetToDefaultCursor();
+		soundPlayer = GetComponent<AudioSource>();
 	}
 
 	#endregion
@@ -89,6 +93,7 @@ public class MouseUtils : MonoBehaviour
 			if (Input.GetMouseButtonDown(0))
 			{
 				SetPressedCursor();
+				soundPlayer.PlayOneShot(mouseSoundFX[0]);
 			}
 
 			if (Input.GetMouseButtonUp(0))

@@ -5113,6 +5113,44 @@ RectTransform:
   m_AnchoredPosition: {x: 28.7, y: 0.4}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!21 &189969673
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CustomShaders/HealthBar
+  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _SHAPE_BOX
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _borderWidth: 0.016
+    - _healthNormalized: 0.688
+    - _lowHealthThreshold: 0.2
+    - _shape: 1
+    - _waveAmp: 0.008
+    - _waveFreq: 4.3
+    - _waveSpeed: 1
+    m_Colors:
+    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
+    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
+    - _fillColor: {r: 0.586445, g: 0.7642817, b: 0.35496503, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &191695209
 GameObject:
   m_ObjectHideFlags: 0
@@ -6313,6 +6351,7 @@ GameObject:
   m_Component:
   - component: {fileID: 240077340}
   - component: {fileID: 240077339}
+  - component: {fileID: 240077341}
   m_Layer: 0
   m_Name: cursor
   m_TagString: Untagged
@@ -6342,6 +6381,8 @@ MonoBehaviour:
   shovelDigCursor: {fileID: 2800000, guid: f850d3d67d67d3b4e839282414d46cca, type: 3}
   MainMenuCanvas: {fileID: 0}
   shopCanvas: {fileID: 0}
+  mouseSoundFX:
+  - {fileID: 8300000, guid: 4746dba88c4a75d4c86e3810c7a548c8, type: 3}
 --- !u!4 &240077340
 Transform:
   m_ObjectHideFlags: 0
@@ -6357,6 +6398,102 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &240077341
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240077338}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 6ded5fafd7a9e33438aaf5b3c69981d8, type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &240792582
 GameObject:
   m_ObjectHideFlags: 0
@@ -15588,6 +15725,44 @@ RectTransform:
   m_AnchoredPosition: {x: -106.5, y: 6.6}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!21 &487051586
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CustomShaders/HealthBar
+  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _SHAPE_BOX
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _borderWidth: 0.016
+    - _healthNormalized: 1
+    - _lowHealthThreshold: 0.2
+    - _shape: 1
+    - _waveAmp: 0.008
+    - _waveFreq: 4.3
+    - _waveSpeed: 1
+    m_Colors:
+    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
+    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
+    - _fillColor: {r: 0.5049388, g: 0.8584906, b: 0.36850303, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &490509155
 GameObject:
   m_ObjectHideFlags: 0
@@ -22362,44 +22537,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3abb7cd2aeafab14581cfa76766d71c8, type: 2}
   framesPerSecond: 3
   stopOnPause: 0
---- !u!21 &743404315
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: CustomShaders/HealthBar
-  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _SHAPE_BOX
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _borderWidth: 0.016
-    - _healthNormalized: 1
-    - _lowHealthThreshold: 0.2
-    - _shape: 1
-    - _waveAmp: 0.008
-    - _waveFreq: 4.3
-    - _waveSpeed: 1
-    m_Colors:
-    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
-    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
-    - _fillColor: {r: 0.5049388, g: 0.8584906, b: 0.36850303, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &746143659
 GameObject:
   m_ObjectHideFlags: 0
@@ -26063,7 +26200,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: 6ded5fafd7a9e33438aaf5b3c69981d8, type: 2}
   m_audioClip: {fileID: 8300000, guid: 7df39395bd509f043b032dccb70e1662, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -42289,7 +42426,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -395, y: 363.00003}
+  m_AnchoredPosition: {x: -395, y: 363}
   m_SizeDelta: {x: 381.41003, y: 194.58997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1360368530
@@ -42336,7 +42473,7 @@ PrefabInstance:
     - target: {fileID: 108847112539177206, guid: 84b555914681501438e06ef491b3cbd2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2014656623}
+      objectReference: {fileID: 189969673}
     - target: {fileID: 3490969108480678221, guid: 84b555914681501438e06ef491b3cbd2, type: 3}
       propertyPath: m_Name
       value: HealthBar
@@ -55484,18 +55621,6 @@ MonoBehaviour:
 
       Defensive'
     unitSprite: {fileID: 21300000, guid: e02464e7ffc369f408134fb47087d41a, type: 3}
-  - name: Angle
-    health: 12
-    damage: 5
-    attackSpeed: 4
-    blockChance: 0.049999997
-    critChance: 0.25
-    digCount: 6
-    rarity: 3
-    description: 'Theyve got an odd shape about them
-
-      Critical'
-    unitSprite: {fileID: 21300000, guid: d2b861f9433b612499797bc076197384, type: 3}
   - name: Chef
     health: 4
     damage: 3
@@ -55508,13 +55633,47 @@ MonoBehaviour:
 
       Quick'
     unitSprite: {fileID: 21300000, guid: f66a5fa32e3f12345af15bbe0a89178b, type: 3}
+  - name: Angle
+    health: 12
+    damage: 5
+    attackSpeed: 4
+    blockChance: 0.049999997
+    critChance: 0.25
+    digCount: 6
+    rarity: 3
+    description: 'Theyve got an odd shape about them
+
+      Critical'
+    unitSprite: {fileID: 21300000, guid: d2b861f9433b612499797bc076197384, type: 3}
+  - name: Destitute
+    health: 16
+    damage: 3
+    attackSpeed: 2
+    blockChance: 0.35
+    critChance: 0.099999994
+    digCount: 7
+    rarity: 3
+    description: 'A barnacles best friend
+
+      Defensive'
+    unitSprite: {fileID: 21300000, guid: afb4f41a1df2a474d86ba8a43862a249, type: 3}
+  - name: Old Blue
+    health: 25
+    damage: 9
+    attackSpeed: 6.5
+    blockChance: 0.049999997
+    critChance: 0
+    digCount: 15
+    rarity: 3
+    description: Ol' reliable
+    unitSprite: {fileID: 21300000, guid: d688bf81f8775874799cfccb2c6b1eb4, type: 3}
   - name: Python
     health: 4
-    damage: 7
+    damage: 6
     attackSpeed: 2
     blockChance: 0.049999997
-    critChance: 0.59999996
-    digCount: 2
+    critChance: 0.5
+    digCount: 3
     rarity: 3
     description: 'Its got a nasty bite
 
@@ -55558,18 +55717,6 @@ MonoBehaviour:
 
       All Rounder'
     unitSprite: {fileID: 21300000, guid: 47267599760930144af0936cca381f38, type: 3}
-  - name: Destitute
-    health: 16
-    damage: 3
-    attackSpeed: 2
-    blockChance: 0.35
-    critChance: 0.099999994
-    digCount: 7
-    rarity: 3
-    description: 'A barnacles best friend
-
-      Defensive'
-    unitSprite: {fileID: 21300000, guid: afb4f41a1df2a474d86ba8a43862a249, type: 3}
   - name: Spliffy
     health: 12
     damage: 5
@@ -55598,7 +55745,7 @@ MonoBehaviour:
     health: 4
     damage: 2
     attackSpeed: 2
-    blockChance: 0.65
+    blockChance: 0.5
     critChance: 0.049999997
     digCount: 10
     rarity: 4
@@ -55632,11 +55779,11 @@ MonoBehaviour:
     unitSprite: {fileID: 21300000, guid: 7cdedb07c2ed15f43b0c86e5ca262ce5, type: 3}
   - name: Pirat
     health: 3
-    damage: 2
+    damage: 3
     attackSpeed: 0.5
     blockChance: 0.01
     critChance: 0.049999997
-    digCount: 7
+    digCount: 5
     rarity: 5
     description: 'Get it
 
@@ -73082,7 +73229,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: 6ded5fafd7a9e33438aaf5b3c69981d8, type: 2}
   m_audioClip: {fileID: 8300000, guid: 1b8e1dbe8c7ed5148858c90a0acfc2f7, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -73263,44 +73410,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!21 &2014656623
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: CustomShaders/HealthBar
-  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _SHAPE_BOX
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _borderWidth: 0.016
-    - _healthNormalized: 0.688
-    - _lowHealthThreshold: 0.2
-    - _shape: 1
-    - _waveAmp: 0.008
-    - _waveFreq: 4.3
-    - _waveSpeed: 1
-    m_Colors:
-    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
-    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
-    - _fillColor: {r: 0.586445, g: 0.7642817, b: 0.35496503, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &2015837074
 GameObject:
   m_ObjectHideFlags: 0
@@ -80250,7 +80359,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 904.0001, y: -275.82294}
+  m_AnchoredPosition: {x: 904, y: -275.82294}
   m_SizeDelta: {x: 722.4882, y: 551.6459}
   m_Pivot: {x: 1, y: 0}
 --- !u!224 &3103896008257693290
@@ -82218,7 +82327,7 @@ PrefabInstance:
     - target: {fileID: 108847112539177206, guid: 84b555914681501438e06ef491b3cbd2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 743404315}
+      objectReference: {fileID: 487051586}
     - target: {fileID: 2760503215815872932, guid: 84b555914681501438e06ef491b3cbd2, type: 3}
       propertyPath: _healthNormalized
       value: 1
@@ -82651,7 +82760,7 @@ MonoBehaviour:
       m_Calls: []
   unitMasterPrefab: {fileID: 6583705595079056773, guid: 604cd9d8b6d41854bbebbcb4e7507a33, type: 3}
   unitPreview: {fileID: 351152927}
-  revealCost: 5
+  revealCost: 3
   interest: 0
 --- !u!114 &5009999971070804351
 MonoBehaviour:
