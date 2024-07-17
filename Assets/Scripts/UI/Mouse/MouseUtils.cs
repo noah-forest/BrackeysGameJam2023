@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class MouseUtils : MonoBehaviour
 {
@@ -93,6 +93,7 @@ public class MouseUtils : MonoBehaviour
 			if (Input.GetMouseButtonDown(0))
 			{
 				SetPressedCursor();
+				soundPlayer.pitch = Eerp(0.8f, 1.2f, Random.value);
 				soundPlayer.PlayOneShot(mouseSoundFX[0]);
 			}
 
@@ -115,6 +116,11 @@ public class MouseUtils : MonoBehaviour
 		{
 			return;
 		}
+	}
+
+	static float Eerp(float a, float b, float t)
+	{
+		return a * MathF.Exp(t * MathF.Log(b / a));
 	}
 
 	#region Set Mouse Cursors

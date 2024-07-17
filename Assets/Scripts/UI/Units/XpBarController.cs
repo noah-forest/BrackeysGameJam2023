@@ -108,7 +108,9 @@ public class XpBarController : MonoBehaviour, ISlotPayloadChangeHandler
 	private void UpdateLevelUI(int xp)
 	{
 		Animator anim = glow.GetComponent<Animator>();
+		AudioSource audioSource = glow.GetComponent<AudioSource>();
 		anim.Play("levelUpGlow");
+		audioSource.PlayOneShot(audioSource.clip);
 		levelUpAnim.Play("levelUpTextAnim");
 
 		if (unitExp.curLevel == 2)
