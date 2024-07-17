@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class RefreshShop : MonoBehaviour
 {
 	public ShopController shopController;
-	public LockShop lockShop;
 
 	public TextMeshProUGUI refreshCostText;
 
