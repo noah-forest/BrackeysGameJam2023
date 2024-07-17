@@ -27,13 +27,13 @@ public class UnitHealthBar : MonoBehaviour
 		CheckGradientAmount();
 
 		health.healthChanged.AddListener(UpdateHealthBar);
+
+		bar.fillAmount = health.health / health.maxHealth;
 	}
 
 	public void UpdateHealthBar(float oldHealth, float newHealth)
     {
 		_target = health.health / health.maxHealth;
-
-		bar.fillAmount = _target;
 
 		if (gameObject.activeSelf)
 		{
