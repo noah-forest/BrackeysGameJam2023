@@ -43,6 +43,8 @@ public class UIManager : MonoBehaviour
 
 	private int dissolveAmount = Shader.PropertyToID("_DissolveAmount");
 
+	private FadeMusic fadeMusic;
+
 	private void Start()
 	{
 		gameManager = GameManager.singleton;
@@ -58,6 +60,8 @@ public class UIManager : MonoBehaviour
 		gameManager.loadShopEvent.AddListener(HideGameOverScreen);
 		UpdateGoldText();
 		UpdateLivesText();
+
+		fadeMusic = gameManager.MusicPlayer.GetComponent<FadeMusic>();
 
 		foreach (Transform child in livesContainer.transform.GetComponentsInChildren<Transform>())
 		{
@@ -89,6 +93,7 @@ public class UIManager : MonoBehaviour
 
 	public void ShowConfirmUI()
 	{
+		fadeMusic.FadeOutMusic();
 		for (int i = 0; i < gameManager.lanes.Count; i++)
 		{
 			if (gameManager.playerBattleSlots[i].payload == null)
@@ -104,11 +109,18 @@ public class UIManager : MonoBehaviour
 		}
 	}
 
+	public void CloseConfirmUI()
+	{
+		fadeMusic.FadeInMusic();
+		confirmUI.SetActive(false);
+	}
+
 	#region BattleOver
 	//this is kind of fucked but its fine.
 	private void ShowBattleWonScreen()
 	{
 		battleOverScreen.SetActive(true);
+		fadeMusic.FadeOutMusic();
 		battlesWonCount.text = gameManager.BattlesWon.ToString();
 		ShowResult(0);
 	}
@@ -116,6 +128,7 @@ public class UIManager : MonoBehaviour
 	private void ShowBattleLostScreen()
 	{
 		battleOverScreen.SetActive(true);
+		fadeMusic.FadeOutMusic();
 		ShowResult(1);
 		LoadLives();
 	}
@@ -225,10 +238,12 @@ public class UIManager : MonoBehaviour
 	private void ShowGameOverScreen()
 	{
 		gameOverScreen.SetActive(true);
+		fadeMusic.FadeOutMusic();
 	}
 
 	private void HideGameOverScreen()
 	{
 		gameOverScreen.SetActive(false);
+		fadeMusic.FadeInMusic();
 	}
 }

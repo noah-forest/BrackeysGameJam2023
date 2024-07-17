@@ -65,12 +65,14 @@ public class LevelLoader : MonoBehaviour
 		transition.SetTrigger("start");
 
 		transitionIsPlaying = true;
+		gameManager.transitionPlaying.Invoke(transitionIsPlaying);
 
 		yield return new WaitForSeconds(transitionTime);
 
 		SceneManager.LoadScene(levelName);
 
 		transitionIsPlaying = false;
+		gameManager.transitionPlaying.Invoke(transitionIsPlaying);
 	}
 
 	IEnumerator WaitToTransShop()

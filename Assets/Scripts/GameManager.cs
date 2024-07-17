@@ -61,6 +61,9 @@ public class GameManager : MonoBehaviour
 	public UnityEvent startShopTransition;
 
 	[HideInInspector]
+	public UnityEvent<bool> transitionPlaying;
+
+	[HideInInspector]
 	public UnityEvent loadUI;
 
 	#endregion
