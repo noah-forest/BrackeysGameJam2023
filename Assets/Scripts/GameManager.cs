@@ -78,6 +78,10 @@ public class GameManager : MonoBehaviour
 	public UnityEvent previewRolled = new();
 	[HideInInspector]
 	public UnityEvent unitRevealed = new();
+	[HideInInspector]
+	public UnityEvent shopLocked = new();
+	[HideInInspector]
+	public UnityEvent shopUnlocked = new();
 	#endregion
 
 	#region Unit Events

@@ -26,7 +26,10 @@ public class RefreshShop : MonoBehaviour
 
 		button = GetComponent<Button>();
 		button.onClick.AddListener(CheckIfRefresh);
+
 		gameManager.goldChangedEvent.AddListener(CheckForGold);
+		gameManager.shopUnlocked.AddListener(CheckForGold);
+		gameManager.shopLocked.AddListener(LockShop);
 
 		canRefresh = true;
 	}
@@ -35,7 +38,9 @@ public class RefreshShop : MonoBehaviour
 	{
 		shopController.refreshCost = originalRefreshCost;
 		refreshCostText.text = shopController.refreshCost.ToString();
-		if (lockShop.locked) return;
+
+		if (!canRefresh) return;
+
 		if (!shopController.firstRoll) return;
 
 		shopController.ClearShopWindows();
@@ -49,7 +54,7 @@ public class RefreshShop : MonoBehaviour
 			button.interactable = false;
 			canRefresh = false;
 		}
-		else if (gameManager.Cash > 0 && !lockShop.locked && gameManager.Cash >= shopController.refreshCost)
+		else if (gameManager.Cash > 0 && gameManager.Cash >= shopController.refreshCost)
 		{
 			button.interactable = true;
 			canRefresh = true;
@@ -79,5 +84,11 @@ public class RefreshShop : MonoBehaviour
 
 		shopController.ClearShopWindows();
 		shopController.PopulateShopUnits();
+	}
+
+	private void LockShop()
+	{
+		button.interactable = false;
+		canRefresh = false;
 	}
 }
