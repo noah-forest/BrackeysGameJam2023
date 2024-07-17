@@ -101,7 +101,7 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
 	void OnMouseDown() // when collider is clicked by player
 	{
-		if (playerOwned) Dig(); // enemies cannot be dug
+		if (playerOwned && inGrave) Dig(); // enemies cannot be dug
 	}
 
 	/// <summary>
