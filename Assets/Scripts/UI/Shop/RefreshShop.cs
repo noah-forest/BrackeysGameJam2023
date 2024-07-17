@@ -39,7 +39,6 @@ public class RefreshShop : MonoBehaviour
 		refreshCostText.text = shopController.refreshCost.ToString();
 
 		if (!canRefresh) return;
-
 		if (!shopController.firstRoll) return;
 
 		shopController.ClearShopWindows();
@@ -50,10 +49,9 @@ public class RefreshShop : MonoBehaviour
 	{
 		if (gameManager.Cash <= 0 || gameManager.Cash < shopController.refreshCost)
 		{
-			button.interactable = false;
-			canRefresh = false;
+			LockShop();
 		}
-		else if (gameManager.Cash > 0 && gameManager.Cash >= shopController.refreshCost)
+		else if (gameManager.Cash > 0 && gameManager.Cash >= shopController.refreshCost && gameManager.Cash - shopController.refreshCost >= 0)
 		{
 			button.interactable = true;
 			canRefresh = true;
