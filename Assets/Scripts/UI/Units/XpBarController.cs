@@ -17,8 +17,9 @@ public class XpBarController : MonoBehaviour, ISlotPayloadChangeHandler
 	public GameObject xpBar;
 
 	public GameObject glow;
+	public GameObject shine;
 
-	public Animator levelUpAnim;
+	public Animator levelUpTextAnim;
 
 	private void Awake()
 	{
@@ -107,11 +108,7 @@ public class XpBarController : MonoBehaviour, ISlotPayloadChangeHandler
 
 	private void UpdateLevelUI(int xp)
 	{
-		Animator anim = glow.GetComponent<Animator>();
-		AudioSource audioSource = glow.GetComponent<AudioSource>();
-		anim.Play("levelUpGlow");
-		audioSource.PlayOneShot(audioSource.clip);
-		levelUpAnim.Play("levelUpTextAnim");
+		DoLevelUpEffects();
 
 		if (unitExp.curLevel == 2)
 		{
@@ -129,6 +126,19 @@ public class XpBarController : MonoBehaviour, ISlotPayloadChangeHandler
 	private void HideXpBar()
 	{
 		xpBar.SetActive(false);
+	}
+
+	private void DoLevelUpEffects()
+	{
+		Animator glowAnim = glow.GetComponent<Animator>();
+		Animator shineAnim = shine.GetComponent<Animator>();
+
+		glowAnim.Play("levelUpGlow");
+		shineAnim.SetTrigger("levelUp");
+		levelUpTextAnim.Play("levelUpTextAnim");
+
+		AudioSource audioSource = glow.GetComponent<AudioSource>();
+		audioSource.PlayOneShot(audioSource.clip);
 	}
 
 	private void AddPip()
