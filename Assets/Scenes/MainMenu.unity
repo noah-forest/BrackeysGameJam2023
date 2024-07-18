@@ -1392,44 +1392,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 32595018}
   m_CullTransparentMesh: 1
---- !u!21 &34062509
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: CustomShaders/HealthBar
-  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _SHAPE_BOX
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _borderWidth: 0.016
-    - _healthNormalized: 0.688
-    - _lowHealthThreshold: 0.2
-    - _shape: 1
-    - _waveAmp: 0.008
-    - _waveFreq: 4.3
-    - _waveSpeed: 1
-    m_Colors:
-    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
-    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
-    - _fillColor: {r: 0.586445, g: 0.7642817, b: 0.35496503, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &37952974
 GameObject:
   m_ObjectHideFlags: 0
@@ -4451,6 +4413,44 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 121452713652014208, guid: b5d80ce91d717c747b2cb5ac94f42b3a, type: 3}
   m_PrefabInstance: {fileID: 154094224}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &156273113
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CustomShaders/HealthBar
+  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _SHAPE_BOX
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _borderWidth: 0.016
+    - _healthNormalized: 0.688
+    - _lowHealthThreshold: 0.2
+    - _shape: 1
+    - _waveAmp: 0.008
+    - _waveFreq: 4.3
+    - _waveSpeed: 1
+    m_Colors:
+    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
+    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
+    - _fillColor: {r: 0.586445, g: 0.7642817, b: 0.35496503, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &159929830 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4901666087894430726, guid: f461f005006e72147bbe50dc5b4536b5, type: 3}
@@ -6925,44 +6925,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 244204775}
   m_CullTransparentMesh: 1
---- !u!21 &246414936
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: CustomShaders/HealthBar
-  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _SHAPE_BOX
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _borderWidth: 0.016
-    - _healthNormalized: 0.688
-    - _lowHealthThreshold: 0.2
-    - _shape: 1
-    - _waveAmp: 0.008
-    - _waveFreq: 4.3
-    - _waveSpeed: 1
-    m_Colors:
-    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
-    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
-    - _fillColor: {r: 0.586445, g: 0.7642817, b: 0.35496503, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &248046444
 GameObject:
   m_ObjectHideFlags: 0
@@ -39104,7 +39066,7 @@ PrefabInstance:
     - target: {fileID: 108847112539177206, guid: 84b555914681501438e06ef491b3cbd2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 34062509}
+      objectReference: {fileID: 1504192067}
     - target: {fileID: 3490969108480678221, guid: 84b555914681501438e06ef491b3cbd2, type: 3}
       propertyPath: m_Name
       value: HealthBar (1)
@@ -42605,7 +42567,7 @@ PrefabInstance:
     - target: {fileID: 108847112539177206, guid: 84b555914681501438e06ef491b3cbd2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 246414936}
+      objectReference: {fileID: 156273113}
     - target: {fileID: 3490969108480678221, guid: 84b555914681501438e06ef491b3cbd2, type: 3}
       propertyPath: m_Name
       value: HealthBar
@@ -43434,9 +43396,16 @@ MonoBehaviour:
     --------------------------------------
 
 
-    "Pirat"
-    by Dalton Gault
+    -=
+    Additional Unit Art =-
 
+    "Pirat" by Dalton Gault
+
+    "Flounder" by weinbergente
+
+
+    -=
+    Music =-
 
     "Desert of Lost Souls" Kevin MacLeod (incompetech.com)
 
@@ -47258,6 +47227,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500459748}
   m_CullTransparentMesh: 1
+--- !u!21 &1504192067
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CustomShaders/HealthBar
+  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _SHAPE_BOX
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _borderWidth: 0.016
+    - _healthNormalized: 0.688
+    - _lowHealthThreshold: 0.2
+    - _shape: 1
+    - _waveAmp: 0.008
+    - _waveFreq: 4.3
+    - _waveSpeed: 1
+    m_Colors:
+    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
+    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
+    - _fillColor: {r: 0.586445, g: 0.7642817, b: 0.35496503, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &1505274635
 GameObject:
   m_ObjectHideFlags: 0
@@ -55724,12 +55731,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitStatsDatabase:
+  - name: Flounder
+    health: 9
+    damage: 5
+    attackSpeed: 4
+    blockChance: 0.099999994
+    critChance: 0.049999997
+    digCount: 5
+    rarity: 2
+    description: Dry ass lips having ass
+    unitSprite: {fileID: 21300000, guid: 1c457a677797dfc4fa65dcbbbd05f949, type: 3}
   - name: Worm
     health: 10
-    damage: 4
+    damage: 3
     attackSpeed: 2
-    blockChance: 0.19999999
-    critChance: 0.099999994
+    blockChance: 0.049999997
+    critChance: 0.14999999
     digCount: 4
     rarity: 2
     description: 'What a cool, and not scary guy!
@@ -55740,7 +55757,7 @@ MonoBehaviour:
     health: 10
     damage: 3
     attackSpeed: 2
-    blockChance: 0.049999997
+    blockChance: 0.099999994
     critChance: 0.099999994
     digCount: 5
     rarity: 2
@@ -55749,12 +55766,12 @@ MonoBehaviour:
       All Rounder'
     unitSprite: {fileID: 21300000, guid: c92070f50f9c3e240bb063172fb9b106, type: 3}
   - name: Stalker
-    health: 8
+    health: 4
     damage: 4
     attackSpeed: 2
     blockChance: 0
     critChance: 0.39999998
-    digCount: 3
+    digCount: 5
     rarity: 2
     description: 'You wont see it coming
 
@@ -55778,7 +55795,7 @@ MonoBehaviour:
     attackSpeed: 4
     blockChance: 0.049999997
     critChance: 0.19999999
-    digCount: 3
+    digCount: 4
     rarity: 2
     description: 'Nothing to see here
 
@@ -55840,18 +55857,6 @@ MonoBehaviour:
 
       Defensive'
     unitSprite: {fileID: 21300000, guid: e02464e7ffc369f408134fb47087d41a, type: 3}
-  - name: Chef
-    health: 4
-    damage: 3
-    attackSpeed: 1.5
-    blockChance: 0.099999994
-    critChance: 0.049999997
-    digCount: 2
-    rarity: 3
-    description: 'Youre telling me a shrimp fried this rice?
-
-      Quick'
-    unitSprite: {fileID: 21300000, guid: f66a5fa32e3f12345af15bbe0a89178b, type: 3}
   - name: Angle
     health: 12
     damage: 5
@@ -55864,18 +55869,18 @@ MonoBehaviour:
 
       Critical'
     unitSprite: {fileID: 21300000, guid: d2b861f9433b612499797bc076197384, type: 3}
-  - name: Destitute
-    health: 16
+  - name: Chef
+    health: 4
     damage: 3
-    attackSpeed: 2
-    blockChance: 0.35
-    critChance: 0.099999994
-    digCount: 7
+    attackSpeed: 1.5
+    blockChance: 0.099999994
+    critChance: 0.049999997
+    digCount: 4
     rarity: 3
-    description: 'A barnacles best friend
+    description: 'Youre telling me a shrimp fried this rice?
 
-      Defensive'
-    unitSprite: {fileID: 21300000, guid: afb4f41a1df2a474d86ba8a43862a249, type: 3}
+      Quick'
+    unitSprite: {fileID: 21300000, guid: f66a5fa32e3f12345af15bbe0a89178b, type: 3}
   - name: Old Blue
     health: 25
     damage: 9
@@ -55884,7 +55889,7 @@ MonoBehaviour:
     critChance: 0
     digCount: 15
     rarity: 3
-    description: Ol' reliable
+    description: Ol reliable
     unitSprite: {fileID: 21300000, guid: d688bf81f8775874799cfccb2c6b1eb4, type: 3}
   - name: Python
     health: 4
@@ -55892,7 +55897,7 @@ MonoBehaviour:
     attackSpeed: 2
     blockChance: 0.049999997
     critChance: 0.5
-    digCount: 3
+    digCount: 5
     rarity: 3
     description: 'Its got a nasty bite
 
@@ -55936,6 +55941,18 @@ MonoBehaviour:
 
       All Rounder'
     unitSprite: {fileID: 21300000, guid: 47267599760930144af0936cca381f38, type: 3}
+  - name: Destitute
+    health: 16
+    damage: 3
+    attackSpeed: 2
+    blockChance: 0.35
+    critChance: 0.099999994
+    digCount: 7
+    rarity: 3
+    description: 'A barnacles best friend
+
+      Defensive'
+    unitSprite: {fileID: 21300000, guid: afb4f41a1df2a474d86ba8a43862a249, type: 3}
   - name: Spliffy
     health: 12
     damage: 5
