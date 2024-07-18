@@ -41,8 +41,9 @@ public class BattleManager : MonoBehaviour
 
 	public int interest;
 
-	[SerializeField] private int EnemyUnitLvl2 = 3;
-	[SerializeField] private int EnemyUnitLvl3 = 6;
+	[SerializeField] private int scaleToLvl2 = 3;
+	[SerializeField] private int scaleToLvl3 = 5;
+	[SerializeField] private int scaleToFinal = 7;
 
 	private bool inShop;
 	private bool firstTime;
@@ -325,28 +326,35 @@ public class BattleManager : MonoBehaviour
 	{
 		int unitRoll = Random.Range(0, unitManager.unitStatsDatabase.Count);
 
+		int unitLevelRoll = 0;
+
 		//after certain amount of battlesWon, start scaling enemy units
-		if (gameManager.BattlesWon >= EnemyUnitLvl2)
+		if (gameManager.BattlesWon >= scaleToLvl2)
 		{
-			int unitLevelRoll = Random.Range(0, 2);
+			unitLevelRoll = Random.Range(0, 2);
 
-			//increase the scaling amount after more battlesWon
-			if (gameManager.BattlesWon >= EnemyUnitLvl3)
+			if (gameManager.BattlesWon >= scaleToLvl3)
 			{
-				unitLevelRoll = Random.Range(0, 3);
+				unitLevelRoll = Random.Range(1, 3);
 			}
 
-			if (unitLevelRoll == 1)
+			if(gameManager.BattlesWon >= scaleToFinal)
 			{
-				return CreateUnitInstance(unitRoll, parent, Experience.ExpToLevel2);
+				unitLevelRoll = 2;
 			}
-			else if (unitLevelRoll == 2)
-			{
-				return CreateUnitInstance(unitRoll, parent, Experience.ExpToLevel3);
-			}
+		} 
+
+		if (unitLevelRoll == 1)
+		{
+			return CreateUnitInstance(unitRoll, parent, Experience.ExpToLevel2);
 		}
-
-		return CreateUnitInstance(unitRoll, parent);
+		else if (unitLevelRoll == 2)
+		{
+			return CreateUnitInstance(unitRoll, parent, Experience.ExpToLevel3);
+		} else
+		{
+			return CreateUnitInstance(unitRoll, parent);
+		}
 	}
 
 	public GameObject CreateUnitInstance(int unitIndex, Transform parent, int unitLevel = 0)
