@@ -44,6 +44,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 	}
 
 	private GameManager gameManager;
+	private BattleManager battleManager;
 	private bool isAttacking;
 	private bool inCombat;
 	private float attackCooldownEnd;
@@ -51,6 +52,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 	public void Awake()
 	{
 		gameManager = GameManager.singleton;
+		battleManager = BattleManager.singleton;
 
 		gameObject.SetActive(false);
 
@@ -171,7 +173,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 	{
 		if (!unitAttacker.targetUnit)
 		{
-			gameManager.playerActor.health.TakeDamage(unitStats.damage); // this is fucking awful dont get me started. This only works cause the enemy will always have all 3 units
+			battleManager.playerActor.health.TakeDamage(unitStats.damage); // this is fucking awful dont get me started. This only works cause the enemy will always have all 3 units
 			return;
 		}
 		unitAttacker.AttackTarget();

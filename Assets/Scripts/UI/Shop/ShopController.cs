@@ -37,6 +37,7 @@ public class ShopController : MonoBehaviour
 	public TextMeshProUGUI sellWindowPrice;
 
 	private GameManager gameManager;
+	private BattleManager battleManager;
 	private ShopAudio shopAudioPlayer;
 
 	private GameObject shopItem;
@@ -63,6 +64,7 @@ public class ShopController : MonoBehaviour
 
 	private void Start()
 	{
+		battleManager = BattleManager.singleton;
 		gameManager = GameManager.singleton;
 		gameManager.unitAddedToSlot.AddListener(SearchAfterPurchase);
 		gameManager.unitSold.AddListener(SearchAfterPurchase);
@@ -160,7 +162,7 @@ public class ShopController : MonoBehaviour
 				//moves unit in battleSlot to nearest empty reserve slot
 				if (newSlot.payload != null && newSlot.payload.name != unitSlot.payload.name)
 				{
-					Slot slot = FindNearestEmptySlot(gameManager.playerReserveSlots);
+					Slot slot = FindNearestEmptySlot(battleManager.playerReserveSlots);
 
 					if (slot != null)
 					{
@@ -227,7 +229,7 @@ public class ShopController : MonoBehaviour
 
 	private void UnitFoundInInventory(Slot unitSlot, SetUnitInfo curShopItem)
 	{
-		foreach(Slot slot in gameManager.playerBattleSlots)
+		foreach(Slot slot in battleManager.playerBattleSlots)
 		{
 			if (slot.payload == null) continue;
 
@@ -242,7 +244,7 @@ public class ShopController : MonoBehaviour
 			}
 		}
 
-		foreach (Slot slot in gameManager.playerReserveSlots)
+		foreach (Slot slot in battleManager.playerReserveSlots)
 		{
 			if (slot.payload == null) continue;
 			if (slot.payload.GetComponent<Experience>().curLevel == Experience.MaxLevel) continue;
@@ -292,11 +294,11 @@ public class ShopController : MonoBehaviour
 	{
 		foreach (Unit unit in shopUnits)
 		{
-			for (int i = 0; i < gameManager.unitManager.unitStatsDatabase.Count; i++)
+			for (int i = 0; i < battleManager.unitManager.unitStatsDatabase.Count; i++)
 			{
-				if (curShopItem.unitName.text == unit.name && curShopItem.unitName.text == gameManager.unitManager.unitStatsDatabase[i].name)
+				if (curShopItem.unitName.text == unit.name && curShopItem.unitName.text == battleManager.unitManager.unitStatsDatabase[i].name)
 				{
-					curUnitSlot.payload = gameManager.CreateUnitInstance(i, transform);
+					curUnitSlot.payload = battleManager.CreateUnitInstance(i, transform);
 					curUnitSlot.payload.SetActive(false);
 				}
 			}
@@ -307,7 +309,7 @@ public class ShopController : MonoBehaviour
 	private void SetShopItem(Transform parent)
 	{
 		UnitInfo unitInfo;
-		unitInfo = gameManager.unitManager.unitStatsDatabase[GetRandomUnitWeighted(defaultRarities)];
+		unitInfo = battleManager.unitManager.unitStatsDatabase[GetRandomUnitWeighted(defaultRarities)];
 
 		for (int i = 0; i < shopUnits.Count; i++)
 		{
@@ -343,7 +345,7 @@ public class ShopController : MonoBehaviour
 	{
 		UnitRarity rarity = RollRarity(rarityTable);
 
-		UnitManager unitManager = gameManager.unitManager;
+		UnitManager unitManager = battleManager.unitManager;
 		Dictionary<UnitRarity, int> rarityOffsets = unitManager.rarityOffsets;
 		Dictionary<UnitRarity, int> unitRarityCount = unitManager.unitRarityCount;
 

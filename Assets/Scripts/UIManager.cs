@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
 	[SerializeField] GameObject gameOverScreen;
 	[SerializeField] GameObject pauseMenuScreen;
 	[SerializeField] GameObject reserveSlots;
-	GameManager gameManager;
+
 	[SerializeField] GameObject shopUi;
 	[SerializeField] GameObject unitPreview;
 	[SerializeField] GameObject HUD;
@@ -44,10 +44,13 @@ public class UIManager : MonoBehaviour
 	private int dissolveAmount = Shader.PropertyToID("_DissolveAmount");
 
 	private FadeMusic fadeMusic;
+	private GameManager gameManager;
+	private BattleManager battleManager;
 
 	private void Start()
 	{
 		gameManager = GameManager.singleton;
+		battleManager = BattleManager.singleton;
 		gameManager.goldChangedEvent.AddListener(UpdateGoldText);
 		gameManager.livesChangedEvent.AddListener(UpdateLivesText);
 		gameManager.battleWonEvent.AddListener(ShowBattleWonScreen);
@@ -94,16 +97,16 @@ public class UIManager : MonoBehaviour
 	public void ShowConfirmUI()
 	{
 		fadeMusic.FadeOutMusic();
-		for (int i = 0; i < gameManager.lanes.Count; i++)
+		for (int i = 0; i < battleManager.lanes.Count; i++)
 		{
-			if (gameManager.playerBattleSlots[i].payload == null)
+			if (battleManager.playerBattleSlots[i].payload == null)
 			{
 				confirmUI.SetActive(true);
 				break;
 			}
-			else if (i >= gameManager.lanes.Count - 1 && gameManager.playerBattleSlots[i].payload != null)
+			else if (i >= battleManager.lanes.Count - 1 && battleManager.playerBattleSlots[i].payload != null)
 			{
-				gameManager.BattleTransition();
+				battleManager.BattleTransition();
 				break;
 			}
 		}
@@ -136,7 +139,7 @@ public class UIManager : MonoBehaviour
 	private void ShowResult(int index)
 	{
 		battleReward.text = $"{gameManager.settings.battleReward}";
-		interestGained.text = $"{gameManager.GainInterest()}";
+		interestGained.text = $"{battleManager.GainInterest()}";
 
 		Image cmpResult = result.GetComponent<Image>();
 		textAnim = result.GetComponent<Animator>();

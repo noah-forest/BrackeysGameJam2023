@@ -11,10 +11,12 @@ public class UnitPreview : MonoBehaviour
 	public int rerollCost = 10;
 
 	private GameManager gameManager;
+	private BattleManager battleManager;
 
 	private void Start()
 	{
 		gameManager = GameManager.singleton;
+		battleManager = BattleManager.singleton;
 	}
 
 	public void FillUnitPos(List<GameObject> enemyUnits)
@@ -48,7 +50,7 @@ public class UnitPreview : MonoBehaviour
 
 	public void RerollEnemyUnits()
 	{
-		gameManager.CreateEnemyTeam();
+		battleManager.CreateEnemyTeam();
 		gameManager.previewRolled?.Invoke();
 	}
 }

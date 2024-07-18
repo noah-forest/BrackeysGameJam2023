@@ -378,7 +378,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 603547721}
-  m_Father: {fileID: 1645660338379916903}
+  m_Father: {fileID: 1598263527}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -8171,6 +8171,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1999471153}
+        m_TargetAssemblyTypeName: FadeMusic, Assembly-CSharp
+        m_MethodName: FadeOutMusic
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!95 &279822820
 Animator:
   serializedVersion: 5
@@ -8922,44 +8934,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 322573607}
   m_CullTransparentMesh: 1
---- !u!21 &323108964
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: CustomShaders/HealthBar
-  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _SHAPE_BOX
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _borderWidth: 0.016
-    - _healthNormalized: 0.688
-    - _lowHealthThreshold: 0.2
-    - _shape: 1
-    - _waveAmp: 0.008
-    - _waveFreq: 4.3
-    - _waveSpeed: 1
-    m_Colors:
-    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
-    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
-    - _fillColor: {r: 0.586445, g: 0.7642817, b: 0.35496503, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &323935197
 GameObject:
   m_ObjectHideFlags: 0
@@ -20578,6 +20552,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1999471153}
+        m_TargetAssemblyTypeName: FadeMusic, Assembly-CSharp
+        m_MethodName: FadeInMusic
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!95 &653581612
 Animator:
   serializedVersion: 5
@@ -20840,6 +20826,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 656292109}
   m_CullTransparentMesh: 1
+--- !u!21 &659909360
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CustomShaders/HealthBar
+  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _SHAPE_BOX
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _borderWidth: 0.016
+    - _healthNormalized: 1
+    - _lowHealthThreshold: 0.2
+    - _shape: 1
+    - _waveAmp: 0.008
+    - _waveFreq: 4.3
+    - _waveSpeed: 1
+    m_Colors:
+    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
+    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
+    - _fillColor: {r: 0.5049388, g: 0.8584906, b: 0.36850303, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &660086179 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 647542086526383253, guid: b5d80ce91d717c747b2cb5ac94f42b3a, type: 3}
@@ -21909,7 +21933,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.3000488, y: 0}
+  m_AnchoredPosition: {x: -1.2999878, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &717419193
@@ -40971,8 +40995,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 4924796644863341493}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1598263528}
+        m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
         m_MethodName: PlayerDied
         m_Mode: 1
         m_Arguments:
@@ -42422,7 +42446,7 @@ PrefabInstance:
     - target: {fileID: 108847112539177206, guid: 84b555914681501438e06ef491b3cbd2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 323108964}
+      objectReference: {fileID: 1556528917}
     - target: {fileID: 3490969108480678221, guid: 84b555914681501438e06ef491b3cbd2, type: 3}
       propertyPath: m_Name
       value: HealthBar
@@ -46653,8 +46677,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 4924796644863341493}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1598263528}
+        m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
         m_MethodName: BattleTransition
         m_Mode: 1
         m_Arguments:
@@ -54012,6 +54036,44 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1553526578}
   m_CullTransparentMesh: 1
+--- !u!21 &1556528917
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CustomShaders/HealthBar
+  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _SHAPE_BOX
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _borderWidth: 0.016
+    - _healthNormalized: 0.688
+    - _lowHealthThreshold: 0.2
+    - _shape: 1
+    - _waveAmp: 0.008
+    - _waveFreq: 4.3
+    - _waveSpeed: 1
+    m_Colors:
+    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
+    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
+    - _fillColor: {r: 0.586445, g: 0.7642817, b: 0.35496503, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &1560838793
 GameObject:
   m_ObjectHideFlags: 0
@@ -55227,6 +55289,80 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textToCopy: {fileID: 913917211}
+--- !u!1 &1598263526
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1598263527}
+  - component: {fileID: 1598263528}
+  m_Layer: 0
+  m_Name: BattleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1598263527
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1598263526}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7370022}
+  - {fileID: 7429292101379088015}
+  m_Father: {fileID: 1645660338379916903}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1126.3435, y: -535.99445}
+  m_SizeDelta: {x: 18.97, y: 9.9881}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1598263528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1598263526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f260c90a1bfdc964d9885b2a120019d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitManager: {fileID: 1619360555}
+  unitPreview: {fileID: 351152927}
+  battleField: {fileID: 6061492426935951633}
+  battleSlots: {fileID: 7298952403858300961}
+  unitMasterPrefab: {fileID: 6583705595079056773, guid: 604cd9d8b6d41854bbebbcb4e7507a33, type: 3}
+  playerActor: {fileID: 2869434031154460488}
+  enemyActor: {fileID: 5815087136913851513}
+  lanes:
+  - {fileID: 1544063334}
+  - {fileID: 1098300557}
+  - {fileID: 1374508765}
+  playerBattleSlots:
+  - {fileID: 4092406645305315808}
+  - {fileID: 2139403685}
+  - {fileID: 1924954231}
+  playerReserveSlots:
+  - {fileID: 1248342789}
+  - {fileID: 1923532321}
+  - {fileID: 1101600764}
+  - {fileID: 822806712}
+  enemyUnits: []
+  interest: 0
+  EnemyUnitLvl2: 3
+  EnemyUnitLvl3: 6
 --- !u!1 &1601295903
 GameObject:
   m_ObjectHideFlags: 0
@@ -70007,44 +70143,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1906840598}
   m_CullTransparentMesh: 1
---- !u!21 &1912314372
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: CustomShaders/HealthBar
-  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _SHAPE_BOX
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _borderWidth: 0.016
-    - _healthNormalized: 1
-    - _lowHealthThreshold: 0.2
-    - _shape: 1
-    - _waveAmp: 0.008
-    - _waveFreq: 4.3
-    - _waveSpeed: 1
-    m_Colors:
-    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
-    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
-    - _fillColor: {r: 0.5049388, g: 0.8584906, b: 0.36850303, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &1913640016
 GameObject:
   m_ObjectHideFlags: 0
@@ -71216,8 +71314,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4924796644863341493}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1598263528}
+        m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
         m_MethodName: ShopTransition
         m_Mode: 1
         m_Arguments:
@@ -78782,8 +78880,7 @@ Transform:
   m_Children:
   - {fileID: 612816109}
   - {fileID: 1983035973}
-  - {fileID: 7370022}
-  - {fileID: 7429292101379088015}
+  - {fileID: 1598263527}
   - {fileID: 1115738553}
   - {fileID: 1619360554}
   - {fileID: 1999471151}
@@ -82351,7 +82448,7 @@ PrefabInstance:
     - target: {fileID: 108847112539177206, guid: 84b555914681501438e06ef491b3cbd2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1912314372}
+      objectReference: {fileID: 659909360}
     - target: {fileID: 2760503215815872932, guid: 84b555914681501438e06ef491b3cbd2, type: 3}
       propertyPath: _healthNormalized
       value: 1
@@ -82747,43 +82844,24 @@ MonoBehaviour:
   shopUnlocked:
     m_PersistentCalls:
       m_Calls: []
+  unitAddedToSlot:
+    m_PersistentCalls:
+      m_Calls: []
   unitExpAdded:
     m_PersistentCalls:
       m_Calls: []
   unitLevelUp:
     m_PersistentCalls:
       m_Calls: []
-  unitAddedToSlot:
-    m_PersistentCalls:
-      m_Calls: []
   debugMenu: {fileID: 612816110}
   settings: {fileID: 1983035974}
   settingsMenu: {fileID: 1946800547}
-  unitManager: {fileID: 1619360555}
+  battleManager: {fileID: 1598263528}
   uiManager: {fileID: 220167500948506941}
-  playerBattleSlots:
-  - {fileID: 4092406645305315808}
-  - {fileID: 2139403685}
-  - {fileID: 1924954231}
-  playerReserveSlots:
-  - {fileID: 1248342789}
-  - {fileID: 1923532321}
-  - {fileID: 1101600764}
-  - {fileID: 822806712}
-  battleSlots: {fileID: 7298952403858300961}
   HUD: {fileID: 6494404399350858429}
   wonParticles: {fileID: 1511206049}
-  battleField: {fileID: 6061492426935951633}
   MusicPlayer: {fileID: 1999471152}
   audioMixer: {fileID: 24100000, guid: 6ded5fafd7a9e33438aaf5b3c69981d8, type: 2}
-  playerActor: {fileID: 2869434031154460488}
-  enemyActor: {fileID: 5815087136913851513}
-  lanes:
-  - {fileID: 1544063334}
-  - {fileID: 1098300557}
-  - {fileID: 1374508765}
-  enemyUnits: []
-  mouseUtils: {fileID: 0}
   openPauseMenu: 0
   pauseGame:
     m_PersistentCalls:
@@ -82791,10 +82869,7 @@ MonoBehaviour:
   resumeGame:
     m_PersistentCalls:
       m_Calls: []
-  unitMasterPrefab: {fileID: 6583705595079056773, guid: 604cd9d8b6d41854bbebbcb4e7507a33, type: 3}
-  unitPreview: {fileID: 351152927}
   revealCost: 3
-  interest: 0
 --- !u!114 &5009999971070804351
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85293,8 +85368,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6061492426935951633}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.19, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1126.3435, y: 536.18445, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -85302,7 +85377,7 @@ Transform:
   - {fileID: 4306918291254166741}
   - {fileID: 45232157026116788}
   - {fileID: 3149993053441068749}
-  m_Father: {fileID: 1645660338379916903}
+  m_Father: {fileID: 1598263527}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7457116552246339444
 MonoBehaviour:
