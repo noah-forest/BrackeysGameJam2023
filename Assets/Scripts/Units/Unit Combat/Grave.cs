@@ -39,6 +39,7 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
 	public void ResetGrave()
 	{
+		inGrave = false;
 		digCount = 0;
 		currentDigCount = 0;
 		graveTutorial.SetActive(false);
