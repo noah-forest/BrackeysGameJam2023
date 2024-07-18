@@ -19,6 +19,7 @@ public class HealthBar : MonoBehaviour
     [SerializeField, Range(0,0.1f)] float _fillWaveAmplitude;
     [SerializeField, Range(0,100f)] float _fillWaveFrequency;
     [SerializeField, Range(0, 1f)] float _fillWaveSpeed;
+    [SerializeField, Range(0, 10f)] float _wavePixelCount;
 
     [Header("Background")]
     [SerializeField] Color _backgroundColor;
@@ -82,12 +83,14 @@ public class HealthBar : MonoBehaviour
         _matInstance.SetFloat("_waveAmp", _fillWaveAmplitude);
         _matInstance.SetFloat("_waveFreq", _fillWaveFrequency);
         _matInstance.SetFloat("_waveSpeed", _fillWaveSpeed);
+        _matInstance.SetFloat("_wavePixelCount", _wavePixelCount);
 
         _matInstance.SetColor("_fillColor", lowToHighHealthTransition.Evaluate(_healthNormalized));
 
         _matInstance.SetColor("_backgroundColor", _backgroundColor);
         _matInstance.SetFloat("_borderWidth", _borderWidth);
         _matInstance.SetColor("_borderColor", _borderColor);
+
     }
 
     void SetKeyword()
