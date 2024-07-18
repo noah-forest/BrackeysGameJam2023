@@ -11,5 +11,4 @@ public class Unit : ScriptableObject
 	public string unitName;
 	public UnitStats unitStats;
 	public Vector2 spriteOffset;
-	public bool flipX;
 }
