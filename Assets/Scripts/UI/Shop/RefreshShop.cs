@@ -47,11 +47,13 @@ public class RefreshShop : MonoBehaviour
 
 	private void CheckForGold()
 	{
+		if (gameManager.Cash - shopController.refreshCost < 0) LockShop();
+
 		if (gameManager.Cash <= 0 || gameManager.Cash < shopController.refreshCost)
 		{
 			LockShop();
 		}
-		else if (gameManager.Cash > 0 && gameManager.Cash >= shopController.refreshCost && gameManager.Cash - shopController.refreshCost >= 0)
+		else if (gameManager.Cash > 0 && gameManager.Cash >= shopController.refreshCost)
 		{
 			button.interactable = true;
 			canRefresh = true;
