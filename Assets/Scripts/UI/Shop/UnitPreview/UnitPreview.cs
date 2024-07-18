@@ -13,23 +13,18 @@ public class UnitPreview : MonoBehaviour
 	private GameManager gameManager;
 	private BattleManager battleManager;
 
+	private bool firstTime;
+
 	private void Start()
 	{
 		gameManager = GameManager.singleton;
 		battleManager = BattleManager.singleton;
+
+		firstTime = true;
 	}
 
 	public void FillUnitPos(List<GameObject> enemyUnits)
 	{
-		//how many units to hide
-		int randomHidden = Random.Range(0, enemyUnits.Count+1);
-
-		//roll it twice to lower the chances of getting all 3 hidden
-		if (randomHidden == enemyUnits.Count)
-		{
-			randomHidden = Random.Range(0, enemyUnits.Count + 1);
-		}
-
 		//show units not hidden
 		for (int i = 0; i < unitPos.Count; ++i)
 		{
@@ -41,11 +36,25 @@ public class UnitPreview : MonoBehaviour
 		}
 
 		//hide the units
-		for(int i = 0; i < randomHidden; ++i)
+		if (!firstTime)
 		{
-			RevealUnit unitImg = unitPos[i].GetComponent<RevealUnit>();
-			unitImg.HideUnit();
+			//how many units to hide
+			int randomHidden = Random.Range(0, enemyUnits.Count + 1);
+
+			//roll it twice to lower the chances of getting all 3 hidden
+			if (randomHidden == enemyUnits.Count)
+			{
+				randomHidden = Random.Range(0, enemyUnits.Count + 1);
+			}
+
+			for (int i = 0; i < randomHidden; ++i)
+			{
+				RevealUnit unitImg = unitPos[i].GetComponent<RevealUnit>();
+				unitImg.HideUnit();
+			}
 		}
+
+		firstTime = false;
 	}
 
 	public void RerollEnemyUnits()
