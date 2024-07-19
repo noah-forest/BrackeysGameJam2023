@@ -48,6 +48,7 @@ public class LockShop : MonoBehaviour
 		refreshCost.SetActive(false);
 		closedLock.SetActive(true);
 		refreshLock.SetActive(true);
+		bars.SetActive(true);
 		barsAnim.SetTrigger("shopLocked");
 
 
@@ -64,7 +65,7 @@ public class LockShop : MonoBehaviour
 		refreshCost.SetActive(true);
 		closedLock.SetActive(false);
 		refreshLock.SetActive(false);
-		barsAnim.SetTrigger("shopUnlocked");
+		bars.SetActive(false);
 
 		lockBorder.color = new Color32(163, 143, 99, 255);
 		foreground.color = new Color32(207, 199, 167, 255);
