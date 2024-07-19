@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -52,6 +53,8 @@ public class ShopController : MonoBehaviour
 
 	public bool firstRoll;          // this is to check if the shop has been initially rolled
 	public bool unitInInventory = false;
+
+	private bool unitShine;
 
 	public RarityTable defaultRarities;
 
@@ -148,6 +151,7 @@ public class ShopController : MonoBehaviour
 
 			SetUnitPayload(unitSlot, curShopItem);
 			UnitFoundInInventory(unitSlot, curShopItem);
+			unitShine = true;
 
 			UnitStats sellInfo = unitSlot.payload.GetComponent<UnitStats>();
 			sellInfo.sellValue.BaseValue = (int)(curShopItem.unitCost * 0.75);
@@ -237,10 +241,10 @@ public class ShopController : MonoBehaviour
 			if (slot.payload.name == unitSlot.payload.name)
 			{
 				curShopItem.unitFound.SetActive(true);
-				curShopItem.unitShine.SetActive(true);
-
-				Animator anim = curShopItem.unitShine.GetComponent<Animator>();
-				anim.SetTrigger("unitFound");
+				if (unitShine)
+				{
+					StartCoroutine(playShineAnim(curShopItem));
+				}
 			}
 		}
 
@@ -251,12 +255,24 @@ public class ShopController : MonoBehaviour
 			if (slot.payload.name == unitSlot.payload.name)
 			{
 				curShopItem.unitFound.SetActive(true);
-				curShopItem.unitShine.SetActive(true);
-
-				Animator anim = curShopItem.unitShine.GetComponent<Animator>();
-				anim.SetTrigger("unitFound");
+				if (unitShine)
+				{
+					StartCoroutine(playShineAnim(curShopItem));
+				}
 			}
 		}
+	}
+
+	private IEnumerator playShineAnim(SetUnitInfo curShopItem)
+	{
+		curShopItem.unitShine.SetActive(true);
+
+		Animator anim = curShopItem.unitShine.GetComponent<Animator>();
+		anim.SetTrigger("unitFound");
+
+		yield return new WaitForSeconds(0.1f);
+
+		unitShine = false;
 	}
 
 	private Slot FindNearestEmptySlot(List<Slot> slots)

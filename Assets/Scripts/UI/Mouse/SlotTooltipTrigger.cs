@@ -38,8 +38,8 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 
 		// raw stats to show
 		tooltipSystem.levelTxt.text = $"{level}";
-		tooltipSystem.healthTxt.text = $"{Mathf.Floor(Health)}";
-		tooltipSystem.dmgTxt.text = $"{Mathf.Floor(stats.damage)}";
+		tooltipSystem.healthTxt.text = $"{Mathf.Ceil(Health)}";
+		tooltipSystem.dmgTxt.text = $"{Mathf.Ceil(stats.damage)}";
 
 		if (Settings.SimplifiedStats)
 		{
@@ -53,14 +53,14 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 			tooltipSystem.atkSpdTxt.text = $"{stats.attackSpeed * 10}";
 		}
 
-		tooltipSystem.digCountTxt.text = $"{Mathf.Floor(stats.digCount)}";
+		tooltipSystem.digCountTxt.text = $"{Mathf.Ceil(stats.digCount)}";
 
 		tooltipSystem.unitDesc.text = stats.description;
 		tooltipSystem.rarityTxt.text = rarity.ToString();
 		SetLabelRarity(tooltipSystem.rarityLabel);
 
-		tooltipSystem.blockChanceTxt.text = $"{Mathf.Floor(stats.blockChance * 100f)}";
-		tooltipSystem.critChanceTxt.text = $"{Mathf.Floor(stats.critChance * 100f)}";
+		tooltipSystem.blockChanceTxt.text = $"{Mathf.Ceil(stats.blockChance * 100f)}";
+		tooltipSystem.critChanceTxt.text = $"{Mathf.Ceil(stats.critChance * 100f)}";
 
 		TooltipSystem.Show(header);
 	}
