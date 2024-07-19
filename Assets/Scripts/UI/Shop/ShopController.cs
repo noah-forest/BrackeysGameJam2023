@@ -89,6 +89,15 @@ public class ShopController : MonoBehaviour
 				sellWindow.SetActive(true);
 			}
 
+			if (arg0.CompareTag("ShopSlot"))
+			{
+				SetUnitInfo unitInfo = arg0.GetComponent<SetUnitInfo>();
+				if (unitInfo != null)
+				{
+					unitInfo.shopPreviewImage.gameObject.SetActive(false);
+				}
+			}
+
 			if (arg0.payload != null)
 			{
 				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[1]);
@@ -110,6 +119,16 @@ public class ShopController : MonoBehaviour
 			{
 				sellWindow.SetActive(false);
 			}
+
+			if (arg0.CompareTag("ShopSlot"))
+			{
+				SetUnitInfo unitInfo = arg0.GetComponent<SetUnitInfo>();
+				if (unitInfo != null)
+				{
+					unitInfo.shopPreviewImage.gameObject.SetActive(true);
+				}
+			}
+
 		});
 
 		Slot unitSlot = sellWindow.GetComponent<Slot>();
