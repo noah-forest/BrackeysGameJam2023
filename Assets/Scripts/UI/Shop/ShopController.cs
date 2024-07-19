@@ -270,7 +270,7 @@ public class ShopController : MonoBehaviour
 		Animator anim = curShopItem.unitShine.GetComponent<Animator>();
 		anim.SetTrigger("unitFound");
 
-		yield return new WaitForSeconds(0.1f);
+		yield return new WaitForSeconds(0.2f);
 
 		unitShine = false;
 	}
