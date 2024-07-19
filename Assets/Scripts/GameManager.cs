@@ -97,6 +97,8 @@ public class GameManager : MonoBehaviour
 	public UnityEvent unitExpAdded;
 	[HideInInspector]
 	public UnityEvent unitLevelUp;
+	[HideInInspector]
+	public UnityEvent hitParentActor;
 	#endregion
 
 	#region Getters and Setters

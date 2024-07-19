@@ -18,12 +18,4 @@ public class Actor : MonoBehaviour
 		health = GetComponent<Health>();
 		health.InitHealth(actorHealth);
 	}
-
-	//public InitializeRandomTeam()
- //   {
-	//	for(int i = 0; i < units.Length; i++)
- //       {
-			
- //       }
- //   }
 }
