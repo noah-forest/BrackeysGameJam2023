@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class RefreshShop : MonoBehaviour
 {
 	public ShopController shopController;
+	public LockShop lockShop;
 
 	public TextMeshProUGUI refreshCostText;
 
@@ -53,7 +54,7 @@ public class RefreshShop : MonoBehaviour
 		{
 			LockShop();
 		}
-		else if (gameManager.Cash > 0 && gameManager.Cash >= shopController.refreshCost)
+		else if (gameManager.Cash > 0 && gameManager.Cash >= shopController.refreshCost && lockShop.locked == false)
 		{
 			button.interactable = true;
 			canRefresh = true;
