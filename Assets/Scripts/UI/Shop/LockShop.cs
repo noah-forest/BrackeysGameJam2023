@@ -8,12 +8,10 @@ public class LockShop : MonoBehaviour
 	public GameObject refreshLock;
 	public GameObject refreshCost;
 
+	public GameObject bars;
+	public Animator barsAnim;
 	public Image lockBorder;
-	public Sprite lockBorderTexture;
-
-	private Sprite defaultBorderTexture;
-
-	public Button refreshButton;
+	public Image foreground;
 
 	public bool locked;
 
@@ -22,8 +20,6 @@ public class LockShop : MonoBehaviour
 	private void Start()
 	{
 		gameManager = GameManager.singleton;
-
-		defaultBorderTexture = lockBorder.sprite;
 
 		Button button = GetComponent<Button>();
 		button.onClick.AddListener(SetShopLocked);
@@ -52,10 +48,11 @@ public class LockShop : MonoBehaviour
 		refreshCost.SetActive(false);
 		closedLock.SetActive(true);
 		refreshLock.SetActive(true);
+		barsAnim.SetTrigger("shopLocked");
 
 
 		lockBorder.color = new Color32(183, 75, 72, 255);
-		lockBorder.sprite = lockBorderTexture;
+		foreground.color = new Color32(135, 126, 92, 255);
 
 		gameManager.shopLocked.Invoke();
 	}
@@ -67,9 +64,10 @@ public class LockShop : MonoBehaviour
 		refreshCost.SetActive(true);
 		closedLock.SetActive(false);
 		refreshLock.SetActive(false);
+		barsAnim.SetTrigger("shopUnlocked");
 
 		lockBorder.color = new Color32(163, 143, 99, 255);
-		lockBorder.sprite = defaultBorderTexture;
+		foreground.color = new Color32(207, 199, 167, 255);
 
 		gameManager.shopUnlocked.Invoke();
 	}
