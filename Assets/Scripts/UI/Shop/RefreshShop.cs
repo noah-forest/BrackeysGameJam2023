@@ -42,6 +42,8 @@ public class RefreshShop : MonoBehaviour
 		if (!canRefresh) return;
 		if (!shopController.firstRoll) return;
 
+		shopController.refreshCost = 1;
+
 		shopController.ClearShopWindows();
 		shopController.PopulateShopUnits();
 	}
