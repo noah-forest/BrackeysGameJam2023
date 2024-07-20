@@ -37,6 +37,7 @@ public class ShopController : MonoBehaviour
 	public GameObject sellWindow;
 	public TextMeshProUGUI sellWindowPrice;
 
+	public StatLegend legend;
 	private GameManager gameManager;
 	private BattleManager battleManager;
 	private ShopAudio shopAudioPlayer;
@@ -55,6 +56,7 @@ public class ShopController : MonoBehaviour
 	public bool unitInInventory = false;
 
 	private bool unitShine;
+	private bool legendWasOpen;
 
 	public RarityTable defaultRarities;
 
@@ -105,10 +107,25 @@ public class ShopController : MonoBehaviour
 				sellWindowPrice.text = $"{sellInfo.sellValue.Value}";
 				//Debug.Log("playing pick up sound");
 			}
+
+			if (legend.open)
+			{
+				legendWasOpen = true;
+				legend.CloseStatLegend();
+			}
+			else if (!legend.open)
+			{
+				legendWasOpen = false;
+			}
 		});
 
 		Slot.anyDragStopped.AddListener(arg0 =>
 		{
+			if (legendWasOpen)
+			{
+				legend.OpenStatLegend();
+			}
+
 			if (arg0.payload != null && !draggedIntoShop)
 			{
 				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[2]);
