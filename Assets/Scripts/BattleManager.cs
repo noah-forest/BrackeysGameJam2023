@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class BattleManager : MonoBehaviour
@@ -31,6 +32,9 @@ public class BattleManager : MonoBehaviour
 	public GameObject battleSlots;
 	public GameObject unitMasterPrefab;
 
+	public TextMeshProUGUI scaleText;
+	public TextMeshProUGUI shopScaleText;
+
 	public Actor playerActor;
 	public Actor enemyActor;
 
@@ -44,6 +48,7 @@ public class BattleManager : MonoBehaviour
 	[SerializeField] private int scaleToLvl2 = 3;
 	[SerializeField] private int scaleToLvl3 = 5;
 	[SerializeField] private int scaleToFinal = 7;
+	private int scaleCountdown;
 
 	private bool inShop;
 	private bool firstTime;
@@ -64,6 +69,12 @@ public class BattleManager : MonoBehaviour
 	{
 		++gameManager.BattlesWon;
 		Debug.Log($"battles won: {gameManager.BattlesWon}");
+
+		if(scaleCountdown == 0)
+		{
+			Debug.Log("unit scaled");
+		}
+
 		gameManager.battleWonEvent.Invoke();
 		gameManager.battleEndedEvent.Invoke();
 		gameManager.pauseGame.Invoke();
@@ -329,12 +340,15 @@ public class BattleManager : MonoBehaviour
 		int unitLevelRoll = 0;
 
 		//after certain amount of battlesWon, start scaling enemy units
+		scaleCountdown = scaleToLvl2 - gameManager.BattlesWon;
 		if (gameManager.BattlesWon >= scaleToLvl2)
 		{
+			scaleCountdown = scaleToLvl3 - gameManager.BattlesWon;
 			unitLevelRoll = Random.Range(0, 2);
 
 			if (gameManager.BattlesWon >= scaleToLvl3)
 			{
+				scaleCountdown = scaleToFinal - gameManager.BattlesWon;
 				unitLevelRoll = Random.Range(1, 3);
 			}
 
@@ -343,6 +357,7 @@ public class BattleManager : MonoBehaviour
 				unitLevelRoll = 2;
 			}
 		} 
+
 
 		if (unitLevelRoll == 1)
 		{
@@ -353,6 +368,8 @@ public class BattleManager : MonoBehaviour
 			return CreateUnitInstance(unitRoll, parent, Experience.ExpToLevel3);
 		} else
 		{
+			scaleText.text = scaleCountdown.ToString();
+			shopScaleText.text = scaleCountdown.ToString();
 			return CreateUnitInstance(unitRoll, parent);
 		}
 	}

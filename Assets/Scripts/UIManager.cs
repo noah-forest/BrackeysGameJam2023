@@ -31,6 +31,9 @@ public class UIManager : MonoBehaviour
 
 	[SerializeField] GameObject battlesWon;
 	[SerializeField] TextMeshProUGUI battlesWonCount;
+	[SerializeField] TextMeshProUGUI shopBattlesWonCount;
+	[SerializeField] TextMeshProUGUI scaleCount;
+	[SerializeField] TextMeshProUGUI shopScaleCount;
 
 	[SerializeField] GameObject livesContainer;
 	[SerializeField] GameObject livesArea;
@@ -65,6 +68,8 @@ public class UIManager : MonoBehaviour
 		UpdateLivesText();
 
 		fadeMusic = gameManager.MusicPlayer.GetComponent<FadeMusic>();
+
+		shopBattlesWonCount.text = gameManager.BattlesWon.ToString();
 
 		foreach (Transform child in livesContainer.transform.GetComponentsInChildren<Transform>())
 		{
@@ -125,6 +130,7 @@ public class UIManager : MonoBehaviour
 		battleOverScreen.SetActive(true);
 		fadeMusic.FadeOutMusic();
 		battlesWonCount.text = gameManager.BattlesWon.ToString();
+		shopBattlesWonCount.text = gameManager.BattlesWon.ToString();
 		ShowResult(0);
 	}
 
