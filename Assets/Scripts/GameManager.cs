@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour
 	[HideInInspector]
 	public UnityEvent resumeGame;
 
-	public int revealCost = 3;
+	public int revealCost = 1;
 
 	private void Start()
 	{

@@ -40,7 +40,7 @@ public class RefreshShop : MonoBehaviour
 
 		shopController.refreshCost = 1;
 
-		if (!canRefresh) return;
+		if (lockShop.locked) return;
 		if (!shopController.firstRoll) return;
 
 		shopController.ClearShopWindows();
@@ -49,7 +49,7 @@ public class RefreshShop : MonoBehaviour
 
 	public bool CheckForGold()
 	{
-		if (gameManager.Cash > 0 && gameManager.Cash >= shopController.refreshCost && lockShop.locked == false)
+		if (gameManager.Cash > 0 && gameManager.Cash >= shopController.refreshCost && !lockShop.locked)
 		{
 			return true;
 		} else

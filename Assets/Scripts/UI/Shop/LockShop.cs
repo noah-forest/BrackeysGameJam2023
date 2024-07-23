@@ -32,6 +32,9 @@ public class LockShop : MonoBehaviour
 		if (locked)
 		{
 			LockShopItems();
+		} else
+		{
+			UnlockShop();
 		}
 	}
 
@@ -70,6 +73,9 @@ public class LockShop : MonoBehaviour
 		lockBorder.color = new Color32(163, 143, 99, 255);
 		foreground.color = new Color32(207, 199, 167, 255);
 
-		gameManager.shopUnlocked.Invoke();
+		if(gameManager != null)
+		{
+			gameManager.shopUnlocked.Invoke();
+		}
 	}
 }
