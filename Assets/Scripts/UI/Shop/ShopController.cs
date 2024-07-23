@@ -269,41 +269,43 @@ public class ShopController : MonoBehaviour
 
 	private void UnitFoundInInventory(Slot unitSlot, SetUnitInfo curShopItem)
 	{
-		foreach(Slot slot in battleManager.playerBattleSlots)
+		SearchThroughSlots(unitSlot, curShopItem, battleManager.playerBattleSlots);
+		SearchThroughSlots(unitSlot, curShopItem, battleManager.playerReserveSlots);
+	}
+
+	private void SearchThroughSlots(Slot unitSlot, SetUnitInfo curShopItem, List<Slot> slots)
+	{
+		foreach (Slot slot in slots)
 		{
 			if (slot.payload == null) continue;
 			if (slot.payload.GetComponent<Experience>().curLevel == Experience.MaxLevel) continue;
 			if (slot.payload.name == unitSlot.payload.name)
 			{
+				//if its appearing in the shop for the first time
 				if (unitShine)
 				{
+					Color defaultColor = curShopItem.shine.color;
+					curShopItem.shine.color = defaultColor;
+
+					//change the shine color to orange if its a legendary in shop
+					if (curShopItem.unitStats.Rarity == UnitRarity.Legendary)
+					{
+						curShopItem.shine.color = new Color32(255, 164, 0, 255);
+					}
+
 					StartCoroutine(playShineAnim(curShopItem));
 				}
 
+				//if you cant afford it, dont show the glow
 				if (gameManager.Cash < curShopItem.unitCost) continue;
 
-				curShopItem.unitFound.SetActive(true);
-			}
-		}
-
-		foreach (Slot slot in battleManager.playerReserveSlots)
-		{
-			if (slot.payload == null) continue;
-			if (slot.payload.GetComponent<Experience>().curLevel == Experience.MaxLevel) continue;
-			if (slot.payload.name == unitSlot.payload.name)
-			{
-				if (unitShine)
-				{
-					StartCoroutine(playShineAnim(curShopItem));
-				}
-
-				if (gameManager.Cash < curShopItem.unitCost) continue;
-
+				//show the glow
 				curShopItem.unitFound.SetActive(true);
 			}
 		}
 	}
 
+	// plays the shine animation, and then sets unitShine to false
 	private IEnumerator playShineAnim(SetUnitInfo curShopItem)
 	{
 		curShopItem.unitShine.SetActive(true);

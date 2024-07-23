@@ -19,6 +19,7 @@ public class SetUnitInfo : MonoBehaviour
 	public Image shopCostLabel;
 	public Image shopLabelBorder;
 	public Image shopFrame;
+	public Image shine;
 
 	public TextMeshProUGUI unitName;
 	public TextMeshProUGUI unitCostText;
