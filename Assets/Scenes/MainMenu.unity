@@ -3273,6 +3273,45 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 84074531}
   m_CullTransparentMesh: 1
+--- !u!21 &88232774
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CustomShaders/HealthBar
+  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _SHAPE_BOX
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _borderWidth: 0.016
+    - _healthNormalized: 0.479
+    - _lowHealthThreshold: 0.2
+    - _shape: 1
+    - _waveAmp: 0.0037
+    - _waveFreq: 2.8
+    - _wavePixelCount: 3.69
+    - _waveSpeed: 1
+    m_Colors:
+    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
+    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
+    - _fillColor: {r: 0.7563932, g: 0.56784725, b: 0.32673705, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &89885072
 GameObject:
   m_ObjectHideFlags: 0
@@ -9267,45 +9306,6 @@ Transform:
   - {fileID: 2005766397}
   m_Father: {fileID: 1455283397}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!21 &263108997
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: CustomShaders/HealthBar
-  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _SHAPE_BOX
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _borderWidth: 0.016
-    - _healthNormalized: 0.479
-    - _lowHealthThreshold: 0.2
-    - _shape: 1
-    - _waveAmp: 0.0037
-    - _waveFreq: 2.8
-    - _wavePixelCount: 3.69
-    - _waveSpeed: 1
-    m_Colors:
-    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
-    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
-    - _fillColor: {r: 0.7563932, g: 0.56784725, b: 0.32673705, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &263554445
 GameObject:
   m_ObjectHideFlags: 0
@@ -36367,6 +36367,45 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 934752274}
   m_CullTransparentMesh: 1
+--- !u!21 &936594981
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CustomShaders/HealthBar
+  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _SHAPE_BOX
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _borderWidth: 0.016
+    - _healthNormalized: 0.479
+    - _lowHealthThreshold: 0.2
+    - _shape: 1
+    - _waveAmp: 0.0037
+    - _waveFreq: 2.8
+    - _wavePixelCount: 3.69
+    - _waveSpeed: 1
+    m_Colors:
+    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
+    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
+    - _fillColor: {r: 0.7563932, g: 0.56784725, b: 0.32673705, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &940459093
 GameObject:
   m_ObjectHideFlags: 0
@@ -37008,45 +37047,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 951127314}
   m_CullTransparentMesh: 1
---- !u!21 &953658527
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: CustomShaders/HealthBar
-  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _SHAPE_BOX
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _borderWidth: 0.016
-    - _healthNormalized: 0.479
-    - _lowHealthThreshold: 0.2
-    - _shape: 1
-    - _waveAmp: 0.0037
-    - _waveFreq: 2.8
-    - _wavePixelCount: 3.69
-    - _waveSpeed: 1
-    m_Colors:
-    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
-    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
-    - _fillColor: {r: 0.7563932, g: 0.56784725, b: 0.32673705, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &953993242
 GameObject:
   m_ObjectHideFlags: 0
@@ -44890,7 +44890,7 @@ PrefabInstance:
     - target: {fileID: 108847112539177206, guid: 84b555914681501438e06ef491b3cbd2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 263108997}
+      objectReference: {fileID: 88232774}
     - target: {fileID: 3490969108480678221, guid: 84b555914681501438e06ef491b3cbd2, type: 3}
       propertyPath: m_Name
       value: HealthBar (1)
@@ -49720,7 +49720,7 @@ PrefabInstance:
     - target: {fileID: 108847112539177206, guid: 84b555914681501438e06ef491b3cbd2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 953658527}
+      objectReference: {fileID: 936594981}
     - target: {fileID: 3490969108480678221, guid: 84b555914681501438e06ef491b3cbd2, type: 3}
       propertyPath: m_Name
       value: HealthBar
@@ -83682,7 +83682,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bccd68bef0a4094eaa5135d96cad95a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingGold: 300
+  startingGold: 12
   battleReward: 8
 --- !u!1 &1991271308
 GameObject:

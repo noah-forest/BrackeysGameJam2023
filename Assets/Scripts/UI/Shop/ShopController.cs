@@ -272,15 +272,17 @@ public class ShopController : MonoBehaviour
 		foreach(Slot slot in battleManager.playerBattleSlots)
 		{
 			if (slot.payload == null) continue;
-
 			if (slot.payload.GetComponent<Experience>().curLevel == Experience.MaxLevel) continue;
 			if (slot.payload.name == unitSlot.payload.name)
 			{
-				curShopItem.unitFound.SetActive(true);
 				if (unitShine)
 				{
 					StartCoroutine(playShineAnim(curShopItem));
 				}
+
+				if (gameManager.Cash < curShopItem.unitCost) continue;
+
+				curShopItem.unitFound.SetActive(true);
 			}
 		}
 
@@ -290,11 +292,14 @@ public class ShopController : MonoBehaviour
 			if (slot.payload.GetComponent<Experience>().curLevel == Experience.MaxLevel) continue;
 			if (slot.payload.name == unitSlot.payload.name)
 			{
-				curShopItem.unitFound.SetActive(true);
 				if (unitShine)
 				{
 					StartCoroutine(playShineAnim(curShopItem));
 				}
+
+				if (gameManager.Cash < curShopItem.unitCost) continue;
+
+				curShopItem.unitFound.SetActive(true);
 			}
 		}
 	}
