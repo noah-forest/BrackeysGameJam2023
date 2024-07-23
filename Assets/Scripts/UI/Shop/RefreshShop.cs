@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,8 +28,6 @@ public class RefreshShop : MonoBehaviour
 		button = GetComponent<Button>();
 		button.onClick.AddListener(CheckIfRefresh);
 
-		gameManager.goldChangedEvent.AddListener(CheckForGold);
-		gameManager.shopUnlocked.AddListener(CheckForGold);
 		gameManager.shopLocked.AddListener(LockShop);
 
 		canRefresh = true;
@@ -39,27 +38,35 @@ public class RefreshShop : MonoBehaviour
 		shopController.refreshCost = originalRefreshCost;
 		refreshCostText.text = shopController.refreshCost.ToString();
 
+		shopController.refreshCost = 1;
+
 		if (!canRefresh) return;
 		if (!shopController.firstRoll) return;
-
-		shopController.refreshCost = 1;
 
 		shopController.ClearShopWindows();
 		shopController.PopulateShopUnits();
 	}
 
-	private void CheckForGold()
+	public bool CheckForGold()
 	{
-		if (gameManager.Cash - shopController.refreshCost < 0) LockShop();
-
-		if (gameManager.Cash <= 0 || gameManager.Cash < shopController.refreshCost)
+		if (gameManager.Cash > 0 && gameManager.Cash >= shopController.refreshCost && lockShop.locked == false)
 		{
-			LockShop();
+			return true;
+		} else
+		{
+			return false;
 		}
-		else if (gameManager.Cash > 0 && gameManager.Cash >= shopController.refreshCost && lockShop.locked == false)
+	}
+
+	private void Update()
+	{
+		if (CheckForGold())
 		{
 			button.interactable = true;
 			canRefresh = true;
+		} else
+		{
+			LockShop();
 		}
 	}
 
