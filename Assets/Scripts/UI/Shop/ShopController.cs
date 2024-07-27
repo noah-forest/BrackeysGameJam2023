@@ -224,6 +224,7 @@ public class ShopController : MonoBehaviour
 						if (unitExp && unitExp.curLevel == Experience.MaxLevel) return false;
 					}
 
+					curShopItem.unitPreview.SetActive(false);
 					curShopItem.purchased.SetActive(true);
 					
 					//turn off the rarity glow on units on purchase
