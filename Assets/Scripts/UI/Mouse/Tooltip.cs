@@ -25,33 +25,24 @@ public class Tooltip : MonoBehaviour
 	{
 		var position = Input.mousePosition;
 		var normalizedPosition = new Vector2(position.x / Screen.width, position.y / Screen.height);
-		var pivot = CalculatePivot(normalizedPosition) * 100;
-
-		transform.position = position + (Vector3) pivot;
+		var pivot = CalculatePivot(normalizedPosition);
+		_rectTransform.pivot = pivot;
+		transform.position = position;
 	}
 
 	private Vector2 CalculatePivot(Vector2 normalizedPosition)
 	{
-		float y = 1.05f;
-		float right = -4.2f;
-		float left = -0.05f;	
+		var pivotLeft = new Vector2(-0.1f, 0.75f);
+		var pivotTopRight = new Vector2(1.1f, 0.75f);
+		var pivotBottomRight = new Vector2(1.1f, 0.5f);
 
-		var pivotTopLeft = new Vector2(left, y);
-		var pivotTopRight = new Vector2(right, y);
-		var pivotBottomLeft = new Vector2(left, y);
-		var pivotBottomRight = new Vector2(right, y);
-
-		if (normalizedPosition.x < 0.5f && normalizedPosition.y >= 0.5f)
+		if (normalizedPosition.x < 0.5f && normalizedPosition.y >= 0.5f || normalizedPosition.x <= 0.5f && normalizedPosition.y < 0.5f)
 		{
-			return pivotTopLeft;
+			return pivotLeft;
 		}
-		else if (normalizedPosition.x > 0.5f && normalizedPosition.y >= 0.5f)
+		else if (normalizedPosition.x > 0.5f && normalizedPosition.y >= 0.425f)
 		{
 			return pivotTopRight;
-		}
-		else if (normalizedPosition.x <= 0.5f && normalizedPosition.y < 0.5f)
-		{
-			return pivotBottomLeft;
 		}
 		else
 		{
