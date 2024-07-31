@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.UI;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BattleManager : MonoBehaviour
 {
@@ -51,7 +53,7 @@ public class BattleManager : MonoBehaviour
 	private int scaleCountdown;
 
 	private bool inShop;
-	private bool firstTime;
+	public bool firstTime;
 	private bool playerUnitsLoaded;
 
 	private void Start()
@@ -61,8 +63,6 @@ public class BattleManager : MonoBehaviour
 
 		playerActor.GetComponent<Health>().died.AddListener(PlayerDied);
 		enemyActor.GetComponent<Health>().died.AddListener(EnemyDied);
-
-		firstTime = true;
 	}
 
 	public void EnemyDied()
@@ -86,6 +86,7 @@ public class BattleManager : MonoBehaviour
 		gameManager.uiManager.ResetHearts();
 		firstTime = true;
 		gameManager.Lives = 3;
+		gameManager.BattlesWon = 0;
 		inShop = true;
 		gameManager.MusicPlayer.Play();
 		battleField.SetActive(true);

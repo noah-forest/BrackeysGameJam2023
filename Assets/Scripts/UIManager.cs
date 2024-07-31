@@ -64,6 +64,7 @@ public class UIManager : MonoBehaviour
 		gameManager.pauseGame.AddListener(ShowPauseMenu);
 		gameManager.resumeGame.AddListener(ShowPauseMenu);
 		gameManager.loadShopEvent.AddListener(HideGameOverScreen);
+		gameManager.startGame.AddListener(ResetBattlesWon);
 		UpdateGoldText();
 		UpdateLivesText();
 
@@ -80,6 +81,11 @@ public class UIManager : MonoBehaviour
 		}
 
 		ResetHearts();
+	}
+
+	private void ResetBattlesWon()
+	{
+		shopBattlesWonCount.text = "0";
 	}
 
 	private void ShowPauseMenu()

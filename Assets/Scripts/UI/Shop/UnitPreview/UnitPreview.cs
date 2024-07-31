@@ -20,6 +20,13 @@ public class UnitPreview : MonoBehaviour
 		gameManager = GameManager.singleton;
 		battleManager = BattleManager.singleton;
 
+		gameManager.startGame.AddListener(Reset);
+
+		firstTime = true;
+	}
+
+	private void Reset()
+	{
 		firstTime = true;
 	}
 

@@ -45,13 +45,14 @@ public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 
 		// raw stats to show
 		tooltipSystem.levelTxt.text = $"{level}";
-		tooltipSystem.healthTxt.text = $"{Health.maxHealth}";
+		tooltipSystem.healthTxt.text = $"{(float)Health.maxHealth}";
 		tooltipSystem.dmgTxt.text = $"{(float)stats.damage}";
 
-		if ((stats.attackSpeed * 10) > 40) tooltipSystem.atkSpdTxt.text = "Ass";
+		if ((stats.attackSpeed * 10) > 40) tooltipSystem.atkSpdTxt.text = "Booty";
 		else if ((stats.attackSpeed * 10) == 40) tooltipSystem.atkSpdTxt.text = "Slow";
-		else if ((stats.attackSpeed * 10) == 20) tooltipSystem.atkSpdTxt.text = "Fast";
-		else if ((stats.attackSpeed * 10) < 20) tooltipSystem.atkSpdTxt.text = "Nuts";
+		else if ((stats.attackSpeed * 10) == 20) tooltipSystem.atkSpdTxt.text = "Average";
+		else if ((stats.attackSpeed * 10) < 20) tooltipSystem.atkSpdTxt.text = "Fast";
+		else if ((stats.attackSpeed * 10) < 10) tooltipSystem.atkSpdTxt.text = "Nuts";
 
 		tooltipSystem.digCountTxt.text = $"{(int)stats.digCount}";
 		
