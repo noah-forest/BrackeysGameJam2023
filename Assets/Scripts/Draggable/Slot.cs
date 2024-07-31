@@ -201,18 +201,24 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 					GameObject tempPayload = payload;
 
 					// grab the experience from both units
-					Experience oldUnitExp = payload.GetComponent<Experience>();
-					Experience unitExp = draggedToSlot.payload.GetComponent<Experience>();
+					Experience incUnitExp = payload.GetComponent<Experience>();
+					Experience targetUnitExp = draggedToSlot.payload.GetComponent<Experience>();
 
 					// if either of them are lvl 3, do nothing
 					// todo: revert to switch
-					if (oldUnitExp.curLevel == Experience.MaxLevel || unitExp.curLevel == Experience.MaxLevel) return;
+					if (incUnitExp.curLevel == Experience.MaxLevel || targetUnitExp.curLevel == Experience.MaxLevel) return;
 
 					payload = null;
 					Destroy(tempPayload);
 
 					//Level up unit
-					unitExp.AddExp(oldUnitExp.Exp + 1);
+					int extraXp = 0;
+					if(incUnitExp.curLevel == 2)
+					{
+						extraXp = Experience.ExpToLevel2;
+					}
+
+					targetUnitExp.AddExp(incUnitExp.Exp + 1 + extraXp);
 
 					//update the tooltip as soon as a unit levels up
 					SlotTooltipTrigger tooltip = draggedToSlot.GetComponent<SlotTooltipTrigger>();

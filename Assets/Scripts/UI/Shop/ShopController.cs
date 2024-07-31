@@ -409,7 +409,7 @@ public class ShopController : MonoBehaviour
 		Dictionary<UnitRarity, int> rarityOffsets = unitManager.rarityOffsets;
 		Dictionary<UnitRarity, int> unitRarityCount = unitManager.unitRarityCount;
 
-		int roll = Random.Range(rarityOffsets[rarity], rarityOffsets[rarity] + unitRarityCount[rarity] - 1);
+		int roll = Random.Range(rarityOffsets[rarity], rarityOffsets[rarity] + unitRarityCount[rarity]);
 		return roll;
 	}
 

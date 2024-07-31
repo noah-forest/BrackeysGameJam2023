@@ -45,22 +45,22 @@ public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 
 		// raw stats to show
 		tooltipSystem.levelTxt.text = $"{level}";
-		tooltipSystem.healthTxt.text = $"{Mathf.Floor(Health.maxHealth)}";
-		tooltipSystem.dmgTxt.text = $"{Mathf.Floor(stats.damage)}";
+		tooltipSystem.healthTxt.text = $"{Health.maxHealth}";
+		tooltipSystem.dmgTxt.text = $"{(float)stats.damage}";
 
 		if ((stats.attackSpeed * 10) > 40) tooltipSystem.atkSpdTxt.text = "Ass";
 		else if ((stats.attackSpeed * 10) == 40) tooltipSystem.atkSpdTxt.text = "Slow";
 		else if ((stats.attackSpeed * 10) == 20) tooltipSystem.atkSpdTxt.text = "Fast";
 		else if ((stats.attackSpeed * 10) < 20) tooltipSystem.atkSpdTxt.text = "Nuts";
 
-		tooltipSystem.digCountTxt.text = $"{Mathf.Floor(stats.digCount)}";
+		tooltipSystem.digCountTxt.text = $"{(int)stats.digCount}";
 		
 		tooltipSystem.unitDesc.text = stats.description;
 		tooltipSystem.rarityTxt.text = rarity.ToString();
 		SetLabelRarity(tooltipSystem.rarityLabel);
 
-		tooltipSystem.blockChanceTxt.text = $"{Mathf.Floor(stats.blockChance * 100f)}";
-		tooltipSystem.critChanceTxt.text = $"{Mathf.Floor(stats.critChance * 100f)}";
+		tooltipSystem.blockChanceTxt.text = $"{stats.blockChance * 100f}";
+		tooltipSystem.critChanceTxt.text = $"{stats.critChance * 100f}";
 
 		TooltipSystem.Show(header);
 

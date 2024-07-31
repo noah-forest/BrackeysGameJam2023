@@ -38,29 +38,30 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 
 		// raw stats to show
 		tooltipSystem.levelTxt.text = $"{level}";
-		tooltipSystem.healthTxt.text = $"{Mathf.Ceil(Health)}";
-		tooltipSystem.dmgTxt.text = $"{Mathf.Ceil(stats.damage)}";
+		tooltipSystem.healthTxt.text = $"{Health}";
+		tooltipSystem.dmgTxt.text = $"{(float)stats.damage}";
 
 		if (Settings.SimplifiedStats)
 		{
-			if ((stats.attackSpeed * 10) > 40) tooltipSystem.atkSpdTxt.text = "Ass";
+			if ((stats.attackSpeed * 10) > 40) tooltipSystem.atkSpdTxt.text = "Booty";
 			else if ((stats.attackSpeed * 10) == 40) tooltipSystem.atkSpdTxt.text = "Slow";
-			else if ((stats.attackSpeed * 10) == 20) tooltipSystem.atkSpdTxt.text = "Fast";
-			else if ((stats.attackSpeed * 10) < 20) tooltipSystem.atkSpdTxt.text = "Nuts";
+			else if ((stats.attackSpeed * 10) == 20) tooltipSystem.atkSpdTxt.text = "Average";
+			else if ((stats.attackSpeed * 10) < 20) tooltipSystem.atkSpdTxt.text = "Fast";
+			else if ((stats.attackSpeed * 10) < 10) tooltipSystem.atkSpdTxt.text = "Nuts";
 		}
 		else
 		{
 			tooltipSystem.atkSpdTxt.text = $"{stats.attackSpeed * 10}";
 		}
 
-		tooltipSystem.digCountTxt.text = $"{Mathf.Ceil(stats.digCount)}";
+		tooltipSystem.digCountTxt.text = $"{(int)stats.digCount}";
 
 		tooltipSystem.unitDesc.text = stats.description;
 		tooltipSystem.rarityTxt.text = rarity.ToString();
 		SetLabelRarity(tooltipSystem.rarityLabel);
 
-		tooltipSystem.blockChanceTxt.text = $"{Mathf.Ceil(stats.blockChance * 100f)}";
-		tooltipSystem.critChanceTxt.text = $"{Mathf.Ceil(stats.critChance * 100f)}";
+		tooltipSystem.blockChanceTxt.text = $"{stats.blockChance * 100f}";
+		tooltipSystem.critChanceTxt.text = $"{stats.critChance * 100f}";
 
 		TooltipSystem.Show(header);
 	}

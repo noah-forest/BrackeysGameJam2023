@@ -33,7 +33,7 @@ public class Health : MonoBehaviour
 		if (health <= 0) return;
 
 		health -= dmg;
-		if (health <= 0.1)
+		if ((int)health <= 0)
 		{
 			health = 0;
 			isDead = true;

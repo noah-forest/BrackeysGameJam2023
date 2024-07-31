@@ -40,24 +40,24 @@ public class Experience : MonoBehaviour
 	private void LevelUp()
 	{
 		++curLevel;
-
 		UnitStats unitStats = GetComponent<UnitStats>();
 		unitStats.LevelUpUnit(this); // to-do add sources for each level to allow for de-leveling
 	}
+
 
 	private void TryToLevel()
 	{
 		// level up conditions
 		if (curLevel == 1 && Exp >= ExpToLevel2)
 		{
-			Exp -= ExpToLevel2;
+			_exp -= ExpToLevel2;
 			LevelUp();
 			unitLevelUp.Invoke(curLevel);
 		}
 
 		if (curLevel == 2 && Exp >= ExpToLevel3)
 		{
-			Exp = 0;
+			_exp = 0;
 			LevelUp();
 			unitLevelUp.Invoke(curLevel);
 		}

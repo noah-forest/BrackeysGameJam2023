@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using UnityEngine;
 
 namespace glumpis.CharacterStats
 {
@@ -13,6 +14,8 @@ namespace glumpis.CharacterStats
 
 		public float MinValue = float.MinValue;
 
+		public bool alwaysCeilValue;
+
 		public float Value
 		{
 			get
@@ -23,6 +26,7 @@ namespace glumpis.CharacterStats
 					_value = CalculateFinalValue();
 					isDirty = false;
 				}
+				if (alwaysCeilValue) return Mathf.Ceil(_value);
 				return _value;
 			}
 		}
@@ -126,14 +130,14 @@ namespace glumpis.CharacterStats
 
 			if(finalValue > MaxValue)
 			{
-				return (float)Math.Round(MaxValue, 4);
+				return (float)Math.Round(MaxValue, 2);
 			} else if(finalValue < MinValue)
 			{
-				return (float)Math.Round(MinValue, 4);
+				return (float)Math.Round(MinValue, 2);
 			} else
 			{
 				//12.0001f != 12f
-				return (float)Math.Round(finalValue, 4);
+				return (float)Math.Round(finalValue, 2);
 			}
 		}
 

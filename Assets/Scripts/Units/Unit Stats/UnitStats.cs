@@ -38,6 +38,9 @@ public class UnitStats : MonoBehaviour
 		blockChance = new CharacterStat(unitInfo.blockChance, 0, 1);
 		digCount = new CharacterStat(unitInfo.digCount, 1);
 		sellValue = new CharacterStat(1, 1);
+
+		health.maxHealth.alwaysCeilValue = true;
+		damage.alwaysCeilValue = true;
 	}
 
 	public void LevelUpUnit(object source)
