@@ -5836,6 +5836,45 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8188907838979509586, guid: f461f005006e72147bbe50dc5b4536b5, type: 3}
   m_PrefabInstance: {fileID: 8227220727185893726}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &163666375
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CustomShaders/HealthBar
+  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _SHAPE_BOX
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _borderWidth: 0.016
+    - _healthNormalized: 0.479
+    - _lowHealthThreshold: 0.2
+    - _shape: 1
+    - _waveAmp: 0.0037
+    - _waveFreq: 2.8
+    - _wavePixelCount: 3.69
+    - _waveSpeed: 1
+    m_Colors:
+    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
+    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
+    - _fillColor: {r: 0.7563932, g: 0.56784725, b: 0.32673705, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &166591223
 GameObject:
   m_ObjectHideFlags: 0
@@ -14327,45 +14366,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 393023038}
   m_CullTransparentMesh: 1
---- !u!21 &393163365
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: CustomShaders/HealthBar
-  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _SHAPE_BOX
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _borderWidth: 0.016
-    - _healthNormalized: 0.479
-    - _lowHealthThreshold: 0.2
-    - _shape: 1
-    - _waveAmp: 0.0037
-    - _waveFreq: 2.8
-    - _wavePixelCount: 3.69
-    - _waveSpeed: 1
-    m_Colors:
-    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
-    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
-    - _fillColor: {r: 0.7563932, g: 0.56784725, b: 0.32673705, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &395384502
 GameObject:
   m_ObjectHideFlags: 0
@@ -17159,6 +17159,45 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 460296515}
   m_CullTransparentMesh: 1
+--- !u!21 &462800349
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CustomShaders/HealthBar
+  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _SHAPE_BOX
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _borderWidth: 0.016
+    - _healthNormalized: 0.479
+    - _lowHealthThreshold: 0.2
+    - _shape: 1
+    - _waveAmp: 0.0037
+    - _waveFreq: 2.8
+    - _wavePixelCount: 3.69
+    - _waveSpeed: 1
+    m_Colors:
+    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
+    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
+    - _fillColor: {r: 0.7563932, g: 0.56784725, b: 0.32673705, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &463254172
 GameObject:
   m_ObjectHideFlags: 0
@@ -40529,45 +40568,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1054853985}
   m_CullTransparentMesh: 1
---- !u!21 &1066883607
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: CustomShaders/HealthBar
-  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _SHAPE_BOX
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _borderWidth: 0.016
-    - _healthNormalized: 0.479
-    - _lowHealthThreshold: 0.2
-    - _shape: 1
-    - _waveAmp: 0.0037
-    - _waveFreq: 2.8
-    - _wavePixelCount: 3.69
-    - _waveSpeed: 1
-    m_Colors:
-    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
-    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
-    - _fillColor: {r: 0.7563932, g: 0.56784725, b: 0.32673705, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &1070635733
 GameObject:
   m_ObjectHideFlags: 0
@@ -44902,7 +44902,7 @@ PrefabInstance:
     - target: {fileID: 108847112539177206, guid: 84b555914681501438e06ef491b3cbd2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1066883607}
+      objectReference: {fileID: 462800349}
     - target: {fileID: 3490969108480678221, guid: 84b555914681501438e06ef491b3cbd2, type: 3}
       propertyPath: m_Name
       value: HealthBar (1)
@@ -49732,7 +49732,7 @@ PrefabInstance:
     - target: {fileID: 108847112539177206, guid: 84b555914681501438e06ef491b3cbd2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 393163365}
+      objectReference: {fileID: 163666375}
     - target: {fileID: 3490969108480678221, guid: 84b555914681501438e06ef491b3cbd2, type: 3}
       propertyPath: m_Name
       value: HealthBar
@@ -65110,7 +65110,7 @@ MonoBehaviour:
   unitStatsDatabase:
   - name: Peter
     health: 6
-    damage: 1
+    damage: 2
     attackSpeed: 1.5
     blockChance: 0.14999999
     critChance: 0.049999997
@@ -65126,7 +65126,7 @@ MonoBehaviour:
     critChance: 0.049999997
     digCount: 5
     rarity: 2
-    description: Dry ass lips having ass
+    description: Notorious sand enjoyer
     unitSprite: {fileID: 21300000, guid: 1c457a677797dfc4fa65dcbbbd05f949, type: 3}
   - name: Worm
     health: 10
@@ -65154,10 +65154,10 @@ MonoBehaviour:
     unitSprite: {fileID: 21300000, guid: c92070f50f9c3e240bb063172fb9b106, type: 3}
   - name: Stalker
     health: 4
-    damage: 4
+    damage: 3
     attackSpeed: 2
     blockChance: 0
-    critChance: 0.39999998
+    critChance: 0.35
     digCount: 5
     rarity: 2
     description: 'You wont see it coming
@@ -65178,10 +65178,10 @@ MonoBehaviour:
     unitSprite: {fileID: 21300000, guid: c8a31b4286ccc7349ab59e53ef3e6e52, type: 3}
   - name: Mollusk
     health: 4
-    damage: 6
+    damage: 7
     attackSpeed: 4
     blockChance: 0.049999997
-    critChance: 0.19999999
+    critChance: 0.25
     digCount: 4
     rarity: 2
     description: 'Nothing to see here
@@ -65256,6 +65256,16 @@ MonoBehaviour:
 
       Critical'
     unitSprite: {fileID: 21300000, guid: d2b861f9433b612499797bc076197384, type: 3}
+  - name: Spike
+    health: 9
+    damage: 4
+    attackSpeed: 2
+    blockChance: 0.29999998
+    critChance: 0.14999999
+    digCount: 8
+    rarity: 3
+    description: Desert cowboy
+    unitSprite: {fileID: 21300000, guid: d22aca81345f6df408e99de7f49c167b, type: 3}
   - name: Chef
     health: 4
     damage: 3
@@ -65280,7 +65290,7 @@ MonoBehaviour:
     unitSprite: {fileID: 21300000, guid: d688bf81f8775874799cfccb2c6b1eb4, type: 3}
   - name: Python
     health: 4
-    damage: 6
+    damage: 4
     attackSpeed: 2
     blockChance: 0.049999997
     critChance: 0.5
@@ -65358,7 +65368,7 @@ MonoBehaviour:
     critChance: 0.29999998
     digCount: 5
     rarity: 4
-    description: 'He just like me for real
+    description: 'They really chill like that
 
       Critical'
     unitSprite: {fileID: 21300000, guid: f5bd059febedc2644a9a8bf29cd5b07e, type: 3}
@@ -65422,6 +65432,16 @@ MonoBehaviour:
 
       Quick'
     unitSprite: {fileID: 21300000, guid: 371116c389eec2f4c9cf7df0fd6835eb, type: 3}
+  - name: Oasis
+    health: 11
+    damage: 5
+    attackSpeed: 2
+    blockChance: 0.25
+    critChance: 0.14999999
+    digCount: 9
+    rarity: 5
+    description: Wonderwall
+    unitSprite: {fileID: 21300000, guid: 9088d40cb0dfdf2478657b880ba67f1d, type: 3}
   - name: Glumpis
     health: 14
     damage: 7
