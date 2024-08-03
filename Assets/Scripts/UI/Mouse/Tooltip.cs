@@ -1,53 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Tooltip : MonoBehaviour
 {
-	public TextMeshProUGUI header;
-	public RectTransform _rectTransform;
+	public RectTransform rectTransform;
 
-	public void SetText(string h = "")
+	private void Awake()
 	{
-		if (string.IsNullOrEmpty(h))
-		{
-			header.gameObject.SetActive(false);
-		} else
-		{
-			header.gameObject.SetActive(true);
-			header.text = h;
-		}
+		rectTransform = GetComponent<RectTransform>();
 	}
 
-	private void Update()
-	{
-		var position = Input.mousePosition;
-		var normalizedPosition = new Vector2(position.x / Screen.width, position.y / Screen.height);
-		var pivot = CalculatePivot(normalizedPosition);
-		_rectTransform.pivot = pivot;
+	// Update is called once per frame
+	void Update()
+    {
+		Vector2 position = Input.mousePosition;
+
+		float pivotX = position.x / Screen.width;
+		float pivotY = position.y / Screen.height;
+
+		rectTransform.pivot = new Vector2(pivotX, pivotY);
 		transform.position = position;
-	}
-
-	private Vector2 CalculatePivot(Vector2 normalizedPosition)
-	{
-		var pivotLeft = new Vector2(-0.1f, 0.75f);
-		var pivotTopRight = new Vector2(1.1f, 0.75f);
-		var pivotBottomRight = new Vector2(1.1f, 0.5f);
-
-		if (normalizedPosition.x < 0.5f && normalizedPosition.y >= 0.5f || normalizedPosition.x <= 0.5f && normalizedPosition.y < 0.5f)
-		{
-			return pivotLeft;
-		}
-		else if (normalizedPosition.x > 0.5f && normalizedPosition.y >= 0.425f)
-		{
-			return pivotTopRight;
-		}
-		else
-		{
-			return pivotBottomRight;
-		}
-	}
+    }
 }
-

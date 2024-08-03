@@ -1,39 +1,20 @@
-using TMPro;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TooltipSystem : MonoBehaviour
 {
-	public static TooltipSystem instance;
+    private static TooltipSystem instance;
 
 	public Tooltip tooltip;
 
-	public TextMeshProUGUI levelTxt;
-	public TextMeshProUGUI healthTxt;
-	public TextMeshProUGUI dmgTxt;
-	public TextMeshProUGUI blockChanceTxt;
-	public TextMeshProUGUI critChanceTxt;
-	public TextMeshProUGUI atkSpdTxt;
-	public TextMeshProUGUI digCountTxt;
-	public TextMeshProUGUI rarityTxt;
-	public Image rarityLabel;
-	public TextMeshProUGUI unitDesc;
-
 	private void Awake()
 	{
-		if (instance)
-		{
-			Destroy(this.gameObject);
-			return;
-		}
-
 		instance = this;
-		Hide();
 	}
 
-	public static void Show(string header)
+	public static void Show()
 	{
-		instance.tooltip.SetText(header);
 		instance.tooltip.gameObject.SetActive(true);
 	}
 

@@ -10,7 +10,7 @@ public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 	private UnitStats stats;
 	private Health Health;
 	private int level;
-	private TooltipSystem tooltipSystem;
+	private UnitTooltipSystem tooltipSystem;
 
 	private string header;
 
@@ -21,7 +21,7 @@ public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 	private void Start()
 	{
 		cursor = MouseUtils.singleton;
-		tooltipSystem = TooltipSystem.instance;
+		tooltipSystem = UnitTooltipSystem.instance;
 		stats = transform.parent.GetComponent<UnitStats>();
 		Health = transform.parent.GetComponent<Health>();
 		Health.unitDied.AddListener(UnitDied);
@@ -63,7 +63,7 @@ public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 		tooltipSystem.blockChanceTxt.text = $"{stats.blockChance * 100f}";
 		tooltipSystem.critChanceTxt.text = $"{stats.critChance * 100f}";
 
-		TooltipSystem.Show(header);
+		UnitTooltipSystem.Show(header);
 
 		cursor.SetTooltipCursor();
 	}
@@ -77,7 +77,7 @@ public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 	public void HideTooltip()
 	{
 		cursor.SetToDefaultCursor();
-		TooltipSystem.Hide();
+		UnitTooltipSystem.Hide();
 	}
 
 	private void SetLabelRarity(Image label)

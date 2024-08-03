@@ -28,12 +28,12 @@ public class RevealUnit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
 	private bool hovering;
 	private bool canReveal;
+	private bool revealed;
 
 	private void Start()
 	{
 		mouseUtils = MouseUtils.singleton;
 		gameManager = GameManager.singleton;
-		gameManager.goldChangedEvent.AddListener(CheckForCash);
 
 		button = GetComponent<Button>();
 		button.onClick.AddListener(CheckIfReveal);
@@ -44,17 +44,27 @@ public class RevealUnit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 		unitCostText.text = gameManager.revealCost.ToString();
 	}
 
-	private void CheckForCash()
+	public bool CheckForGold()
 	{
 		if (gameManager.Cash > 0 && gameManager.Cash >= gameManager.revealCost && gameManager.Cash - gameManager.revealCost >= 0)
 		{
-			button.interactable = true;
-			canReveal = true;
+			return true;
 		}
-		else if (gameManager.Cash <= 0 || gameManager.Cash < gameManager.revealCost)
+		else
+		{	
+			return false;
+		}
+	}
+
+	private void Update()
+	{
+		if (CheckForGold() && canReveal)
+		{
+			button.interactable = true;
+		}
+		else
 		{
 			button.interactable = false;
-			canReveal = false;
 		}
 	}
 
@@ -74,20 +84,17 @@ public class RevealUnit : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 		{
 			trigger.ShowTooltip(unitSlot);
 		}
-		button.interactable = false;
 		priceTag.SetActive(false);
 		hidden = false;
+		canReveal = false;
 	}
 
 	public void HideUnit()
 	{
 		unitImage.sprite = hiddenSprite;
 		unitSlot.payload = null;
-		if(canReveal)
-		{
-			button.interactable = true;
-		}
 		priceTag.SetActive(true);
+		canReveal = true;
 		hidden = true;
 	}
 

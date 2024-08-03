@@ -10,7 +10,7 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 	private UnitStats stats;
 	private float Health;
 	private int level;
-	private TooltipSystem tooltipSystem;
+	private UnitTooltipSystem tooltipSystem;
 
 	private string header;
 
@@ -21,7 +21,7 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 	private void Start()
 	{
 		unitSlot = GetComponent<Slot>();
-		tooltipSystem = TooltipSystem.instance;
+		tooltipSystem = UnitTooltipSystem.instance;
 		mouseUtils = MouseUtils.singleton;
 	}
 
@@ -63,12 +63,12 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 		tooltipSystem.blockChanceTxt.text = $"{stats.blockChance * 100f}";
 		tooltipSystem.critChanceTxt.text = $"{stats.critChance * 100f}";
 
-		TooltipSystem.Show(header);
+		UnitTooltipSystem.Show(header);
 	}
 
 	public void HideTooltip()
 	{
-		TooltipSystem.Hide();
+		UnitTooltipSystem.Hide();
 	}
 
 	public void OnPointerEnter(PointerEventData eventData)
