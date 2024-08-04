@@ -138,6 +138,9 @@ public class BattleManager : MonoBehaviour
 		if (gameManager.Cash >= interestThreshold)
 		{
 			interest = gameManager.Cash / interestThreshold;
+		} else
+		{
+			interest = 0;
 		}
 
 		return interest;
