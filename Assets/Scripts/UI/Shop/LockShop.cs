@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class LockShop : MonoBehaviour
@@ -16,6 +17,7 @@ public class LockShop : MonoBehaviour
 	public bool locked;
 
 	private GameManager gameManager;
+	private Animator buttonAnim;
 
 	private void Start()
 	{
@@ -23,6 +25,8 @@ public class LockShop : MonoBehaviour
 
 		Button button = GetComponent<Button>();
 		button.onClick.AddListener(SetShopLocked);
+
+		buttonAnim = GetComponent<Animator>();
 
 		gameManager.startGame.AddListener(UnlockShop);
 	}
