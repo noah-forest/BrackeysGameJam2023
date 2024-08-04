@@ -151,20 +151,10 @@ public class BattleManager : MonoBehaviour
 		if (firstTime)
 		{
 			gameManager.Cash = gameManager.settings.startingGold;
-		}
-
-		if (gameManager.debugMenu.gainInterest && gameManager.debugMenu.growingMoney && !firstTime)
+		} else
 		{
 			gameManager.Cash += GainInterest();
 			GainBattleReward();
-		}
-		else if (!gameManager.debugMenu.gainInterest && gameManager.debugMenu.growingMoney && !firstTime)
-		{
-			GainBattleReward();
-		}
-		else
-		{
-			gameManager.Cash = gameManager.settings.startingGold;
 		}
 
 		firstTime = false;
