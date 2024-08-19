@@ -86,11 +86,11 @@ public class SlotTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 	{
 		label.color = rarity switch
 		{
-			UnitRarity.Common => (Color)new Color32(217, 217, 217, 255),
+			UnitRarity.Common => (Color)new Color32(169, 169, 169, 255),
 			UnitRarity.Rare => (Color)new Color32(128, 187, 245, 255),
 			UnitRarity.Epic => (Color)new Color32(218, 128, 245, 255),
 			UnitRarity.Legendary => (Color)new Color32(255, 175, 85, 255),
-			_ => (Color)new Color32(217, 217, 217, 255),
+			_ => (Color)new Color32(169, 169, 169, 255),
 		};
 	}
 }
