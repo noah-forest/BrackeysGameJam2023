@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using UnityEditor.UI;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class BattleManager : MonoBehaviour
 {
@@ -26,7 +23,7 @@ public class BattleManager : MonoBehaviour
 
 	private GameManager gameManager;
 	private MouseUtils mouseUtils;
-	
+
 	public UnitManager unitManager;
 	public UnitPreview unitPreview;
 
@@ -138,7 +135,8 @@ public class BattleManager : MonoBehaviour
 		if (gameManager.Cash >= interestThreshold)
 		{
 			interest = gameManager.Cash / interestThreshold;
-		} else
+		}
+		else
 		{
 			interest = 0;
 		}
@@ -154,7 +152,8 @@ public class BattleManager : MonoBehaviour
 		if (firstTime)
 		{
 			gameManager.Cash = gameManager.settings.startingGold;
-		} else
+		}
+		else
 		{
 			gameManager.Cash += GainInterest();
 			GainBattleReward();
@@ -334,7 +333,7 @@ public class BattleManager : MonoBehaviour
 				unitLevelRoll = Random.Range(1, 3);
 			}
 
-			if(gameManager.BattlesWon >= scaleToFinal)
+			if (gameManager.BattlesWon >= scaleToFinal)
 			{
 				unitLevelRoll = 2;
 			}
@@ -347,7 +346,8 @@ public class BattleManager : MonoBehaviour
 		else if (unitLevelRoll == 2)
 		{
 			return CreateUnitInstance(unitRoll, parent, Experience.ExpToLevel3);
-		} else
+		}
+		else
 		{
 			return CreateUnitInstance(unitRoll, parent);
 		}

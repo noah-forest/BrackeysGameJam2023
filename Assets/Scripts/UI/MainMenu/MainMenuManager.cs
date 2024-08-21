@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MainMenuManager : MonoBehaviour
@@ -10,20 +8,20 @@ public class MainMenuManager : MonoBehaviour
 	//[HideInInspector]
 	public List<bool> bools = new();
 
-    // Start is called before the first frame update
-    void Start()
-    {
+	// Start is called before the first frame update
+	void Start()
+	{
 		for (int i = 0; i < menus.Count; i++)
-		{ 
+		{
 			bool menuOpen = false;
 			bools.Add(menuOpen);
 		}
-    }
+	}
 
 	public void SetMenuOpen(GameObject menu)
 	{
 		SetMenuClosed(menu);
-		for(int i = 0; i < menus.Count;i++)
+		for (int i = 0; i < menus.Count; i++)
 		{
 			if (menus[i].activeInHierarchy)
 			{
@@ -34,7 +32,7 @@ public class MainMenuManager : MonoBehaviour
 
 	public void SetMenuClosed(GameObject menu)
 	{
-		for(int i = 0; i < menus.Count; ++i)
+		for (int i = 0; i < menus.Count; ++i)
 		{
 			if (menus[i] != menu && menus[i].activeInHierarchy)
 			{

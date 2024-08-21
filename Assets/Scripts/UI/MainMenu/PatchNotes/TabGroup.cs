@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -18,7 +17,7 @@ public class TabGroup : MonoBehaviour
 
 	public void Subscribe(PatchNoteButton button)
 	{
-		if(tabButtons == null)
+		if (tabButtons == null)
 		{
 			tabButtons = new();
 		}
@@ -51,7 +50,7 @@ public class TabGroup : MonoBehaviour
 
 	public void ResetTabs()
 	{
-		foreach(PatchNoteButton button in tabButtons)
+		foreach (PatchNoteButton button in tabButtons)
 		{
 			if (selectedTab != null && button == selectedTab) continue;
 			button.foreground.color = tabIdle;

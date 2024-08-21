@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,7 +38,8 @@ public class BurgerManager : MonoBehaviour
 		if (burgerOpen)
 		{
 			CloseHistory();
-		} else
+		}
+		else
 		{
 			OpenHistory();
 		}
@@ -70,7 +69,7 @@ public class BurgerManager : MonoBehaviour
 
 	public void priorityButtonPressed()
 	{
-		if(burgerOpen)
+		if (burgerOpen)
 		{
 			burgerOnClick();
 		}
