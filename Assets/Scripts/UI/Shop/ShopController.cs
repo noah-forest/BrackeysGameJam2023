@@ -57,6 +57,7 @@ public class ShopController : MonoBehaviour
 
 	private bool unitShine;
 	private bool legendWasOpen;
+	private bool canAfford;
 
 	public RarityTable defaultRarities;
 
@@ -194,13 +195,15 @@ public class ShopController : MonoBehaviour
 
 			unitSlot.AddRetrievePrecheck((shopSlot, newSlot) =>
 			{
+				canAfford = gameManager.Cash >= curShopItem.unitCost;
+				
 				if (newSlot.gameObject.name.Contains("Shop"))
 				{
 					return false;
 				}
 
 				//moves unit in battleSlot to nearest empty reserve slot
-				if (newSlot.payload != null && newSlot.payload.name != unitSlot.payload.name)
+				if (newSlot.payload != null && newSlot.payload.name != unitSlot.payload.name && canAfford)
 				{
 					Slot slot = FindNearestEmptySlot(battleManager.playerReserveSlots);
 
@@ -216,7 +219,7 @@ public class ShopController : MonoBehaviour
 				};
 
 				//unit purchase check
-				if (gameManager.Cash >= curShopItem.unitCost)
+				if (canAfford)
 				{
 					if (newSlot.payload != null)
 					{
