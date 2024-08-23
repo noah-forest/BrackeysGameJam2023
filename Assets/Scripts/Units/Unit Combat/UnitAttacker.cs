@@ -1,3 +1,4 @@
+using Assets.Scripts.Units;
 using System;
 using System.Collections;
 using System.Net.Sockets;
@@ -15,15 +16,11 @@ using Random = UnityEngine.Random;
 public class UnitAttacker : MonoBehaviour
 {
 
-	public UnitController targetUnit;
+	public Health target;
 	public UnityEvent critEvent;
 	UnitStats stats;
 
 	public AudioSource hitAudioPlayer;
-
-	private bool isAttacking;
-	private bool crit;
-
 
 	private void Start()
 	{
@@ -36,25 +33,19 @@ public class UnitAttacker : MonoBehaviour
 	public void AttackTarget()
 	{
 		// Damage instance feilds.
+		DamageInfo damageInfo = new DamageInfo();
+		damageInfo.damage = stats.damage;
+		damageInfo.isCrit = (Random.value < stats.critChance); // determine whether they crit
+        damageInfo.critMultiplier = stats.critDamageMult;
+		damageInfo.attacker = gameObject;
+		damageInfo.inflictor = gameObject;
 
-		float damage = stats.damage;
-
-		crit = false;       // currently cirt bool does nothing ,but may be used later.
-		float critRoll = Random.value;
-		if (critRoll < stats.critChance) // determine whether they crit
-		{
-			// crit hit
-			//crit = true;
-			critEvent.Invoke();
-			damage *= stats.critDamageMult;
-		}
-
-		targetUnit.TakeDamage(damage);
+        if (damageInfo.isCrit) critEvent.Invoke();
+		target.TakeDamage(damageInfo);
 		hitAudioPlayer.PlayOneShot(hitAudioPlayer.clip);
 	}
 	public void Respawn()
 	{
-		// come back from grave
-		isAttacking = false;
+
 	}
 }

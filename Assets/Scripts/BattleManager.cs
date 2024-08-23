@@ -213,8 +213,8 @@ public class BattleManager : MonoBehaviour
 	{
 		foreach (BattleLane lane in lanes)
 		{
-			if (lane.enemyUnitController) lane.enemyUnitController.unitAttacker.targetUnit = lane.playerUnit;
-			if (lane.playerUnit) lane.playerUnit.unitAttacker.targetUnit = lane.enemyUnitController;
+			if(lane.enemyUnitController) lane.enemyUnitController.unitAttacker.target = lane.playerUnit ? lane.playerUnit.health : playerActor.health;
+			if(lane.playerUnit) lane.playerUnit.unitAttacker.target = lane.enemyUnitController ? lane.enemyUnitController.health : enemyActor.health;
 		}
 	}
 
@@ -252,7 +252,8 @@ public class BattleManager : MonoBehaviour
 			lane.enemyUnitController.parentActor = enemyActor;
 			lane.enemyUnitController.unitGrave = lane.enemyGrave;
 			lane.enemyUnit.SetActive(true);
-
+			lane.enemyUnitController.unitOwner = enemyActor;
+			lane.enemyUnitController.health.OwnerHealth = enemyActor.health;
 			lane.enemyUnitController.InitCombat();
 		}
 		enemyActor.health.Revive();
@@ -290,8 +291,11 @@ public class BattleManager : MonoBehaviour
 				lanes[unitIdx].playerUnit = newUnitObj.GetComponent<UnitController>();
 				lanes[unitIdx].playerUnit.parentActor = playerActor;
 				lanes[unitIdx].playerUnit.unitGrave = lanes[unitIdx].playerGrave;
+				lanes[unitIdx].playerUnit.unitOwner = playerActor;
+                lanes[unitIdx].playerUnit.health.OwnerHealth = playerActor.health;
 
-				lanes[unitIdx].playerUnit.InitCombat();
+
+                lanes[unitIdx].playerUnit.InitCombat();
 			}
 			else
 			{

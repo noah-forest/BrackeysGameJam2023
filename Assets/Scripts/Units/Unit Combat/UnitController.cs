@@ -1,3 +1,4 @@
+using Assets.Scripts.Units;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -17,12 +18,11 @@ public class UnitController : MonoBehaviour, ISlotItem
 	UnitAnimator unitAnimator;
 	[HideInInspector]
 	public UnitStats unitStats;
+	[HideInInspector]
+	public Actor unitOwner;
 
 	public Actor parentActor;
-	public UnityEvent attacked;
 
-	[HideInInspector]
-	public UnityEvent blockedEvent;
 
 	private Grave _grave;
 	/// <summary>
@@ -68,9 +68,10 @@ public class UnitController : MonoBehaviour, ISlotItem
 		gameManager.battleEndedEvent.AddListener(BattleEnded);
 
 
-		attacked.AddListener(OnUnitAttacked);
+		health.attackedEvent.AddListener(OnUnitAttacked);
 		health.died.AddListener(OnDeath);
-		blockedEvent.AddListener(unitAnimator.PlayBlock);
+		health.blockedEvent.AddListener(unitAnimator.PlayBlock);
+
 		unitAttacker.critEvent.AddListener(unitAnimator.PlayCrit);
 	}
 
@@ -78,6 +79,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 	{
 		inCombat = true;
 		gameManager.combatBeganEvent.Invoke();
+
 	}
 
 	private void FixedUpdate()
@@ -109,9 +111,11 @@ public class UnitController : MonoBehaviour, ISlotItem
 	private void BattleStarted()
 	{
 		inCombat = true;
-	}
+        health.blockChance = unitStats.blockChance; // this may cause problems later due to block not being able to be updated mid combat.
 
-	private void BattleEnded()
+    }
+
+    private void BattleEnded()
 	{
 		inCombat = false;
 	}
@@ -122,42 +126,10 @@ public class UnitController : MonoBehaviour, ISlotItem
 	/// <param name="dmg"></param>
 	/// <param name="crit"></param>
 	/// <param name="blocked"></param>
-	public void TakeDamage(float dmg)
-	{
-		float remainder = health.health - dmg;
-
-		// if the unit is dead when it would normally take damage, damage this units actor
-		if (health.isDead)
-		{
-			if (!parentActor.health.isDead)
-			{
-				parentActor.health.TakeDamage(dmg);
-			}
-
-			return;
-		}
-
-		//check if the unit blocks the incoming damage
-		bool blocked = false;
-		float blockRoll = Random.value;
-		if (blockRoll < unitStats.blockChance)
-		{
-			// blocked hit
-			blockedEvent.Invoke();
-			blocked = true;
-		} // this is seperated out from the follwing 'damage the unit if' as other behavior may rely on block status.
-
-		// damage the unit
-		if (!blocked)
-		{
+	public void TakeDamage(DamageInfo dmg)
+	{ 
             health.TakeDamage(dmg);
-			if(health.health <= 0.1 && gameManager.debugMenu.overkillEnabled)
-			{
-				parentActor.health.TakeDamage(Mathf.Abs(remainder));
-			}
-			attacked.Invoke();
-		};
-	}
+    }
 
 	public void InitCombat()
 	{
@@ -171,11 +143,6 @@ public class UnitController : MonoBehaviour, ISlotItem
 
 	private void DamageEnemyUnit()
 	{
-		if (!unitAttacker.targetUnit)
-		{
-			battleManager.playerActor.health.TakeDamage(unitStats.damage); // this is fucking awful dont get me started. This only works cause the enemy will always have all 3 units
-			return;
-		}
 		unitAttacker.AttackTarget();
 	}
 
