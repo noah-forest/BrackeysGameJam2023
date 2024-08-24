@@ -51,8 +51,9 @@ public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 		if ((stats.attackSpeed * 10) > 40) tooltipSystem.atkSpdTxt.text = "Booty";
 		else if ((stats.attackSpeed * 10) == 40) tooltipSystem.atkSpdTxt.text = "Slow";
 		else if ((stats.attackSpeed * 10) == 20) tooltipSystem.atkSpdTxt.text = "Average";
-		else if ((stats.attackSpeed * 10) < 20) tooltipSystem.atkSpdTxt.text = "Fast";
 		else if ((stats.attackSpeed * 10) < 10) tooltipSystem.atkSpdTxt.text = "Nuts";
+		else if ((stats.attackSpeed * 10) < 20) tooltipSystem.atkSpdTxt.text = "Fast";
+		
 
 		tooltipSystem.digCountTxt.text = $"{(int)stats.digCount}";
 		

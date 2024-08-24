@@ -45,7 +45,7 @@ public class BattleManager : MonoBehaviour
 	public int scaleToLvl3 = 5;
 	public int scaleToFinal = 7;
 
-	private bool inShop;
+	public bool inShop;
 	public bool firstTime;
 	private bool playerUnitsLoaded;
 
@@ -186,6 +186,7 @@ public class BattleManager : MonoBehaviour
 		gameManager.battleStartedEvent.Invoke();
 		gameManager.resumeGame.Invoke();
 		ShowBattlfield();
+		inShop = false;
 		StartCoroutine(LoadUnits()); //dont let this shit get into final build please -> <- (it will) 
 	}
 
