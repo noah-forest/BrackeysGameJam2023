@@ -39,8 +39,7 @@ public class UnitAttacker : MonoBehaviour
         damageInfo.critMultiplier = stats.critDamageMult;
 		damageInfo.attacker = gameObject;
 		damageInfo.inflictor = gameObject;
-
-        if (damageInfo.isCrit) critEvent.Invoke();
+        if (damageInfo.isCrit)critEvent.Invoke();
 		target.TakeDamage(damageInfo);
 		hitAudioPlayer.PlayOneShot(hitAudioPlayer.clip);
 	}

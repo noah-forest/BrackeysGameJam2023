@@ -20,6 +20,8 @@ public class UnitController : MonoBehaviour, ISlotItem
 	public UnitStats unitStats;
 	[HideInInspector]
 	public Actor unitOwner;
+	[HideInInspector]
+	public UnitPerformance unitPerformanceAllTime;
 
 	public Actor parentActor;
 
@@ -128,7 +130,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 	/// <param name="blocked"></param>
 	public void TakeDamage(DamageInfo dmg)
 	{ 
-            health.TakeDamage(dmg);
+        health.TakeDamage(dmg);
     }
 
 	public void InitCombat()

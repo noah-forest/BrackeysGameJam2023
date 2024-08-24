@@ -3,6 +3,7 @@ using UnityEngine.Events;
 using glumpis.CharacterStats;
 using Assets.Scripts.Units;
 using UnityEditor;
+using Unity.VisualScripting.FullSerializer.Internal.Converters;
 
 public class Health : MonoBehaviour
 {
@@ -15,24 +16,24 @@ public class Health : MonoBehaviour
     public UnityEvent blockedEvent;
     public UnityEvent attackedEvent;
 
-
-    public float health
-	{
-		get => _health;
-		set
-		{
-			float previousHealth = _health;
-			_health = value;
-			healthChanged.Invoke(previousHealth, value);
-		}
-	}
-
 	public bool isDead;
 	public UnityEvent died = new();
 	public UnityEvent<GameObject> unitDied = new();
 	public UnityEvent<float, float> healthChanged;
 
-	private void Start()
+
+    public float health
+    {
+        get => _health;
+        set
+        {
+            float previousHealth = _health;
+            _health = value;
+            healthChanged.Invoke(previousHealth, value);
+        }
+    }
+
+    private void Start()
 	{
 		Revive();
 	}
@@ -100,6 +101,24 @@ public class Health : MonoBehaviour
         Debug.Log(logString);
 
 
+		var unit = damageReport.damageInfo.attacker.GetComponent<UnitController>();
+		var victimUnit = damageReport.victim.GetComponent<UnitController>();
+		var victimActor = damageReport.victim.GetComponent<Actor>();
+		
+		if (unit)
+		{
+			unit.unitPerformanceAllTime.timesAttacked++;
+			unit.unitPerformanceAllTime.timesCrit += damageReport.damageInfo.isCrit ? 1 : 0;
+			unit.unitPerformanceAllTime.damageDealt += damageReport.damageDealt;
+			unit.unitPerformanceAllTime.unitsKilled += damageReport.wasLethal && victimUnit ? 1 : 0;
+			unit.unitPerformanceAllTime.actorsKilled += damageReport.wasLethal && victimActor ? 1 : 0;
+		}
+		if (victimUnit)
+		{
+			victimUnit.unitPerformanceAllTime.damageRecieved += damageReport.damageDealt;
+			victimUnit.unitPerformanceAllTime.damageBlocked += damageReport.wasBlocked ? damageReport.incomingDamage : 0;
+			victimUnit.unitPerformanceAllTime.timesDied += damageReport.wasLethal ? 1 : 0;
+		}
 
 
 		//determine if damage should overflow to owner

@@ -41,4 +41,25 @@ namespace Assets.Scripts.Units
         public bool wasLethal;
         public GameObject victim;
     }
+
+
+    public struct  UnitPerformance
+    {
+        public float damageDealt;
+        public float damageDealtToActors;
+        public float damageDealtToUnits;
+        public float damageRecieved;
+        public float damageBlocked;
+        public int unitsKilled;
+        public int actorsKilled;
+        public int timesAttacked;
+        public int timesCrit;
+        public int timesDug;
+        public int timesBlocked;
+        public int timesDied;
+
+        public int battlesSurvived;
+        public int battlesLost;
+        public int battlesWon;
+    }
 }
