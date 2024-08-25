@@ -151,15 +151,38 @@ public class ShopController : MonoBehaviour
 		
 		Slot.controlClicked.AddListener(arg0 =>
 		{
+			// if you control + click a shop slot it will auto purchase the unit
 			if (arg0.CompareTag("ShopSlot"))
 			{
 				SetUnitInfo unitInfo = arg0.GetComponent<SetUnitInfo>();
 				canAfford = gameManager.Cash >= unitInfo.unitCost;
 				if (unitInfo != null && canAfford)
 				{
-					var temp = FindNearestEmptySlot(battleManager.playerBattleSlots);
-					temp.payload = arg0.payload;
-					PurchaseUnit(temp, unitInfo);
+					//find an available slot
+					Slot slot = FindNearestEmptySlot(battleManager.playerBattleSlots);
+					
+					if (!slot && FindNearestEmptySlot(battleManager.playerReserveSlots))
+					{
+						slot = FindNearestEmptySlot(battleManager.playerReserveSlots);
+					}
+					else if(!slot)
+					{
+						return;
+					}
+					
+					// purchase the unit
+					PurchaseUnit(slot, unitInfo);
+					slot.payload = arg0.payload;
+					arg0.payload = null;
+				}
+			}
+			
+			// if you control + click a inv slot it will auto sell the unit
+			if (arg0.CompareTag("BattleSlot") || arg0.CompareTag("ReserveSlot"))
+			{
+				if (arg0.payload)
+				{
+					SellUnit(arg0);
 				}
 			}
 		});
