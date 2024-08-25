@@ -8,7 +8,7 @@ public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 	private MouseUtils cursor;
 
 	private UnitStats stats;
-	private Health Health;
+	private Health health;
 	private int level;
 	private UnitTooltipSystem tooltipSystem;
 
@@ -23,8 +23,8 @@ public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 		cursor = MouseUtils.singleton;
 		tooltipSystem = UnitTooltipSystem.instance;
 		stats = transform.parent.GetComponent<UnitStats>();
-		Health = transform.parent.GetComponent<Health>();
-		Health.unitDied.AddListener(UnitDied);
+		health = transform.parent.GetComponent<Health>();
+		health.unitDied.AddListener(UnitDied);
 		header = transform.parent.name.Replace("(Clone)", "").Trim();
 		rarity = stats.Rarity;
 	}
@@ -45,7 +45,7 @@ public class UnitTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
 
 		// raw stats to show
 		tooltipSystem.levelTxt.text = $"{level}";
-		tooltipSystem.healthTxt.text = $"{(float)Health.maxHealth}";
+		tooltipSystem.healthTxt.text = $"{(float)health.maxHealth}";
 		tooltipSystem.dmgTxt.text = $"{(float)stats.damage}";
 
 		if ((stats.attackSpeed * 10) > 40) tooltipSystem.atkSpdTxt.text = "Booty";
