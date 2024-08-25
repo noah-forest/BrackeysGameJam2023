@@ -14,18 +14,23 @@ public class PerformanceTracker : MonoBehaviour, ISlotPayloadChangeHandler, ISlo
 
     public void SlotDragEnded(GameObject payload)
     {
+        if (!display) return;
         lastPayload = payload;
     }
 
     public void SlotPayloadChanged(GameObject payload)
     {
+        if (!display) return;
+        //Debug.Log($"PT Change: {gameObject.name} Last: {(lastPayload ? lastPayload.name : "none")} Cur: {(payload ? payload.name : "none")}");
         if (lastPayload && lastPayload != payload)
         {
-            lastPayload.GetComponent<UnitController>()?.performanceUpdatedEvent.RemoveListener(UpdateDisplay);
+            lastPayload.GetComponent<UnitController>()?.performanceUpdatedEvent.RemoveAllListeners();
+            //Debug.Log("removing binding from lastpayload");
         }
         if (payload)
         {
             UnitController unit = payload.GetComponent<UnitController>();
+            unit?.performanceUpdatedEvent.RemoveAllListeners();
             unit?.performanceUpdatedEvent.AddListener(UpdateDisplay);
 
             ISlotItem renderer = payload.GetComponent<ISlotItem>();
@@ -41,6 +46,10 @@ public class PerformanceTracker : MonoBehaviour, ISlotPayloadChangeHandler, ISlo
         else
         {
             if(display) display.ClearDisplay();
+            if (lastPayload) lastPayload.GetComponent<UnitController>()?.performanceUpdatedEvent.RemoveAllListeners();
+            //Debug.Log("Payload is null removing binding from lastpayload");
+
+            lastPayload = null;
         }
     }
 

@@ -16,6 +16,7 @@ namespace Assets.Scripts.Units
 
     public class DamageSystem : MonoBehaviour
     {
+        [SerializeField] bool logDamageReports;
         #region singleton
         public static DamageSystem singleton;
 
@@ -67,6 +68,7 @@ namespace Assets.Scripts.Units
 
         private void LogDamageReport(DamageReport damageReport)
         {
+            if (!logDamageReports) return;
             string logString = $"[DAMAGE REPORT]: Unit {damageReport.damageInfo.attacker.name} ";
             logString += damageReport.damageInfo.isCrit ? "CRITICALLY " : "";
             logString += (damageReport.wasLethal) ? "killed " : "attacked ";
