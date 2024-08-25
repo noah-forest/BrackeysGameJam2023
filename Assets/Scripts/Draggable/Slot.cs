@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public delegate bool SlotDropPrecheck(Slot oldSlot, Slot newSlot);
 public delegate bool SlotRetrievePrecheck(Slot oldSlot, Slot newSlot);
 
-public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler, IDragHandler, IEndDragHandler
+public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     public static Slot currentlyOverSlot;
     public static DragVisual _dragVisual;
@@ -18,8 +18,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
     public UnityEvent dragStarted = new();
     public UnityEvent dragStopped = new();
 
-	public UnityEvent slotFilled = new();
-
+	public static UnityEvent<Slot> controlClicked = new();
 	public static UnityEvent<Slot> anyDragStarted = new(); 
     public static UnityEvent<Slot> anyDragStopped = new();
 
@@ -27,6 +26,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
 	private bool beingDragged;
 
+	private bool controlDown;
+	
     public static DragVisual dragVisual
     {
         get
@@ -77,6 +78,11 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
         OnPayloadChanged();
     }
 
+    private void Update()
+    {
+	    controlDown = Input.GetKey(KeyCode.LeftControl);
+    }
+
     public void AddDropPrecheck(SlotDropPrecheck precheck)
     {
         slotDropPrechecks.Add(precheck);
@@ -114,7 +120,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
         {
             renderer.SlotPayloadChanged(payload);
         }
-		if(gameManager != null) gameManager.unitAddedToSlot?.Invoke();
+		if(gameManager != null) gameManager.unitAddedToSlot?.Invoke(this);
 	}
 
     protected void OnMouseDown()
@@ -231,6 +237,12 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 		}
     }
 
+    protected void OnMouseClick()
+    {
+	    if (!controlDown) return;
+	    controlClicked.Invoke(this);
+    }
+
     //To work with UI
 
     public void OnPointerEnter(PointerEventData data)
@@ -282,5 +294,13 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 		{
 			this.OnMouseUp();
 		}
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+	    if (interactable)
+	    {
+		    this.OnMouseClick();
+	    }
     }
 }

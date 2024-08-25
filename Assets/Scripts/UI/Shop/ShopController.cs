@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +60,7 @@ public class ShopController : MonoBehaviour
 	private bool legendWasOpen;
 	private bool canAfford;
 
-	public RarityTable defaultRarities;
+	private RarityTable defaultRarities;
 
 	[Space(15)]
 	[Header("Rarity Weights")]
@@ -109,14 +110,15 @@ public class ShopController : MonoBehaviour
 				//Debug.Log("playing pick up sound");
 			}
 
-			if (legend.open)
+			switch (legend.open)
 			{
-				legendWasOpen = true;
-				legend.CloseStatLegend();
-			}
-			else if (!legend.open)
-			{
-				legendWasOpen = false;
+				case true:
+					legendWasOpen = true;
+					legend.CloseStatLegend();
+					break;
+				case false:
+					legendWasOpen = false;
+					break;
 			}
 		});
 
@@ -138,17 +140,30 @@ public class ShopController : MonoBehaviour
 				sellWindow.SetActive(false);
 			}
 
-			if (arg0.CompareTag("ShopSlot"))
+			if (!arg0.CompareTag("ShopSlot")) return;
+			SetUnitInfo unitInfo = arg0.GetComponent<SetUnitInfo>();
+			if (unitInfo != null)
 			{
-				SetUnitInfo unitInfo = arg0.GetComponent<SetUnitInfo>();
-				if (unitInfo != null)
-				{
-					unitInfo.shopPreviewImage.gameObject.SetActive(true);
-				}
+				unitInfo.shopPreviewImage.gameObject.SetActive(true);
 			}
 
 		});
-
+		
+		Slot.controlClicked.AddListener(arg0 =>
+		{
+			if (arg0.CompareTag("ShopSlot"))
+			{
+				SetUnitInfo unitInfo = arg0.GetComponent<SetUnitInfo>();
+				canAfford = gameManager.Cash >= unitInfo.unitCost;
+				if (unitInfo != null && canAfford)
+				{
+					var temp = FindNearestEmptySlot(battleManager.playerBattleSlots);
+					temp.payload = arg0.payload;
+					PurchaseUnit(temp, unitInfo);
+				}
+			}
+		});
+		
 		Slot unitSlot = sellWindow.GetComponent<Slot>();
 
 		unitSlot.AddDropPrecheck((slot, shopSlot) =>
@@ -156,13 +171,7 @@ public class ShopController : MonoBehaviour
 			if (slot.payload != null)
 			{
 				// sold the unit
-				UnitStats sellInfo = slot.payload.GetComponent<UnitStats>();
-				draggedIntoShop = true;
-				slot.payload = null;
-				shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
-				gameManager.Cash += (int)sellInfo.sellValue.Value;
-				Destroy(slot.payload);
-				gameManager.unitSold.Invoke();
+				SellUnit(slot);
 			}
 			return false;
 		});
@@ -170,7 +179,7 @@ public class ShopController : MonoBehaviour
 
 		PopulateShopUnits();
 	}
-
+	
 	/// <summary>
 	/// Populates the shop with units
 	/// </summary>
@@ -218,35 +227,12 @@ public class ShopController : MonoBehaviour
 					}
 				};
 
-				//unit purchase check
 				if (canAfford)
 				{
-					if (newSlot.payload != null)
-					{
-						Experience unitExp = newSlot.payload.GetComponent<Experience>();
-						if (unitExp && unitExp.curLevel == Experience.MaxLevel) return false;
-					}
-
-					curShopItem.unitPreview.SetActive(false);
-					curShopItem.purchased.SetActive(true);
-					
-					//turn off the rarity glow on units on purchase
-					foreach(GameObject glow in curShopItem.rarityGlowList)
-					{
-						if (glow.activeInHierarchy)
-						{
-							glow.SetActive(false);
-						}
-					}
-
-					curShopItem.unitFound.SetActive(false);
-					curShopItem.unitShine.SetActive(false);
-					gameManager.Cash -= curShopItem.unitCost;
-					gameManager.unitPurchased?.Invoke();
-
-					shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
+					PurchaseUnit(newSlot, curShopItem);
 					return true;
 				}
+				
 				return false;
 			});
 
@@ -255,20 +241,56 @@ public class ShopController : MonoBehaviour
 		firstRoll = true;
 	}
 
-	public void SearchAfterPurchase()
+	private void SellUnit(Slot slot)
 	{
-		for (int i = 0; i < shopWindows.Count;  i++)
+		UnitStats sellInfo = slot.payload.GetComponent<UnitStats>();
+		draggedIntoShop = true;
+		slot.payload = null;
+		shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
+		gameManager.Cash += (int)sellInfo.sellValue.Value;
+		Destroy(slot.payload);
+		gameManager.unitSold.Invoke(slot);
+	}
+	
+	private void PurchaseUnit(Slot newSlot, SetUnitInfo curShopItem)
+	{
+		if (newSlot.payload != null)
 		{
-			SetUnitInfo curShopItem = shopWindows[i].GetComponent<SetUnitInfo>();
-			Slot unitSlot = shopWindows[i].GetComponent<Slot>();
+			Experience unitExp = newSlot.payload.GetComponent<Experience>();
+			if (unitExp && unitExp.curLevel == Experience.MaxLevel) return;
+		}
+
+		curShopItem.unitPreview.SetActive(false);
+		curShopItem.purchased.SetActive(true);
+					
+		//turn off the rarity glow on units on purchase
+		foreach (var glow in curShopItem.rarityGlowList.Where(glow => glow.activeInHierarchy))
+		{
+			glow.SetActive(false);
+		}
+
+		curShopItem.unitFound.SetActive(false);
+		curShopItem.unitShine.SetActive(false);
+		gameManager.Cash -= curShopItem.unitCost;
+		gameManager.unitPurchased?.Invoke();
+
+		shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
+	}
+	
+	private void SearchAfterPurchase(Slot slot)
+	{
+		foreach (var window in shopWindows)
+		{
+			SetUnitInfo curShopItem = window.GetComponent<SetUnitInfo>();
+			Slot unitSlot = window.GetComponent<Slot>();
 			curShopItem.unitFound.SetActive(false); //set this to false before searching, effectively clearing it
 			curShopItem.unitShine.SetActive(false);
 
 			if (unitSlot.payload != null)
-            {
+			{
 				UnitFoundInInventory(unitSlot, curShopItem);
-            }
-        }
+			}
+		}
 	}
 
 	private void UnitFoundInInventory(Slot unitSlot, SetUnitInfo curShopItem)
@@ -283,29 +305,27 @@ public class ShopController : MonoBehaviour
 		{
 			if (slot.payload == null) continue;
 			if (slot.payload.GetComponent<Experience>().curLevel == Experience.MaxLevel) continue;
-			if (slot.payload.name == unitSlot.payload.name)
+			if (slot.payload.name != unitSlot.payload.name) continue;
+			//if its appearing in the shop for the first time
+			if (unitShine)
 			{
-				//if its appearing in the shop for the first time
-				if (unitShine)
+				Color defaultColor = curShopItem.shine.color;
+				curShopItem.shine.color = defaultColor;
+
+				//change the shine color to orange if its a legendary in shop
+				if (curShopItem.unitStats.Rarity == UnitRarity.Legendary)
 				{
-					Color defaultColor = curShopItem.shine.color;
-					curShopItem.shine.color = defaultColor;
-
-					//change the shine color to orange if its a legendary in shop
-					if (curShopItem.unitStats.Rarity == UnitRarity.Legendary)
-					{
-						curShopItem.shine.color = new Color32(255, 164, 0, 255);
-					}
-
-					StartCoroutine(playShineAnim(curShopItem));
+					curShopItem.shine.color = new Color32(255, 164, 0, 255);
 				}
 
-				//if you cant afford it, dont show the glow
-				if (gameManager.Cash < curShopItem.unitCost) continue;
-
-				//show the glow
-				curShopItem.unitFound.SetActive(true);
+				StartCoroutine(playShineAnim(curShopItem));
 			}
+
+			//if you cant afford it, dont show the glow
+			if (gameManager.Cash < curShopItem.unitCost) continue;
+
+			//show the glow
+			curShopItem.unitFound.SetActive(true);
 		}
 	}
 
@@ -322,32 +342,22 @@ public class ShopController : MonoBehaviour
 		unitShine = false;
 	}
 
-	private Slot FindNearestEmptySlot(List<Slot> slots)
+	private static Slot FindNearestEmptySlot(IEnumerable<Slot> slots)
 	{
-		foreach (Slot slot in slots)
-		{
-			if (slot.payload == null)
-			{
-				return slot;
-			}
-		}
-
-		return null;
+		return slots.FirstOrDefault(slot => slot.payload == null);
 	}
 
 	public void ClearShopWindows()
 	{
 		// if the shop items are already being displayed
-		if (shopWindows.Count != 0)
+		if (shopWindows.Count == 0) return;
+		foreach (GameObject window in shopWindows)
 		{
-			foreach (GameObject window in shopWindows)
-			{
-				if (window.GetComponent<Slot>().payload != null) Destroy(window.GetComponent<Slot>().payload);
-				Destroy(window);
-			} // delete them
-			shopWindows.Clear(); // clear the list
-			shopWindows.TrimExcess(); // wipe the memory
-		}
+			if (window.GetComponent<Slot>().payload != null) Destroy(window.GetComponent<Slot>().payload);
+			Destroy(window);
+		} // delete them
+		shopWindows.Clear(); // clear the list
+		shopWindows.TrimExcess(); // wipe the memory
 	}
 
 	//loops through the folders containing the SOs
@@ -359,11 +369,10 @@ public class ShopController : MonoBehaviour
 		{
 			for (int i = 0; i < battleManager.unitManager.unitStatsDatabase.Count; i++)
 			{
-				if (curShopItem.unitName.text == unit.name && curShopItem.unitName.text == battleManager.unitManager.unitStatsDatabase[i].name)
-				{
-					curUnitSlot.payload = battleManager.CreateUnitInstance(i, transform);
-					curUnitSlot.payload.SetActive(false);
-				}
+				if (curShopItem.unitName.text != unit.name ||
+				    curShopItem.unitName.text != battleManager.unitManager.unitStatsDatabase[i].name) continue;
+				curUnitSlot.payload = battleManager.CreateUnitInstance(i, transform);
+				curUnitSlot.payload.SetActive(false);
 			}
 		}
 	}
@@ -371,15 +380,14 @@ public class ShopController : MonoBehaviour
 	// sets a single shop item at a certain location
 	private void SetShopItem(Transform parent)
 	{
-		UnitInfo unitInfo;
-		unitInfo = battleManager.unitManager.unitStatsDatabase[GetRandomUnitWeighted(defaultRarities)];
+		var unitInfo = battleManager.unitManager.unitStatsDatabase[GetRandomUnitWeighted(defaultRarities)];
 
-		for (int i = 0; i < shopUnits.Count; i++)
+		foreach (var unit in shopUnits)
 		{
 			FindShopItem(); // find shopitem prefab and inits the curUnitInfo
-			if (shopUnits[i].name == unitInfo.name)
+			if (unit.name == unitInfo.name)
 			{
-				curUnitInfo.curUnit = shopUnits[i];
+				curUnitInfo.curUnit = unit;
 			}
 		}
 

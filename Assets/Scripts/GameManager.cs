@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
 	[HideInInspector]
 	public UnityEvent unitPurchased = new();
 	[HideInInspector]
-	public UnityEvent unitSold = new();
+	public UnityEvent<Slot> unitSold = new();
 	[HideInInspector]
 	public UnityEvent enemyUnitsCreated = new();
 	[HideInInspector]
@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
 	[HideInInspector]
 	public UnityEvent shopUnlocked = new();
 	[HideInInspector]
-	public UnityEvent unitAddedToSlot = new();
+	public UnityEvent<Slot> unitAddedToSlot = new();
 	#endregion
 
 	#region Unit Events
