@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -49,20 +50,21 @@ namespace Assets.Scripts.Units
 
             if (unit)
             {
-                unit.unitPerformanceAllTime.timesAttacked++;
-                unit.unitPerformanceAllTime.timesCrit += damageReport.damageInfo.isCrit ? 1 : 0;
-                unit.unitPerformanceAllTime.damageDealt += damageReport.damageDealt;
-                unit.unitPerformanceAllTime.unitsKilled += damageReport.wasLethal && victimUnit ? 1 : 0;
-                unit.unitPerformanceAllTime.actorsKilled += damageReport.wasLethal && victimActor ? 1 : 0;
-                unit.performanceUpdatedEvent.Invoke(unit.unitPerformanceAllTime);
+                unit.unitPerformanceLastBattle.timesAttacked++;
+                unit.unitPerformanceLastBattle.timesCrit += damageReport.damageInfo.isCrit ? 1 : 0;
+                unit.unitPerformanceLastBattle.damageDealt += damageReport.damageDealt;
+                unit.unitPerformanceLastBattle.unitsKilled += damageReport.wasLethal && victimUnit ? 1 : 0;
+                unit.unitPerformanceLastBattle.actorsKilled += damageReport.wasLethal && victimActor ? 1 : 0;
+                unit.performanceUpdatedEvent.Invoke(unit.unitPerformanceLastBattle);
 
             }
             if (victimUnit)
             {
-                victimUnit.unitPerformanceAllTime.damageRecieved += damageReport.damageDealt;
-                victimUnit.unitPerformanceAllTime.damageBlocked += damageReport.wasBlocked ? damageReport.incomingDamage : 0;
-                victimUnit.unitPerformanceAllTime.timesDied += damageReport.wasLethal ? 1 : 0;
-                victimUnit.performanceUpdatedEvent.Invoke(victimUnit.unitPerformanceAllTime);
+                victimUnit.unitPerformanceLastBattle.damageRecieved += damageReport.damageDealt;
+                victimUnit.unitPerformanceLastBattle.damageBlocked += damageReport.wasBlocked ? damageReport.incomingDamage : 0;
+                victimUnit.unitPerformanceLastBattle.damagePassedToActor += damageReport.damageRemainder;
+                victimUnit.unitPerformanceLastBattle.timesDied += damageReport.wasLethal ? 1 : 0;
+                victimUnit.performanceUpdatedEvent.Invoke(victimUnit.unitPerformanceLastBattle);
             }
         }
 
@@ -121,6 +123,7 @@ namespace Assets.Scripts.Units
         public float damageDealtToUnits;
         public float damageRecieved;
         public float damageBlocked;
+        public float damagePassedToActor;
         public int unitsKilled;
         public int actorsKilled;
         public int timesAttacked;
@@ -132,5 +135,27 @@ namespace Assets.Scripts.Units
         public int battlesSurvived;
         public int battlesLost;
         public int battlesWon;
+
+        public static UnitPerformance operator+(UnitPerformance a, UnitPerformance b)
+        {
+           a.damageDealt += b.damageDealt;
+           a.damageDealtToActors += b.damageDealtToActors;
+           a.damageDealtToUnits += b.damageDealtToUnits;
+           a.damageRecieved += b.damageRecieved;
+           a.damageBlocked += b.damageBlocked;
+           a.damagePassedToActor += b.damagePassedToActor;
+           a.unitsKilled += b.unitsKilled;
+           a.actorsKilled += b.actorsKilled;
+           a.timesAttacked += b.timesAttacked;
+           a.timesCrit += b.timesCrit;
+           a.timesDug += b.timesDug;
+           a.timesBlocked += b.timesBlocked;
+           a.timesDied += b.timesDied;
+           
+           a.battlesSurvived += b.battlesSurvived;
+           a.battlesLost += b.battlesLost;
+           a.battlesWon += b.battlesWon;
+           return b;
+        }
     }
 }

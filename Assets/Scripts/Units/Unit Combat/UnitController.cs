@@ -22,8 +22,10 @@ public class UnitController : MonoBehaviour, ISlotItem
 	public Actor unitOwner;
 	[HideInInspector]
 	public UnitPerformance unitPerformanceAllTime;
+    [HideInInspector]
+    public UnitPerformance unitPerformanceLastBattle;
 
-	public UnityEvent<UnitPerformance> performanceUpdatedEvent;
+    public UnityEvent<UnitPerformance> performanceUpdatedEvent;
 	public Actor parentActor;
 
 
@@ -82,7 +84,6 @@ public class UnitController : MonoBehaviour, ISlotItem
 	{
 		inCombat = true;
 		gameManager.combatBeganEvent.Invoke();
-
 	}
 
 	private void FixedUpdate()
@@ -115,12 +116,15 @@ public class UnitController : MonoBehaviour, ISlotItem
 	{
 		inCombat = true;
         health.blockChance = unitStats.blockChance; // this may cause problems later due to block not being able to be updated mid combat.
+        unitPerformanceLastBattle = new();
+		performanceUpdatedEvent.Invoke(unitPerformanceLastBattle);
 
     }
 
     private void BattleEnded()
 	{
 		inCombat = false;
+		unitPerformanceAllTime += unitPerformanceLastBattle;
 	}
 
 	/// <summary>

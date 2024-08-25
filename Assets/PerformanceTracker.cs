@@ -10,7 +10,8 @@ public class PerformanceTracker : MonoBehaviour, ISlotPayloadChangeHandler, ISlo
 
     public UnitPerformanceDisplay display;
     GameObject lastPayload;
-    UnitPerformance storedPerformance;
+    UnitPerformance storedPerformanceAllTime;
+    UnitPerformance storedPerformanceLastBattle;
 
     public void SlotDragEnded(GameObject payload)
     {
@@ -55,9 +56,9 @@ public class PerformanceTracker : MonoBehaviour, ISlotPayloadChangeHandler, ISlo
 
     public void UpdateDisplay(UnitPerformance unitPerformance)
     {
-        storedPerformance = unitPerformance;
+        storedPerformanceAllTime = unitPerformance;
 
-        if (display.damagePreviewText) display.damagePreviewText.text = storedPerformance.damageDealt.ToString();
+        if (display.damagePreviewText) display.damagePreviewText.text = storedPerformanceAllTime.damageDealt.ToString();
     }
 
 
