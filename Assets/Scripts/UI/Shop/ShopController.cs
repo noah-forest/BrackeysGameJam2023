@@ -156,7 +156,7 @@ public class ShopController : MonoBehaviour
 			{
 				SetUnitInfo unitInfo = arg0.GetComponent<SetUnitInfo>();
 				canAfford = gameManager.Cash >= unitInfo.unitCost;
-				if (unitInfo != null && canAfford)
+				if (unitInfo != null && canAfford && arg0.payload)
 				{
 					//find an available slot
 					Slot slot = FindNearestEmptySlot(battleManager.playerBattleSlots);
@@ -172,6 +172,7 @@ public class ShopController : MonoBehaviour
 					
 					// purchase the unit
 					PurchaseUnit(slot, unitInfo);
+					slot.quickAction.Invoke();
 					slot.payload = arg0.payload;
 					arg0.payload = null;
 				}
@@ -183,6 +184,7 @@ public class ShopController : MonoBehaviour
 				if (arg0.payload)
 				{
 					SellUnit(arg0);
+					arg0.quickAction.Invoke();
 				}
 			}
 		});

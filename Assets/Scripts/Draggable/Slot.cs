@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -18,6 +15,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
     public UnityEvent dragStarted = new();
     public UnityEvent dragStopped = new();
 
+    public UnityEvent quickAction = new();
+
 	public static UnityEvent<Slot> controlClicked = new();
 	public static UnityEvent<Slot> anyDragStarted = new(); 
     public static UnityEvent<Slot> anyDragStopped = new();
@@ -25,8 +24,6 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 	public bool interactable = true;
 
 	private bool beingDragged;
-
-	private bool controlDown;
 	
     public static DragVisual dragVisual
     {
@@ -54,6 +51,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
     
     protected Transform spriteDraggingRepresentation;
 
+    private SlotTooltipTrigger tooltip;
+
     public GameObject payload
     {
         get => _payload;
@@ -75,12 +74,11 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 		mouseUtils = MouseUtils.singleton;
 		gameManager = GameManager.singleton;
 
+		tooltip = GetComponent<SlotTooltipTrigger>();
+		
+		quickAction.AddListener(QuickAction);
+		
         OnPayloadChanged();
-    }
-
-    private void Update()
-    {
-	    controlDown = Input.GetKey(KeyCode.LeftControl);
     }
 
     public void AddDropPrecheck(SlotDropPrecheck precheck)
@@ -154,13 +152,27 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
     protected void OnMouseEnter()
     {
-		if (payload != null) mouseUtils.SetHoverDragCursor();
+	    if (payload && CompareTag("ShopSlot"))
+	    {
+		    mouseUtils.hoveringShopSlot = true;
+	    } else if (payload && CompareTag("BattleSlot") || payload && CompareTag("ReserveSlot"))
+	    {
+		    mouseUtils.hoveringSlot = true;
+	    } 
+	     
+	    if (payload && !gameManager.controlDown)
+	    {
+		    mouseUtils.SetHoverDragCursor();
+	    }
+	    
 		currentlyOverSlot = this;
     }
 
     protected void OnMouseExit()
     {
 		mouseUtils.SetToDefaultCursor();
+		mouseUtils.hoveringShopSlot = false;
+		mouseUtils.hoveringSlot = false;
         if (currentlyOverSlot == this)
         {
             currentlyOverSlot = null;
@@ -179,7 +191,10 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
         anyDragStopped.Invoke(this);
         beingDragged = false;
 
-		if(payload != null) mouseUtils.SetHoverDragCursor();
+        if (payload)
+        {
+	        mouseUtils.SetHoverDragCursor();
+        }
 
 		if (payload != null && currentlyOverSlot != null && currentlyOverSlot != this)
         {
@@ -239,12 +254,20 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
 
     protected void OnMouseClick()
     {
-	    if (!controlDown) return;
+	    if (!gameManager.controlDown) return;
 	    controlClicked.Invoke(this);
     }
 
     //To work with UI
 
+    private void QuickAction()
+    {
+	    mouseUtils.hoveringSlot = false;
+	    mouseUtils.hoveringShopSlot = false;
+	    if(tooltip) tooltip.HideTooltip();
+	    mouseUtils.SetToDefaultCursor();
+    }
+    
     public void OnPointerEnter(PointerEventData data)
     {
 		if (interactable)

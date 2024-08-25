@@ -16,6 +16,8 @@ public class MouseUtils : MonoBehaviour
 	public Texture2D hoverDragCursor;
 	public Texture2D shovelCursor;
 	public Texture2D shovelDigCursor;
+	public Texture2D quickSellCursor;
+	public Texture2D quickBuyCursor;
 
 	public Canvas MainMenuCanvas;
 	public Canvas shopCanvas;
@@ -25,6 +27,8 @@ public class MouseUtils : MonoBehaviour
 
 	private bool hovering;
 	private bool hoveringGrave;
+	public bool hoveringShopSlot;
+	public bool hoveringSlot;
 
 	#region singleton
 
@@ -50,6 +54,13 @@ public class MouseUtils : MonoBehaviour
 	private List<Button> buttons = new();
 	private List<Slot> slots = new();
 	private EventTrigger trigger;
+
+	private GameManager gameManager;
+	
+	private void Start()
+	{
+		gameManager = GameManager.singleton;
+	}
 
 	public void FindButtonsInScene()
 	{
@@ -112,9 +123,17 @@ public class MouseUtils : MonoBehaviour
 			{
 				SetShovelCursor();
 			}
-		} else
+		}
+		
+		if (hoveringSlot && gameManager.controlDown)
 		{
-			return;
+			SetQuickSellCursor();
+		} else if (hoveringShopSlot && gameManager.controlDown)
+		{
+			SetQuickBuyCursor();
+		} else if (hoveringSlot && Input.GetKeyUp(KeyCode.LeftControl) || hoveringShopSlot && Input.GetKeyUp(KeyCode.LeftControl))
+		{
+			SetHoverDragCursor();
 		}
 	}
 
@@ -129,28 +148,24 @@ public class MouseUtils : MonoBehaviour
 		hovering = false;
 
 		// set drag cursor
-		Vector2 cursorOffset = new Vector2(dragCursor.width / 2, dragCursor.height / 2);
-		Cursor.SetCursor(dragCursor, cursorOffset, CursorMode.Auto);
+		SetCursor(dragCursor);
 	}
 
 	public void SetPressedCursor()
 	{
-		Vector2 cursorOffset = new Vector2(pressedCursor.width / 2, pressedCursor.height / 2);
-		Cursor.SetCursor(pressedCursor, cursorOffset, CursorMode.Auto);
+		SetCursor(pressedCursor);
 	}
 
 	public void SetShovelPressedCursor()
 	{
-		Vector2 cursorOffset = new Vector2(shovelDigCursor.width / 2, shovelDigCursor.height / 2);
-		Cursor.SetCursor(shovelDigCursor, cursorOffset, CursorMode.Auto);
+		SetCursor(shovelDigCursor);
 	}
 
 	public void SetHoverDragCursor()
 	{
 		hovering = false;
 
-		Vector2 cursorOffset = new Vector2(hoverDragCursor.width / 2, hoverDragCursor.height / 2);
-		Cursor.SetCursor(hoverDragCursor, cursorOffset, CursorMode.Auto);
+		SetCursor(hoverDragCursor);
 	}
 
 	public void SetShovelCursor()
@@ -158,33 +173,44 @@ public class MouseUtils : MonoBehaviour
 		hovering = false;
 		hoveringGrave = true;
 
-		Vector2 cursorOffset = new Vector2(shovelCursor.width / 2, shovelCursor.height / 2);
-		Cursor.SetCursor(shovelCursor, cursorOffset, CursorMode.Auto);
+		SetCursor(shovelCursor);
 	}
 
 	public void SetHoverCursor()
 	{
 		hovering = true;
 
-		Vector2 cursorOffset = new Vector2(hoverCursor.width / 2, hoverCursor.height / 2);
-		Cursor.SetCursor(hoverCursor, cursorOffset, CursorMode.Auto);
+		SetCursor(hoverCursor);
 	}
 
 	public void SetTooltipCursor()
 	{
 		hovering = false;
 
-		Vector2 cursorOffset = new Vector2(tooltipCursor.width / 2, tooltipCursor.height / 2);
-		Cursor.SetCursor(tooltipCursor, cursorOffset, CursorMode.Auto);
+		SetCursor(tooltipCursor);
+	}
+
+	public void SetQuickSellCursor()
+	{
+		SetCursor(quickSellCursor);
+	}
+
+	public void SetQuickBuyCursor()
+	{
+		SetCursor(quickBuyCursor);
 	}
 
 	public void SetToDefaultCursor()
 	{
 		hovering = false;
 		hoveringGrave = false;
+		SetCursor(defaultCursor);
+	}
 
-		Vector2 cursorOffset = new Vector2(defaultCursor.width / 2, defaultCursor.height / 2);
-		Cursor.SetCursor(defaultCursor, cursorOffset, CursorMode.Auto);
+	private void SetCursor(Texture2D cursor)
+	{
+		Vector2 cursorOffset = new Vector2(cursor.width / 2, cursor.height / 2);
+		Cursor.SetCursor(cursor, cursorOffset, CursorMode.Auto);
 	}
 	#endregion
 }

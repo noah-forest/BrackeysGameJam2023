@@ -169,6 +169,7 @@ public class GameManager : MonoBehaviour
 
 	public bool gameIsPaused { private set; get; }
 	public bool openPauseMenu;
+	public bool controlDown;
 
 	[HideInInspector]
 	public UnityEvent pauseGame;
@@ -188,15 +189,14 @@ public class GameManager : MonoBehaviour
 	private void Update()
 	{
 		if (SceneManager.GetActiveScene().name == "MainMenu") return;
+		
+		//if they holding down control
+		controlDown = Input.GetKey(KeyCode.LeftControl);
+		
+		//open pause menu
 		if (Input.GetKeyDown(KeyCode.Escape))
 		{
 			TogglePauseMenu();
-
-			if (settingsMenu.activeInHierarchy)
-			{
-				OpenSideMenu menu = settingsMenu.GetComponent<OpenSideMenu>();
-				menu.OnClick();
-			}
 		}
 	}
 
