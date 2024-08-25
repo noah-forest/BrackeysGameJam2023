@@ -23,6 +23,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 	[HideInInspector]
 	public UnitPerformance unitPerformanceAllTime;
 
+	public UnityEvent<UnitPerformance> performanceUpdatedEvent;
 	public Actor parentActor;
 
 

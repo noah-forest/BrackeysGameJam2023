@@ -632,6 +632,7 @@ GameObject:
   - component: {fileID: 5712782741260193707}
   - component: {fileID: 7183466953266504517}
   - component: {fileID: 7136427402738899980}
+  - component: {fileID: 7632455079361800374}
   m_Layer: 5
   m_Name: BattleSlot
   m_TagString: BattleSlot
@@ -690,7 +691,7 @@ MonoBehaviour:
   dragStopped:
     m_PersistentCalls:
       m_Calls: []
-  slotFilled:
+  quickAction:
     m_PersistentCalls:
       m_Calls: []
   interactable: 1
@@ -729,6 +730,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a5bd5e52a3434c149bdd2ded69308417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7632455079361800374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7016550189597939381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3941e38100e1e2c4a873407e9f9ffb33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7156220437853451943

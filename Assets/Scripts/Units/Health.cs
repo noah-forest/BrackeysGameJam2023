@@ -89,37 +89,8 @@ public class Health : MonoBehaviour
 
 		damageReport.damageRemainder = Mathf.Abs(damageReport.healthBeforeDamage - damageReport.damageDealt);
 
-		//Log
-        //TODO broadcast damage report to channel
-        string logString = $"Unit {damageReport.damageInfo.attacker.name} ";
-        logString += damageReport.damageInfo.isCrit ? "CRITICALLY " : "";
-        logString += (damageReport.wasLethal) ? "killed " : "attacked ";
-        logString += $"opposing {damageReport.victim.name} with {damageReport.incomingDamage} damage ";
-        logString += damageReport.damageInfo.isOverflow ? "via overflow " : "";
-        logString += damageReport.wasBlocked ? "but was BLOCKED " : "";
-        logString += $"({damageReport.healthBeforeDamage}) => ({damageReport.healthAfterDamage}) ";
-        Debug.Log(logString);
-
-
-		var unit = damageReport.damageInfo.attacker.GetComponent<UnitController>();
-		var victimUnit = damageReport.victim.GetComponent<UnitController>();
-		var victimActor = damageReport.victim.GetComponent<Actor>();
-		
-		if (unit)
-		{
-			unit.unitPerformanceAllTime.timesAttacked++;
-			unit.unitPerformanceAllTime.timesCrit += damageReport.damageInfo.isCrit ? 1 : 0;
-			unit.unitPerformanceAllTime.damageDealt += damageReport.damageDealt;
-			unit.unitPerformanceAllTime.unitsKilled += damageReport.wasLethal && victimUnit ? 1 : 0;
-			unit.unitPerformanceAllTime.actorsKilled += damageReport.wasLethal && victimActor ? 1 : 0;
-		}
-		if (victimUnit)
-		{
-			victimUnit.unitPerformanceAllTime.damageRecieved += damageReport.damageDealt;
-			victimUnit.unitPerformanceAllTime.damageBlocked += damageReport.wasBlocked ? damageReport.incomingDamage : 0;
-			victimUnit.unitPerformanceAllTime.timesDied += damageReport.wasLethal ? 1 : 0;
-		}
-
+        // broadcast damage report
+		DamageSystem.singleton.OnAnyHealthAttacked.Invoke(damageReport);
 
 		//determine if damage should overflow to owner
 		if (gameManager.debugMenu.overkillEnabled && OwnerHealth && isDead && damageReport.damageRemainder > 0)
