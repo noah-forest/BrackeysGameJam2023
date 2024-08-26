@@ -38,6 +38,8 @@ public class UIManager : MonoBehaviour
 	[SerializeField] TextMeshProUGUI scaleContent;
 	[SerializeField] GameObject scaledUI;
 
+	[SerializeField] private GameObject dpsPreview;
+	
 	[SerializeField] GameObject livesContainer;
 	[SerializeField] GameObject livesArea;
 	[SerializeField] Sprite fullHeart;
@@ -55,7 +57,7 @@ public class UIManager : MonoBehaviour
 
 	private int scaleCountdown;
 	private int scaleLevel;
-
+	
 	private void Start()
 	{
 		gameManager = GameManager.singleton;
@@ -289,6 +291,7 @@ public class UIManager : MonoBehaviour
 		shopUi.SetActive(true);
 		unitPreview.SetActive(true);
 		reserveSlots.SetActive(true);
+		dpsPreview.SetActive(false);
 		if(scaleCountdown == 0)
 		{
 			scaledUI.transform.parent.gameObject.SetActive(false);
@@ -300,6 +303,7 @@ public class UIManager : MonoBehaviour
 		shopUi.SetActive(false);
 		unitPreview.SetActive(false);
 		reserveSlots.SetActive(false);
+		dpsPreview.SetActive(true);
 	}
 
 	private void ShowGameOverScreen()
