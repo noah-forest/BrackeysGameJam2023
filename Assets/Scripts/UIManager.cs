@@ -34,7 +34,6 @@ public class UIManager : MonoBehaviour
 	[SerializeField] TextMeshProUGUI battlesWonCount;
 	[SerializeField] TextMeshProUGUI shopBattlesWonCount;
 	[SerializeField] TextMeshProUGUI scaleText;
-	[SerializeField] TextMeshProUGUI shopScaleText;
 	[SerializeField] TextMeshProUGUI scaleContent;
 	[SerializeField] GameObject scaledUI;
 
@@ -81,8 +80,6 @@ public class UIManager : MonoBehaviour
 		shopBattlesWonCount.text = gameManager.BattlesWon.ToString();
 		scaleLevel = battleManager.scaleToLvl2;
 		scaleCountdown = scaleLevel - gameManager.BattlesWon;
-
-		shopScaleText.text = scaleCountdown.ToString();
 
 		foreach (Transform child in livesContainer.transform.GetComponentsInChildren<Transform>())
 		{
@@ -184,8 +181,6 @@ public class UIManager : MonoBehaviour
 		{
 			scaleCountdown = scaleLevel - gameManager.BattlesWon;
 		}
-
-		shopScaleText.text = $"{scaleCountdown}";
 
 		ShowResult(0);
 	}

@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Tooltip : MonoBehaviour
 {
 	public RectTransform rectTransform;
 
+	public TextMeshProUGUI contentText;
+	
 	private void Awake()
 	{
 		rectTransform = GetComponent<RectTransform>();
@@ -19,7 +22,7 @@ public class Tooltip : MonoBehaviour
 		float pivotX = position.x / Screen.width;
 		float pivotY = position.y / Screen.height;
 
-		rectTransform.pivot = new Vector2(pivotX, pivotY);
+		rectTransform.pivot = new Vector2(pivotX, pivotY - 0.5f);
 		transform.position = position;
     }
 }

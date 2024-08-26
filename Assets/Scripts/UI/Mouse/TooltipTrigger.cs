@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 
 public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+	public string content;
+	
 	private void Start()
 	{
 		TooltipSystem.Hide();
@@ -12,7 +14,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 	public void OnPointerEnter(PointerEventData eventData)
 	{
-		TooltipSystem.Show();
+		TooltipSystem.Show(content);
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
