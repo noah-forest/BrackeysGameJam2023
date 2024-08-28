@@ -49,6 +49,8 @@ public class BattleManager : MonoBehaviour
 	public bool firstTime;
 	private bool playerUnitsLoaded;
 
+	[HideInInspector] public string battleOutcome;
+
 	private void Start()
 	{
 		gameManager = GameManager.singleton;
@@ -61,7 +63,8 @@ public class BattleManager : MonoBehaviour
 	public void EnemyDied()
 	{
 		++gameManager.BattlesWon;
-
+		battleOutcome = "Won";
+		
 		gameManager.battleWonEvent.Invoke();
 		gameManager.battleEndedEvent.Invoke();
 		gameManager.pauseGame.Invoke();
@@ -100,6 +103,7 @@ public class BattleManager : MonoBehaviour
 	public void PlayerDied()
 	{
 		--gameManager.Lives;
+		battleOutcome = "Lost";
 		if (gameManager.Lives > 0)
 		{
 			gameManager.battleLostEvent.Invoke();

@@ -15,6 +15,8 @@ public class UnitPerformanceDisplay : MonoBehaviour
     [SerializeField]
     public UnityEngine.UI.Image previewIcon;
 
+    public Sprite nullSprite;
+
     private void Start()
     {
         ClearDisplay();
@@ -29,7 +31,7 @@ public class UnitPerformanceDisplay : MonoBehaviour
 
     public void ClearDisplay()
     {
-        previewIcon.sprite = null;
+        previewIcon.sprite = nullSprite;
         namePreviewText.text = "No Unit";
         damagePreviewText.text = 0.ToString();
     }
