@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class PR_TabGroup : MonoBehaviour
@@ -17,6 +18,8 @@ public class PR_TabGroup : MonoBehaviour
     [Space(5)]
     public GameObject tabCont;
     public GameObject tab;
+    
+    public GameObject pageCont;
     
     private BattleManager battleManager;
     private List<GameObject> newTabs = new();
@@ -43,15 +46,48 @@ public class PR_TabGroup : MonoBehaviour
             var tabInfo = temp.GetComponent<PR_Tab>();
             var slotItem = slot.payload.GetComponent<ISlotItem>();
 
+            var page = Instantiate(tabInfo.page, pageCont.transform);
+            var pageInfo = page.GetComponent<PR_PageInfo>();
+            if (tabInfo != masterTab)
+            {
+                page.SetActive(false);
+            }
+            
             tabInfo.tabGroup = this;
-            
-            if (slotItem != null) 
+
+            if (slotItem != null)
+            {
                 tabInfo.icon.sprite = slotItem.GetSlotSprite();
+                FillOutPageInfo(slot, pageInfo);
+            }
             
+            objectToSwap.Add(page);
             newTabs.Add(temp);
         }
     }
 
+    private void FillOutPageInfo(Slot slot, PR_PageInfo pageInfo)
+    {
+        var controller = slot.payload.GetComponent<UnitController>();
+        var exp = slot.payload.GetComponent<Experience>();
+        
+        pageInfo.unitName.text = slot.payload.name;
+        pageInfo.unitLevel.text = exp.curLevel.ToString();
+        pageInfo.dmgDealt.SetText($"{controller.unitPerformanceAllTime.damageDealt}");
+        pageInfo.dmgToEnemy.SetText($"{controller.unitPerformanceAllTime.damageDealtToActors}");
+        pageInfo.dmgToUnits.SetText($"{controller.unitPerformanceAllTime.damageDealtToUnits}");
+        pageInfo.dmgBlocked.SetText($"{controller.unitPerformanceAllTime.damageBlocked}");
+        pageInfo.dmgReceived.SetText($"{controller.unitPerformanceAllTime.damageRecieved}");
+        pageInfo.dmgAllowed.SetText($"{controller.unitPerformanceAllTime.damagePassedToActor}");
+        pageInfo.unitsKilled.SetText($"{controller.unitPerformanceAllTime.unitsKilled}");
+        pageInfo.actorsKilled.SetText($"{controller.unitPerformanceAllTime.actorsKilled}");
+        pageInfo.timesAttacked.SetText($"{controller.unitPerformanceAllTime.timesAttacked}");
+        pageInfo.timesCrit.SetText($"{controller.unitPerformanceAllTime.timesCrit}");
+        pageInfo.timesDug.SetText($"{controller.unitPerformanceAllTime.timesDug}");
+        pageInfo.timesBlocked.SetText($"{controller.unitPerformanceAllTime.timesBlocked}");
+        pageInfo.timesDied.SetText($"{controller.unitPerformanceAllTime.timesDied}");
+    }
+    
     private void DestroyNewTabs()
     {
         if (newTabs.Count == 0) return;
@@ -59,8 +95,8 @@ public class PR_TabGroup : MonoBehaviour
         {
             Destroy(go);
         }
+        
         newTabs.Clear();
-        newTabs.TrimExcess();
     }
 
     private void DestroyOldTabs(PR_Tab master)
@@ -73,9 +109,17 @@ public class PR_TabGroup : MonoBehaviour
             Destroy(temp);
         }
 
+        foreach (var go in objectToSwap)
+        {
+            if (go == master.page) continue;
+            Destroy(go);
+        }
+        
+        objectToSwap.Clear();
         tabButtons.Clear();
         
         tabButtons.Add(master);
+        objectToSwap.Add(master.page);
         OnTabSelected(master);
     }
     

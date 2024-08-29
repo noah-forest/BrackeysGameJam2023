@@ -10,6 +10,8 @@ public class PR_Tab : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler,
 
     public Image icon;
 
+    public GameObject page;
+    
     private MouseUtils mouseUtils;
     
     // Start is called before the first frame update
