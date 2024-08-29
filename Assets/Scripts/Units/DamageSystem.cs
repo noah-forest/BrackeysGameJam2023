@@ -65,7 +65,7 @@ namespace Assets.Scripts.Units
                 victimUnit.unitPerformanceLastBattle.damageRecieved += damageReport.damageDealt;
                 victimUnit.unitPerformanceLastBattle.damageBlocked += damageReport.wasBlocked ? damageReport.incomingDamage : 0;
                 victimUnit.unitPerformanceLastBattle.timesBlocked += damageReport.wasBlocked ? 1 : 0;
-                victimUnit.unitPerformanceLastBattle.damagePassedToActor += damageReport.damageRemainder;
+                victimUnit.unitPerformanceLastBattle.damagePassedToActor += damageReport.wasLethal ? damageReport.damageRemainder : 0;
                 victimUnit.unitPerformanceLastBattle.timesDied += damageReport.wasLethal ? 1 : 0;
                 victimUnit.performanceUpdatedEvent.Invoke(victimUnit.unitPerformanceLastBattle);
             }
@@ -158,7 +158,7 @@ namespace Assets.Scripts.Units
            a.battlesSurvived += b.battlesSurvived;
            a.battlesLost += b.battlesLost;
            a.battlesWon += b.battlesWon;
-           return b;
+           return a;
         }
     }
 }

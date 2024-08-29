@@ -9,7 +9,8 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 	public bool playerOwned;
 	private ParticleSystem digParticle;
-	public UnityEvent graveDug;
+	public UnityEvent graveFinished;
+	public UnityEvent graveClicked;
 	private bool inGrave;
 	private int currentDigCount;
 
@@ -67,13 +68,14 @@ public class Grave : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		currentDigCount++;
 
 		int spriteInterp = (int)Mathf.Lerp(digLevelSprites.Length, 1, (float)(currentDigCount) / (float)digCount);
-
+		graveClicked.Invoke();
+		
 		if (currentDigCount >= digCount)
 		{
 			inGrave = false;
 			graveTutorial.SetActive(false);
 			spriteInterp = 0;
-			graveDug.Invoke();
+			graveFinished.Invoke();
 		}
 		digParticle.Play();
 		sprite.sprite = digLevelSprites[spriteInterp];

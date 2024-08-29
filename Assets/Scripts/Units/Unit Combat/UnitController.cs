@@ -39,11 +39,14 @@ public class UnitController : MonoBehaviour, ISlotItem
 		{
 			if (_grave != null)
 			{
-				_grave.graveDug.RemoveListener(Respawn);
-			}
-			
-			_grave = value;
-			_grave.graveDug.AddListener(Respawn);
+				_grave.graveFinished.RemoveListener(Respawn);
+                _grave.graveClicked.RemoveListener(OnGraveClicked);
+
+            }
+
+            _grave = value;
+			_grave.graveFinished.AddListener(Respawn);
+			_grave.graveClicked.AddListener(OnGraveClicked);
 		}
 		get => _grave;
 	}
@@ -182,6 +185,11 @@ public class UnitController : MonoBehaviour, ISlotItem
 			GameObject Go = transform.GetChild(i).gameObject;
 			Go.SetActive(true);
 		}
+	}
+
+	public void OnGraveClicked()
+	{
+		unitPerformanceLastBattle.timesDug++;
 	}
 
 	public Sprite GetSlotSprite()
