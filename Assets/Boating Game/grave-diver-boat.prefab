@@ -255,7 +255,7 @@ Transform:
   m_GameObject: {fileID: 2545829563348287795}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0.678, z: 3.407}
+  m_LocalPosition: {x: 0, y: 1.184, z: 3.407}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -479,6 +479,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2749491485131299502}
+  - component: {fileID: 723297921765881025}
   - component: {fileID: 3834712899350198344}
   m_Layer: 0
   m_Name: grave-diver-boat
@@ -505,6 +506,21 @@ Transform:
   - {fileID: 2450913901161669301}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &723297921765881025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5730541577539286929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 029e6b3c4e77cc24db86137142dc6581, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 3834712899350198344}
+  impactLogic: {fileID: 7355553730324982138}
+  gameManager: {fileID: 0}
 --- !u!114 &3834712899350198344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,7 +566,7 @@ Transform:
   m_GameObject: {fileID: 8742203300855390252}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5899697, y: 0.5899697, z: 0.3897894, w: 0.3897894}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.43, z: 0}
   m_LocalScale: {x: 12.550047, y: 12.550047, z: 12.550047}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -621,6 +637,7 @@ GameObject:
   - component: {fileID: 2071798244576920545}
   - component: {fileID: 4730423320629889488}
   - component: {fileID: 1697156080025947110}
+  - component: {fileID: 7355553730324982138}
   m_Layer: 0
   m_Name: SecretOrb
   m_TagString: Untagged
@@ -741,3 +758,16 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &7355553730324982138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8806399039895413219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf6b31fe4f3528a4ca557439a82ac629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boat: {fileID: 723297921765881025}

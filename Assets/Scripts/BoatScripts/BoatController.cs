@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles movement of boat
+/// </summary>
 public class BoatController : MonoBehaviour
 {
     [SerializeField]
@@ -17,8 +20,10 @@ public class BoatController : MonoBehaviour
     private float boatTurnPower = 10;
     [SerializeField]
     private float wheelVisualSpeed = 50;
+
+    //used to try to maintain the positions of the boat and the rolling ball, which techincally move independantly
     Vector3 orbOffset;
-    Vector3 torque;
+    Vector3 turnForce;
 
     // Start is called before the first frame update
     void Start()
@@ -31,15 +36,11 @@ public class BoatController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            torque += Vector3.right * boatTurnPower;
-            Debug.Log($"PRESSING A {torque}");
-
+            turnForce += Vector3.right * boatTurnPower;
         }
         else if(Input.GetKeyDown(KeyCode.D))
         {
-            torque += Vector3.left * boatTurnPower;
-
-            Debug.Log($"PRESSING D { torque}");
+            turnForce += Vector3.left * boatTurnPower;
         }
 
 
@@ -52,9 +53,9 @@ public class BoatController : MonoBehaviour
         wheel.AddTorque(orb.velocity.x * Vector3.forward * wheelVisualSpeed,ForceMode.Acceleration);
 
 
-        orb.AddForce((boatForwardSpeed * -Vector3.forward + torque) * Time.fixedDeltaTime);
+        orb.AddForce((boatForwardSpeed * -Vector3.forward + turnForce) * Time.fixedDeltaTime);
         transform.position = orb.transform.position - orbOffset;
-        torque = Vector3.zero;
+        turnForce = Vector3.zero;
     }
 
 
