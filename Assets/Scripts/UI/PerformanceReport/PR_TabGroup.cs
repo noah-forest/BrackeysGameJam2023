@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Assets.Scripts.Units;
 using UnityEngine;
 
 public class PR_TabGroup : MonoBehaviour
@@ -73,19 +74,39 @@ public class PR_TabGroup : MonoBehaviour
         
         pageInfo.unitName.text = slot.payload.name;
         pageInfo.unitLevel.text = exp.curLevel.ToString();
-        pageInfo.dmgDealt.SetText($"{controller.unitPerformanceAllTime.damageDealt}");
-        pageInfo.dmgToEnemy.SetText($"{controller.unitPerformanceAllTime.damageDealtToActors}");
-        pageInfo.dmgToUnits.SetText($"{controller.unitPerformanceAllTime.damageDealtToUnits}");
-        pageInfo.dmgBlocked.SetText($"{controller.unitPerformanceAllTime.damageBlocked}");
-        pageInfo.dmgReceived.SetText($"{controller.unitPerformanceAllTime.damageRecieved}");
-        pageInfo.dmgAllowed.SetText($"{controller.unitPerformanceAllTime.damagePassedToActor}");
-        pageInfo.unitsKilled.SetText($"{controller.unitPerformanceAllTime.unitsKilled}");
-        pageInfo.actorsKilled.SetText($"{controller.unitPerformanceAllTime.actorsKilled}");
-        pageInfo.timesAttacked.SetText($"{controller.unitPerformanceAllTime.timesAttacked}");
-        pageInfo.timesCrit.SetText($"{controller.unitPerformanceAllTime.timesCrit}");
-        pageInfo.timesDug.SetText($"{controller.unitPerformanceAllTime.timesDug}");
-        pageInfo.timesBlocked.SetText($"{controller.unitPerformanceAllTime.timesBlocked}");
-        pageInfo.timesDied.SetText($"{controller.unitPerformanceAllTime.timesDied}");
+        OnToggleOff(pageInfo, controller);
+        
+        pageInfo.allTimeToggle.onToggleOn.AddListener(delegate { OnToggle(pageInfo, controller); });
+        pageInfo.allTimeToggle.onToggleOff.AddListener(delegate { OnToggleOff(pageInfo, controller); });
+    }
+
+    private void OnToggle(PR_PageInfo pageInfo, UnitController unitController)
+    {
+        pageInfo.displayCheck.SetText("All Time");
+        DisplayUnitPerformance(pageInfo, unitController.unitPerformanceAllTime);
+    }
+
+    private void OnToggleOff(PR_PageInfo pageInfo, UnitController unitController)
+    {
+        pageInfo.displayCheck.SetText("Last Battle");
+        DisplayUnitPerformance(pageInfo, unitController.unitPerformanceLastBattle);
+    }
+
+    private void DisplayUnitPerformance(PR_PageInfo pageInfo, UnitPerformance performance)
+    {
+        pageInfo.dmgDealt.SetText($"{performance.damageDealt}");
+        pageInfo.dmgToEnemy.SetText($"{performance.damageDealtToActors}");
+        pageInfo.dmgToUnits.SetText($"{performance.damageDealtToUnits}");
+        pageInfo.dmgBlocked.SetText($"{performance.damageBlocked}");
+        pageInfo.dmgReceived.SetText($"{performance.damageRecieved}");
+        pageInfo.dmgAllowed.SetText($"{performance.damagePassedToActor}");
+        pageInfo.unitsKilled.SetText($"{performance.unitsKilled}");
+        pageInfo.actorsKilled.SetText($"{performance.actorsKilled}");
+        pageInfo.timesAttacked.SetText($"{performance.timesAttacked}");
+        pageInfo.timesCrit.SetText($"{performance.timesCrit}");
+        pageInfo.timesDug.SetText($"{performance.timesDug}");
+        pageInfo.timesBlocked.SetText($"{performance.timesBlocked}");
+        pageInfo.timesDied.SetText($"{performance.timesDied}");
     }
     
     private void DestroyNewTabs()

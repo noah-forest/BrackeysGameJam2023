@@ -4,7 +4,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ToggleSwitch : MonoBehaviour, IPointerClickHandler
+public class ToggleSwitch : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
 	[Header("Slider Setup")]
 	[SerializeField, Range(0, 1f)] private float sliderValue;
@@ -12,58 +12,62 @@ public class ToggleSwitch : MonoBehaviour, IPointerClickHandler
 
 	public bool CurrentValue { get; private set; }
 
-	private Slider _slider;
+	private Slider slider;
 
 	[Header("Animation")]
 	[SerializeField, Range(0, 1f)] private float animationDuration = 0.5f;
 	[SerializeField] private AnimationCurve slideEase = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
-	private Coroutine _animateSliderCoroutine;
+	private Coroutine animateSliderCoroutine;
 
 	[HideInInspector] public UnityEvent onToggleOn;
 	[HideInInspector] public UnityEvent onToggleOff;
 
-	private ToggleGroup _toggleGroup;
+	private ToggleGroup toggleGroup;
+
+	private MouseUtils mouseUtils;
 
 	private void Awake()
 	{
 		SetUpToggleComponents();
+		mouseUtils = MouseUtils.singleton;
 	}
 
 	protected void OnValidate()
 	{
 		SetUpToggleComponents();
-		_slider.value = sliderValue;
+		slider.value = sliderValue;
 	}
 
 	private void SetUpToggleComponents()
 	{
-		if (_slider != null) return;
-
+		if (slider != null) return;
+		
 		SetUpSliderComponent();
 	}
 
 	private void SetUpSliderComponent()
 	{
-		_slider = GetComponent<Slider>();
+		slider = GetComponent<Slider>();
 
-		if (_slider == null)
+		if (slider == null)
 		{
 			Debug.Log("No slider found!", this);
 			return;
 		}
 
-		_slider.interactable = false;
+		slider.interactable = false;
 
-		var sliderColors = _slider.colors;
+		var sliderColors = slider.colors;
 		sliderColors.disabledColor = Color.white;
-		_slider.colors = sliderColors;
-		_slider.transition = Selectable.Transition.None;
+		slider.colors = sliderColors;
+		background.color = new Color32(255, 136, 136, 255);
+		slider.transition = Selectable.Transition.None;
 	}
 
 	public void SetUpForManager(ToggleGroup manager)
 	{
-		_toggleGroup = manager;
+		toggleGroup = manager;
 	}
 
 	private void Toggle()
@@ -89,17 +93,17 @@ public class ToggleSwitch : MonoBehaviour, IPointerClickHandler
 			background.color = new Color32(255, 136, 136, 255);
 		}
 
-		if(_animateSliderCoroutine != null)
+		if(animateSliderCoroutine != null)
 		{
-			StopCoroutine(_animateSliderCoroutine);
+			StopCoroutine(animateSliderCoroutine);
 		}
 
-		_animateSliderCoroutine = StartCoroutine(AnimateSlider());
+		animateSliderCoroutine = StartCoroutine(AnimateSlider());
 	}
 
 	private IEnumerator AnimateSlider()
 	{
-		float startValue = _slider.value;
+		float startValue = slider.value;
 		float endValue = CurrentValue ? 1 : 0;
 
 		float time = 0;
@@ -110,17 +114,27 @@ public class ToggleSwitch : MonoBehaviour, IPointerClickHandler
 				time += Time.unscaledDeltaTime;
 				
 				float lerpFactor = slideEase.Evaluate(time / animationDuration);
-				_slider.value = sliderValue = Mathf.Lerp(startValue, endValue, lerpFactor);
+				slider.value = sliderValue = Mathf.Lerp(startValue, endValue, lerpFactor);
 
 				yield return null;
 			}
 		}
 
-		_slider.value = endValue;
+		slider.value = endValue;
 	}
 
 	public void OnPointerClick(PointerEventData eventData)
 	{
 		Toggle();
+	}
+
+	public void OnPointerEnter(PointerEventData eventData)
+	{
+		mouseUtils.SetHoverCursor();
+	}
+
+	public void OnPointerExit(PointerEventData eventData)
+	{
+		mouseUtils.SetToDefaultCursor();
 	}
 }

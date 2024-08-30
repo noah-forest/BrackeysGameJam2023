@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -20,4 +21,6 @@ public class PR_PageInfo : MonoBehaviour
     public TextMeshProUGUI timesDug;
     public TextMeshProUGUI timesBlocked;
     public TextMeshProUGUI timesDied;
+    public TextMeshProUGUI displayCheck;
+    public ToggleSwitch allTimeToggle;
 }
