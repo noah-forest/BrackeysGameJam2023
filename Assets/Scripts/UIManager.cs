@@ -33,9 +33,6 @@ public class UIManager : MonoBehaviour
 	[SerializeField] GameObject battlesWon;
 	[SerializeField] TextMeshProUGUI battlesWonCount;
 	[SerializeField] TextMeshProUGUI shopBattlesWonCount;
-	[SerializeField] TextMeshProUGUI scaleText;
-	[SerializeField] TextMeshProUGUI scaleContent;
-	[SerializeField] GameObject scaledUI;
 
 	[SerializeField] private GameObject dpsPreview;
 	
@@ -53,9 +50,6 @@ public class UIManager : MonoBehaviour
 	private FadeMusic fadeMusic;
 	private GameManager gameManager;
 	private BattleManager battleManager;
-
-	private int scaleCountdown;
-	private int scaleLevel;
 	
 	private void Start()
 	{
@@ -78,8 +72,6 @@ public class UIManager : MonoBehaviour
 		fadeMusic = gameManager.MusicPlayer.GetComponent<FadeMusic>();
 
 		shopBattlesWonCount.text = gameManager.BattlesWon.ToString();
-		scaleLevel = battleManager.scaleToLvl2;
-		scaleCountdown = scaleLevel - gameManager.BattlesWon;
 
 		foreach (Transform child in livesContainer.transform.GetComponentsInChildren<Transform>())
 		{
@@ -146,42 +138,6 @@ public class UIManager : MonoBehaviour
 		fadeMusic.FadeOutMusic();
 		battlesWonCount.text = gameManager.BattlesWon.ToString();
 		shopBattlesWonCount.text = gameManager.BattlesWon.ToString();
-
-		// countdown the amt of battles till enemies scale
-		if (gameManager.BattlesWon == battleManager.scaleToLvl2)    // lvl1s and 2s
-		{
-			scaleLevel = battleManager.scaleToLvl3;
-			scaledUI.SetActive(true);
-			scaleContent.text = $"Next scale in:";
-			scaleText.text = $"{scaleLevel - gameManager.BattlesWon}";
-		}
-		else if (gameManager.BattlesWon == battleManager.scaleToLvl3)   // lvl2 and 3s
-		{
-			scaleLevel = battleManager.scaleToFinal;
-			scaledUI.SetActive(true);
-			scaleContent.text = $"Next scale in:";
-			scaleText.text = $"{scaleLevel - gameManager.BattlesWon}";
-		}
-		else if (gameManager.BattlesWon >= battleManager.scaleToFinal) // lvl3s only
-		{
-			scaleCountdown = 0;
-			scaledUI.SetActive(true);
-			scaleContent.transform.parent.parent.gameObject.SetActive(false);
-		}
-		else
-		{
-			// this is because it will always be 1 ahead, due to the way the events happen
-			scaleText.text = $"{scaleCountdown - 1}";
-			scaledUI.SetActive(false);
-			scaleContent.text = "Enemy scales in:";
-		}
-
-		// if it isnt at the final stage (the only time its 0)
-		if(scaleCountdown != 0)
-		{
-			scaleCountdown = scaleLevel - gameManager.BattlesWon;
-		}
-
 		ShowResult(0);
 	}
 
@@ -287,10 +243,6 @@ public class UIManager : MonoBehaviour
 		unitPreview.SetActive(true);
 		reserveSlots.SetActive(true);
 		dpsPreview.SetActive(false);
-		if(scaleCountdown == 0)
-		{
-			scaledUI.transform.parent.gameObject.SetActive(false);
-		}
 	}
 
 	private void HideShop()
