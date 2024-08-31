@@ -40,7 +40,7 @@ public class UnitAttacker : MonoBehaviour
 		// Damage instance feilds.
 		DamageInfo damageInfo = new DamageInfo();
 		damageInfo.damage = stats.damage;
-		damageInfo.isCrit = (Random.value < stats.critChance); // determine whether they crit
+		damageInfo.isCrit = (Random.value <= stats.critChance); // determine whether they crit
         damageInfo.critMultiplier = stats.critDamageMult;
 		damageInfo.attacker = gameObject;
 		damageInfo.inflictor = gameObject;

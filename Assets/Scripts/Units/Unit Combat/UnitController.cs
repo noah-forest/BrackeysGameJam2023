@@ -112,7 +112,6 @@ public class UnitController : MonoBehaviour, ISlotItem
 	private void BattleStarted()
 	{
 		InCombat = true;
-        health.blockChance = unitStats.blockChance; // this may cause problems later due to block not being able to be updated mid combat.
         unitPerformanceLastBattle = new();
 		performanceUpdatedEvent.Invoke(unitPerformanceLastBattle);
 
@@ -124,20 +123,10 @@ public class UnitController : MonoBehaviour, ISlotItem
 		unitPerformanceAllTime += unitPerformanceLastBattle;
 	}
 
-	/// <summary>
-	/// called by other units in order to deal damage to THIS unit
-	/// </summary>
-	/// <param name="dmg"></param>
-	/// <param name="crit"></param>
-	/// <param name="blocked"></param>
-	public void TakeDamage(DamageInfo dmg)
-	{ 
-        health.TakeDamage(dmg);
-    }
-
 	public void InitCombat()
 	{
 		SetAttackTime();
+		health.blockChance = unitStats.blockChance;
 	}
 
 	private void StartAttack()

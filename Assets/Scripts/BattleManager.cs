@@ -22,6 +22,7 @@ public class BattleManager : MonoBehaviour
 	#endregion
 
 	public BattleDifficulty nextBattleDifficulty;
+	public BossEncounterSO nextBossEncounter;
 
 	private GameManager gameManager;
 	private MouseUtils mouseUtils;
@@ -132,7 +133,8 @@ public class BattleManager : MonoBehaviour
 
 	public void GainBattleReward()
 	{
-		gameManager.Cash += gameManager.settings.battleReward;
+		Debug.Log($" Battle Reward : D {(int)nextBattleDifficulty} : R {gameManager.settings.battleRewards[(int)nextBattleDifficulty]}  ");
+		gameManager.Cash += gameManager.settings.battleRewards[(int)nextBattleDifficulty];
 	}
 
 	public int GainInterest()
@@ -242,12 +244,21 @@ public class BattleManager : MonoBehaviour
 			enemyUnits.TrimExcess();
 		}
 
-		foreach (BattleLane lane in lanes)
+		for (int i = 0; i < lanes.Count; i++)
 		{
-			if (lane.enemyUnit) Destroy(lane.enemyUnit);
-			lane.enemyUnit = InstantiateRandomUnit(lane.enemyUnitPosition);
-			enemyUnits.Add(lane.enemyUnit);
+			if (lanes[i].enemyUnit) Destroy(lanes[i].enemyUnit);
+			if (nextBossEncounter)
+			{
+                lanes[i].enemyUnit = InstatiateBossEncounterUnit(lanes[i].enemyUnitPosition, i);
+            }
+            else
+			{
+                lanes[i].enemyUnit = InstantiateRandomUnit(lanes[i].enemyUnitPosition);
+
+            }
+            enemyUnits.Add(lanes[i].enemyUnit);
 		}
+		nextBossEncounter = null;
 
 		//populates the unitPreview with the generated units
 		unitPreview.FillUnitPos(enemyUnits);
@@ -369,6 +380,25 @@ public class BattleManager : MonoBehaviour
 		}
 	}
 
+	public GameObject InstatiateBossEncounterUnit(Transform parent, int laneIdx)
+	{
+		int unitRoll = nextBossEncounter.bossTeam[laneIdx].unitID;
+
+		int unitLevelRoll = nextBossEncounter.bossTeam[laneIdx].level-1;
+
+        if (unitLevelRoll == 1)
+        {
+            return CreateUnitInstance(unitRoll, parent, Experience.ExpToLevel2);
+        }
+        else if (unitLevelRoll == 2)
+        {
+            return CreateUnitInstance(unitRoll, parent, Experience.ExpToLevel3);
+        }
+        else
+        {
+            return CreateUnitInstance(unitRoll, parent);
+        }
+    }
 	public GameObject CreateUnitInstance(int unitIndex, Transform parent, int unitLevel = 0)
 	{
 		GameObject newUnit = Instantiate(unitMasterPrefab, parent);

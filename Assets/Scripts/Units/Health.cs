@@ -67,7 +67,8 @@ public class Health : MonoBehaviour
         damageReport.healthBeforeDamage = health;
 		damageReport.incomingDamage = dmg.isCrit ? dmg.damage * dmg.critMultiplier : dmg.damage;
 
-        damageReport.wasBlocked = (Random.value < blockChance);
+		float roll = Random.value;
+        damageReport.wasBlocked = (roll <= blockChance);
 		if (damageReport.wasBlocked)
 		{
 			damageReport.damageDealt = 0;

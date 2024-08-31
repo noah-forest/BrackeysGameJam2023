@@ -4,7 +4,8 @@ using UnityEngine.Events;
 public class Settings : MonoBehaviour
 {
 	public int startingGold = 12;
-	public int battleReward = 8;
+
+	public int[] battleRewards;
 
 	[Space(10)]
 

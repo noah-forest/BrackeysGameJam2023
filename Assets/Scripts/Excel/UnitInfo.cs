@@ -14,6 +14,25 @@ public class UnitInfo
 	public string description;
 	public Sprite unitSprite;
 
+	bool idSet;
+	[SerializeField]
+	int _unitID;
+	/// <summary>
+	/// assignment will fail after first time. ID should be assigned by unit manager and nowehere else
+	/// </summary>
+	public int UnitID
+	{
+		get { return _unitID; }
+		set
+		{
+			if (!idSet)
+			{
+				_unitID = value;
+				idSet = true;
+			}
+		}
+	}
+
 	public UnitInfo(UnitInfo d)
 	{
 		unitSprite = d.unitSprite;

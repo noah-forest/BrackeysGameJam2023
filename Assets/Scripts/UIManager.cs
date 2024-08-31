@@ -151,7 +151,7 @@ public class UIManager : MonoBehaviour
 
 	private void ShowResult(int index)
 	{
-		battleReward.text = $"{gameManager.settings.battleReward}";
+		battleReward.text = $"{gameManager.settings.battleRewards[(int)battleManager.nextBattleDifficulty]}";
 		interestGained.text = $"{battleManager.GainInterest()}";
 
 		Image cmpResult = result.GetComponent<Image>();

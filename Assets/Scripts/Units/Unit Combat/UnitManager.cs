@@ -32,6 +32,7 @@ public class UnitManager : MonoBehaviour
 		for (int i = 0; i < unitStatsDatabase.Count; i++)
 		{
 			UnitInfo unit = unitStatsDatabase[i];
+			unitStatsDatabase[i].UnitID = i;
 
 			++unitRarityCount[unit.rarity];
 			
