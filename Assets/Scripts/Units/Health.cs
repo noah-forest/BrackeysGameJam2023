@@ -45,8 +45,12 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(DamageInfo dmg)
 	{
+		if(OwnerHealth && OwnerHealth.isDead)
+		{
+			return;
+		}
 
-		if (health <= 0 || isDead)
+		if (health <= 0 || isDead )
 		{
 			if (OwnerHealth)
 			{

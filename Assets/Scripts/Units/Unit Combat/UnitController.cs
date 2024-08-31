@@ -1,9 +1,6 @@
 using Assets.Scripts.Units;
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(UnitAnimator))]
@@ -19,15 +16,12 @@ public class UnitController : MonoBehaviour, ISlotItem
 	[HideInInspector]
 	public UnitStats unitStats;
 	[HideInInspector]
-	public Actor unitOwner;
-	[HideInInspector]
 	public UnitPerformance unitPerformanceAllTime;
     [HideInInspector]
     public UnitPerformance unitPerformanceLastBattle;
 
     public UnityEvent<UnitPerformance> performanceUpdatedEvent;
 	public Actor parentActor;
-
 
 	private Grave _grave;
 	/// <summary>
@@ -54,7 +48,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 	private GameManager gameManager;
 	private BattleManager battleManager;
 	private bool isAttacking;
-	private bool inCombat;
+	public bool InCombat {  get; private set; }
 	private float attackCooldownEnd;
 
 	public void Awake()
@@ -85,13 +79,13 @@ public class UnitController : MonoBehaviour, ISlotItem
 
 	private void OnEnable()
 	{
-		inCombat = true;
+		InCombat = true;
 		gameManager.combatBeganEvent.Invoke();
 	}
 
 	private void FixedUpdate()
 	{
-		if (!inCombat) return;
+		if (!InCombat) return;
 
 		if (health.isDead)
 		{
@@ -117,7 +111,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 
 	private void BattleStarted()
 	{
-		inCombat = true;
+		InCombat = true;
         health.blockChance = unitStats.blockChance; // this may cause problems later due to block not being able to be updated mid combat.
         unitPerformanceLastBattle = new();
 		performanceUpdatedEvent.Invoke(unitPerformanceLastBattle);
@@ -126,7 +120,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 
     private void BattleEnded()
 	{
-		inCombat = false;
+		InCombat = false;
 		unitPerformanceAllTime += unitPerformanceLastBattle;
 	}
 
@@ -189,7 +183,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 
 	public void OnGraveClicked()
 	{
-		unitPerformanceLastBattle.timesDug++;
+		++unitPerformanceLastBattle.timesDug;
 	}
 
 	public Sprite GetSlotSprite()

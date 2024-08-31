@@ -32,6 +32,11 @@ public class UnitAttacker : MonoBehaviour
 	/// </summary>
 	public void AttackTarget()
 	{
+		UnitController unitC = target.GetComponent<UnitController>();
+		if (unitC)
+		{
+			if (unitC.parentActor.health.isDead) { return; }
+		}
 		// Damage instance feilds.
 		DamageInfo damageInfo = new DamageInfo();
 		damageInfo.damage = stats.damage;

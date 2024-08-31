@@ -256,7 +256,6 @@ public class BattleManager : MonoBehaviour
 			lane.enemyUnitController.parentActor = enemyActor;
 			lane.enemyUnitController.unitGrave = lane.enemyGrave;
 			lane.enemyUnit.SetActive(true);
-			lane.enemyUnitController.unitOwner = enemyActor;
 			lane.enemyUnitController.health.OwnerHealth = enemyActor.health;
 			lane.enemyUnitController.InitCombat();
 		}
@@ -295,7 +294,6 @@ public class BattleManager : MonoBehaviour
 				lanes[unitIdx].playerUnit = newUnitObj.GetComponent<UnitController>();
 				lanes[unitIdx].playerUnit.parentActor = playerActor;
 				lanes[unitIdx].playerUnit.unitGrave = lanes[unitIdx].playerGrave;
-				lanes[unitIdx].playerUnit.unitOwner = playerActor;
                 lanes[unitIdx].playerUnit.health.OwnerHealth = playerActor.health;
 
 

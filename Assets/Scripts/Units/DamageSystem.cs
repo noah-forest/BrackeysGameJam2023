@@ -48,7 +48,7 @@ namespace Assets.Scripts.Units
             UnitController victimUnit = damageReport.victim.GetComponent<UnitController>();
             Actor victimActor = damageReport.victim.GetComponent<Actor>();
 
-            if (unit)
+            if (unit && unit.InCombat)
             {
                 unit.unitPerformanceLastBattle.timesAttacked++;
                 unit.unitPerformanceLastBattle.timesCrit += damageReport.damageInfo.isCrit ? 1 : 0;
@@ -60,7 +60,7 @@ namespace Assets.Scripts.Units
                 unit.performanceUpdatedEvent.Invoke(unit.unitPerformanceLastBattle);
 
             }
-            if (victimUnit)
+            if (victimUnit && unit.InCombat)
             {
                 victimUnit.unitPerformanceLastBattle.damageRecieved += damageReport.damageDealt;
                 victimUnit.unitPerformanceLastBattle.damageBlocked += damageReport.wasBlocked ? damageReport.incomingDamage : 0;
