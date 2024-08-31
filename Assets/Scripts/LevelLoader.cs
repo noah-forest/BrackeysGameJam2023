@@ -25,6 +25,8 @@ public class LevelLoader : MonoBehaviour
 
 		gameManager.startShopTransition.AddListener(LoadShopTrans);
 		gameManager.startBattleTransition.AddListener(LoadBattleTrans);
+		
+		gameManager.startBoatTransition.AddListener(LoadBoatTrans);
 	}
 
 	private void StartGame()
@@ -43,6 +45,14 @@ public class LevelLoader : MonoBehaviour
 	{
 		gameManager.LoadShop();
 		gameManager.HUD.SetActive(true);
+	}
+
+	private void LoadBoatTrans()
+	{
+		Debug.Log("starting boat transition");
+		StartCoroutine(LoadLevel("transition"));
+		StartCoroutine(WaitToLoadLevel());
+		StartCoroutine(LoadLevel("boat"));
 	}
 
 	private void LoadShopTrans()
@@ -106,6 +116,16 @@ public class LevelLoader : MonoBehaviour
 		yield return new WaitForSeconds(transitionTime);
 
 		uiManager.HideMenus();
+	}
+
+	IEnumerator WaitToLoadLevel()
+	{
+		if (Time.timeScale != 1)
+		{
+			Time.timeScale = 1;
+		}
+		
+		yield return new WaitForSeconds(transitionTime);
 	}
 }
                                               

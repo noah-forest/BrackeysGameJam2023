@@ -179,6 +179,12 @@ public class BattleManager : MonoBehaviour
 		gameManager.startShopTransition.Invoke();
 	}
 
+	public void BoatTransition()
+	{
+		gameManager.startBoatTransition.Invoke();
+		Debug.Log("invoking boat transition");
+	}
+
 	public void BattleTransition()
 	{
 		gameManager.startBattleTransition.Invoke();
