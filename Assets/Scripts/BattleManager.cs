@@ -21,6 +21,8 @@ public class BattleManager : MonoBehaviour
 	}
 	#endregion
 
+	public BattleDifficulty nextBattleDifficulty;
+
 	private GameManager gameManager;
 	private MouseUtils mouseUtils;
 
@@ -335,20 +337,22 @@ public class BattleManager : MonoBehaviour
 		int unitLevelRoll = 0;
 
 		//after certain amount of battlesWon, start scaling enemy units
-
-		if (gameManager.BattlesWon >= scaleToLvl2)
+		switch (nextBattleDifficulty)
 		{
-			unitLevelRoll = Random.Range(0, 2);
-
-			if (gameManager.BattlesWon >= scaleToLvl3)
-			{
-				unitLevelRoll = Random.Range(1, 3);
-			}
-
-			if (gameManager.BattlesWon >= scaleToFinal)
-			{
+			case BattleDifficulty.easy:
+                //leave unit at lvl 1 (roll 0)
+                break;
+			case BattleDifficulty.medium:
+                unitLevelRoll = Random.Range(0, 2);
+                break;
+			case BattleDifficulty.hard:
+                unitLevelRoll = Random.Range(1, 3);
+                break;
+			case BattleDifficulty.superHard:
 				unitLevelRoll = 2;
-			}
+				break;
+			default:
+				break;
 		}
 
 		if (unitLevelRoll == 1)

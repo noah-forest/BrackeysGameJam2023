@@ -24,7 +24,7 @@ public class BoatController : MonoBehaviour
     //used to try to maintain the positions of the boat and the rolling ball, which techincally move independantly
     Vector3 orbOffset;
     Vector3 turnForce;
-
+    bool cantMove = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,7 +48,7 @@ public class BoatController : MonoBehaviour
 
     private void FixedUpdate()
     {
-
+        if (cantMove) return;
         deck.Rotate(Vector3.right, orb.velocity.x);
         wheel.AddTorque(orb.velocity.x * Vector3.forward * wheelVisualSpeed,ForceMode.Acceleration);
 
@@ -58,7 +58,13 @@ public class BoatController : MonoBehaviour
         turnForce = Vector3.zero;
     }
 
-
+    public void StopMovement()
+    {
+        orb.isKinematic = true;
+        orb.velocity = Vector3.zero;
+        cantMove = true;
+        turnForce = Vector3.zero;
+    }
 
 
 

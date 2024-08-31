@@ -8,6 +8,7 @@ public class NewBehaviourScript : BoatHazard
     {
         base.InteractWithBoat(boat);
         boat.gameManager.startShopTransition.Invoke();
+        boat.gameManager.battleManager.nextBattleDifficulty = BattleDifficulty.superHard;
         Destroy(boatManager.gameObject);
     }
 }
