@@ -237,7 +237,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8743856590994936714}
   - component: {fileID: 2213226408546760397}
-  - component: {fileID: 8848135616933200614}
   - component: {fileID: 3884218630974487683}
   m_Layer: 0
   m_Name: Camera
@@ -312,14 +311,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &8848135616933200614
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2545829563348287795}
-  m_Enabled: 1
 --- !u!114 &3884218630974487683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -521,6 +512,7 @@ MonoBehaviour:
   controller: {fileID: 3834712899350198344}
   impactLogic: {fileID: 7355553730324982138}
   gameManager: {fileID: 0}
+  boatManager: {fileID: 0}
 --- !u!114 &3834712899350198344
 MonoBehaviour:
   m_ObjectHideFlags: 0
