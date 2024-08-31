@@ -3,11 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public class BoatHazard : MonoBehaviour, IBoatInteractable
 {
-    public void InteractWithBoat(BoatMaster boat)
+    protected BoatWorldManager boatManager;
+
+    private void Start()
     {
+        boatManager = BoatWorldManager.singleton;
+    }
+    public virtual void InteractWithBoat(BoatMaster boat)
+    {
+        boatManager.boatSpawn = boat.transform.position;
         Debug.Log($"Boat impacted {gameObject.name}");
     }
 }

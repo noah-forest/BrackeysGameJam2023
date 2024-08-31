@@ -8,7 +8,7 @@ using UnityEngine;
 public class BoatController : MonoBehaviour
 {
     [SerializeField]
-    Rigidbody orb;
+    public Rigidbody orb;
     [SerializeField]
     Transform deck;
     [SerializeField]

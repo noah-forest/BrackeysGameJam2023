@@ -123,6 +123,45 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!21 &16802977
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CustomShaders/HealthBar
+  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _SHAPE_BOX
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _borderWidth: 0.016
+    - _healthNormalized: 0.479
+    - _lowHealthThreshold: 0.2
+    - _shape: 1
+    - _waveAmp: 0.0037
+    - _waveFreq: 2.8
+    - _wavePixelCount: 3.69
+    - _waveSpeed: 1
+    m_Colors:
+    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
+    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
+    - _fillColor: {r: 0.7563932, g: 0.56784725, b: 0.32673705, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &25158505
 GameObject:
   m_ObjectHideFlags: 0
@@ -13401,45 +13440,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1423185995}
   m_CullTransparentMesh: 1
---- !u!21 &1436474715
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: CustomShaders/HealthBar
-  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _SHAPE_BOX
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _borderWidth: 0.016
-    - _healthNormalized: 0.479
-    - _lowHealthThreshold: 0.2
-    - _shape: 1
-    - _waveAmp: 0.0037
-    - _waveFreq: 2.8
-    - _wavePixelCount: 3.69
-    - _waveSpeed: 1
-    m_Colors:
-    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
-    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
-    - _fillColor: {r: 0.7563932, g: 0.56784725, b: 0.32673705, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &1438195025
 GameObject:
   m_ObjectHideFlags: 0
@@ -18002,6 +18002,45 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1886930731}
   m_CullTransparentMesh: 1
+--- !u!21 &1888123819
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CustomShaders/HealthBar
+  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _SHAPE_BOX
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Ints: []
+    m_Floats:
+    - _borderWidth: 0.016
+    - _healthNormalized: 0.479
+    - _lowHealthThreshold: 0.2
+    - _shape: 1
+    - _waveAmp: 0.0037
+    - _waveFreq: 2.8
+    - _wavePixelCount: 3.69
+    - _waveSpeed: 1
+    m_Colors:
+    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
+    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
+    - _fillColor: {r: 0.7563932, g: 0.56784725, b: 0.32673705, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &1889982130
 GameObject:
   m_ObjectHideFlags: 0
@@ -19706,45 +19745,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!21 &2034924938
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: CustomShaders/HealthBar
-  m_Shader: {fileID: 4800000, guid: 8b409af744179ac48ae9717baa10feb5, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _SHAPE_BOX
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs: []
-    m_Ints: []
-    m_Floats:
-    - _borderWidth: 0.016
-    - _healthNormalized: 0.479
-    - _lowHealthThreshold: 0.2
-    - _shape: 1
-    - _waveAmp: 0.0037
-    - _waveFreq: 2.8
-    - _wavePixelCount: 3.69
-    - _waveSpeed: 1
-    m_Colors:
-    - _backgroundColor: {r: 0.047169805, g: 0.045122813, b: 0.045122813, a: 0.5882353}
-    - _borderColor: {r: 0.39607847, g: 0.29411766, b: 0.078431375, a: 1}
-    - _fillColor: {r: 0.7563932, g: 0.56784725, b: 0.32673705, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &2044343118
 GameObject:
   m_ObjectHideFlags: 0
@@ -21613,7 +21613,7 @@ PrefabInstance:
     - target: {fileID: 297862063074083992, guid: 423baefdb8a0f8042a1dd7bb520b1908, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2034924938}
+      objectReference: {fileID: 16802977}
     - target: {fileID: 473011630054189146, guid: 423baefdb8a0f8042a1dd7bb520b1908, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -21716,7 +21716,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 646822037408887033, guid: 423baefdb8a0f8042a1dd7bb520b1908, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 40.13104
+      value: 353.1
       objectReference: {fileID: 0}
     - target: {fileID: 646822037408887033, guid: 423baefdb8a0f8042a1dd7bb520b1908, type: 3}
       propertyPath: m_LocalRotation.w
@@ -22093,7 +22093,7 @@ PrefabInstance:
     - target: {fileID: 2122206562074253081, guid: 423baefdb8a0f8042a1dd7bb520b1908, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 1436474715}
+      objectReference: {fileID: 1888123819}
     - target: {fileID: 2198365900589030015, guid: 423baefdb8a0f8042a1dd7bb520b1908, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
