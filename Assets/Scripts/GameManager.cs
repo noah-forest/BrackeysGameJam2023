@@ -62,8 +62,10 @@ public class GameManager : MonoBehaviour
 	public UnityEvent startBattleTransition;
 	[HideInInspector]
 	public UnityEvent startShopTransition;
+    [HideInInspector]
+    public UnityEvent startBoatTransition;
 
-	[HideInInspector]
+    [HideInInspector]
 	public UnityEvent<bool> transitionPlaying;
 
 	[HideInInspector]
