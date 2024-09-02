@@ -66,7 +66,7 @@ public class BoatController : MonoBehaviour
         {
             MoveLeft();
         }
-        Debug.Log($"Steering Angle =  {steeringAngle}");
+        //Debug.Log($"Steering Angle =  {steeringAngle}");
 
     }
 
