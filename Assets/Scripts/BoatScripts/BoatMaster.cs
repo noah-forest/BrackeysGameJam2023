@@ -20,9 +20,9 @@ public class BoatMaster : MonoBehaviour
 
         boatManager.boat = this;
         
-        controller.orb.isKinematic = true;
+        controller.boatBody.isKinematic = true;
         transform.position = boatManager.boatSpawn + boatManager.boatOffset;
-        controller.orb.isKinematic = false;
+        controller.boatBody.isKinematic = false;
 
     }
 }

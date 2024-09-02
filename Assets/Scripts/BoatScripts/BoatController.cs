@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -8,64 +9,99 @@ using UnityEngine;
 public class BoatController : MonoBehaviour
 {
     [SerializeField]
-    public Rigidbody orb;
-    [SerializeField]
-    Transform deck;
+    public Rigidbody boatBody;
+    //[SerializeField]
+    //Transform deck;
     [SerializeField]
     Rigidbody wheel;
 
-    [SerializeField]
-    private float boatForwardSpeed = 1;
-    [SerializeField]
-    private float boatTurnPower = 10;
-    [SerializeField]
-    private float wheelVisualSpeed = 50;
+    [SerializeField] private float boatForwardSpeed = 1;
+    [SerializeField] private float boatJetSpeed = 20;
+    [SerializeField] private float boatSteerVisualSpeed = 50;
+    [SerializeField] private float breakForce;
+    [SerializeField] private float rotCorrectionRate = 1;
+     
+    [SerializeField] private float maxSteeringAngle;
+    [SerializeField] private float turnAnglePerSec = 5;
+    float steeringAngle;
+
+    [SerializeField] float bounceDecayRate = 10;
+    float curBounceForce;
+
+
+
+    [SerializeField] WheelCollider[] wheelColliders = new WheelCollider[4];
 
     //used to try to maintain the positions of the boat and the rolling ball, which techincally move independantly
     Vector3 orbOffset;
-    Vector3 turnForce;
+    Vector3 moveVector;
     bool cantMove = false;
     // Start is called before the first frame update
-    void Start()
+
+    private void Start()
     {
-        orbOffset = orb.position;
+        foreach (var wheel in wheelColliders)
+        {
+            wheel.ConfigureVehicleSubsteps(5, 12, 15);
+        }
+    }
+    public void MoveRight()
+    {
+        steeringAngle = Mathf.Min(steeringAngle + turnAnglePerSec * Time.deltaTime, maxSteeringAngle);
+        
     }
 
+    public void MoveLeft()
+    {
+        steeringAngle = Mathf.Max(steeringAngle - turnAnglePerSec * Time.deltaTime, -maxSteeringAngle);
+    }
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
-            turnForce += Vector3.right * boatTurnPower;
+            MoveRight();
         }
-        else if(Input.GetKeyDown(KeyCode.D))
+        else if(Input.GetKey(KeyCode.D))
         {
-            turnForce += Vector3.left * boatTurnPower;
+            MoveLeft();
         }
-
+        Debug.Log($"Steering Angle =  {steeringAngle}");
 
     }
 
     private void FixedUpdate()
     {
         if (cantMove) return;
-        deck.Rotate(Vector3.right, orb.velocity.x);
-        wheel.AddTorque(orb.velocity.x * Vector3.forward * wheelVisualSpeed,ForceMode.Acceleration);
+        //deck.Rotate(Vector3.right, boatBody.velocity.x);
+        //wheel.AddTorque(boatBody.velocity.x * Vector3.forward * wheelVisualSpeed,ForceMode.Acceleration);
 
+        wheelColliders[2].motorTorque = -boatForwardSpeed + curBounceForce;
+        wheelColliders[3].motorTorque = -boatForwardSpeed + curBounceForce;
+        curBounceForce = Mathf.Lerp(curBounceForce, 0, Time.fixedDeltaTime * bounceDecayRate);
 
-        orb.AddForce((boatForwardSpeed * -Vector3.forward + turnForce) * Time.fixedDeltaTime);
-        transform.position = orb.transform.position - orbOffset;
-        turnForce = Vector3.zero;
+        wheelColliders[2].steerAngle = steeringAngle;
+        wheelColliders[3].steerAngle = steeringAngle;
+
+        Vector3 boatxz = boatBody.velocity * 0.01f;
+        boatxz.y = 0;
+        boatBody.AddForce(new Vector3(0, -boatxz.magnitude, 0), ForceMode.VelocityChange);
+        boatBody.AddForce(boatJetSpeed * Vector3.back);
+        boatBody.MoveRotation(Quaternion.Lerp(boatBody.rotation, Quaternion.identity, Time.fixedDeltaTime * rotCorrectionRate));
+        steeringAngle = Mathf.Lerp(steeringAngle, 0, Time.fixedDeltaTime * rotCorrectionRate);
     }
 
     public void StopMovement()
     {
-        orb.isKinematic = true;
-        orb.velocity = Vector3.zero;
-        cantMove = true;
-        turnForce = Vector3.zero;
+        boatBody.isKinematic = true;
+        boatBody.velocity = Vector3.zero;
+        cantMove = true; 
     }
 
-
+    public void Bounce()
+    {
+        steeringAngle *= -1;
+        curBounceForce = boatBody.velocity.magnitude * 2;
+    }
 
 }

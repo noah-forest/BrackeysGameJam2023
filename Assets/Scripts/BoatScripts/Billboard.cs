@@ -8,7 +8,7 @@ public class Billboard : MonoBehaviour
     Camera cam;
     private void Start()
     {
-        cam = Camera.main;
+        cam = Camera.current;
     }
 
     // Update is called once per frame

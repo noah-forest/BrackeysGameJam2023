@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: CyclerBoss
   m_EditorClassIdentifier: 
   bossTeam:
-    units:
+    units: []
+  CycleTeams:
+  - units:
     - level: 3
       unitID: 0
       useRandomID: 0
@@ -23,7 +25,6 @@ MonoBehaviour:
     - level: 3
       unitID: 9
       useRandomID: 0
-  CycleTeams:
   - units:
     - level: 2
       unitID: 14
