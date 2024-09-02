@@ -24,6 +24,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 	public Actor parentActor;
 
 	private Grave _grave;
+	public UnityEvent<UnitController> unitRespawnEvent;
 	/// <summary>
 	/// This is a property that will handle assigning the graveDug event whenever you assign a new grave to a unit
 	/// </summary>
@@ -162,6 +163,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 	public void Respawn()
 	{
 		health.Revive();
+		unitRespawnEvent.Invoke(this);
 		SetAttackTime();
 		for (int i = 0; i < transform.childCount; i++)
 		{

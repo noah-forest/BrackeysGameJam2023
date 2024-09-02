@@ -31,5 +31,6 @@ public class BattleLane : MonoBehaviour
     /// </summary>
     public Grave playerGrave;
 
+    public int LaneID;
 
 }

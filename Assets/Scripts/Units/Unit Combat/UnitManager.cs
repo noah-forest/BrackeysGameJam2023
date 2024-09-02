@@ -1,3 +1,4 @@
+using Assets.Scripts.Units;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,7 +6,23 @@ using UnityEngine;
 
 public class UnitManager : MonoBehaviour
 {
-	public List<UnitInfo> unitStatsDatabase;
+    #region singleton
+    public static UnitManager singleton;
+
+    private void Awake()
+    {
+        if (singleton)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        singleton = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    #endregion singleton
+    public List<UnitInfo> unitStatsDatabase;
 
 	public Dictionary<UnitRarity, int> unitRarityCount = new()
 	{

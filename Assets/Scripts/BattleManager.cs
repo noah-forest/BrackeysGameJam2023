@@ -61,9 +61,24 @@ public class BattleManager : MonoBehaviour
 
 		playerActor.GetComponent<Health>().died.AddListener(PlayerDied);
 		enemyActor.GetComponent<Health>().died.AddListener(EnemyDied);
+		gameManager.battleEndedEvent.AddListener(ClearBoss);
 	}
 
-	public void EnemyDied()
+	void ClearBoss()
+	{
+        nextBossEncounter = null;
+    }
+
+    private void Update()
+    {
+		if (nextBossEncounter) nextBossEncounter.UpdateLogic(Time.deltaTime);
+    }
+    private void FixedUpdate()
+    {
+		if (nextBossEncounter) nextBossEncounter.FixedUpdateLogic(Time.fixedDeltaTime);
+    }
+
+    public void EnemyDied()
 	{
 		++gameManager.BattlesWon;
 		battleOutcome = "Won";
@@ -95,6 +110,10 @@ public class BattleManager : MonoBehaviour
 			Destroy(slot.payload);
 			slot.payload = null;
 		}
+        for (int i = 0; i < lanes.Count; i++)
+		{
+            lanes[i].LaneID = i;
+        }
 	}
 
 	public bool CheckForReserveSlot()
@@ -223,17 +242,20 @@ public class BattleManager : MonoBehaviour
 		ClearBattlefield();
 		battleField.SetActive(true);
 	}
-	private void AssignUnitTargets()
+	public void AssignUnitTargets()
 	{
 		foreach (BattleLane lane in lanes)
 		{
 			if(lane.enemyUnitController) lane.enemyUnitController.unitAttacker.target = lane.playerUnit ? lane.playerUnit.health : playerActor.health;
 			if(lane.playerUnit) lane.playerUnit.unitAttacker.target = lane.enemyUnitController ? lane.enemyUnitController.health : enemyActor.health;
 		}
+		if(nextBossEncounter) nextBossEncounter.BattleStart();
 	}
 
 	public void CreateEnemyTeam()
 	{
+		if (nextBossEncounter) nextBossEncounter.PreBattle();
+
 		if (enemyUnits.Count != 0)
 		{
 			foreach (GameObject unit in enemyUnits)
@@ -258,7 +280,7 @@ public class BattleManager : MonoBehaviour
             }
             enemyUnits.Add(lanes[i].enemyUnit);
 		}
-		nextBossEncounter = null;
+		
 
 		//populates the unitPreview with the generated units
 		unitPreview.FillUnitPos(enemyUnits);
@@ -382,9 +404,9 @@ public class BattleManager : MonoBehaviour
 
 	public GameObject InstatiateBossEncounterUnit(Transform parent, int laneIdx)
 	{
-		int unitRoll = nextBossEncounter.bossTeam[laneIdx].unitID;
+		int unitRoll = nextBossEncounter.GetUnitID(laneIdx);
 
-		int unitLevelRoll = nextBossEncounter.bossTeam[laneIdx].level-1;
+		int unitLevelRoll = nextBossEncounter.GetUnitLvl(laneIdx)-1;
 
         if (unitLevelRoll == 1)
         {
