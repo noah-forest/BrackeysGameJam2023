@@ -25,18 +25,10 @@ public class BoatWorldManager : MonoBehaviour
     public Vector3 boatSpawn = new Vector3();
     public Vector3 boatOffset;
     public BoatMaster boat;
-    public Camera cam;
-    public Vector3 camBoatOffset;
 
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-        camBoatOffset = cam.transform.position - boatSpawn + boatOffset;
-    }
-
-    private void Update()
-    {
-        if(boat) cam.transform.position = boat.transform.position + camBoatOffset;
     }
 
 }
