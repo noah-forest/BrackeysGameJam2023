@@ -1,27 +1,24 @@
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class RefreshShop : MonoBehaviour
 {
 	public ShopController shopController;
 	public LockShop lockShop;
-
 	public TextMeshProUGUI refreshCostText;
-
 	public bool canRefresh;
 
 	private GameManager gameManager;
-
 	private Button button;
-
 	private int originalRefreshCost;
-
+	
 	private void Start()
 	{
 		gameManager = GameManager.singleton;
-
+		
 		originalRefreshCost = shopController.refreshCost;
 		refreshCostText.text = shopController.refreshCost.ToString();
 

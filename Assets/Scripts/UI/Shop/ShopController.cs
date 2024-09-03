@@ -293,7 +293,7 @@ public class ShopController : MonoBehaviour
 		{
 			glow.SetActive(false);
 		}
-
+		
 		curShopItem.unitFound.SetActive(false);
 		curShopItem.unitShine.SetActive(false);
 		gameManager.Cash -= curShopItem.unitCost;

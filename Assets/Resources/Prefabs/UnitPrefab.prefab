@@ -232,7 +232,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2494711087525896825}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -640,7 +640,17 @@ MonoBehaviour:
     BaseValue: 0
     MaxValue: 3.4028235e+38
     MinValue: -3.4028235e+38
+    alwaysCeilValue: 0
   _health: 0
+  blockChance: 0
+  OwnerHealth: {fileID: 0}
+  gameManager: {fileID: 0}
+  blockedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  attackedEvent:
+    m_PersistentCalls:
+      m_Calls: []
   isDead: 0
   died:
     m_PersistentCalls:
@@ -668,30 +678,37 @@ MonoBehaviour:
     BaseValue: 0
     MaxValue: 3.4028235e+38
     MinValue: -3.4028235e+38
+    alwaysCeilValue: 0
   attackSpeed:
     BaseValue: 0
     MaxValue: 3.4028235e+38
     MinValue: -3.4028235e+38
+    alwaysCeilValue: 0
   blockChance:
     BaseValue: 0
     MaxValue: 3.4028235e+38
     MinValue: -3.4028235e+38
+    alwaysCeilValue: 0
   critChance:
     BaseValue: 0
     MaxValue: 3.4028235e+38
     MinValue: -3.4028235e+38
+    alwaysCeilValue: 0
   critDamageMult:
     BaseValue: 0
     MaxValue: 3.4028235e+38
     MinValue: -3.4028235e+38
+    alwaysCeilValue: 0
   digCount:
     BaseValue: 0
     MaxValue: 3.4028235e+38
     MinValue: -3.4028235e+38
+    alwaysCeilValue: 0
   sellValue:
     BaseValue: 0
     MaxValue: 3.4028235e+38
     MinValue: -3.4028235e+38
+    alwaysCeilValue: 0
   description: 'Very slow attack speed.
 
     Has very high attack power.'
@@ -708,7 +725,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b30087d5421b2c45852d849cadeae79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetUnit: {fileID: 0}
+  target: {fileID: 0}
   critEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -794,11 +811,11 @@ MonoBehaviour:
   health: {fileID: 0}
   unitAttacker: {fileID: 0}
   unitStats: {fileID: 0}
-  parentActor: {fileID: 0}
-  attacked:
+  performanceUpdatedEvent:
     m_PersistentCalls:
       m_Calls: []
-  blockedEvent:
+  parentActor: {fileID: 0}
+  unitRespawnEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!95 &6340627276176685974

@@ -29,6 +29,7 @@ public class SlotImageRenderer : MonoBehaviour, ISlotPayloadChangeHandler, ISlot
             if (slotItem != null)
             {
                 image.sprite = slotItem.GetSlotSprite();
+                image.transform.localScale = new Vector3(-1, 1, 1);
                 image.color = new Color(1,1,1,1);
             }
         }
@@ -44,6 +45,7 @@ public class SlotImageRenderer : MonoBehaviour, ISlotPayloadChangeHandler, ISlot
         if (payload)
         {
             image.color = new Color(0, 0, 0, 0.5f);
+            image.transform.localScale = new Vector3(-1, 1, 1);
         }
     }
 
@@ -52,6 +54,7 @@ public class SlotImageRenderer : MonoBehaviour, ISlotPayloadChangeHandler, ISlot
         if (payload)
         {
             image.color = new Color(0, 0, 0, 1);
+            image.transform.localScale = new Vector3(-1, 1, 1);
         }
     }
 }

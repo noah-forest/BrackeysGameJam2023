@@ -35,6 +35,8 @@ public class UIManager : MonoBehaviour
 	[SerializeField] TextMeshProUGUI shopBattlesWonCount;
 
 	[SerializeField] private GameObject dpsPreview;
+
+	[SerializeField] private GameObject bossPortrait;
 	
 	[SerializeField] GameObject livesContainer;
 	[SerializeField] GameObject livesArea;
@@ -243,6 +245,7 @@ public class UIManager : MonoBehaviour
 		unitPreview.SetActive(true);
 		reserveSlots.SetActive(true);
 		dpsPreview.SetActive(false);
+		bossPortrait.SetActive(false);
 	}
 
 	private void HideShop()
@@ -251,6 +254,8 @@ public class UIManager : MonoBehaviour
 		unitPreview.SetActive(false);
 		reserveSlots.SetActive(false);
 		dpsPreview.SetActive(true);
+		
+		bossPortrait.SetActive(battleManager.nextBossEncounter != null);
 	}
 
 	private void ShowGameOverScreen()
