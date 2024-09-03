@@ -72,6 +72,13 @@ namespace Assets.Scripts.BoatScripts
                 lane.enemyUnitController.parentActor = enemyActor;
                 lane.enemyUnitController.unitGrave = lane.enemyGrave;
                 lane.enemyUnit.SetActive(true);
+                
+                lane.enemyUnit.transform.localScale = new UnityEngine.Vector3(-1, 1, 1);
+                lane.enemyUnit.GetComponentInChildren<SpriteRenderer>().flipX = true;
+                var healthBar = lane.enemyUnit.GetComponentInChildren<UnitHealthBar>();
+                healthBar.shadowFlipped.SetActive(true);
+                healthBar.shadowDefault.SetActive(false);
+                
                 lane.enemyUnitController.health.OwnerHealth = enemyActor.health;
                 lane.enemyUnitController.InitCombat();
                 lane.enemyUnitController.unitAttacker.target = lane.playerUnit ? lane.playerUnit.health : playerActor.health;
