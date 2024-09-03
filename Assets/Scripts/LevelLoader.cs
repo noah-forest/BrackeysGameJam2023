@@ -17,16 +17,23 @@ public class LevelLoader : MonoBehaviour
 		transitionIsPlaying = false;
 
 		gameManager = GameManager.singleton;
-		uiManager = gameManager.uiManager;
+		if(gameManager)
+		{
+            uiManager = gameManager.uiManager;
 
-		gameManager.startGame.AddListener(StartGame);
-		gameManager.startBattle.AddListener(StartBattle);
-		gameManager.loadUI.AddListener(LoadUI);
+            gameManager.startGame.AddListener(StartGame);
+            gameManager.startBattle.AddListener(StartBattle);
+            gameManager.loadUI.AddListener(LoadUI);
 
-		gameManager.startShopTransition.AddListener(LoadShopTrans);
-		gameManager.startBattleTransition.AddListener(LoadBattleTrans);
-		
-		gameManager.startBoatTransition.AddListener(LoadBoatTrans);
+            gameManager.startShopTransition.AddListener(LoadShopTrans);
+            gameManager.startBattleTransition.AddListener(LoadBattleTrans);
+
+            gameManager.startBoatTransition.AddListener(LoadBoatTrans);
+        }
+		else
+		{
+			Debug.Log("[LEVEL LOADER] no game manager in scene. Unable to load levels.");
+		}
 	}
 
 	private void StartGame()

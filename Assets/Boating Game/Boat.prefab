@@ -355,14 +355,15 @@ MonoBehaviour:
   boatForwardSpeed: 800
   boatJetSpeed: 500
   boatSteerVisualSpeed: 50
-  breakForce: 0
+  breakForce: 200
   rotCorrectionRate: 1.2
   maxSteeringAngle: 6
   turnAnglePerSec: 50
   bonusLowSpeedThreshold: 6
   bonusLowSpeedScalar: 2
   steeringEffectOnSpeed: 50
-  bounceDecayRate: 10
+  startForce: 5
+  bounceDecayRate: 15
   wheelColliders:
   - {fileID: 8245795613274928276}
   - {fileID: 5433983018554273157}

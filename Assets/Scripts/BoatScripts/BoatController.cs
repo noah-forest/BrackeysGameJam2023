@@ -26,6 +26,7 @@ public class BoatController : MonoBehaviour
     [SerializeField] private float bonusLowSpeedThreshold = 1;
     [SerializeField] private float bonusLowSpeedScalar = 0.5f;
     [SerializeField] private float steeringEffectOnSpeed = 50;
+    [SerializeField] private float startForce = 200;
     float steeringAngle;
 
     [SerializeField] float bounceDecayRate = 10;
@@ -45,6 +46,7 @@ public class BoatController : MonoBehaviour
         {
             wheel.ConfigureVehicleSubsteps(5, 12, 15);
         }
+        boatBody.AddForce(startForce * Vector3.back);
     }
     public void MoveRight()
     {
@@ -81,7 +83,12 @@ public class BoatController : MonoBehaviour
         wheelColliders[3].motorTorque = -boatForwardSpeed + curBounceForce + steeringAngle * steeringEffectOnSpeed;
         curBounceForce = Mathf.Lerp(curBounceForce, 0, Time.fixedDeltaTime * bounceDecayRate);
 
-        float bonus = 1 + Mathf.Clamp(bonusLowSpeedScalar * (bonusLowSpeedThreshold-boatBody.velocity.magnitude), -.5f, 2f);
+        wheelColliders[2].brakeTorque = steeringAngle * breakForce;
+        wheelColliders[3].brakeTorque = steeringAngle * breakForce;
+
+
+
+        float bonus = 1;// + Mathf.Clamp(bonusLowSpeedScalar * (bonusLowSpeedThreshold-boatBody.velocity.magnitude), -.5f, 2f);
         wheelColliders[2].steerAngle = steeringAngle * bonus;
         wheelColliders[3].steerAngle = steeringAngle * bonus;
         Debug.Log(boatBody.velocity.magnitude);

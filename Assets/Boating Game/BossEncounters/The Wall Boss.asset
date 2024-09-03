@@ -12,10 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e852bc5a7abe0c74293967efeae9377f, type: 3}
   m_Name: The Wall Boss
   m_EditorClassIdentifier: 
+  bossName: The Wall
+  bossPortrait: {fileID: 0}
   bossTeam:
-  - level: 3
-    unitID: 24
-  - level: 3
-    unitID: 24
-  - level: 3
-    unitID: 24
+    units:
+    - level: 0
+      unitID: 0
+      useRandomID: 0
+    - level: 0
+      unitID: 0
+      useRandomID: 0
+    - level: 0
+      unitID: 0
+      useRandomID: 0

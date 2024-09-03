@@ -6,6 +6,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New StandardEncounter", menuName = "Boat Game/Boss Encounter/Set Team")]
 public class BossEncounterSO : ScriptableObject
 {
+    public String bossName;
+    public Sprite bossPortrait;
     [Serializable]
     public struct TeamUnit
     {
