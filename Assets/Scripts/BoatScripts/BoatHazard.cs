@@ -12,7 +12,7 @@ public class BoatHazard : MonoBehaviour, IBoatInteractable
     {
         boatManager = BoatWorldManager.singleton;
     }
-    public virtual void InteractWithBoat(BoatMaster boat)
+    public virtual void InteractWithBoat(BoatMaster boat, Collision collision)
     {
         Debug.Log($"{boatManager} :: {boat}");
         if (!boatManager) boatManager = BoatWorldManager.singleton;

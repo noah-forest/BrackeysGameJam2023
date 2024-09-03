@@ -12,6 +12,6 @@ public class BoatInteractor : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        collision.gameObject.GetComponent<IBoatInteractable>()?.InteractWithBoat(boat);
+        collision.gameObject.GetComponent<IBoatInteractable>()?.InteractWithBoat(boat, collision);
     }
 }

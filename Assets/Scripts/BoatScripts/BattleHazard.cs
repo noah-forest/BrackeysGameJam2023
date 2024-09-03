@@ -25,12 +25,15 @@ public class BattleHazard : BoatHazard
         }
     }
 
-    public override void InteractWithBoat(BoatMaster boat)
+    public override void InteractWithBoat(BoatMaster boat, Collision collision)
     {
-        base.InteractWithBoat(boat);
-        boat.controller.StopMovement();
-        boat.gameManager.battleManager.nextBattleDifficulty = battleDifficulty;
-        boat.gameManager.startShopTransition.Invoke();
+        base.InteractWithBoat(boat, collision);
+        if (boat.gameManager)
+        {
+            boat.controller.StopMovement();
+            boat.gameManager.battleManager.nextBattleDifficulty = battleDifficulty;
+            boat.gameManager.startShopTransition.Invoke();
+        }
         Destroy(gameObject);
     }
 }

@@ -759,6 +759,7 @@ GameObject:
   - component: {fileID: 666805508}
   - component: {fileID: 666805507}
   - component: {fileID: 666805506}
+  - component: {fileID: 666805510}
   m_Layer: 0
   m_Name: RightWall
   m_TagString: Untagged
@@ -853,6 +854,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1919776036}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+--- !u!114 &666805510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 666805505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ec1b1d435d23164194b248a54dea6c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impactEffect: {fileID: 0}
+  destroyOnImpact: 0
 --- !u!1001 &670844393
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1159,6 +1174,7 @@ GameObject:
   - component: {fileID: 892476154}
   - component: {fileID: 892476153}
   - component: {fileID: 892476152}
+  - component: {fileID: 892476156}
   m_Layer: 0
   m_Name: LeftWall
   m_TagString: Untagged
@@ -1253,6 +1269,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1919776036}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!114 &892476156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 892476151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ec1b1d435d23164194b248a54dea6c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impactEffect: {fileID: 0}
+  destroyOnImpact: 0
 --- !u!4 &920749239 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8384586033563516432, guid: d41d55f176092d44788fc5aed84d08f9, type: 3}
@@ -2020,7 +2050,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7093680628205783246, guid: 41cadc28f22b8e64ba0abcddb6d1c491, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8065275778482422593, guid: 41cadc28f22b8e64ba0abcddb6d1c491, type: 3}
       propertyPath: m_LocalPosition.x

@@ -23,12 +23,13 @@ public class BoatController : MonoBehaviour
      
     [SerializeField] private float maxSteeringAngle;
     [SerializeField] private float turnAnglePerSec = 5;
+    [SerializeField] private float bonusLowSpeedThreshold = 1;
+    [SerializeField] private float bonusLowSpeedScalar = 0.5f;
+    [SerializeField] private float steeringEffectOnSpeed = 50;
     float steeringAngle;
 
     [SerializeField] float bounceDecayRate = 10;
     float curBounceForce;
-
-
 
     [SerializeField] WheelCollider[] wheelColliders = new WheelCollider[4];
 
@@ -76,17 +77,19 @@ public class BoatController : MonoBehaviour
         //deck.Rotate(Vector3.right, boatBody.velocity.x);
         //wheel.AddTorque(boatBody.velocity.x * Vector3.forward * wheelVisualSpeed,ForceMode.Acceleration);
 
-        wheelColliders[2].motorTorque = -boatForwardSpeed + curBounceForce;
-        wheelColliders[3].motorTorque = -boatForwardSpeed + curBounceForce;
+        wheelColliders[2].motorTorque = -boatForwardSpeed + curBounceForce + steeringAngle * steeringEffectOnSpeed;
+        wheelColliders[3].motorTorque = -boatForwardSpeed + curBounceForce + steeringAngle * steeringEffectOnSpeed;
         curBounceForce = Mathf.Lerp(curBounceForce, 0, Time.fixedDeltaTime * bounceDecayRate);
 
-        wheelColliders[2].steerAngle = steeringAngle;
-        wheelColliders[3].steerAngle = steeringAngle;
+        float bonus = 1 + Mathf.Clamp(bonusLowSpeedScalar * (bonusLowSpeedThreshold-boatBody.velocity.magnitude), -.5f, 2f);
+        wheelColliders[2].steerAngle = steeringAngle * bonus;
+        wheelColliders[3].steerAngle = steeringAngle * bonus;
+        Debug.Log(boatBody.velocity.magnitude);
 
         Vector3 boatxz = boatBody.velocity * 0.01f;
         boatxz.y = 0;
         boatBody.AddForce(new Vector3(0, -boatxz.magnitude, 0), ForceMode.VelocityChange);
-        boatBody.AddForce(boatJetSpeed * Vector3.back);
+        boatBody.AddForce((boatJetSpeed - steeringAngle)* Vector3.back);
         boatBody.MoveRotation(Quaternion.Lerp(boatBody.rotation, Quaternion.identity, Time.fixedDeltaTime * rotCorrectionRate));
         steeringAngle = Mathf.Lerp(steeringAngle, 0, Time.fixedDeltaTime * rotCorrectionRate);
     }
@@ -98,10 +101,11 @@ public class BoatController : MonoBehaviour
         cantMove = true; 
     }
 
-    public void Bounce()
+    public void Bounce(Vector3 normal)
     {
         steeringAngle *= -1;
         curBounceForce = boatBody.velocity.magnitude * 2;
+        boatBody.velocity = Vector3.Reflect(boatBody.velocity, normal);
     }
 
 }
