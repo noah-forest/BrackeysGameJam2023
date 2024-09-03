@@ -286,6 +286,7 @@ public class BattleManager : MonoBehaviour
 		unitPreview.FillUnitPos(enemyUnits);
 	}
 
+	// ReSharper disable Unity.PerformanceAnalysis
 	/// <summary>
 	/// deletes the old enemy units if there are any and then loads a random enemy unit for each lane and assign graves to them
 	/// </summary>
@@ -297,6 +298,13 @@ public class BattleManager : MonoBehaviour
 			lane.enemyUnitController.parentActor = enemyActor;
 			lane.enemyUnitController.unitGrave = lane.enemyGrave;
 			lane.enemyUnit.SetActive(true);
+			lane.enemyUnit.transform.localScale = new Vector3(-1, 1, 1);
+			lane.enemyUnit.GetComponentInChildren<SpriteRenderer>().flipX = true;
+			
+			var healthBar = lane.enemyUnit.GetComponentInChildren<UnitHealthBar>();
+			healthBar.shadowFlipped.SetActive(true);
+			healthBar.shadowDefault.SetActive(false);
+			
 			lane.enemyUnitController.health.OwnerHealth = enemyActor.health;
 			lane.enemyUnitController.InitCombat();
 		}
@@ -323,15 +331,10 @@ public class BattleManager : MonoBehaviour
 				newUnitObj.transform.localPosition = Vector3.zero;
 
 				//flip players units so that the attack anim plays the correct way
-				newUnitObj.transform.localScale = new Vector3(-1, 1, 1);
+				newUnitObj.transform.localScale = new Vector3(1, 1, 1);
 				//then flip the sprites so that they aren't facing the wrong way
 				newUnitObj.GetComponentInChildren<SpriteRenderer>().flipX = true;
-
-				//since we flip the unit, we need to manually flip the shadow on the health bar to be correct
-				UnitHealthBar healthBar = newUnitObj.GetComponentInChildren<UnitHealthBar>();
-				healthBar.shadowFlipped.SetActive(true);
-				healthBar.shadowDefault.SetActive(false);
-
+				
 				lanes[unitIdx].playerUnit = newUnitObj.GetComponent<UnitController>();
 				lanes[unitIdx].playerUnit.parentActor = playerActor;
 				lanes[unitIdx].playerUnit.unitGrave = lanes[unitIdx].playerGrave;

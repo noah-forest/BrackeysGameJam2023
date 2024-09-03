@@ -118,7 +118,11 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IP
         {
             renderer.SlotPayloadChanged(payload);
         }
-		if(gameManager != null) gameManager.unitAddedToSlot?.Invoke(this);
+
+        if (gameManager)
+        {
+	        gameManager.unitAddedToSlot?.Invoke(this);
+        }
 	}
 
     protected void OnMouseDown()

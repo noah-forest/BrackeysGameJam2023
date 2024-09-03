@@ -54,6 +54,7 @@ public class Draggable : MonoBehaviour
         obj.transform.SetParent(canvasObj.transform);
         Canvas canvas = canvasObj.GetComponent<Canvas>();
         img.sprite = GetSpriteForDragging();
+        img.transform.localScale = new Vector3(-1, 1, 1);
         canvas.overrideSorting = true;
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         canvas.sortingOrder = 10000;
