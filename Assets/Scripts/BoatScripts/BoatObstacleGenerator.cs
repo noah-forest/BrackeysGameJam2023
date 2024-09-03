@@ -34,7 +34,7 @@ public class BoatObstacleGenerator : MonoBehaviour
             if (hit.collider)
             {
                 spawnPoint.y = hit.point.y + verticalOffset;
-                toGenerate = Instantiate(toGenerate, spawnPoint, transform.rotation);
+                toGenerate = Instantiate(toGenerate, spawnPoint, transform.rotation,transform);
                 toGenerate.transform.Rotate(Vector3.up, Random.Range(0, 180));
                 toGenerate.transform.up = hit.normal;
                 toGenerate.transform.RotateAround(toGenerate.transform.position, toGenerate.transform.up, toGenerate.transform.localEulerAngles.y);
