@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+	private static readonly int PlayerHit = Animator.StringToHash("playerHit");
 	[SerializeField] TextMeshProUGUI livesUI;
 	[SerializeField] TextMeshProUGUI goldUI;
 
@@ -40,6 +41,8 @@ public class UIManager : MonoBehaviour
 	[SerializeField] private GameObject bossPortrait;
 	[SerializeField] private Image bossImage;
 	[SerializeField] private TextMeshProUGUI bossName;
+
+	[SerializeField] private Animator portraitAnim;
 	
 	[SerializeField] GameObject livesContainer;
 	[SerializeField] GameObject livesArea;
@@ -60,6 +63,7 @@ public class UIManager : MonoBehaviour
 	{
 		gameManager = GameManager.singleton;
 		battleManager = BattleManager.singleton;
+		gameManager.playerActorHit.AddListener(PlayerActorHit);
 		gameManager.goldChangedEvent.AddListener(UpdateGoldText);
 		gameManager.livesChangedEvent.AddListener(UpdateLivesText);
 		gameManager.battleWonEvent.AddListener(ShowBattleWonScreen);
@@ -89,6 +93,11 @@ public class UIManager : MonoBehaviour
 		ResetHearts();
 	}
 
+	private void PlayerActorHit()
+	{
+		portraitAnim.SetTrigger(PlayerHit);
+	}
+	
 	private void ResetBattlesWon()
 	{
 		shopBattlesWonCount.text = "0";

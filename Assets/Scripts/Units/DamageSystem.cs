@@ -35,9 +35,15 @@ namespace Assets.Scripts.Units
 
         #endregion singleton
 
+        private GameManager gameManager;
+
+        private Actor victimActor;
+
         public UnityEvent<DamageReport> OnAnyHealthAttacked;
         private void Start()
         {
+            gameManager = GameManager.singleton;
+            
             OnAnyHealthAttacked.AddListener(UpdateUnitPerformance);
             OnAnyHealthAttacked.AddListener(LogDamageReport);
         }
@@ -46,8 +52,10 @@ namespace Assets.Scripts.Units
         {
             UnitController unit = damageReport.damageInfo.attacker.GetComponent<UnitController>();
             UnitController victimUnit = damageReport.victim.GetComponent<UnitController>();
-            Actor victimActor = damageReport.victim.GetComponent<Actor>();
+            victimActor = damageReport.victim.GetComponent<Actor>();
 
+            damageReport.playerHit = CheckIfPlayerActorHit();
+            
             if (unit && unit.InCombat)
             {
                 unit.unitPerformanceLastBattle.timesAttacked++;
@@ -71,6 +79,17 @@ namespace Assets.Scripts.Units
             }
         }
 
+        private bool CheckIfPlayerActorHit()
+        {
+            if (victimActor && victimActor == gameManager.player)
+            {
+                gameManager.playerActorHit.Invoke();
+                return true;
+            }
+
+            return false;
+        }
+        
         private void LogDamageReport(DamageReport damageReport)
         {
             if (!logDamageReports) return;
@@ -116,6 +135,7 @@ namespace Assets.Scripts.Units
         public bool wasBlocked;
         public bool wasLethal;
         public GameObject victim;
+        public bool playerHit;
     }
 
 

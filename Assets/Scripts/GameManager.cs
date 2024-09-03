@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
 	public UnityEvent battleEndedEvent;
 	[HideInInspector]
 	public UnityEvent loadShopEvent;
+
+	[HideInInspector] public UnityEvent playerActorHit;
 	#endregion
 
 	#region Transition Events
@@ -158,8 +160,9 @@ public class GameManager : MonoBehaviour
 
 	public BattleManager battleManager;
 	public UIManager uiManager;
-	
 
+	public Actor player;
+	
 	[Header("everything else")]
 
 	public GameObject HUD;

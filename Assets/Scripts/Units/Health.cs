@@ -77,7 +77,7 @@ public class Health : MonoBehaviour
         else
 		{
 			damageReport.damageDealt = damageReport.incomingDamage;
-            health -= damageReport.damageDealt; ///-------------------------------------------- DAMAGE ACTUALLY DEALT HERE
+            health -= damageReport.damageDealt; //-------------------------------------------- DAMAGE ACTUALLY DEALT HERE
 			
             if ((int)health <= 0)
             {
