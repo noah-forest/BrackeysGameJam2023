@@ -38,6 +38,8 @@ public class UIManager : MonoBehaviour
 	[SerializeField] private GameObject dpsPreview;
 
 	[SerializeField] private GameObject bossPortrait;
+	[SerializeField] private Image bossImage;
+	[SerializeField] private TextMeshProUGUI bossName;
 	
 	[SerializeField] GameObject livesContainer;
 	[SerializeField] GameObject livesArea;
@@ -255,8 +257,19 @@ public class UIManager : MonoBehaviour
 		unitPreview.SetActive(false);
 		reserveSlots.SetActive(false);
 		dpsPreview.SetActive(true);
-		
-		bossPortrait.SetActive(battleManager.nextBossEncounter != null);
+
+		if (battleManager.nextBossEncounter != null)
+		{
+			// there is boss
+			bossPortrait.SetActive(true);
+			bossImage.sprite = battleManager.nextBossEncounter.bossPortrait;
+			bossName.text = battleManager.nextBossEncounter.bossName;
+		}
+		else
+		{
+			// no boss
+			bossPortrait.SetActive(false);
+		}
 	}
 
 	private void ShowGameOverScreen()
