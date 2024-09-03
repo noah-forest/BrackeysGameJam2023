@@ -10,40 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2212587a4fe075646b21e607473dee16, type: 3}
-  m_Name: CyclerBoss
+  m_Name: RandomBoss
   m_EditorClassIdentifier: 
-  bossName: The Joinkler
-  bossPortrait: {fileID: 21300000, guid: 333285a1babc4804b9fb39e79e423d66, type: 3}
+  bossName: Stages of Reef
+  bossPortrait: {fileID: 21300000, guid: 9661897e8b7bba1488e6c30782ec6600, type: 3}
   bossTeam:
     units: []
   CycleTeams:
   - units:
-    - level: 3
+    - level: 2
       unitID: 0
-      useRandomID: 0
-    - level: 3
+      useRandomID: 1
+    - level: 2
       unitID: 5
-      useRandomID: 0
-    - level: 3
+      useRandomID: 1
+    - level: 2
       unitID: 9
-      useRandomID: 0
+      useRandomID: 1
   - units:
     - level: 2
-      unitID: 14
-      useRandomID: 0
+      unitID: 0
+      useRandomID: 1
     - level: 2
-      unitID: 18
-      useRandomID: 0
+      unitID: 5
+      useRandomID: 1
     - level: 2
-      unitID: 15
-      useRandomID: 0
-  - units:
-    - level: 0
-      unitID: 27
-      useRandomID: 0
-    - level: 0
-      unitID: 28
-      useRandomID: 0
-    - level: 0
-      unitID: 29
-      useRandomID: 0
+      unitID: 9
+      useRandomID: 1

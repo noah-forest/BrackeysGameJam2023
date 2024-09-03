@@ -56,8 +56,7 @@ namespace Assets.Scripts.BoatScripts
         void OnBossUnitDied(UnitController unit)
         {
             //THIS is super jank and prone to breaking if the ui structure is changed.
-            BattleLane lane = unit.gameObject.transform.parent.parent.GetComponent<BattleLane>();
-            Debug.Log($"{unit.gameObject.name} -> {unit.gameObject.transform.parent.name} - > {unit.gameObject.transform.parent.parent.name}");
+            BattleLane lane = unit.gameObject.transform.parent.parent.parent.GetComponent<BattleLane>();
 
             if (lane)
             {
@@ -82,6 +81,7 @@ namespace Assets.Scripts.BoatScripts
             else 
             {
                 Debug.Log("[BOSS ENCOUNTER] Cycler Boss relys on specific lane structure. If this has been changed, the boss will not work correctly.");
+                Debug.Log($"[BOSS ENCOUNTER] Cycler Boss attempted Path from unit to lane: {unit.gameObject.name} -> {unit.gameObject.transform.parent.name} - > {unit.gameObject.transform.parent.parent.name} -> {unit.gameObject.transform.parent.parent.parent.name}");
             }
         }
     }

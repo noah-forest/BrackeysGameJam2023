@@ -79,19 +79,22 @@ public class BoatController : MonoBehaviour
         //deck.Rotate(Vector3.right, boatBody.velocity.x);
         //wheel.AddTorque(boatBody.velocity.x * Vector3.forward * wheelVisualSpeed,ForceMode.Acceleration);
 
-        wheelColliders[2].motorTorque = -boatForwardSpeed + curBounceForce + steeringAngle * steeringEffectOnSpeed;
-        wheelColliders[3].motorTorque = -boatForwardSpeed + curBounceForce + steeringAngle * steeringEffectOnSpeed;
+        wheelColliders[2].motorTorque = -boatForwardSpeed + curBounceForce;
+        wheelColliders[3].motorTorque = -boatForwardSpeed + curBounceForce;
         curBounceForce = Mathf.Lerp(curBounceForce, 0, Time.fixedDeltaTime * bounceDecayRate);
 
-        wheelColliders[2].brakeTorque = steeringAngle * breakForce;
-        wheelColliders[3].brakeTorque = steeringAngle * breakForce;
+        if(Mathf.Abs(steeringAngle) >= maxSteeringAngle)
+        {
+            wheelColliders[2].brakeTorque = breakForce;
+            wheelColliders[3].brakeTorque = breakForce;
+        }
+
 
 
 
         float bonus = 1;// + Mathf.Clamp(bonusLowSpeedScalar * (bonusLowSpeedThreshold-boatBody.velocity.magnitude), -.5f, 2f);
         wheelColliders[2].steerAngle = steeringAngle * bonus;
         wheelColliders[3].steerAngle = steeringAngle * bonus;
-        Debug.Log(boatBody.velocity.magnitude);
 
         Vector3 boatxz = boatBody.velocity * 0.01f;
         boatxz.y = 0;
