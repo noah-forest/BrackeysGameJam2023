@@ -15,6 +15,7 @@ public class CopyIcon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        thisIcon.sprite = iconToCopy.sprite;
+        if(thisIcon.sprite != iconToCopy.sprite) 
+            thisIcon.sprite = iconToCopy.sprite;
     }
 }
