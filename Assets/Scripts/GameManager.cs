@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 

@@ -298,9 +298,9 @@ public class BattleManager : MonoBehaviour
 			lane.enemyUnitController.parentActor = enemyActor;
 			lane.enemyUnitController.unitGrave = lane.enemyGrave;
 			lane.enemyUnit.SetActive(true);
+			
 			lane.enemyUnit.transform.localScale = new Vector3(-1, 1, 1);
 			lane.enemyUnit.GetComponentInChildren<SpriteRenderer>().flipX = true;
-			
 			var healthBar = lane.enemyUnit.GetComponentInChildren<UnitHealthBar>();
 			healthBar.shadowFlipped.SetActive(true);
 			healthBar.shadowDefault.SetActive(false);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
