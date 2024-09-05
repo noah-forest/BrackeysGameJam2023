@@ -23,8 +23,10 @@ public class BoatWorldManager : MonoBehaviour
     }
     #endregion
     public Vector3 boatSpawn = new Vector3();
+    public int boatLaneSpawn;
     public Vector3 boatOffset;
     public BoatMaster boat;
+    public BoatGridManager grid;
 
     void Start()
     {

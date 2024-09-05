@@ -13,8 +13,7 @@ public enum BattleDifficulty
 
 public class BattleHazard : BoatHazard
 {
-    [SerializeField]
-    BattleDifficulty battleDifficulty;
+    public BattleDifficulty battleDifficulty;
     [SerializeField]
     GameObject[] difficultyVisuals;
     public void Start()
@@ -25,9 +24,9 @@ public class BattleHazard : BoatHazard
         }
     }
 
-    public override void InteractWithBoat(BoatMaster boat, Collision collision)
+    public override void InteractWithBoat(BoatMaster boat, ControllerColliderHit hit)
     {
-        base.InteractWithBoat(boat, collision);
+        base.InteractWithBoat(boat, hit);
         if (boat.gameManager)
         {
             boat.controller.StopMovement();

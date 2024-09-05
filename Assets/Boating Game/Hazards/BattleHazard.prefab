@@ -177,6 +177,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8384586033563516432}
+  - component: {fileID: 357994725430045972}
+  - component: {fileID: 889896624067409755}
   m_Layer: 0
   m_Name: BattleHazard
   m_TagString: Untagged
@@ -201,6 +203,47 @@ Transform:
   - {fileID: 7748975495744931590}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &357994725430045972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3315462154218527993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66abf48624f1c2346a5a8bc44efd9449, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impactEffect: {fileID: 0}
+  battleDifficulty: 0
+  difficultyVisuals:
+  - {fileID: 6713088086200459619}
+  - {fileID: 514869790393312665}
+  - {fileID: 5422467637707105011}
+--- !u!136 &889896624067409755
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3315462154218527993}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3758747
+  m_Height: 0.8320237
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4817069387099113781
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,8 +255,6 @@ GameObject:
   - component: {fileID: 3091973059726343767}
   - component: {fileID: 2818806154729387700}
   - component: {fileID: 4249622672322073088}
-  - component: {fileID: 4734468018944416448}
-  - component: {fileID: 4766408175701459117}
   m_Layer: 0
   m_Name: BattleHazard
   m_TagString: Untagged
@@ -303,46 +344,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23d26b37b7fa5cb4aa96beef80f4b22d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4734468018944416448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4817069387099113781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66abf48624f1c2346a5a8bc44efd9449, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  battleDifficulty: 0
-  difficultyVisuals:
-  - {fileID: 6713088086200459619}
-  - {fileID: 514869790393312665}
-  - {fileID: 5422467637707105011}
---- !u!136 &4766408175701459117
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4817069387099113781}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.16
-  m_Height: 0.32
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5422467637707105011
 GameObject:
   m_ObjectHideFlags: 0

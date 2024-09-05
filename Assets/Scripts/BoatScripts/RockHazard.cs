@@ -5,10 +5,10 @@ using UnityEngine;
 public class RockHazard : BoatHazard
 {
     [SerializeField] bool destroyOnImpact;
-    public override void InteractWithBoat(BoatMaster boat, Collision collision)
+    public override void InteractWithBoat(BoatMaster boat, ControllerColliderHit hit)
     {
-        base.InteractWithBoat(boat, collision);
-        boat.controller.Bounce(collision.GetContact(0).normal);
+        base.InteractWithBoat(boat, hit);
+        boat.controller.Bounce();
         if(destroyOnImpact) Destroy(gameObject);
     }
 }

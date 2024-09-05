@@ -7,9 +7,9 @@ public class TreasureHazard : BoatHazard
 	[SerializeField] private int minReward = 2;
 	private int treasureAmount;
 	
-	public override void InteractWithBoat(BoatMaster boat, Collision collision)
+	public override void InteractWithBoat(BoatMaster boat, ControllerColliderHit hit)
 	{
-		base.InteractWithBoat(boat, collision);
+		base.InteractWithBoat(boat, hit);
 		if (boat.gameManager)
 		{
 			treasureAmount = Random.Range(minReward, maxReward+1);

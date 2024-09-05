@@ -9,6 +9,6 @@ namespace Assets.Scripts.BoatScripts
 {
     public interface IBoatInteractable
     {
-        void InteractWithBoat(BoatMaster boat, Collision collision);
+        void InteractWithBoat(BoatMaster boat, ControllerColliderHit hit);
     }
 }

@@ -10,8 +10,15 @@ public class BoatInteractor : MonoBehaviour
 {
     public BoatMaster boat;
 
-    private void OnCollisionEnter(Collision collision)
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    collision.gameObject.GetComponent<IBoatInteractable>()?.InteractWithBoat(boat, hit);
+    //}
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        collision.gameObject.GetComponent<IBoatInteractable>()?.InteractWithBoat(boat, collision);
+        Debug.Log($"controller Interactor: {hit.gameObject.name}");
+
+        hit.gameObject.GetComponent<IBoatInteractable>()?.InteractWithBoat(boat, hit);
     }
 }

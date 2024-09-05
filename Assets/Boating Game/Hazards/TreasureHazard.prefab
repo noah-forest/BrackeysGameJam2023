@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8384586033563516432}
   - component: {fileID: 3128442589350796301}
+  - component: {fileID: 5515446601500139432}
   m_Layer: 0
   m_Name: TreasureHazard
   m_TagString: Untagged
@@ -48,6 +49,29 @@ MonoBehaviour:
   impactEffect: {fileID: 0}
   maxReward: 8
   minReward: 2
+--- !u!136 &5515446601500139432
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3315462154218527993}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7342574828276487550
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,9 +18,9 @@ public class NewBehaviourScript : BoatHazard
             apearance.sprite = bossEncounter.bossPortrait;
         }
     }
-    public override void InteractWithBoat(BoatMaster boat, Collision collision)
+    public override void InteractWithBoat(BoatMaster boat, ControllerColliderHit hit)
     {
-        base.InteractWithBoat(boat, collision);
+        base.InteractWithBoat(boat, hit);
         if (boat.gameManager)
         {
 

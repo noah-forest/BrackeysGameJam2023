@@ -19,10 +19,11 @@ public class BoatMaster : MonoBehaviour
         boatManager = BoatWorldManager.singleton;
 
         boatManager.boat = this;
+        controller.characterController.enabled = false;
+        transform.position = boatManager.boatSpawn;
+        controller.CurrentLane = boatManager.grid? boatManager.boatLaneSpawn : 0;
+        controller.characterController.enabled = true;
         
-        controller.boatBody.isKinematic = true;
-        transform.position = boatManager.boatSpawn + boatManager.boatOffset;
-        controller.boatBody.isKinematic = false;
 
     }
 }

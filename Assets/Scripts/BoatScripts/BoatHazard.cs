@@ -12,11 +12,12 @@ public class BoatHazard : MonoBehaviour, IBoatInteractable
     {
         boatManager = BoatWorldManager.singleton;
     }
-    public virtual void InteractWithBoat(BoatMaster boat, Collision collision)
+    public virtual void InteractWithBoat(BoatMaster boat, ControllerColliderHit hit)
     {
         Debug.Log($"{boatManager} :: {boat}");
         if (!boatManager) boatManager = BoatWorldManager.singleton;
         boatManager.boatSpawn = boat.transform.position;
+        boatManager.boatLaneSpawn = boat.controller.CurrentLane;
         Debug.Log($"Boat impacted {gameObject.name}");
         if(impactEffect) Instantiate(impactEffect, transform.position, transform.rotation);
 

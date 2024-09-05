@@ -20,6 +20,11 @@ public class BoatObstacleGenerator : MonoBehaviour
         if(possibleObsticales.Count > 0) GenerateObsticales();
     }
 
+
+
+    //pick a random X,Z coord in the collider bounds,
+    //then raycast down until impacting a surface. 
+    //then generate the obstacle at the point and aligned with that normal, and give it a random rotation.
     private void GenerateObsticales()
     {
         while(obsticalesGenerated < minObstacles && obsticalesGenerated < maxObstacles)

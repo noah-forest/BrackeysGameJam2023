@@ -9,65 +9,72 @@ using UnityEngine;
 public class BoatController : MonoBehaviour
 {
     [SerializeField]
-    public Rigidbody boatBody;
+    public CharacterController characterController;
     //[SerializeField]
     //Transform deck;
     [SerializeField]
     Rigidbody wheel;
-
+    [SerializeField] public BoatGridManager gridManager;
     [SerializeField] private float boatForwardSpeed = 1;
-    [SerializeField] private float boatJetSpeed = 20;
-    [SerializeField] private float boatSteerVisualSpeed = 50;
-    [SerializeField] private float breakForce;
-    [SerializeField] private float rotCorrectionRate = 1;
-     
-    [SerializeField] private float maxSteeringAngle;
-    [SerializeField] private float turnAnglePerSec = 5;
-    [SerializeField] private float bonusLowSpeedThreshold = 1;
-    [SerializeField] private float bonusLowSpeedScalar = 0.5f;
-    [SerializeField] private float steeringEffectOnSpeed = 50;
-    [SerializeField] private float startForce = 200;
-    float steeringAngle;
+    [SerializeField] private float boatGravity = 9.8f;
+    private int _currentLane = 0;
+    public int CurrentLane
+    {
+        get { return _currentLane; }
+        set 
+        {
+            if (gridManager && gridManager.boatLaneXPositions.Length > 0)
+            {
+                _currentLane = Mathf.Clamp(value, 0, gridManager.Width - 1);
+                targetLaneX = gridManager.boatLaneXPositions[_currentLane];
+            }
+            else
+            {
+                _currentLane = 0;
+                targetLaneX = 0;
+            }
+            
+        }
+    }
+    public float targetLaneX;
+    [SerializeField] float initialBounceForce = 15;
+    [SerializeField] float bounceDecayRate = 5;
+    float bounceForce;
 
-    [SerializeField] float bounceDecayRate = 10;
-    float curBounceForce;
-
-    [SerializeField] WheelCollider[] wheelColliders = new WheelCollider[4];
+    Vector3 moveVector;
 
     //used to try to maintain the positions of the boat and the rolling ball, which techincally move independantly
     Vector3 orbOffset;
-    Vector3 moveVector;
+
     bool cantMove = false;
     // Start is called before the first frame update
 
     private void Start()
     {
-        foreach (var wheel in wheelColliders)
-        {
-            wheel.ConfigureVehicleSubsteps(5, 12, 15);
-        }
-        boatBody.AddForce(startForce * Vector3.back);
+        gridManager = BoatWorldManager.singleton.grid;
+        CurrentLane = 0;
+        //transform.position = gridManager.tileGrid[1, 0].transform.position;
     }
     public void MoveRight()
     {
-        steeringAngle = Mathf.Min(steeringAngle + turnAnglePerSec * Time.deltaTime, maxSteeringAngle);
-        
+        CurrentLane++;
     }
 
     public void MoveLeft()
     {
-        steeringAngle = Mathf.Max(steeringAngle - turnAnglePerSec * Time.deltaTime, -maxSteeringAngle);
+        CurrentLane--;
     }
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKey(KeyCode.A))
         {
-            MoveRight();
+            MoveLeft();
         }
         else if(Input.GetKey(KeyCode.D))
         {
-            MoveLeft();
+            
+            MoveRight();
         }
         //Debug.Log($"Steering Angle =  {steeringAngle}");
 
@@ -76,46 +83,42 @@ public class BoatController : MonoBehaviour
     private void FixedUpdate()
     {
         if (cantMove) return;
-        //deck.Rotate(Vector3.right, boatBody.velocity.x);
-        //wheel.AddTorque(boatBody.velocity.x * Vector3.forward * wheelVisualSpeed,ForceMode.Acceleration);
+        moveVector = (transform.forward * (boatForwardSpeed + bounceForce));                            // initial Z movement 
+        Vector3 distVect = (Vector3.right * transform.position.x - Vector3.right * targetLaneX);
+        Vector3 xDir = distVect.normalized;
+        moveVector += xDir * distVect.magnitude/boatForwardSpeed * 20;                  // X movement
+        moveVector += Vector3.down * boatGravity;                                       // Y movement
+        characterController.Move(moveVector * Time.fixedDeltaTime);
+        bounceForce = Mathf.Max(0, bounceForce - bounceDecayRate * Time.fixedDeltaTime, 0);
 
-        wheelColliders[2].motorTorque = -boatForwardSpeed + curBounceForce;
-        wheelColliders[3].motorTorque = -boatForwardSpeed + curBounceForce;
-        curBounceForce = Mathf.Lerp(curBounceForce, 0, Time.fixedDeltaTime * bounceDecayRate);
-
-        if(Mathf.Abs(steeringAngle) >= maxSteeringAngle)
-        {
-            wheelColliders[2].brakeTorque = breakForce;
-            wheelColliders[3].brakeTorque = breakForce;
-        }
-
-
-
-
-        float bonus = 1;// + Mathf.Clamp(bonusLowSpeedScalar * (bonusLowSpeedThreshold-boatBody.velocity.magnitude), -.5f, 2f);
-        wheelColliders[2].steerAngle = steeringAngle * bonus;
-        wheelColliders[3].steerAngle = steeringAngle * bonus;
-
-        Vector3 boatxz = boatBody.velocity * 0.01f;
-        boatxz.y = 0;
-        boatBody.AddForce(new Vector3(0, -boatxz.magnitude, 0), ForceMode.VelocityChange);
-        boatBody.AddForce((boatJetSpeed - steeringAngle)* Vector3.back);
-        boatBody.MoveRotation(Quaternion.Lerp(boatBody.rotation, Quaternion.identity, Time.fixedDeltaTime * rotCorrectionRate));
-        steeringAngle = Mathf.Lerp(steeringAngle, 0, Time.fixedDeltaTime * rotCorrectionRate);
     }
 
     public void StopMovement()
     {
-        boatBody.isKinematic = true;
-        boatBody.velocity = Vector3.zero;
         cantMove = true; 
     }
 
-    public void Bounce(Vector3 normal)
+    public void Bounce()
     {
-        steeringAngle *= -1;
-        curBounceForce = boatBody.velocity.magnitude * 2;
-        boatBody.velocity = Vector3.Reflect(boatBody.velocity, normal);
+        bounceForce = initialBounceForce;
+        if(CurrentLane == 0)
+        {
+            MoveRight();
+        }else if(CurrentLane == gridManager.Width - 1)
+        {
+            MoveLeft();
+        }
+        else
+        {
+            if(Random.value >= 0.5)
+            {
+                MoveRight();
+            }
+            else
+            {
+                MoveLeft();
+            }
+        }
     }
 
 }

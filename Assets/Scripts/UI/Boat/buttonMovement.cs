@@ -42,28 +42,18 @@ public class buttonMovement : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	public void OnPointerDown(PointerEventData eventData)
 	{
 		pointerDown = true;
-	}
+        if (wayToMove == movementType.Left)
+        {
+            boatController.MoveLeft();
+        }
+        else if (wayToMove == movementType.Right)
+        {
+            boatController.MoveRight();
+        }
+    }
 
 	public void OnPointerUp(PointerEventData eventData)
 	{
 		pointerDown = false;
-	}
-
-	private void Update()
-	{
-		if (pointerDown)
-		{
-			if (wayToMove == movementType.Left)
-			{
-				boatController.MoveLeft();
-			} else if (wayToMove == movementType.Right)
-			{
-				boatController.MoveRight();
-			}
-		}
-		else
-		{
-			pointerDown = false;
-		}
 	}
 }
