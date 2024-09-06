@@ -304,6 +304,10 @@ public class BattleManager : MonoBehaviour
 			var healthBar = lane.enemyUnit.GetComponentInChildren<UnitHealthBar>();
 			healthBar.shadowFlipped.SetActive(true);
 			healthBar.shadowDefault.SetActive(false);
+
+			var atkSpdBar = lane.enemyUnit.GetComponentInChildren<RadialProgress>();
+			atkSpdBar.progressShadowFlipped.gameObject.SetActive(true);
+			atkSpdBar.progressShadow.gameObject.SetActive(false);
 			
 			lane.enemyUnitController.health.OwnerHealth = enemyActor.health;
 			lane.enemyUnitController.InitCombat();

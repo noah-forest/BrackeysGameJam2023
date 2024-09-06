@@ -5,6 +5,8 @@ public class RadialProgress : MonoBehaviour
 {
 	public UnitMasterComponent unitMaster;
 	public Image progressImage;
+	public Image progressShadow;
+	public Image progressShadowFlipped;
 
 	private UnitAnimator unitAnimator;
 	private UnitController unitController;

@@ -20,6 +20,7 @@ public class UnitMasterComponent : MonoBehaviour
 
 	[Space(10)]
 	[Header("Your mother")]
+	public RadialProgress radialProgress;
 	public Animator unitAnimator;
 	public Canvas healthBar;
 	public ParticleSystem unitParticleSystem;
