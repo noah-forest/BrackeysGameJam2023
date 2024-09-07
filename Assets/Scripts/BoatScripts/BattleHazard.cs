@@ -18,10 +18,7 @@ public class BattleHazard : BoatHazard
     GameObject[] difficultyVisuals;
     public void Start()
     {
-        if (battleDifficulty != BattleDifficulty.easy && difficultyVisuals.Length > (int)battleDifficulty - 1)
-        {
-            difficultyVisuals[(int)battleDifficulty - 1].SetActive(true);
-        }
+        difficultyVisuals[(int)battleDifficulty].SetActive(true);
     }
 
     public override void InteractWithBoat(BoatMaster boat, ControllerColliderHit hit)
