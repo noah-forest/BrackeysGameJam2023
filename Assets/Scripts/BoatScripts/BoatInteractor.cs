@@ -17,7 +17,7 @@ public class BoatInteractor : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        Debug.Log($"controller Interactor: {hit.gameObject.name}");
+        //Debug.Log($"controller Interactor: {hit.gameObject.name}");
 
         hit.gameObject.GetComponent<IBoatInteractable>()?.InteractWithBoat(boat, hit);
     }

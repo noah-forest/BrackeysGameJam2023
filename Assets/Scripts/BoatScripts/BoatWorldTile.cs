@@ -5,9 +5,13 @@ using UnityEngine;
 public class BoatWorldTile : MonoBehaviour
 {
     public BoatHazard hazard;
-    public Vector2 gridPosition;
-    public void GenerateHazards()
-    {
+    public Vector2Int gridPosition;
+    public float weight = 1;
+    public MeshRenderer meshRenderer;
+    public Material paintMaterial;
 
+    public void Paint()
+    {
+        meshRenderer.material = paintMaterial;
     }
 }

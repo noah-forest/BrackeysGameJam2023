@@ -194,14 +194,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0f911858c0c1bf478bf8d2338bf5182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boatBody: {fileID: 0}
   characterController: {fileID: 8891657980180091433}
   wheel: {fileID: 0}
   gridManager: {fileID: 0}
   boatForwardSpeed: 800
-  boatGravity: 9.8
-  currentLane: 0
+  boatGravity: 10
   targetLaneX: 0
+  initialBounceForce: 15
+  bounceDecayRate: 5
 --- !u!114 &8417176237685491795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,12 +235,12 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 2
-  m_Radius: 0.63
+  m_Radius: 1
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: -2.31}
+  m_Center: {x: 0, y: 0, z: -1.2}
 --- !u!1001 &6030333985018763065
 PrefabInstance:
   m_ObjectHideFlags: 0
