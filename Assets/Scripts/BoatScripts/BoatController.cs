@@ -16,6 +16,7 @@ public class BoatController : MonoBehaviour
     Rigidbody wheel;
     [SerializeField] public BoatGridManager gridManager;
     [SerializeField] private float boatForwardSpeed = 1;
+    [SerializeField] private float boatHorizontalSpeed = 50;
     [SerializeField] private float boatGravity = 9.8f;
     private int _currentLane = 0;
     public int CurrentLane
@@ -86,7 +87,8 @@ public class BoatController : MonoBehaviour
         moveVector = (transform.forward * (boatForwardSpeed + bounceForce));                            // initial Z movement 
         Vector3 distVect = (Vector3.right * transform.position.x - Vector3.right * targetLaneX);
         Vector3 xDir = distVect.normalized;
-        moveVector += xDir * distVect.magnitude/boatForwardSpeed * 20;                  // X movement
+        moveVector += xDir * distVect.magnitude/boatForwardSpeed * boatHorizontalSpeed;                  // X movement
+        //moveVector.z /= (Mathf.Abs(moveVector.x) * 0.5f) + 1;
         moveVector += Vector3.down * boatGravity;                                       // Y movement
         characterController.Move(moveVector * Time.fixedDeltaTime);
         bounceForce = Mathf.Max(0, bounceForce - bounceDecayRate * Time.fixedDeltaTime, 0);
