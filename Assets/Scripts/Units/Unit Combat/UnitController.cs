@@ -52,6 +52,8 @@ public class UnitController : MonoBehaviour, ISlotItem
 	public bool InCombat {  get; private set; }
 	private float attackCooldownEnd;
 
+	private GameObject deathVFX;
+
 	public void Awake()
 	{
 		gameManager = GameManager.singleton;
@@ -148,6 +150,9 @@ public class UnitController : MonoBehaviour, ISlotItem
 	private void OnDeath()
 	{
 		health.unitDied?.Invoke(gameObject);
+
+		deathVFX = Instantiate(battleManager.deadUnitVFX, transform.parent);
+		
 		if (unitGrave)
 		{
 			unitGrave.ActivateGrave(unitStats.digCount);
@@ -164,6 +169,7 @@ public class UnitController : MonoBehaviour, ISlotItem
 	{
 		health.Revive();
 		unitRespawnEvent.Invoke(this);
+		if(deathVFX) Destroy(deathVFX);
 		SetAttackTime();
 		for (int i = 0; i < transform.childCount; i++)
 		{

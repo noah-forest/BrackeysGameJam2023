@@ -33,7 +33,8 @@ public class BattleManager : MonoBehaviour
 	public GameObject battleField;
 	public GameObject battleSlots;
 	public GameObject unitMasterPrefab;
-
+	public GameObject deadUnitVFX;
+    
 	public Actor playerActor;
 	public Actor enemyActor;
 
@@ -285,8 +286,7 @@ public class BattleManager : MonoBehaviour
 		//populates the unitPreview with the generated units
 		unitPreview.FillUnitPos(enemyUnits);
 	}
-
-	// ReSharper disable Unity.PerformanceAnalysis
+	
 	/// <summary>
 	/// deletes the old enemy units if there are any and then loads a random enemy unit for each lane and assign graves to them
 	/// </summary>
