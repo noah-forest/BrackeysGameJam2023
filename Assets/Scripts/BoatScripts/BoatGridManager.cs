@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.WSA;
 using static UnityEngine.Rendering.DebugUI.Table;
 
 public class BoatGridManager : MonoBehaviour
@@ -23,6 +24,15 @@ public class BoatGridManager : MonoBehaviour
     [SerializeField] BoatWorldTile tilePrefab;
     [SerializeField] int emptyTileWeight = 3;
     [SerializeField] int[] difficultyThresholds = new int[4];
+
+    /// <summary>
+    /// determines at what y val hazards start spawning
+    /// </summary>
+    [SerializeField] int startSafeZoneSize = 5;
+    /// <summary>
+    /// determines at what y val hazards stop spawning
+    /// </summary>
+    [SerializeField] int endSafeZoneSize = 3;
 
 
 
@@ -52,7 +62,7 @@ public class BoatGridManager : MonoBehaviour
         {
             tileGrid = new BoatWorldTile[width, height];
             boatLaneXPositions = new float[width];
-            int threshInc = (int)((float)height * 0.20f);
+            int threshInc = (int)((float)height * 0.3f);
             for (int i = 0; i < difficultyThresholds.Length; i++)
             {
                 difficultyThresholds[i] = threshInc * i;
@@ -76,7 +86,7 @@ public class BoatGridManager : MonoBehaviour
                 tileGrid[x,y].name = $"Tile ({x},{y})";
                 tileGrid[x,y].gridPosition = new Vector2Int (x, y);
                 boatLaneXPositions[x] = tileGrid[x, y].transform.position.x;
-                if (y > 3) InstantiateHazard(ref tileGrid[x,y]);
+                if (y > startSafeZoneSize && y < height - endSafeZoneSize) InstantiateHazard(ref tileGrid[x,y]);
                 Debug.Log($"{tileGrid[x, y].name} : weight :{tileGrid[x, y].weight} ");
             }
         }
@@ -93,8 +103,7 @@ public class BoatGridManager : MonoBehaviour
 
 
         BoatHazard hazard = hazardList[roll].hazardPrefab;
-        var collider = hazard.GetComponent<CapsuleCollider>();
-        Vector3 yOffset = 0.8f * Vector3.up;//collider ? collider.height * 0.5 * Vector3.up : Vector3.zero;
+        Vector3 yOffset = 0.8f * Vector3.up;
         tile.hazard = Instantiate(hazard, tile.transform.position + yOffset, Quaternion.identity, transform);
         BattleHazard battle = tile.hazard.GetComponent<BattleHazard>();
         if (battle)
@@ -144,6 +153,20 @@ public class BoatGridManager : MonoBehaviour
         {
             if(paintSolution) tile.Paint();
             if (tile.weight >= 5) Destroy(tile.hazard.gameObject);
+            ////Super lazy way to prevent battles from being next to eachother (just on the main path tho...)
+            if (tile.GetComponent<BattleHazard>())
+            {
+                int x = tile.gridPosition.x;
+                int y = tile.gridPosition.y;
+                BoatWorldTile neighborTile = GetTile(x + 1, y);
+                if (neighborTile && neighborTile.hazard.GetComponent<BattleHazard>()) Destroy(tile.hazard.gameObject);
+                neighborTile = GetTile(x - 1, y);
+                if (neighborTile && neighborTile.hazard.GetComponent<BattleHazard>()) Destroy(tile.hazard.gameObject);
+                neighborTile = GetTile(x, y + 1);
+                if (neighborTile && neighborTile.hazard.GetComponent<BattleHazard>()) Destroy(tile.hazard.gameObject);
+                neighborTile = GetTile(x, y - 1);
+                if (neighborTile && neighborTile.hazard.GetComponent<BattleHazard>()) Destroy(tile.hazard.gameObject);
+            }
         }
     }
 }

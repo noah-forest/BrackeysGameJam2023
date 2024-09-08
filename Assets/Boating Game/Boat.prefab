@@ -198,6 +198,7 @@ MonoBehaviour:
   wheel: {fileID: 0}
   gridManager: {fileID: 0}
   boatForwardSpeed: 800
+  boatHorizontalSpeed: 50
   boatGravity: 10
   targetLaneX: 0
   initialBounceForce: 15
@@ -235,8 +236,8 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 2
-  m_Radius: 1
-  m_SlopeLimit: 45
+  m_Radius: 0.88
+  m_SlopeLimit: 1
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001

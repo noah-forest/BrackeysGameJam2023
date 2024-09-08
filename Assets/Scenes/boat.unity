@@ -1374,6 +1374,8 @@ MonoBehaviour:
   tilePrefab: {fileID: 2189286320191248781, guid: 645c9374e7b85444c86fcedf4ae7d08c, type: 3}
   emptyTileWeight: 2
   difficultyThresholds: 00000000000000000000000000000000
+  startSafeZoneSize: 5
+  endSafeZoneSize: 3
   hazardList:
   - hazardPrefab: {fileID: 357994725430045972, guid: d41d55f176092d44788fc5aed84d08f9, type: 3}
     spawnWeight: 0
@@ -1468,6 +1470,10 @@ PrefabInstance:
     - target: {fileID: 8894543004381651256, guid: e7cb2f37b55da80449124e4aab3c7665, type: 3}
       propertyPath: boatForwardSpeed
       value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8894543004381651256, guid: e7cb2f37b55da80449124e4aab3c7665, type: 3}
+      propertyPath: boatHorizontalSpeed
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
