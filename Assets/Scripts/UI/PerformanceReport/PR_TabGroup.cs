@@ -146,11 +146,8 @@ public class PR_TabGroup : MonoBehaviour
     
     public void Subscribe(PR_Tab button)
     {
-        if (tabButtons == null)
-        {
-            tabButtons = new List<PR_Tab>();
-        }
-        
+        tabButtons ??= new List<PR_Tab>();
+
         tabButtons.Add(button);
     }
 

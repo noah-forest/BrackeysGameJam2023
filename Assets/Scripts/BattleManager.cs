@@ -43,11 +43,9 @@ public class BattleManager : MonoBehaviour
 	public List<Slot> playerReserveSlots = new(); //manually set
 	public List<GameObject> enemyUnits = new(); //auto populated
 
+	public List<BossEncounterSO> bosses = new();
+	
 	public int interest;
-
-	public int scaleToLvl2 = 3;
-	public int scaleToLvl3 = 5;
-	public int scaleToFinal = 7;
 
 	private bool inShop;
 	public bool firstTime;
