@@ -75,15 +75,16 @@ public class FillOutUnits : MonoBehaviour
 
         var desc = tabManager.descToShow[0]; // this is hard coded and terrible
         var headerInfo = tabManager.headerInfo;
-
+        
         headerInfo.entryImage.sprite = tab.unitInfo.unitSprite;
         headerInfo.entryName.text = tab.unitInfo.name;
+        
+        headerInfo.header.SetActive(true);
         
         var descInfo = desc.GetComponent<UnitsDescInfo>();
         SetUpDesc(descInfo, tab.unitInfo);
         
         desc.SetActive(true);
-        
     }
 
     public void ResetTabs()
@@ -102,8 +103,8 @@ public class FillOutUnits : MonoBehaviour
         descInfo.health.text = $"{unitInfo.health}";
         descInfo.damage.text = $"{unitInfo.damage}";
         descInfo.digCount.text = $"{unitInfo.digCount}";
-        descInfo.blockChance.text = $"{unitInfo.blockChance * 100f}";
-        descInfo.critChance.text = $"{unitInfo.critChance * 100f}";
+        descInfo.blockChance.text = $"{Mathf.Round(unitInfo.blockChance * 100f)}";
+        descInfo.critChance.text = $"{Mathf.Round(unitInfo.critChance * 100f)}";
         
         if ((unitInfo.attackSpeed * 10) > 40) descInfo.speed.text = "Booty";
         else if ((unitInfo.attackSpeed * 10) == 40) descInfo.speed.text = "Slow";

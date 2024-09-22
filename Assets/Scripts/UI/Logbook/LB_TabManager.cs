@@ -44,6 +44,7 @@ public class LB_TabManager : MonoBehaviour
         if (selectedTab != tab)
         {
             descToShow[0].SetActive(false);
+            headerInfo.header.SetActive(false);
             unitSelector.selectedTab = null;
             unitSelector.ResetTabs();
         }
