@@ -15,8 +15,10 @@ public class FillOutUnits : MonoBehaviour
     public LB_TabManager tabManager;
     
     public GameObject logEntry;
-    
+
+    public Sprite nullSprite;
     private UnitManager unitManager;
+    
 
     private void Start()
     {
@@ -74,15 +76,9 @@ public class FillOutUnits : MonoBehaviour
         tab.background.color = tabActive;
 
         var desc = tabManager.descToShow[0]; // this is hard coded and terrible
-        var headerInfo = tabManager.headerInfo;
-        
-        headerInfo.entryImage.sprite = tab.unitInfo.unitSprite;
-        headerInfo.entryName.text = tab.unitInfo.name;
-        
-        headerInfo.header.SetActive(true);
         
         var descInfo = desc.GetComponent<UnitsDescInfo>();
-        SetUpDesc(descInfo, tab.unitInfo);
+        SetUpDesc(descInfo, tab.unitInfo, tab.entryInfo);
         
         desc.SetActive(true);
     }
@@ -98,21 +94,46 @@ public class FillOutUnits : MonoBehaviour
 
     #endregion
 
-    private void SetUpDesc(UnitsDescInfo descInfo, UnitInfo unitInfo)
+    private void SetUpDesc(UnitsDescInfo descInfo, UnitInfo unitInfo, EntryInfo entryInfo)
     {
-        descInfo.health.text = $"{unitInfo.health}";
-        descInfo.damage.text = $"{unitInfo.damage}";
-        descInfo.digCount.text = $"{unitInfo.digCount}";
-        descInfo.blockChance.text = $"{Mathf.Round(unitInfo.blockChance * 100f)}";
-        descInfo.critChance.text = $"{Mathf.Round(unitInfo.critChance * 100f)}";
+        var headerInfo = tabManager.headerInfo;
         
-        if ((unitInfo.attackSpeed * 10) > 40) descInfo.speed.text = "Booty";
-        else if ((unitInfo.attackSpeed * 10) == 40) descInfo.speed.text = "Slow";
-        else if ((unitInfo.attackSpeed * 10) == 20) descInfo.speed.text = "Average";
-        else if ((unitInfo.attackSpeed * 10) < 10) descInfo.speed.text = "Nuts";
-        else if ((unitInfo.attackSpeed * 10) < 20) descInfo.speed.text = "Fast";
+        if (entryInfo.entryLocked)
+        {
+            headerInfo.entryImage.sprite = nullSprite;
+            headerInfo.entryName.text = "???";
+            
+            descInfo.health.text = $"??";
+            descInfo.damage.text = $"??";
+            descInfo.digCount.text = $"??";
+            descInfo.blockChance.text = $"??";
+            descInfo.critChance.text = $"??";
+            descInfo.speed.text = "???";
         
-        descInfo.description.text = $"{unitInfo.description}";
-        descInfo.rarity.text = $"{unitInfo.rarity}";
+            descInfo.description.text = $"Buy this unit to find out!";
+            descInfo.rarity.text = $"???";
+        }
+        else
+        {
+            headerInfo.entryImage.sprite = unitInfo.unitSprite;
+            headerInfo.entryName.text = unitInfo.name;
+            
+            descInfo.health.text = $"{unitInfo.health}";
+            descInfo.damage.text = $"{unitInfo.damage}";
+            descInfo.digCount.text = $"{unitInfo.digCount}";
+            descInfo.blockChance.text = $"{Mathf.Round(unitInfo.blockChance * 100f)}";
+            descInfo.critChance.text = $"{Mathf.Round(unitInfo.critChance * 100f)}";
+        
+            if ((unitInfo.attackSpeed * 10) > 40) descInfo.speed.text = "Booty";
+            else if ((unitInfo.attackSpeed * 10) == 40) descInfo.speed.text = "Slow";
+            else if ((unitInfo.attackSpeed * 10) == 20) descInfo.speed.text = "Average";
+            else if ((unitInfo.attackSpeed * 10) < 10) descInfo.speed.text = "Nuts";
+            else if ((unitInfo.attackSpeed * 10) < 20) descInfo.speed.text = "Fast";
+        
+            descInfo.description.text = $"{unitInfo.description}";
+            descInfo.rarity.text = $"{unitInfo.rarity}";
+        }
+        
+        headerInfo.header.SetActive(true);
     }
 }

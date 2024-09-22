@@ -8,7 +8,7 @@ public class Entry_Tab : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
 {
     public FillOutUnits manager;
     public Image background;
-    
+    public EntryInfo entryInfo;
     public UnitInfo unitInfo;
     
     private MouseUtils mouseUtils;
