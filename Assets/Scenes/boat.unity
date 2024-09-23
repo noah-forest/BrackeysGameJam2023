@@ -1372,32 +1372,50 @@ MonoBehaviour:
   height: 50
   gridY: 0
   tilePrefab: {fileID: 2189286320191248781, guid: 645c9374e7b85444c86fcedf4ae7d08c, type: 3}
-  emptyTileWeight: 2
   difficultyThresholds: 00000000000000000000000000000000
   startSafeZoneSize: 5
   endSafeZoneSize: 3
-  hazardList:
-  - hazardPrefab: {fileID: 357994725430045972, guid: d41d55f176092d44788fc5aed84d08f9, type: 3}
-    spawnWeight: 0
+  terrainHazards:
+  - hazardPrefab: {fileID: 0}
+    spawnWeight: 50
     minNumber: 0
-    maxNumber: 0
+    maxNumber: 50
   - hazardPrefab: {fileID: -1983143283455938551, guid: aee9d2cf67b6fc14eabad54fd7397a21, type: 3}
-    spawnWeight: 0
+    spawnWeight: 40
     minNumber: 0
-    maxNumber: 0
+    maxNumber: 50
   - hazardPrefab: {fileID: 3128442589350796301, guid: e3b783fe299bdd4419b305c36a58e524, type: 3}
-    spawnWeight: 0
+    spawnWeight: 20
     minNumber: 0
-    maxNumber: 0
-  - hazardPrefab: {fileID: -1983143283455938551, guid: aee9d2cf67b6fc14eabad54fd7397a21, type: 3}
-    spawnWeight: 0
+    maxNumber: 5
+  - hazardPrefab: {fileID: 357994725430045972, guid: d41d55f176092d44788fc5aed84d08f9, type: 3}
+    spawnWeight: 20
     minNumber: 0
-    maxNumber: 0
-  - hazardPrefab: {fileID: -1983143283455938551, guid: aee9d2cf67b6fc14eabad54fd7397a21, type: 3}
-    spawnWeight: 0
+    maxNumber: 5
+  eventHazards:
+  - hazardPrefab: {fileID: 0}
+    spawnWeight: 20
     minNumber: 0
-    maxNumber: 0
+    maxNumber: 10
+  - hazardPrefab: {fileID: 3128442589350796301, guid: e3b783fe299bdd4419b305c36a58e524, type: 3}
+    spawnWeight: 30
+    minNumber: 0
+    maxNumber: 10
+  - hazardPrefab: {fileID: 357994725430045972, guid: d41d55f176092d44788fc5aed84d08f9, type: 3}
+    spawnWeight: 60
+    minNumber: 0
+    maxNumber: 10
+  bonusHazards:
+  - hazardPrefab: {fileID: 0}
+    spawnWeight: 20
+    minNumber: 0
+    maxNumber: 20
+  - hazardPrefab: {fileID: 3128442589350796301, guid: e3b783fe299bdd4419b305c36a58e524, type: 3}
+    spawnWeight: 80
+    minNumber: 0
+    maxNumber: 20
   boatLaneXPositions: []
+  pathHazardGenerationPasses: 1
   logPathLogic: 0
   paintSolution: 1
 --- !u!4 &1736457527

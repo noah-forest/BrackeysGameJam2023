@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.WSA;
 using static UnityEngine.Rendering.DebugUI.Table;
+using Random = UnityEngine.Random;
 
 public class BoatGridManager : MonoBehaviour
 {
@@ -22,7 +23,6 @@ public class BoatGridManager : MonoBehaviour
     }
     [SerializeField] float gridY = 0;
     [SerializeField] BoatWorldTile tilePrefab;
-    [SerializeField] int emptyTileWeight = 3;
     [SerializeField] int[] difficultyThresholds = new int[4];
 
     /// <summary>
@@ -44,7 +44,11 @@ public class BoatGridManager : MonoBehaviour
         public int minNumber;
         public int maxNumber;
     }
-    [SerializeField] List<HazardEntry> hazardList;
+    [SerializeField] List<HazardEntry> terrainHazards;
+    [SerializeField] List<HazardEntry> eventHazards;
+    [SerializeField] List<HazardEntry> bonusHazards;
+
+    Dictionary<HazardEntry, int> hazardsSpawned = new Dictionary<HazardEntry, int>();
 
     private BoatWorldTile[,] tileGrid;
     [HideInInspector] public float[] boatLaneXPositions = new float[3];
@@ -52,11 +56,32 @@ public class BoatGridManager : MonoBehaviour
     BoatPathFinder pathFinder = new BoatPathFinder();
     public float tileSize { get; private set;}
 
+    public int pathHazardGenerationPasses = 1;
     public bool logPathLogic;
     public bool paintSolution;
+    List<BoatWorldTile> path;
 
     private void Start()
     {
+
+        terrainHazards.Sort((h, h1) => h.spawnWeight < h1.spawnWeight ? 0 : 1);
+        for (int i = 0; i < terrainHazards.Count; i++)
+        {
+            hazardsSpawned.Add(terrainHazards[i], 0);
+            Debug.Log(i + ":"  + terrainHazards[i].spawnWeight);
+        }
+        for (int i = 0; i < eventHazards.Count; i++)
+        {
+            hazardsSpawned.Add(eventHazards[i], 0);
+            Debug.Log(i + ":" + eventHazards[i].spawnWeight);
+        }
+        for(int i = 0; i  < bonusHazards.Count; i++)
+        {
+            hazardsSpawned.Add(bonusHazards[i], 0);
+            Debug.Log(i + ":" + bonusHazards[i].spawnWeight);
+
+        }
+
         tileSize = 5;
         if (tilePrefab)
         {
@@ -70,8 +95,8 @@ public class BoatGridManager : MonoBehaviour
             
             GenerateGrid();
             CreateValidPath();
-
-
+            PopulatePathHazards();
+           // PopulateEmptySpace();
         }
     }
 
@@ -86,23 +111,30 @@ public class BoatGridManager : MonoBehaviour
                 tileGrid[x,y].name = $"Tile ({x},{y})";
                 tileGrid[x,y].gridPosition = new Vector2Int (x, y);
                 boatLaneXPositions[x] = tileGrid[x, y].transform.position.x;
-                if (y > startSafeZoneSize && y < height - endSafeZoneSize) InstantiateHazard(ref tileGrid[x,y]);
-                Debug.Log($"{tileGrid[x, y].name} : weight :{tileGrid[x, y].weight} ");
+                if (y > startSafeZoneSize && y < height - endSafeZoneSize) InstantiateHazard(ref tileGrid[x,y], terrainHazards);
+                //Debug.Log($"{tileGrid[x, y].name} : weight :{tileGrid[x, y].pathWeight} ");
             }
         }
     }
 
-    void InstantiateHazard(ref BoatWorldTile tile)
+    void InstantiateHazard(ref BoatWorldTile tile, List<HazardEntry> hazardSet)
     {
-        int roll = UnityEngine.Random.Range(0, hazardList.Count + emptyTileWeight);
-        if (roll >= hazardList.Count)
+        //int roll = UnityEngine.Random.Range(0, hazardList.Count + emptyTileWeight);
+        //if (roll >= hazardList.Count)
+        //{
+        //    tile.pathWeight = 1;
+        //    return;
+        //}
+
+        int roll = RollHazardsWeighted(hazardSet);
+
+        BoatHazard hazard = hazardSet[roll].hazardPrefab;
+        hazardsSpawned[hazardSet[roll]]++;
+        if(!hazard)
         {
-            tile.weight = 1;
+            tile.pathWeight = 1;
             return;
         }
-
-
-        BoatHazard hazard = hazardList[roll].hazardPrefab;
         Vector3 yOffset = 0.8f * Vector3.up;
         tile.hazard = Instantiate(hazard, tile.transform.position + yOffset, Quaternion.identity, transform);
         BattleHazard battle = tile.hazard.GetComponent<BattleHazard>();
@@ -119,7 +151,7 @@ public class BoatGridManager : MonoBehaviour
             }
         }
 
-        tile.weight = hazard.pathFindingInfluence;
+        tile.pathWeight = hazard.pathFindingInfluence;
     }
 
     void CreateValidPath()
@@ -132,8 +164,81 @@ public class BoatGridManager : MonoBehaviour
         {
             Debug.Log($"[BOAT GRID][PATHFINDER] solution length: {pathFinder.solution.Count}");
             CleanSolution(pathFinder.solution, paintSolution);
+            path = pathFinder.solution;
         }
     }
+
+
+    void PopulatePathHazards()
+    {
+        for(int pass = 0; pass < pathHazardGenerationPasses; pass++)
+        {
+            List<BoatWorldTile> pathCopy = path;
+            while (pathCopy.Count > 0)
+            {
+                int tileRoll = Random.Range(0, pathCopy.Count);
+                BoatWorldTile tile = pathCopy[tileRoll];
+                if (tile.gridPosition.y < startSafeZoneSize || tile.gridPosition.y > height - endSafeZoneSize)
+                {
+                    pathCopy.Remove(tile);
+                    continue;
+                }
+                InstantiateHazard(ref tile, eventHazards);
+                for (int i = 0; i < tile.neighbors.Count; i++)
+                {
+                    pathCopy.Remove(tile.neighbors[i]);
+                }
+                pathCopy.Remove(tile);
+            }
+
+            //int xRoll = Random.Range(0, width);
+            //int yRoll = Random.Range(0, height);
+            //
+        }
+    }
+
+    void PopulateEmptySpace()
+    {
+        List<BoatWorldTile> nonPath = new List<BoatWorldTile>();
+        for (int x = 0; x < width; x++)
+        {
+
+            for (int y = 0; y < height; y++)
+            {
+                nonPath.Add(tileGrid[x,y]);
+            }
+        }
+        for (int i = 0; i < path.Count ; i++)
+        {
+            nonPath.Remove(path[i]);
+        }
+
+        while (nonPath.Count > 0)
+        {
+            int tileRoll = Random.Range(0, nonPath.Count);
+            BoatWorldTile tile = nonPath[tileRoll];
+            if (tile.gridPosition.y < startSafeZoneSize || tile.gridPosition.y > height - endSafeZoneSize)
+            {
+                nonPath.Remove(tile);
+                continue;
+            }
+            InstantiateHazard(ref tile, eventHazards);
+            for (int i = 0; i < tile.neighbors.Count; i++)
+            {
+                BoatWorldTile neighborTile = tile.neighbors[i];
+
+                if (tile && !path.Contains(neighborTile))
+                {
+                    InstantiateHazard(ref neighborTile, bonusHazards);
+                }
+
+                nonPath.Remove(tile.neighbors[i]);
+            }
+            nonPath.Remove(tile);
+        }
+
+    }
+
     public BoatWorldTile GetTile(int x, int y)
     {
         if ((0 <= x) && (0 <= y) && (x < width) && (y < height))
@@ -147,12 +252,14 @@ public class BoatGridManager : MonoBehaviour
         }
     }
 
+    
+
     void CleanSolution(List<BoatWorldTile> solution, bool paintSolution = false)
     {
         foreach(BoatWorldTile tile in solution)
         {
             if(paintSolution) tile.Paint();
-            if (tile.weight >= 5) Destroy(tile.hazard.gameObject);
+            if (tile.pathWeight >= 5) Destroy(tile.hazard.gameObject);
             ////Super lazy way to prevent battles from being next to eachother (just on the main path tho...)
             if (tile.GetComponent<BattleHazard>())
             {
@@ -168,5 +275,46 @@ public class BoatGridManager : MonoBehaviour
                 if (neighborTile && neighborTile.hazard.GetComponent<BattleHazard>()) Destroy(tile.hazard.gameObject);
             }
         }
+    }
+
+    int RollHazardsWeighted(List<HazardEntry> hazardSet)
+    {
+        float weightedTotal = 0;
+        List<HazardEntry> hazardListCopy = hazardSet;
+        for (int i = hazardListCopy.Count-1; i > 0; i--)
+        {
+            //if (hazardsSpawned[hazardListCopy[i]] >= hazardListCopy[i].maxNumber || i == lastSpawnedHazard)
+            //{
+            //    //Debug.Log($"Max number of {hazardListCopy[i].hazardPrefab.name} reached :: {hazardsSpawned[hazardListCopy[i]]}/{hazardListCopy[i].maxNumber}");
+
+            //    hazardListCopy.RemoveAt(i);
+            //}
+            //else
+            //{
+            //    weightedTotal += hazardListCopy[i].spawnWeight;
+            //}
+            weightedTotal += hazardListCopy[i].spawnWeight * (1 - hazardsSpawned[hazardListCopy[i]] / hazardListCopy[i].maxNumber);
+        }
+        Debug.Log("weighted total " + weightedTotal);
+
+        float weightRoll = Random.Range(0, weightedTotal);
+        Debug.Log("weighted roll " + weightRoll);
+
+        for (int i = 0; i < hazardListCopy.Count; i++)
+        {
+            //Debug.Log($" wRoll: {weightRoll} :: hWeight: {hazardList[i].spawnWeight} ");
+
+            if ( weightRoll <= hazardListCopy[i].spawnWeight)
+            {
+                return i;
+            }
+            else
+            {
+                weightRoll -= hazardListCopy[i].spawnWeight;
+            }
+        }
+
+        Debug.Log("Weighted roll of hazards failed and exited with zero");
+        return 0;
     }
 }

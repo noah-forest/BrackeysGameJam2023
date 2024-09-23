@@ -26,9 +26,9 @@ namespace Assets.Scripts.BoatScripts
 
             public bool TryAddNeighbor(BoatWorldTile newNeighbor, Dictionary<BoatWorldTile, SearchNode> nodeMap)
             {
-                String logstring = newNeighbor ? $"neighbor weight: {newNeighbor.weight}" : "neighbor is null" ;
+                String logstring = newNeighbor ? $"neighbor weight: {newNeighbor.pathWeight}" : "neighbor is null" ;
                 if(debugPathGeneration) Debug.Log($"[PATHER][SNODE] {tile.name} trying to add neighbor {newNeighbor} => {logstring}");
-                if (newNeighbor == null || newNeighbor.weight == 0)
+                if (newNeighbor == null || newNeighbor.pathWeight == 0)
                 {
                     if(debugPathGeneration) Debug.Log($"[PATHER][SNODE] {tile.name} ======= FAILED to add neighbor {newNeighbor}");
 
@@ -65,7 +65,7 @@ namespace Assets.Scripts.BoatScripts
 
             public float GetNewCost(PlannerNode newParent, float distBetweenTiles)
             {
-                return gCost + distBetweenTiles * searchNode.tile.weight;
+                return gCost + distBetweenTiles * searchNode.tile.pathWeight;
             }
 
             float GetDistanceTo(SearchNode node)
@@ -154,13 +154,20 @@ namespace Assets.Scripts.BoatScripts
                 int x = pair.Key.gridPosition.x;
                 int y = pair.Key.gridPosition.y;
                 BoatWorldTile neighborTile = tileMap.GetTile(x + 1, y);
+                pair.Key.TryAddNeighbor(neighborTile);
                 pair.Value.TryAddNeighbor(neighborTile, nodes); // 1
                 neighborTile = tileMap.GetTile(x - 1, y);
+                pair.Key.TryAddNeighbor(neighborTile);
                 pair.Value.TryAddNeighbor(neighborTile, nodes); // 2
                 neighborTile = tileMap.GetTile(x, y + 1);
+                pair.Key.TryAddNeighbor(neighborTile);
                 pair.Value.TryAddNeighbor(neighborTile, nodes); // 3
                 neighborTile = tileMap.GetTile(x, y - 1);
+                pair.Key.TryAddNeighbor(neighborTile);
                 pair.Value.TryAddNeighbor(neighborTile, nodes); // 4
+
+
+
 
                 //hexagon tile stuff. Not used as we are using a sqaure grid
                 //int offset = x % 2 == 1 ? 1 : -1;
@@ -168,7 +175,7 @@ namespace Assets.Scripts.BoatScripts
                 //pair.Value.TryAddNeighbor(neighborTile, nodes);
                 //neighborTile = tileMap.GetTile(x - 1, y + offset);
                 //pair.Value.TryAddNeighbor(neighborTile, nodes);
-                if(debugPathGeneration) Debug.Log($"[PATHER][INIT] {pair.Key.name} ----- neighbors complete ----");
+                if (debugPathGeneration) Debug.Log($"[PATHER][INIT] {pair.Key.name} ----- neighbors complete ----");
 
             }
         }
@@ -183,7 +190,7 @@ namespace Assets.Scripts.BoatScripts
             PlannerNode pathStart = new PlannerNode(startNode,null, goalNode, heuristicWeight);
             if(debugPathGeneration) Debug.Log($"[PATHER][ENTER] Root Planner Node created: {pathStart.searchNode.tile.name}");
 
-            if (startNode.tile.weight == 0 || goalNode.tile.weight == 0) invalidStartEndNodes = true; /// griuaghgirighghg pointers when they dont
+            if (startNode.tile.pathWeight == 0 || goalNode.tile.pathWeight == 0) invalidStartEndNodes = true; /// griuaghgirighghg pointers when they dont
 
             pathStart.fCost = pathStart.hCost;
             aStarQ.Enqueue(pathStart, pathStart.fCost);
