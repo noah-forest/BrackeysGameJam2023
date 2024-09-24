@@ -44,6 +44,7 @@ public class BoatGridManager : MonoBehaviour
         public int minNumber;
         public int maxNumber;
     }
+    [SerializeField] public BoatHazard BossHazard;
     [SerializeField] List<HazardEntry> terrainHazards;
     [SerializeField] List<HazardEntry> eventHazards;
     [SerializeField] List<HazardEntry> bonusHazards;
@@ -96,7 +97,8 @@ public class BoatGridManager : MonoBehaviour
             GenerateGrid();
             CreateValidPath();
             PopulatePathHazards();
-           // PopulateEmptySpace();
+            // PopulateEmptySpace();
+            SpawnBoss();
         }
     }
 
@@ -158,7 +160,7 @@ public class BoatGridManager : MonoBehaviour
     {
         pathFinder.SetDebug(logPathLogic);
         pathFinder.Initialize(this);
-        pathFinder.Enter(1, 0, 1, height - 1);
+        pathFinder.Enter(1, 0, width/2, height - 1);
         pathFinder.GeneratePath();
         if (pathFinder.IsDone())
         {
@@ -195,6 +197,14 @@ public class BoatGridManager : MonoBehaviour
             //int yRoll = Random.Range(0, height);
             //
         }
+        
+    }
+
+    void SpawnBoss()
+    {
+        BoatWorldTile tile = tileGrid[width / 2, height - 1];
+        Vector3 yOffset = 3.2f * Vector3.up;
+        tile.hazard = Instantiate(BossHazard, tile.transform.position + yOffset, Quaternion.identity, transform);
     }
 
     void PopulateEmptySpace()

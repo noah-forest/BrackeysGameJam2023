@@ -23,6 +23,7 @@ namespace Assets.Scripts.BoatScripts
         {
             public BoatWorldTile tile;
             public List<SearchNode> neighbors = new List<SearchNode>();
+            public int verticalCheckbackDepth = 4;
 
             public bool TryAddNeighbor(BoatWorldTile newNeighbor, Dictionary<BoatWorldTile, SearchNode> nodeMap)
             {
@@ -223,6 +224,7 @@ namespace Assets.Scripts.BoatScripts
 
                     successor = isDupe ? visited[node] : new PlannerNode(node, curPathNode, goalNode, heuristicWeight);
                     newGCost = successor.GetNewCost(curPathNode, distanceBetweenTiles);
+                    if(successor.searchNode.tile.gridPosition.x == curPathNode.searchNode.tile.gridPosition.x) newGCost *= 50; // try to de-incintivize path being overly straight
                     if (isDupe) // already visited neighbor node
                     {
                         if(debugPathGeneration) Debug.Log($"[PATHER][GENERATE] newGcost: {newGCost} vs oldGcost: {successor.gCost}");
@@ -235,7 +237,7 @@ namespace Assets.Scripts.BoatScripts
                         if(debugPathGeneration) Debug.Log($"[PATHER][GENERATE] Neighbors cost is BETTER than old version. Updating");
                         aStarQ.Remove(successor, out successor, out _); // otherwise, we remove the node and replace it with one with better cost values;
                         successor.gCost = newGCost;
-                        successor.fCost = successor.gCost + successor.hCost;
+                        successor.fCost = successor.gCost + successor.hCost + curPathNode.searchNode.tile.gridPosition.y; // try to de-incintivize path being overly straight
                         successor.parentNode = curPathNode;
                         aStarQ.Enqueue(successor, successor.fCost); // Updated node is returned to Q
                     }
@@ -243,7 +245,7 @@ namespace Assets.Scripts.BoatScripts
                     {
                         if(debugPathGeneration) Debug.Log($"[PATHER][GENERATE] Created new neighbor and assigned gcost: {newGCost}");
                         successor.gCost = newGCost;
-                        successor.fCost = successor.gCost + successor.hCost;
+                        successor.fCost = successor.gCost + successor.hCost + curPathNode.searchNode.tile.gridPosition.y; // try to de-incintivize path being overly straight
                         visited.Add(node, successor);
                         aStarQ.Enqueue(successor, successor.fCost);
                     }
