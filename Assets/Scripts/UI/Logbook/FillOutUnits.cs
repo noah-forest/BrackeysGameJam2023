@@ -33,16 +33,11 @@ public class FillOutUnits : MonoBehaviour
             var entry = Instantiate(logEntry, transform);
             var entryInfo = entry.GetComponent<EntryInfo>();
             entryInfo.entryIcon.sprite = unit.unitSprite;
+            entryInfo.entryName = unit.name;
             
             var tab = entry.GetComponent<Entry_Tab>();
             tab.unitInfo = unit;
             tab.manager = this;
-
-            if (!entryInfo.entryLocked)
-            {
-                entryInfo.lockObj.SetActive(false);
-                entryInfo.entryIcon.color = Color.white;
-            }
         }
     }
 
