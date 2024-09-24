@@ -298,6 +298,9 @@ public class ShopController : MonoBehaviour
 		curShopItem.unitShine.SetActive(false);
 		gameManager.Cash -= curShopItem.unitCost;
 		gameManager.unitPurchased?.Invoke();
+		
+		// unlocks the unit in the logbook
+		EntryInfo.onEntryUnlocked.Invoke(curShopItem.curUnit.name);
 
 		shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
 	}
