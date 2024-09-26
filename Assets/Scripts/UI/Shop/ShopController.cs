@@ -40,6 +40,7 @@ public class ShopController : MonoBehaviour
 
 	public StatLegend legend;
 	private GameManager gameManager;
+	private SaveData saveData;
 	private BattleManager battleManager;
 	private ShopAudio shopAudioPlayer;
 
@@ -54,7 +55,7 @@ public class ShopController : MonoBehaviour
 	private bool draggedIntoShop;
 
 	public bool firstRoll;          // this is to check if the shop has been initially rolled
-	public bool unitInInventory = false;
+	public bool unitInInventory;
 
 	private bool unitShine;
 	private bool legendWasOpen;
@@ -73,6 +74,7 @@ public class ShopController : MonoBehaviour
 	{
 		battleManager = BattleManager.singleton;
 		gameManager = GameManager.singleton;
+		saveData = SaveData.singleton;
 		gameManager.unitAddedToSlot.AddListener(SearchAfterPurchase);
 		gameManager.unitSold.AddListener(SearchAfterPurchase);
 		shopAudioPlayer = GetComponent<ShopAudio>();
@@ -250,7 +252,7 @@ public class ShopController : MonoBehaviour
 					{
 						return false;
 					}
-				};
+				}
 
 				if (canAfford)
 				{
@@ -298,11 +300,25 @@ public class ShopController : MonoBehaviour
 		curShopItem.unitShine.SetActive(false);
 		gameManager.Cash -= curShopItem.unitCost;
 		gameManager.unitPurchased?.Invoke();
-		
-		// unlocks the unit in the logbook
-		EntryInfo.onEntryUnlocked.Invoke(curShopItem.curUnit.name);
+
+		//unlock the unit in the logbook
+		UnlockUnit(curShopItem);
 
 		shopAudioPlayer.PlayAudioClipOnce(shopAudioPlayer.audioClips[3]);
+	}
+
+	private void UnlockUnit(SetUnitInfo curShopItem)
+	{
+		var unitToUnlock = curShopItem.curUnit.name;
+		
+		// check to make sure the unit hasn't already been added, then add it
+		if (!saveData.unlockMatrix.unitsUnlocked.Contains(unitToUnlock))
+		{
+			saveData.unlockMatrix.unitsUnlocked.Add(unitToUnlock);
+			
+			// sends event to unlock the unit in the logbook
+			EntryInfo.onEntryUnlocked.Invoke(unitToUnlock);
+		}
 	}
 	
 	private void SearchAfterPurchase(Slot slot)
@@ -346,7 +362,7 @@ public class ShopController : MonoBehaviour
 					curShopItem.shine.color = new Color32(255, 164, 0, 255);
 				}
 
-				StartCoroutine(playShineAnim(curShopItem));
+				StartCoroutine(PlayShineAnim(curShopItem));
 			}
 
 			//if you cant afford it, dont show the glow
@@ -358,7 +374,7 @@ public class ShopController : MonoBehaviour
 	}
 
 	// plays the shine animation, and then sets unitShine to false
-	private IEnumerator playShineAnim(SetUnitInfo curShopItem)
+	private IEnumerator PlayShineAnim(SetUnitInfo curShopItem)
 	{
 		curShopItem.unitShine.SetActive(true);
 

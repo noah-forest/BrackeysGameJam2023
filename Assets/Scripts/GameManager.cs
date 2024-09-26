@@ -1,13 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using Random = UnityEngine.Random;
-
 
 public class GameManager : MonoBehaviour
 {
@@ -184,10 +178,19 @@ public class GameManager : MonoBehaviour
 
 	public int revealCost = 1;
 
+	private SaveData saveData;
+	
 	private void Start()
 	{
 		mouseUtils = MouseUtils.singleton;
-
+		saveData = SaveData.singleton;
+		
+		// check if there is save data before loading it
+		if (saveData.CheckForSaveData())
+		{ 
+			saveData.unlockMatrix = saveData.LoadFromJson();
+		}
+		
 		pauseGame.AddListener(PauseGame);
 		resumeGame.AddListener(UnPauseGame);
 	}

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -13,9 +14,30 @@ public class EntryInfo : MonoBehaviour
     public GameObject lockObj;
     public bool entryLocked = true;
 
+    private SaveData saveData;
+    
     private void Start()
     {
+        saveData = SaveData.singleton;
+
+        //check if something was unlocked before the event can be listened to
+        LoadUnlockedEntries(saveData.unlockMatrix.unitsUnlocked);
+        LoadUnlockedEntries(saveData.unlockMatrix.bossesUnlocked);
+        LoadUnlockedEntries(saveData.unlockMatrix.hazardsUnlocked);
+        
+        Debug.Log($"list of units unlocked: {saveData.unlockMatrix.unitsUnlocked.Count}");
         onEntryUnlocked.AddListener(UnlockEntry);
+    }
+
+    private void LoadUnlockedEntries(List<string> unlockedEntries)
+    {
+        if (unlockedEntries.Count > 0 && entryLocked)
+        {
+            foreach (var entry in unlockedEntries)
+            {
+                onEntryUnlocked.Invoke(entry);
+            }
+        }
     }
 
     private void UnlockEntry(string name)
@@ -27,6 +49,9 @@ public class EntryInfo : MonoBehaviour
             entryLocked = false;
             lockObj.SetActive(false);
             entryIcon.color = Color.white;
+            
+            // save the unlock matrix when a new unit is unlocked
+            saveData.SaveIntoJson();
         }
     }
 }

@@ -18,7 +18,6 @@ public class FillOutUnits : MonoBehaviour
 
     public Sprite nullSprite;
     private UnitManager unitManager;
-    
 
     private void Start()
     {
@@ -39,7 +38,7 @@ public class FillOutUnits : MonoBehaviour
             tab.unitInfo = unit;
             tab.manager = this;
         }
-    }
+     }
 
     #region -- tabSystem --
 
