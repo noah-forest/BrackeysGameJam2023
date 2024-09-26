@@ -6,10 +6,12 @@ using UnityEngine.UI;
 
 public class Entry_Tab : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    public FillOutUnits manager;
+    public PopulateEntries manager;
     public Image background;
     public EntryInfo entryInfo;
+    
     public UnitInfo unitInfo;
+    public BossEncounterSO bossInfo;
     
     private MouseUtils mouseUtils;
     

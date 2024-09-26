@@ -8,6 +8,10 @@ public class BossEncounterSO : ScriptableObject
 {
     public String bossName;
     public Sprite bossPortrait;
+    
+    [TextArea]
+    public string bossDescription; 
+    
     [Serializable]
     public struct TeamUnit
     {
@@ -35,7 +39,7 @@ public class BossEncounterSO : ScriptableObject
     protected Actor enemyActor;
     protected Actor playerActor;
     public Team bossTeam;
-
+    
     public virtual int GetUnitID(int LaneIdx)
     {
         return bossTeam.units[LaneIdx].UnitID;

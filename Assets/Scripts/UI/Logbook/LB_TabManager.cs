@@ -9,7 +9,7 @@ public class LB_TabManager : MonoBehaviour
     public List<GameObject> objectToSwap;
     public List<GameObject> descToShow;
 
-    public FillOutUnits unitSelector;
+    public PopulateEntries unitSelector;
     
     public Color tabIdle;
     public Color tabHover;
@@ -43,7 +43,10 @@ public class LB_TabManager : MonoBehaviour
     {
         if (selectedTab != tab)
         {
-            descToShow[0].SetActive(false);
+            foreach (var page in descToShow)
+            {
+                page.SetActive(false);
+            }
             headerInfo.header.SetActive(false);
             unitSelector.selectedTab = null;
             unitSelector.ResetTabs();

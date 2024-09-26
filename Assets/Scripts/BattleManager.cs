@@ -26,6 +26,7 @@ public class BattleManager : MonoBehaviour
 
 	private GameManager gameManager;
 	private MouseUtils mouseUtils;
+	private SaveData saveData;
 
 	public UnitManager unitManager;
 	public UnitPreview unitPreview;
@@ -57,6 +58,7 @@ public class BattleManager : MonoBehaviour
 	{
 		gameManager = GameManager.singleton;
 		mouseUtils = MouseUtils.singleton;
+		saveData = SaveData.singleton;
 
 		playerActor.GetComponent<Health>().died.AddListener(PlayerDied);
 		enemyActor.GetComponent<Health>().died.AddListener(EnemyDied);
@@ -248,7 +250,26 @@ public class BattleManager : MonoBehaviour
 			if(lane.enemyUnitController) lane.enemyUnitController.unitAttacker.target = lane.playerUnit ? lane.playerUnit.health : playerActor.health;
 			if(lane.playerUnit) lane.playerUnit.unitAttacker.target = lane.enemyUnitController ? lane.enemyUnitController.health : enemyActor.health;
 		}
-		if(nextBossEncounter) nextBossEncounter.BattleStart();
+
+		if (nextBossEncounter)
+		{
+			nextBossEncounter.BattleStart();
+			UnlockBoss(nextBossEncounter);
+		}
+	}
+	
+	private void UnlockBoss(BossEncounterSO boss)
+	{
+		var bossToUnlock = boss.bossName;
+		
+		// check to make sure the unit hasn't already been added, then add it
+		if (!saveData.unlockMatrix.bossesUnlocked.Contains(bossToUnlock))
+		{
+			saveData.unlockMatrix.bossesUnlocked.Add(bossToUnlock);
+			
+			// sends event to unlock the unit in the logbook
+			EntryInfo.onEntryUnlocked.Invoke(bossToUnlock);
+		}
 	}
 
 	public void CreateEnemyTeam()

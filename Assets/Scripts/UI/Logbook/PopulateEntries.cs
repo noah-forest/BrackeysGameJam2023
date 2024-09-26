@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class FillOutUnits : MonoBehaviour
+public class PopulateEntries : MonoBehaviour
 {
     public List<Entry_Tab> tabs;
-
+    public List<GameObject> entryContainers;
+    
     public Color tabIdle;
     public Color tabHover;
     public Color tabActive;
@@ -17,28 +19,54 @@ public class FillOutUnits : MonoBehaviour
     public GameObject logEntry;
 
     public Sprite nullSprite;
+    
     private UnitManager unitManager;
-
+    private List<BossEncounterSO> bossEncounters;
+    
     private void Start()
     {
         unitManager = UnitManager.singleton;
         CreateUnitEntries();
+        CreateBossEntries();
     }
     
     private void CreateUnitEntries()
     {
         foreach (var unit in unitManager.unitStatsDatabase)
         {
-            var entry = Instantiate(logEntry, transform);
+            var entry = Instantiate(logEntry, entryContainers[0].transform);
             var entryInfo = entry.GetComponent<EntryInfo>();
             entryInfo.entryIcon.sprite = unit.unitSprite;
             entryInfo.entryName = unit.name;
+            entryInfo.entryType = EntryType.Unit;
             
             var tab = entry.GetComponent<Entry_Tab>();
             tab.unitInfo = unit;
             tab.manager = this;
         }
-     }
+    }
+
+    private void CreateBossEntries()
+    {
+        LoadBossEncounters();
+        foreach (var boss in bossEncounters)
+        {
+            var entry = Instantiate(logEntry, entryContainers[1].transform);
+            var entryInfo = entry.GetComponent<EntryInfo>();
+            entryInfo.entryIcon.sprite = boss.bossPortrait;
+            entryInfo.entryName = boss.bossName;
+            entryInfo.entryType = EntryType.Boss;
+            
+            var tab = entry.GetComponent<Entry_Tab>();
+            tab.bossInfo = boss;
+            tab.manager = this;
+        }
+    }
+
+    private void CreateHazardEntries()
+    {
+        
+    }
 
     #region -- tabSystem --
 
@@ -69,11 +97,19 @@ public class FillOutUnits : MonoBehaviour
         ResetTabs();
         tab.background.color = tabActive;
 
-        var desc = tabManager.descToShow[0]; // this is hard coded and terrible
-        
-        var descInfo = desc.GetComponent<UnitsDescInfo>();
-        SetUpDesc(descInfo, tab.unitInfo, tab.entryInfo);
-        
+        var desc = tabManager.descToShow[(int)tab.entryInfo.entryType];
+
+        if (tab.entryInfo.entryType == EntryType.Unit)
+        {
+            var descInfo = desc.GetComponent<UnitsDescInfo>();
+            SetUpUnitDesc(descInfo, tab.unitInfo, tab.entryInfo);
+        }
+        else
+        {
+            var descInfo = desc.GetComponent<GenericDescInfo>();
+            SetUpBossDesc(descInfo, tab.bossInfo, tab.entryInfo);
+        }
+
         desc.SetActive(true);
     }
 
@@ -88,7 +124,32 @@ public class FillOutUnits : MonoBehaviour
 
     #endregion
 
-    private void SetUpDesc(UnitsDescInfo descInfo, UnitInfo unitInfo, EntryInfo entryInfo)
+    private void LoadBossEncounters()
+    {
+        bossEncounters = Resources.LoadAll<BossEncounterSO>("SOs/BossEncounters").ToList();
+    }
+
+    private void SetUpBossDesc(GenericDescInfo descInfo, BossEncounterSO bossInfo, EntryInfo entryInfo)
+    {
+        var headerInfo = tabManager.headerInfo;
+        
+        if (entryInfo.entryLocked)
+        {
+            descInfo.description.SetText("Encounter this entry to view more!");
+            headerInfo.entryImage.sprite = nullSprite;
+            headerInfo.entryName.text = "???";
+        }
+        else
+        {
+            descInfo.description.SetText(bossInfo.bossDescription);
+            headerInfo.entryImage.sprite = bossInfo.bossPortrait;
+            headerInfo.entryName.text = bossInfo.bossName;
+        }
+        
+        headerInfo.header.SetActive(true);
+    }
+
+    private void SetUpUnitDesc(UnitsDescInfo descInfo, UnitInfo unitInfo, EntryInfo entryInfo)
     {
         var headerInfo = tabManager.headerInfo;
         

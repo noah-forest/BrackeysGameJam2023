@@ -4,6 +4,13 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+public enum EntryType
+{
+    Unit,
+    Boss,
+    Hazard
+}
+
 public class EntryInfo : MonoBehaviour
 {
     // takes in a name of the thing to unlock
@@ -13,6 +20,7 @@ public class EntryInfo : MonoBehaviour
     public Image entryIcon;
     public GameObject lockObj;
     public bool entryLocked = true;
+    public EntryType entryType;
 
     private SaveData saveData;
     
