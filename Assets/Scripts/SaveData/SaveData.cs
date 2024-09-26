@@ -35,7 +35,6 @@ public class SaveData : MonoBehaviour
     public UnlockMatrix LoadFromJson()
     {
         var matrix = File.ReadAllText(Application.persistentDataPath + "/unlockables.json");
-
         return JsonUtility.FromJson<UnlockMatrix>(matrix);
     }
 

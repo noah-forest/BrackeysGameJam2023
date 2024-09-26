@@ -21,7 +21,7 @@ public class EntryInfo : MonoBehaviour
     public GameObject lockObj;
     public bool entryLocked = true;
     public EntryType entryType;
-
+    
     private SaveData saveData;
     
     private void Start()
@@ -51,15 +51,13 @@ public class EntryInfo : MonoBehaviour
     private void UnlockEntry(string name)
     {
         if (!entryLocked) return;
+        if (entryName != name) return;
         
-        if (entryName == name)
-        {
-            entryLocked = false;
-            lockObj.SetActive(false);
-            entryIcon.color = Color.white;
-            
-            // save the unlock matrix when a new unit is unlocked
-            saveData.SaveIntoJson();
-        }
+        entryLocked = false;
+        lockObj.SetActive(false);
+        entryIcon.color = Color.white;
+        
+        // save the unlock matrix when a new unit is unlocked
+        saveData.SaveIntoJson();
     }
 }

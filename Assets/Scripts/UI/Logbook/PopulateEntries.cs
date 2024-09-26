@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class PopulateEntries : MonoBehaviour
 {
-    public List<Entry_Tab> tabs;
-    public List<GameObject> entryContainers;
+    public List<Entry_Tab> tabs = new();
+    public List<GameObject> entryContainers = new();
     
     public Color tabIdle;
     public Color tabHover;
@@ -67,6 +67,7 @@ public class PopulateEntries : MonoBehaviour
     {
         
     }
+    
 
     #region -- tabSystem --
 

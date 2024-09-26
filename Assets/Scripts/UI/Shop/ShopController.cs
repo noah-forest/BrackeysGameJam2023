@@ -312,13 +312,11 @@ public class ShopController : MonoBehaviour
 		var unitToUnlock = curShopItem.curUnit.name;
 		
 		// check to make sure the unit hasn't already been added, then add it
-		if (!saveData.unlockMatrix.unitsUnlocked.Contains(unitToUnlock))
-		{
-			saveData.unlockMatrix.unitsUnlocked.Add(unitToUnlock);
+		if (saveData.unlockMatrix.unitsUnlocked.Contains(unitToUnlock)) return;
+		saveData.unlockMatrix.unitsUnlocked.Add(unitToUnlock);
 			
-			// sends event to unlock the unit in the logbook
-			EntryInfo.onEntryUnlocked.Invoke(unitToUnlock);
-		}
+		// sends event to unlock the unit in the logbook
+		EntryInfo.onEntryUnlocked.Invoke(unitToUnlock);
 	}
 	
 	private void SearchAfterPurchase(Slot slot)
