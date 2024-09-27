@@ -39,12 +39,10 @@ public class EntryInfo : MonoBehaviour
 
     private void LoadUnlockedEntries(List<string> unlockedEntries)
     {
-        if (unlockedEntries.Count > 0 && entryLocked)
+        if (unlockedEntries.Count <= 0 || !entryLocked) return;
+        foreach (var entry in unlockedEntries)
         {
-            foreach (var entry in unlockedEntries)
-            {
-                onEntryUnlocked.Invoke(entry);
-            }
+            onEntryUnlocked.Invoke(entry);
         }
     }
 
