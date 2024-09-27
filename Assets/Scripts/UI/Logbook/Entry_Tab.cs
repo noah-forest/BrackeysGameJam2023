@@ -12,6 +12,7 @@ public class Entry_Tab : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
     
     public UnitInfo unitInfo;
     public BossEncounterSO bossInfo;
+    public HazardEntrySO hazardInfo;
     
     private MouseUtils mouseUtils;
     

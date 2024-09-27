@@ -2,34 +2,76 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PopulateEntries : MonoBehaviour
 {
     public List<Entry_Tab> tabs = new();
     public List<GameObject> entryContainers = new();
+
+	public static UnityEvent unlockedEntriesChanged = new();
     
     public Color tabIdle;
     public Color tabHover;
     public Color tabActive;
 
+	public TextMeshProUGUI completionText;
+
     public Entry_Tab selectedTab;
     public LB_TabManager tabManager;
-    
     public GameObject logEntry;
-
     public Sprite nullSprite;
-    
-    private UnitManager unitManager;
+
+	private UnitManager unitManager;
+	private SaveData saveData;
     private List<BossEncounterSO> bossEncounters;
-    
-    private void Start()
+    private List<HazardEntrySO> hazardEncounters;
+
+	private float numOfEntries;
+	private float numOfUnlockedEntries;
+
+	private void Start()
     {
         unitManager = UnitManager.singleton;
-        CreateUnitEntries();
+		saveData = SaveData.singleton;
+
+		CreateUnitEntries();
         CreateBossEntries();
-    }
-    
+        CreateHazardEntries();
+
+        numOfEntries =
+            unitManager.unitStatsDatabase.Count + bossEncounters.Count + hazardEncounters.Count;
+
+		unlockedEntriesChanged.AddListener(UpdateCompletion);
+
+		LoadCompletion(saveData.unlockMatrix.unitsUnlocked);
+		LoadCompletion(saveData.unlockMatrix.bossesUnlocked);
+		LoadCompletion(saveData.unlockMatrix.hazardsUnlocked);
+		CheckCompletion();
+	}
+
+	private void LoadCompletion(List<string> unlockedEntries)
+	{
+		if (unlockedEntries.Count <= 0) return;
+		foreach (var entry in unlockedEntries)
+		{
+			unlockedEntriesChanged.Invoke();
+		}
+	}
+
+	private void CheckCompletion()
+	{
+		completionText.text = $"Completed: {MathF.Round(numOfUnlockedEntries / numOfEntries * 100, 1)}%";
+	}
+
+	private void UpdateCompletion()
+	{
+		++numOfUnlockedEntries;
+		completionText.text = $"Completed: {MathF.Round(numOfUnlockedEntries / numOfEntries * 100, 1)}%";
+	}
+
     private void CreateUnitEntries()
     {
         foreach (var unit in unitManager.unitStatsDatabase)
@@ -65,7 +107,19 @@ public class PopulateEntries : MonoBehaviour
 
     private void CreateHazardEntries()
     {
-        
+        LoadHazardEncounters();
+        foreach (var hazard in hazardEncounters)
+        {
+            var entry = Instantiate(logEntry, entryContainers[2].transform);
+            var entryInfo = entry.GetComponent<EntryInfo>();
+            entryInfo.entryIcon.sprite = hazard.hazardIcon;
+            entryInfo.entryName = hazard.hazardName;
+            entryInfo.entryType = EntryType.Hazard;
+            
+            var tab = entry.GetComponent<Entry_Tab>();
+            tab.hazardInfo = hazard;
+            tab.manager = this;
+        }
     }
     
 
@@ -100,15 +154,28 @@ public class PopulateEntries : MonoBehaviour
 
         var desc = tabManager.descToShow[(int)tab.entryInfo.entryType];
 
-        if (tab.entryInfo.entryType == EntryType.Unit)
+        switch (tab.entryInfo.entryType)
         {
-            var descInfo = desc.GetComponent<UnitsDescInfo>();
-            SetUpUnitDesc(descInfo, tab.unitInfo, tab.entryInfo);
-        }
-        else
-        {
-            var descInfo = desc.GetComponent<GenericDescInfo>();
-            SetUpBossDesc(descInfo, tab.bossInfo, tab.entryInfo);
+            case EntryType.Unit:
+            {
+                var descInfo = desc.GetComponent<UnitsDescInfo>();
+                SetUpUnitDesc(descInfo, tab.unitInfo, tab.entryInfo);
+                break;
+            }
+            case EntryType.Boss:
+            {
+                var descInfo = desc.GetComponent<GenericDescInfo>();
+                SetUpBossDesc(descInfo, tab.bossInfo, tab.entryInfo);
+                break;
+            }
+            case EntryType.Hazard:
+            {
+                var descInfo = desc.GetComponent<GenericDescInfo>();
+                SetUpHazardDesc(descInfo, tab.hazardInfo, tab.entryInfo);
+                break;
+            }
+            default:
+                throw new ArgumentOutOfRangeException();
         }
 
         desc.SetActive(true);
@@ -128,6 +195,31 @@ public class PopulateEntries : MonoBehaviour
     private void LoadBossEncounters()
     {
         bossEncounters = Resources.LoadAll<BossEncounterSO>("SOs/BossEncounters").ToList();
+    }
+
+    private void LoadHazardEncounters()
+    {
+        hazardEncounters = Resources.LoadAll<HazardEntrySO>("SOs/Hazards").ToList();
+    }
+
+    private void SetUpHazardDesc(GenericDescInfo descInfo, HazardEntrySO hazardInfo, EntryInfo entryInfo)
+    {
+        var headerInfo = tabManager.headerInfo;
+        
+        if (entryInfo.entryLocked)
+        {
+            descInfo.description.SetText("Encounter this entry to view more!");
+            headerInfo.entryImage.sprite = nullSprite;
+            headerInfo.entryName.text = "???";
+        }
+        else
+        {
+            descInfo.description.SetText(hazardInfo.hazardDescription);
+            headerInfo.entryImage.sprite = hazardInfo.hazardIcon;
+            headerInfo.entryName.text = hazardInfo.hazardName;
+        }
+        
+        headerInfo.header.SetActive(true);
     }
 
     private void SetUpBossDesc(GenericDescInfo descInfo, BossEncounterSO bossInfo, EntryInfo entryInfo)

@@ -314,7 +314,9 @@ public class ShopController : MonoBehaviour
 		// check to make sure the unit hasn't already been added, then add it
 		if (saveData.unlockMatrix.unitsUnlocked.Contains(unitToUnlock)) return;
 		saveData.unlockMatrix.unitsUnlocked.Add(unitToUnlock);
-			
+
+		PopulateEntries.unlockedEntriesChanged.Invoke();
+
 		// sends event to unlock the unit in the logbook
 		EntryInfo.onEntryUnlocked.Invoke(unitToUnlock);
 	}

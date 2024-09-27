@@ -266,7 +266,9 @@ public class BattleManager : MonoBehaviour
 		if (!saveData.unlockMatrix.bossesUnlocked.Contains(bossToUnlock))
 		{
 			saveData.unlockMatrix.bossesUnlocked.Add(bossToUnlock);
-			
+
+			PopulateEntries.unlockedEntriesChanged.Invoke();
+
 			// sends event to unlock the unit in the logbook
 			EntryInfo.onEntryUnlocked.Invoke(bossToUnlock);
 		}

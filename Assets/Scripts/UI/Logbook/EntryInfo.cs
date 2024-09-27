@@ -33,7 +33,6 @@ public class EntryInfo : MonoBehaviour
         LoadUnlockedEntries(saveData.unlockMatrix.bossesUnlocked);
         LoadUnlockedEntries(saveData.unlockMatrix.hazardsUnlocked);
         
-        Debug.Log($"list of units unlocked: {saveData.unlockMatrix.unitsUnlocked.Count}");
         onEntryUnlocked.AddListener(UnlockEntry);
     }
 
@@ -42,7 +41,7 @@ public class EntryInfo : MonoBehaviour
         if (unlockedEntries.Count <= 0 || !entryLocked) return;
         foreach (var entry in unlockedEntries)
         {
-            onEntryUnlocked.Invoke(entry);
+			UnlockEntry(entry);
         }
     }
 

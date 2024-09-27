@@ -112,9 +112,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68302ce0dc52031428ba53943086ac5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hazardEntry: {fileID: 11400000, guid: f233f018c8a848648afb41a65e1937af, type: 2}
   impactEffect: {fileID: 0}
-  soundPlayer: {fileID: 0}
   impactSound: {fileID: 8300000, guid: 982d89ab4e21d5947a7424d59db5a108, type: 3}
+  impactVolume: 5
   pathFindingInfluence: 1
   possibleEncounters:
   - {fileID: 11400000, guid: 66758433f47fae447814183c63950575, type: 2}
@@ -266,9 +267,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ec1b1d435d23164194b248a54dea6c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hazardEntry: {fileID: 0}
   impactEffect: {fileID: 7445010759489791287, guid: a47a0bbc064e6e5489360cbc874704d0, type: 3}
-  soundPlayer: {fileID: 0}
   impactSound: {fileID: 0}
+  impactVolume: 5
   pathFindingInfluence: 1
   destroyOnImpact: 1
 --- !u!136 &1819896907076430054

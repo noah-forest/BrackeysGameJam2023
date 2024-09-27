@@ -178,12 +178,11 @@ public class GameManager : MonoBehaviour
 
 	public int revealCost = 1;
 
-	private SaveData saveData;
+	public SaveData saveData;
 	
 	private void Start()
 	{
 		mouseUtils = MouseUtils.singleton;
-		saveData = SaveData.singleton;
 		
 		// check if there is save data before loading it
 		if (saveData.CheckForSaveData())
