@@ -40,16 +40,10 @@ public class SaveData : MonoBehaviour
 
     public bool CheckForSaveData()
     {
-        var saveData = File.ReadAllText(Application.persistentDataPath + "/unlockables.json");
-
-        if (string.IsNullOrEmpty(saveData))
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        var saveData = File.Exists(Application.persistentDataPath + "/unlockables.json") 
+            ? File.ReadAllText(Application.persistentDataPath + "/unlockables.json") : "";
+        
+        return !string.IsNullOrEmpty(saveData);
     }
 }
 
