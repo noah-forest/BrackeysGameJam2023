@@ -53,8 +53,5 @@ public class EntryInfo : MonoBehaviour
         entryLocked = false;
         lockObj.SetActive(false);
         entryIcon.color = Color.white;
-        
-        // save the unlock matrix when a new unit is unlocked
-        saveData.SaveIntoJson();
     }
 }

@@ -266,6 +266,7 @@ public class BattleManager : MonoBehaviour
 		if (!saveData.unlockMatrix.bossesUnlocked.Contains(bossToUnlock))
 		{
 			saveData.unlockMatrix.bossesUnlocked.Add(bossToUnlock);
+			saveData.SaveIntoJson();
 
 			PopulateEntries.unlockedEntriesChanged.Invoke();
 

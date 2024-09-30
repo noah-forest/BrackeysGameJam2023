@@ -44,6 +44,7 @@ public class BoatHazard : MonoBehaviour, IBoatInteractable
         // check to make sure the hazard hasn't already been added, then add it
         if (saveData.unlockMatrix.hazardsUnlocked.Contains(hazardToUnlock)) return;
         saveData.unlockMatrix.hazardsUnlocked.Add(hazardToUnlock);
+		saveData.SaveIntoJson();
 
 		PopulateEntries.unlockedEntriesChanged.Invoke();
 
